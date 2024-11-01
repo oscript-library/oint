@@ -1,0 +1,8 @@
+﻿    Path  = "/New/pic.png";
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Image = "https://api.athenaeum.digital/test_data/picture.jpg";
+
+    ImagePath = GetTempFileName("png");
+    CopyFile(Image, ImagePath);
+
+    Result = OPI_Dropbox.UploadFile(Token, ImagePath, Path, True);

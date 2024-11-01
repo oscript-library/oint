@@ -1,0 +1,27 @@
+﻿    Token   = "xoxb-6965308400114-696804637...";
+    Channel = "C06UFNUTKUL";
+
+    // Text
+
+    Text   = "TestMessage1";
+    Result = OPI_Slack.SendMessage(Token, Channel, Text);
+
+    // With attachments (picture block in the example)
+
+    Text       = "Message with picture";
+    Image      = "https://api.athenaeum.digital/test_data/picture.jpg";
+    BlockArray = New Array;
+
+    Block = OPI_Slack.GenerateImageBlock(Image, "Image");
+    BlockArray.Add(Block);
+
+    Result = OPI_Slack.SendMessage(Token, Channel, Text, , BlockArray);
+
+    // Sheduled
+
+    Text = "Sheduled message";
+    Hour = 3600;
+    Day  = 24;
+
+    SendingDate = OPI_Tools.GetCurrentDate() + (Day * Hour);
+    Result      = OPI_Slack.SendMessage(Token, Channel, Text, SendingDate);

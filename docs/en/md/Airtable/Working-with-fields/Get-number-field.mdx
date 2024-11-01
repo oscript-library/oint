@@ -1,0 +1,59 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get field (numeric)
+ Gets the description of a numeric field
+
+
+
+`Function GetNumberField(Val Name, Val Precision = 0) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | New field name |
+  | Precision | --precision | Number, String | &#x2716; | Number of decimal places |
+
+  
+  Returns:  Structure - Field description
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Airtable.GetNumberField("Number");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable GetNumberField \
+             --title "7a09c61f-6057-4d70-8b81-0ca8fb393e44"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable GetNumberField ^
+             --title "7a09c61f-6057-4d70-8b81-0ca8fb393e44"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "name": "Number",
+ "type": "number",
+ "options": {
+  "precision": 0
+ }
+}
+```

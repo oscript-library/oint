@@ -1,5 +1,4 @@
-﻿  
-  Имя   = "Описание";
-  Ответ = OPI_GoogleDrive.ПолучитьСписокКаталогов(Токен, Имя, Ложь);  //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                         //Строка
-  
+﻿    Имя       = "Тестовая папка";
+    Токен     = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+
+    Результат = OPI_GoogleDrive.ПолучитьСписокКаталогов(Токен, Имя, Истина);

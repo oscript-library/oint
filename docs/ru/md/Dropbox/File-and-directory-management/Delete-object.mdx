@@ -1,0 +1,73 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить объект
+ Удаляет объект с облачного диска
+
+
+
+`Функция УдалитьОбъект(Знач Токен, Знач Путь, Знач Безвозвратно = Ложь) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Путь | --path | Строка | &#x2714; | Путь к объекту удаления |
+  | БезВозвратно | --permanently | Строка | &#x2714; | Удалить объект без возможности востановления |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Путь      = "/New/pic.png";
+    Токен     = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+
+    Результат = OPI_Dropbox.УдалитьОбъект(Токен, Путь);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox УдалитьОбъект \
+              --token "***" \
+              --path "/Новый каталог"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox УдалитьОбъект ^
+              --token "***" ^
+              --path "/Новый каталог"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "metadata": {
+  ".tag": "file",
+  "name": "pic.png",
+  "path_lower": "/new/pic.png",
+  "path_display": "/New/pic.png",
+  "id": "id:kJU6-a-pT48AAAAAAAAcWQ",
+  "client_modified": "2024-10-08T17:44:58Z",
+  "server_modified": "2024-10-08T17:45:38Z",
+  "rev": "623fab496638abd841553",
+  "size": 2114023,
+  "is_downloadable": true,
+  "content_hash": "0f3b18c255b0f252bd326cacc04c15c3aa57bd6b8234adb65aa7bb2987a65492"
+ }
+}
+```

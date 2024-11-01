@@ -1,0 +1,5 @@
+oint yadisk ЗагрузитьФайл ^
+  --token "***" ^
+  --path "/1948fc42-7ff4-4164-ab45-71f0b4a81e29.png" ^
+  --file "C:\Users\Administrator\AppData\Local\Temp\vglsc2evinp.png" ^
+  --rewrite true

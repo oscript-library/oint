@@ -1,0 +1,74 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create keyboard
+ Forms a keyboard from an array of buttons
+
+
+
+`Function FormKeyboard(Val ButtonArray) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | ButtonArray | --buttons | Array of String | &#x2714; | Array of button titles |
+
+  
+  Returns:  String - Keyboard JSON
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    ButtonArray = New Array;
+    ButtonArray.Add("Button 1");
+    ButtonArray.Add("Button 2");
+
+    Keyboard = OPI_VK.FormKeyboard(ButtonArray);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vk FormKeyboard \
+             --buttons "['Button 1','Button 2']"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vk FormKeyboard ^
+             --buttons "['Button 1','Button 2']"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+  "buttons": [
+  [
+  {
+  "action": {
+  "type": "text",
+  "label": "Button 1"
+  }
+  },
+  {
+  "action": {
+  "type": "text",
+  "label": "Button 2"
+  }
+  }
+  ]
+  ],
+  "one_time": false
+  }
+```

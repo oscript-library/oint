@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить информацию об уценке
+ Получает информацию об уценке и основном товаре по SKU уценённых товаров
+
+
+
+`Функция ПолучитьИнформациюОбУценке(Знач IDКлиента, Знач КлючAPI, Знач SKU) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | IDКлиента | --clientid | Строка | &#x2714; | Идентификатор клиента |
+  | КлючAPI | --apikey | Строка | &#x2714; | API ключ |
+  | SKU | --sku | Число, Массив Из Число | &#x2714; | SKU уцененных товаров |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Ozon Seller API
+
+<br/>
+
+:::tip
+Метод в документации API: [post /v1/product/info/discounted](https://docs.ozon.ru/api/seller/#operation/ProductAPI_GetProductInfoDiscounted)
+:::
+<br/>
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    IDКлиента  = "2128753";
+    КлючAPI    = "7cc90d26-33e4-499b...";
+    SKU        = 1626044001;
+
+    Результат = OPI_Ozon.ПолучитьИнформациюОбУценке(IDКлиента, КлючAPI, SKU);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon ПолучитьИнформациюОбУценке \
+              --clientid "***" \
+              --apikey "***" \
+              --sku 1626044001
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon ПолучитьИнформациюОбУценке ^
+              --clientid "***" ^
+              --apikey "***" ^
+              --sku 1626044001
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "items": []
+}
+```

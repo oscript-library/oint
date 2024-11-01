@@ -1,0 +1,82 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Загрузить файл
+ Загружает файл на облачный диск
+
+
+
+`Функция ЗагрузитьФайл(Знач Токен, Знач Файл, Знач Путь, Знач Перезаписывать = Ложь) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Файл | --file | Строка, ДвоичныеДанные | &#x2714; | Данные файл для загрузки |
+  | Путь | --path | Строка | &#x2714; | Путь сохранения на Dropbox |
+  | Перезаписывать | --overwrite | Булево | &#x2716; | Перезаписывать файл при конфликте путей |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+:::tip
+Параметры с типом данных Двоичные данные могут принимать также пути к файлам на диске и URL
+:::
+<br/>
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Путь      = "/New/pic.png";
+    Токен     = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Картинка  = "https://api.athenaeum.digital/test_data/picture.jpg";
+
+    КартинкаПуть = ПолучитьИмяВременногоФайла("png");
+    КопироватьФайл(Картинка, КартинкаПуть);
+
+    Результат = OPI_Dropbox.ЗагрузитьФайл(Токен, КартинкаПуть, Путь, Истина);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ЗагрузитьФайл \
+              --token "***" \
+              --file "C:\Users\Administrator\AppData\Local\Temp\2hih0yf4t4n.png" \
+              --path "/New/pic.png" \
+              --overwrite true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ЗагрузитьФайл ^
+              --token "***" ^
+              --file "C:\Users\Administrator\AppData\Local\Temp\2hih0yf4t4n.png" ^
+              --path "/New/pic.png" ^
+              --overwrite true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "name": "pic.png",
+ "path_lower": "/new/pic.png",
+ "path_display": "/New/pic.png",
+ "id": "id:kJU6-a-pT48AAAAAAAAcWQ",
+ "client_modified": "2024-10-08T17:44:58Z",
+ "server_modified": "2024-10-08T17:44:59Z",
+ "rev": "623fab23a7559bd841553",
+ "size": 2114023,
+ "is_downloadable": true,
+ "content_hash": "0f3b18c255b0f252bd326cacc04c15c3aa57bd6b8234adb65aa7bb2987a65492"
+}
+```

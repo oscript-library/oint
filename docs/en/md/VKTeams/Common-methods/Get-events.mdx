@@ -1,0 +1,81 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get events
+ Receives bot events in Polling mode
+
+
+
+`Function GetEvents(Val Token, Val LastID, Val Timeout = 0) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | LastID | --last | String, Number | &#x2714; | ID of the last event processed before this event |
+  | Timeout | --timeout | String, Number | &#x2716; | Connection hold time for Long Polling |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK Teams
+
+<br/>
+
+:::tip
+Method at API documentation: [GET /events/get](https://teams.vk.com/botapi/#/events/get_events_get)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "001.3501506236.091...";
+    LastID = 0;
+
+    For N = 1 To 5 Do // In real work - endless loop
+
+        Result = OPI_VKTeams.GetEvents(Token, LastID, 3);
+
+        Events = Result["events"];
+
+        // Event handling...
+
+        If Not Events.Count() = 0 Then
+
+            LastID = Events[Events.UBound()]["eventId"];
+
+        EndIf;
+
+    EndDo;
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vkteams GetEvents \
+             --token "***" \
+             --last 190 \
+             --timeout 3
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vkteams GetEvents ^
+             --token "***" ^
+             --last 190 ^
+             --timeout 3
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "events": [],
+ "ok": true
+}
+```

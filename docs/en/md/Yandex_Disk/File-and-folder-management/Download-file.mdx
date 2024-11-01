@@ -1,0 +1,59 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Download file
+ Downloads a file at the specified path
+
+
+
+`Function DownloadFile(Val Token, Val Path, Val SavePath = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Path | --path | String | &#x2714; | Path to the file for downloading |
+  | SavePath | --out | String | &#x2716; | File save path |
+
+  
+  Returns:  BinaryData,String - Binary data or file path when SavePath parameter is specified
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
+    Path  = "/d60811f5-8c4e-4580-9c23-df02e62f1a7a.png";
+
+    Result = OPI_YandexDisk.DownloadFile(Token, Path);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint yadisk DownloadFile \
+             --token "***" \
+             --path "/dbceabe3-6cd4-430a-adef-dec4d5eab7ee.png"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint yadisk DownloadFile ^
+             --token "***" ^
+             --path "/dbceabe3-6cd4-430a-adef-dec4d5eab7ee.png"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+NOT JSON: FF D8 FF E1 54 C1 45 78 69 66 00 00 49 49 2A 00 08 00 00 00 0B 00 0E 01 02 00 20 00 00 00 92 00 00 00 0F 01 02 00 05 00 00 00 B2 00 00 00 10 01 02 00 07 00 00 00 B8 00 00 00 12 01 03 00 01 00…
+```

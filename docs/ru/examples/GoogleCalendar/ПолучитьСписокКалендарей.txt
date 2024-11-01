@@ -1,4 +1,2 @@
-﻿  
-  Ответ = OPI_GoogleCalendar.ПолучитьСписокКалендарей(Токен); //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                 //Строка
-  
+﻿    Токен     = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Результат = OPI_GoogleCalendar.ПолучитьСписокКалендарей(Токен);

@@ -1,0 +1,83 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send image
+ Sends an image to a chat or channel
+
+
+
+`Function SendImage(Val Token, Val URL, Val UserID, Val SendingToChannel, Val Description = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | URL | --picture | String | &#x2714; | Image URL |
+  | UserID | --user | String, Number | &#x2714; | User ID. For channel > administrator, for bot > recipient |
+  | SendingToChannel | --ischannel | boolean | &#x2714; | Sending to channel or bot chat |
+  | Description | --description | String | &#x2716; | Image annotation |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Viber
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Description = "TestMessage";
+    URL         = "https://api.athenaeum.digital/test_data/picture.jpg";
+
+    UserID           = "d3jxe61Z4W73nmNkjYGgZg==";
+    Token            = "523b5b25ed27e6ec-fdf013e4...";
+    SendingToChannel = False;
+
+    Result = OPI_Viber.SendImage(Token, URL, UserID, SendingToChannel, Description);
+
+    UserID           = "tMNGhftyUPrB3r1lD+bT4g==";
+    Token            = "523b58ba82afffaa-7ef3b426...";
+    SendingToChannel = True;
+
+    Result = OPI_Viber.SendImage(Token, URL, UserID, SendingToChannel, Description);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint viber SendImage \
+             --token "***" \
+             --picture "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" \
+             --user "tMNGhftyUPrB3r1lD+bT4g==" \
+             --ischannel true \
+             --description "TestMessage"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint viber SendImage ^
+             --token "***" ^
+             --picture "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" ^
+             --user "tMNGhftyUPrB3r1lD+bT4g==" ^
+             --ischannel true ^
+             --description "TestMessage"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "status": 0,
+ "status_message": "ok",
+ "message_token": 6024682541026790805,
+ "chat_hostname": "SN-CHAT-04_",
+ "billing_status": 3
+}
+```

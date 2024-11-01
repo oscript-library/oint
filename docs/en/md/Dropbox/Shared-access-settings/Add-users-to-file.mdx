@@ -1,0 +1,82 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Add users to file
+ Defines access to the file for third-party users
+
+
+
+`Function AddUsersToFile(Val Token, Val FileID, Val EmailAddresses, Val ViewOnly = True) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | FileID | --fileid | String | &#x2714; | ID of the file to be accessed |
+  | EmailAddresses | --emails | String, Array of String | &#x2714; | List of email addresses of users being added |
+  | ViewOnly | --readonly | Boolean | &#x2716; | Prohibits file editing for the external user |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Email = "h5bk6ft62s@privaterelay.appleid.com";
+    File  = "kJU6-a-pT48AAAAAAAAABw";
+
+    Result = OPI_Dropbox.AddUsersToFile(Token, File, Email, False);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox AddUsersToFile \
+             --token "***" \
+             --fileid "kJU6-a-pT48AAAAAAAAABw" \
+             --emails "['h5bk6ft62s@privaterelay.appleid.com']" \
+             --readonly true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox AddUsersToFile ^
+             --token "***" ^
+             --fileid "kJU6-a-pT48AAAAAAAAABw" ^
+             --emails "['h5bk6ft62s@privaterelay.appleid.com']" ^
+             --readonly true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+[
+ {
+  "member": {
+   ".tag": "email",
+   "email": "h5bk6ft62s@privaterelay.appleid.com"
+  },
+  "result": {
+   ".tag": "success",
+   "success": {
+    ".tag": "editor"
+   }
+  },
+  "sckey_sha1": "ee2d8fd2cee052e103a52aa74be85bbebb8e6bb4",
+  "invitation_signature": [
+   "ee2d8fd2cee052e103a52aa74be85bbebb8e6bb4:ed7721b375882c806612d4056dad9f317cc98a22"
+  ]
+ }
+]
+```

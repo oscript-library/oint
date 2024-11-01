@@ -1,0 +1,5 @@
+﻿    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Email = "h5bk6ft62s@privaterelay.appleid.com";
+    File  = "kJU6-a-pT48AAAAAAAAABw";
+
+    Result = OPI_Dropbox.AddUsersToFile(Token, File, Email, False);

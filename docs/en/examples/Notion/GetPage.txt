@@ -1,0 +1,4 @@
+﻿    Token = "secret_9RsfMrRMqZwqp0Zl0B...";
+    Page  = "12682aa7-fc4e-8138-9f3e-f9e7e9aecee3";
+
+    Result = OPI_Notion.GetPage(Token, Page);

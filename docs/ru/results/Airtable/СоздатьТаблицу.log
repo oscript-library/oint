@@ -1,73 +1,71 @@
-﻿  
+﻿    {
+ "id": "tblhBYsKZ3w9qZzlj",
+ "name": "Тестовая таблица 2",
+ "description": "Новая таблица",
+ "primaryFieldId": "fld9iS1ofdALjC2yT",
+ "fields": [
   {
-  "id": "tblT64aWyrMUAbUmF",
-  "name": "Тестовая таблица 2",
-  "description": "Новая таблица",
-  "primaryFieldId": "fldoHs3kv6RLc8pjo",
-  "fields": [
-  {
-  "type": "number",
-  "options": {
-  "precision": 0
-  },
-  "id": "fldoHs3kv6RLc8pjo",
-  "name": "Номер"
-  },
-  {
-  "type": "richText",
-  "id": "fldzY5xRHDY7ClKxa",
-  "name": "Строковое"
+   "type": "number",
+   "options": {
+    "precision": 0
+   },
+   "id": "fld9iS1ofdALjC2yT",
+   "name": "Номер"
   },
   {
-  "type": "multipleAttachments",
-  "options": {
-  "isReversed": false
-  },
-  "id": "fldYHxxXPALKl3yHp",
-  "name": "Вложение"
+   "type": "richText",
+   "id": "fldcMrmBANDdi3wjL",
+   "name": "Строковое"
   },
   {
-  "type": "checkbox",
-  "options": {
-  "icon": "check",
-  "color": "yellowBright"
-  },
-  "id": "fldRUoggUObfqckXh",
-  "name": "Флажок"
+   "type": "multipleAttachments",
+   "options": {
+    "isReversed": false
+   },
+   "id": "fldQlnMrCcjrKoGvN",
+   "name": "Вложение"
   },
   {
-  "type": "date",
-  "options": {
-  "dateFormat": {
-  "name": "iso",
-  "format": "YYYY-MM-DD"
+   "type": "checkbox",
+   "options": {
+    "icon": "check",
+    "color": "yellowBright"
+   },
+   "id": "fldPKXJmkzAFRo41T",
+   "name": "Флажок"
+  },
+  {
+   "type": "date",
+   "options": {
+    "dateFormat": {
+     "name": "iso",
+     "format": "YYYY-MM-DD"
+    }
+   },
+   "id": "fldvgGvcjT2zaVAoa",
+   "name": "Дата"
+  },
+  {
+   "type": "phoneNumber",
+   "id": "fldxpWaIK8kfA0bdI",
+   "name": "Телефон"
+  },
+  {
+   "type": "email",
+   "id": "fldSIeymPzrNvPv5E",
+   "name": "Почта"
+  },
+  {
+   "type": "url",
+   "id": "fldFczkpBLZWvsRld",
+   "name": "Ссылка"
   }
-  },
-  "id": "fldvtwjapJM7s99nN",
-  "name": "Дата"
-  },
+ ],
+ "views": [
   {
-  "type": "phoneNumber",
-  "id": "flda4VY8dVd2mbqz9",
-  "name": "Телефон"
-  },
-  {
-  "type": "email",
-  "id": "fld8ZLKndqBIkT72s",
-  "name": "Почта"
-  },
-  {
-  "type": "url",
-  "id": "fldqjsCp1c2KaAS53",
-  "name": "Ссылка"
+   "id": "viw1FaP6XyTzHPsAD",
+   "name": "Grid view",
+   "type": "grid"
   }
-  ],
-  "views": [
-  {
-  "id": "viwX3vEGO5vB2Km4k",
-  "name": "Grid view",
-  "type": "grid"
-  }
-  ]
-  }
-  
+ ]
+}

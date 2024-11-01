@@ -1,0 +1,65 @@
+﻿---
+sidebar_position: 10
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create folder
+ Creates an empty directory at the selected path
+
+
+
+`Function CreateFolder(Val Token, Val Path) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Path | --path | String | &#x2714; | Target path for creating the directory |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Path  = "/New catalog";
+
+    Result = OPI_Dropbox.CreateFolder(Token, Path);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox CreateFolder \
+             --token "***" \
+             --path "/New catalog"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox CreateFolder ^
+             --token "***" ^
+             --path "/New catalog"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "metadata": {
+  "name": "New catalog",
+  "path_lower": "/new catalog",
+  "path_display": "/New catalog",
+  "id": "id:kJU6-a-pT48AAAAAAAAclw"
+ }
+}
+```

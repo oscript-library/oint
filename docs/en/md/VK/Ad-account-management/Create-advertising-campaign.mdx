@@ -1,0 +1,75 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create advertising campaign
+ Creates a campaign in the selected advertising account
+
+
+
+`Function CreateAdvertisingCampaign(Val AccountID, Val Name, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | AccountID | --cabinet | String, Number | &#x2714; | Advertising account ID |
+  | Name | --title | String | &#x2714; | Campaign name |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+  Parameters = GetVKParameters();
+  
+  AccountID = "1607951446";
+  Name = "New campaign";
+  
+  Result = OPI_VK.CreateAdvertisingCampaign(AccountID, Name, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk CreateAdvertisingCampaign \
+             --cabinet "1607951446" \
+             --title "New campaign" \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk CreateAdvertisingCampaign ^
+             --cabinet "1607951446" ^
+             --title "New campaign" ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": [
+  {
+   "id": 1030702431,
+   "error_code": 602,
+   "error_desc": "Some part of the request has not been completed"
+  }
+ ]
+}
+```

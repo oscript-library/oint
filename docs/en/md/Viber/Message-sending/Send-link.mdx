@@ -1,0 +1,79 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send link
+ Sends a URL with a preview to a chat or channel
+
+
+
+`Function SendLink(Val Token, Val URL, Val UserID, Val SendingToChannel) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | URL | --url | String | &#x2714; | SentLink |
+  | UserID | --user | String, Number | &#x2714; | User ID. For channel > administrator, for bot > recipient |
+  | SendingToChannel | --ischannel | Boolean | &#x2714; | Sending to channel or bot chat |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Viber
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL = "https://github.com/Bayselonarrend/OpenIntegrations";
+
+    UserID           = "d3jxe61Z4W73nmNkjYGgZg==";
+    Token            = "523b5b25ed27e6ec-fdf013e4...";
+    SendingToChannel = False;
+
+    Result = OPI_Viber.SendLink(Token, URL, UserID, SendingToChannel);
+
+    UserID           = "tMNGhftyUPrB3r1lD+bT4g==";
+    Token            = "523b58ba82afffaa-7ef3b426...";
+    SendingToChannel = True;
+
+    Result = OPI_Viber.SendLink(Token, URL, UserID, SendingToChannel);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint viber SendLink \
+             --token "***" \
+             --url "https://github.com/Bayselonarrend/OpenIntegrations" \
+             --user "tMNGhftyUPrB3r1lD+bT4g==" \
+             --ischannel true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint viber SendLink ^
+             --token "***" ^
+             --url "https://github.com/Bayselonarrend/OpenIntegrations" ^
+             --user "tMNGhftyUPrB3r1lD+bT4g==" ^
+             --ischannel true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "status": 0,
+ "status_message": "ok",
+ "message_token": 6024682655669700844,
+ "chat_hostname": "SN-CHAT-03_",
+ "billing_status": 3
+}
+```

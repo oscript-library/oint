@@ -142,7 +142,7 @@
     NewLine.Метод       = "GetObjectInformation";
     NewLine.МетодПоиска = "GETOBJECTINFORMATION";
     NewLine.Параметр    = "--detail";
-    NewLine.Описание    = "Add information fields for mediafiles (optional, def. val. - False)";
+    NewLine.Описание    = "Add information fields for mediafiles (optional, def. val. - No)";
     NewLine.Область     = "File and directory management";
 
 
@@ -173,7 +173,7 @@
     NewLine.Метод       = "GetListOfFolderFiles";
     NewLine.МетодПоиска = "GETLISTOFFOLDERFILES";
     NewLine.Параметр    = "--detail";
-    NewLine.Описание    = "Add information fields for mediafiles (optional, def. val. - False)";
+    NewLine.Описание    = "Add information fields for mediafiles (optional, def. val. - No)";
     NewLine.Область     = "File and directory management";
 
 
@@ -245,7 +245,7 @@
     NewLine.Метод       = "UploadFile";
     NewLine.МетодПоиска = "UPLOADFILE";
     NewLine.Параметр    = "--overwrite";
-    NewLine.Описание    = "Overwrite file in case of path conflicts (optional, def. val. - False)";
+    NewLine.Описание    = "Overwrite file in case of path conflicts (optional, def. val. - No)";
     NewLine.Область     = "File and directory management";
 
 
@@ -328,7 +328,7 @@
     NewLine.Метод       = "DeleteObject";
     NewLine.МетодПоиска = "DELETEOBJECT";
     NewLine.Параметр    = "--permanently";
-    NewLine.Описание    = "Delete object without the possibility of recovery (optional, def. val. - False)";
+    NewLine.Описание    = "Delete object without the possibility of recovery (optional, def. val. - No)";
     NewLine.Область     = "File and directory management";
 
 
@@ -348,7 +348,7 @@
     NewLine.Модуль      = "OPI_Dropbox";
     NewLine.Метод       = "CopyObject";
     NewLine.МетодПоиска = "COPYOBJECT";
-    NewLine.Параметр    = "--form";
+    NewLine.Параметр    = "--from";
     NewLine.Описание    = "Path to the original object";
     NewLine.Область     = "File and directory management";
 
@@ -379,7 +379,7 @@
     NewLine.Модуль      = "OPI_Dropbox";
     NewLine.Метод       = "MoveObject";
     NewLine.МетодПоиска = "MOVEOBJECT";
-    NewLine.Параметр    = "--form";
+    NewLine.Параметр    = "--from";
     NewLine.Описание    = "Path to the original object";
     NewLine.Область     = "File and directory management";
 
@@ -652,7 +652,7 @@
     NewLine.Параметр    = "--token";
     NewLine.Описание    = "Token";
     NewLine.Область     = "Shared access settings";
-    NewLine.ОписаниеМетода   = "Defines access to the file for an external user";
+    NewLine.ОписаниеМетода   = "Defines access to the file for third-party users";
 
 
     NewLine = CompositionTable.Add();
@@ -681,7 +681,7 @@
     NewLine.Метод       = "AddUsersToFile";
     NewLine.МетодПоиска = "ADDUSERSTOFILE";
     NewLine.Параметр    = "--readonly";
-    NewLine.Описание    = "Prohibits file editing for the external user (optional, def. val. - True)";
+    NewLine.Описание    = "Prohibits file editing for the external user (optional, def. val. - Yes)";
     NewLine.Область     = "Shared access settings";
 
 
@@ -722,7 +722,7 @@
     NewLine.Метод       = "AddUsersToFolder";
     NewLine.МетодПоиска = "ADDUSERSTOFOLDER";
     NewLine.Параметр    = "--readonly";
-    NewLine.Описание    = "Prohibits file editing for the external user (optional, def. val. - True)";
+    NewLine.Описание    = "Prohibits file editing for the external user (optional, def. val. - Yes)";
     NewLine.Область     = "Shared access settings";
 
 

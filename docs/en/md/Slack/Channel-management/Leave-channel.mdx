@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 10
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Leave channel
+ Removes the current bot from the channel
+
+
+
+`Function LeaveChannel(Val Token, Val Channel) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Channel | --channel | String | &#x2714; | Channel ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token   = "xoxb-6965308400114-696804637...";
+    Channel = "C07SY62EY12";
+
+    Result = OPI_Slack.LeaveChannel(Token, Channel);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack LeaveChannel \
+             --token "***" \
+             --channel "C07UZU8ASMN"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack LeaveChannel ^
+             --token "***" ^
+             --channel "C07UZU8ASMN"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true
+}
+```

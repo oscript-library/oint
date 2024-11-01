@@ -1,52 +1,48 @@
-﻿  
-  [
-  
-  {
-  "eventType": "default",
-  "attachments": [
-  {
-  "iconLink": "",
-  "title": "",
-  "fileUrl": "https://opi.neocities.org/assets/images/logo_long-e8fdcca6ff8b32e679ea49a1ccdd3eac.png"
-  },
-  {
-  "iconLink": "",
-  "title": "",
-  "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/logo.png?v1"
-  }
-  ],
-  "reminders": {
-  "useDefault": true
-  },
-  "sequence": 0,
-  "start": {
-  "timeZone": "Europe/Minsk",
-  "dateTime": "2024-02-20T05:31:12+03:00"
-  },
+﻿    [
+ {
+  "kind": "calendar#event",
+  "etag": "\"3456818530772000\"",
+  "id": "ukaeqabapn045fr78jnkr0m6dk",
+  "status": "confirmed",
+  "htmlLink": "https://www.google.com/calendar/event?eid=dWthZXFhYmFwbjA0NWZyNzhqbmtyMG02ZGsgZjhjYjI1MzUxNmNjOTkwZDFmMzZhN2QxNWNkYjgyNWZmZGMxNWM2Y2VlYWEyNWVmNzg5MjRkZTliZWVhM2E1NkBn",
+  "created": "2024-10-08T17:41:01Z",
+  "updated": "2024-10-08T17:41:05.386Z",
+  "summary": "Новое событие",
+  "description": "Новое описание события",
+  "location": "В офисе",
   "creator": {
-  "self": true,
-  "email": "bayselonarrend@gmail.com"
+   "email": "bayselonarrend@gmail.com"
+  },
+  "organizer": {
+   "email": "f8cb253516cc990d1f36a7d15cdb825ffdc15c6ceeaa25ef78924de9beea3a56@group.calendar.google.com",
+   "displayName": "Тестовый календарь",
+   "self": true
+  },
+  "start": {
+   "dateTime": "2024-10-08T23:41:01+03:00",
+   "timeZone": "Europe/Moscow"
   },
   "end": {
-  "timeZone": "Europe/Minsk",
-  "dateTime": "2024-02-20T06:31:12+03:00"
+   "dateTime": "2024-10-09T00:41:01+03:00",
+   "timeZone": "Europe/Moscow"
   },
-  "iCalUID": "o6dt8kbedrmu15o53pgbrrv35o@google.com",
-  "description": "Описание тестового события",
-  "updated": "2024-02-20T11:31:13.044Z",
-  "created": "2024-02-20T11:31:13.000Z",
-  "htmlLink": "https://www.google.com/calendar/event?eid=bzZkdDhrYmVkcm11MTVvNTNwZ2JycnYzNW8gYmF5c2Vsb25hcnJlbmRAbQ",
-  "location": "В оффисе",
-  "summary": "Новое событие",
-  "organizer": {
-  "self": true,
-  "email": "bayselonarrend@gmail.com"
+  "iCalUID": "ukaeqabapn045fr78jnkr0m6dk@google.com",
+  "sequence": 0,
+  "reminders": {
+   "useDefault": true
   },
-  "status": "confirmed",
-  "id": "o6dt8kbedrmu15o53pgbrrv35o",
-  "etag": "\"3416857346088000\"",
-  "kind": "calendar#event"
-  },
-  
-  ]
-  
+  "attachments": [
+   {
+    "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg",
+    "title": "Картинка1",
+    "iconLink": ""
+   },
+   {
+    "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg",
+    "title": "Картинка2",
+    "iconLink": ""
+   }
+  ],
+  "eventType": "default"
+ }
+]

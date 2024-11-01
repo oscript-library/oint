@@ -1,0 +1,58 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get user filter structure
+ Returns the field structure for filtering users in the FindUsers method
+
+
+
+`Function GetUserFilterStructure(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+
+  
+  Returns:  Structure of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Bitrix24.GetUserFilterStructure();
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint bitrix24 GetUserFilterStructure \
+             --empty false
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint bitrix24 GetUserFilterStructure ^
+             --empty false
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "NAME": "<name>",
+ "LAST_NAME": "<surname>",
+ "WORK_POSITION": "<position>",
+ "UF_DEPARTMENT_NAME": "<department name>",
+ "USER_TYPE": "<type: employee, extranet, email>"
+}
+```

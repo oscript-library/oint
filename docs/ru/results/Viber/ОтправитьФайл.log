@@ -1,8 +1,7 @@
-﻿  
-  {
-  "chat_hostname": "SN-CHAT-09_",
-  "message_token": 5925491906424759104,
-  "status_message": "ok",
-  "status": 0
-  }
-  
+﻿    {
+ "status": 0,
+ "status_message": "ok",
+ "message_token": 6024493484262966074,
+ "chat_hostname": "SN-CHAT-01_",
+ "billing_status": 3
+}

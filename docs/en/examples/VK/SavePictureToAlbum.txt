@@ -1,0 +1,13 @@
+﻿    Parameters       = GetVKParameters();
+    ImageDescription = "AutoTestImage";
+    AlbumID          = "306203084";
+
+    Image = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Path to file or Binary Data
+    TFN   = GetTempFileName("png");
+    CopyFile(Image, TFN);
+
+    Image = New BinaryData(TFN);
+
+    Result = OPI_VK.SaveImageToAlbum(AlbumID, Image, ImageDescription, Parameters);
+
+    Result = OPI_VK.SaveImageToAlbum(AlbumID, TFN, ImageDescription, Parameters);

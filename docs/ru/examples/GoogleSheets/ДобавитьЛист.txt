@@ -1,7 +1,5 @@
-﻿  
-  Книга        = "1Pu07Y5UiGVfW4fqfP7tcSQtdSX_2wdm2Ih23zlxJJwc";
-  Наименование = "Тестовый лист";
-  
-  Ответ = OPI_GoogleSheets.ДобавитьЛист(Токен, Книга, Наименование); //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                        //JSON строка
-  
+﻿    Токен        = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Книга        = "1fktk0k_rOszr4c3t89Z1KXXSsRWPU0fFPgLImiN-MzI";
+    Наименование = "Тестовый лист";
+
+    Результат = OPI_GoogleSheets.ДобавитьЛист(Токен, Книга, Наименование);

@@ -1,0 +1,77 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить список тегов
+ Получает список тегов выбранных файлов
+
+
+
+`Функция ПолучитьСписокТегов(Знач Токен, Знач Пути) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Пути | --paths | Строка, Массив Из Строка | &#x2714; | Путь или набору путей к файлам |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+
+    МассивПутей = Новый Массив;
+    МассивПутей.Добавить("/New/Dogs.mp3");
+    МассивПутей.Добавить("/New/mydoc.docx");
+
+    Результат = OPI_Dropbox.ПолучитьСписокТегов(Токен, МассивПутей);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ПолучитьСписокТегов \
+              --token "***" \
+              --paths "/New/mydoc.docx"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ПолучитьСписокТегов ^
+              --token "***" ^
+              --paths "/New/mydoc.docx"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "paths_to_tags": [
+  {
+   "path": "/New/Dogs.mp3",
+   "tags": []
+  },
+  {
+   "path": "/New/mydoc.docx",
+   "tags": [
+    {
+     ".tag": "user_generated_tag",
+     "tag_text": "важное"
+    }
+   ]
+  }
+ ]
+}
+```

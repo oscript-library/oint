@@ -1,5 +1,4 @@
-﻿  
-  Идентификатор = "1dg_MwwwPSPYT0p3y-8dvGWoapbwaaaaa";
-  
-  Ответ = OPI_GoogleDrive.УдалитьОбъект(Токен, Идентификатор);  //Соответствие
-  
+﻿    Токен         = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Идентификатор = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+
+    Результат = OPI_GoogleDrive.УдалитьОбъект(Токен, Идентификатор);

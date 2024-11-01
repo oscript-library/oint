@@ -1,0 +1,70 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create text tweet
+ Creates a tweet without attachments
+
+
+
+`Function CreateTextTweet(Val Text, Val Parameters = "") ExportReturn CreateCustomTweet(Text, , , , Parameters);EndFunction`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Text | --text | String | &#x2714; | Tweet text |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization data. See GetStandardParameters |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Twitter
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetTwitterAuthData();
+    Text       = "TestTweet" + String(New UUID);
+
+    Result = OPI_Twitter.CreateTextTweet(Text, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreateTextTweet \
+             --text "TestTweetd87bb863-8fec-4d35-ae77-cd99ac068bb1" \
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreateTextTweet ^
+             --text "TestTweetd87bb863-8fec-4d35-ae77-cd99ac068bb1" ^
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "data": {
+  "edit_history_tweet_ids": [
+   "1843891450397839870"
+  ],
+  "text": "TestTweeteea716eb-0e64-4c2d-b9c9-fb3cca5c6c4e",
+  "id": "1843891450397839870"
+ }
+}
+```

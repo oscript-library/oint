@@ -1,0 +1,62 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить событие
+ Удаляет событие по ID
+
+
+
+`Функция УдалитьСобытие(Знач Токен, Знач Календарь, Знач Событие) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Календарь | --calendar | Строка | &#x2714; | ID календаря |
+  | Событие | --event | Строка | &#x2714; | ID события |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен     = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Календарь = "aed9a7a5ff01b42e80462afcfc08037e289b1a4dfb07820f5d4e2885e8ccd68e@group.calendar.google.com";
+    Событие   = "hcqslmklah35bb514mtfaf9p50";
+
+    Результат = OPI_GoogleCalendar.УдалитьСобытие(Токен, Календарь, Событие);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gcalendar УдалитьСобытие \
+              --token "***" \
+              --calendar "556214a488905a8a339a532d3fba9e1a0f9bd147dd4d16fdb0541baf4e0180b5@group.calendar.google.com" \
+              --event "ojqsuttimtddck36up67qc4qik"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gcalendar УдалитьСобытие ^
+              --token "***" ^
+              --calendar "556214a488905a8a339a532d3fba9e1a0f9bd147dd4d16fdb0541baf4e0180b5@group.calendar.google.com" ^
+              --event "ojqsuttimtddck36up67qc4qik"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+null
+```

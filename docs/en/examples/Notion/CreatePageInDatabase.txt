@@ -1,0 +1,21 @@
+﻿    Token  = "secret_9RsfMrRMqZwqp0Zl0B...";
+    Base   = "12682aa7-fc4e-81c0-bdcd-c2e2dbfd727d";
+    Image_ = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Binary Data or Path to file
+
+    Image = New Map;
+    Image.Insert("Logo", Image_);
+
+    Properties = New Map;
+    Properties.Insert("Name"         , "LLC Vector");
+    Properties.Insert("Description"  , "OurFirstClient");
+    Properties.Insert("Number"       , 1);
+    Properties.Insert("Status"       , "Regular");
+    Properties.Insert("CreationDate" , OPI_Tools.GetCurrentDate());
+    Properties.Insert("Image"        , Image);
+    Properties.Insert("Active"       , True);
+    Properties.Insert("Website"      , "https://vector.ru");
+    Properties.Insert("Email"        , "mail@vector.ru");
+    Properties.Insert("Phone"        , "88005553535");
+    Properties.Insert("Status"       , "New");
+
+    Result = OPI_Notion.CreatePageInDatabase(Token, Base, Properties);

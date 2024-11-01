@@ -1,0 +1,85 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create customer refund
+ Processes customer returns for online store orders
+
+
+
+`Function CreateCustomerRefund(Val Token, Val UUID, Val Tariff, Val TestAPI = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Auth token |
+  | UUID | --uuid | String | &#x2714; | Order UUID |
+  | Tariff | --tariff | Number | &#x2714; | Tariff code (from those available under the contract) |
+  | TestAPI | --testapi | Boolean | &#x2716; | Flag to use test API for requests |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from CDEK
+
+<br/>
+
+:::tip
+This method is used if the direct order was delivered by CDEK and the recipient wants to return it in full
+
+ If the order was delivered by another service, or you need to return not all items, you must use the CreateOrder method with is_client_return = true
+
+ Method at API documentation: [Registration of refusal](https://api-docs.cdek.ru/55327686.html)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3MzAyNzQyOTksImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
+    UUID   = "9c3c739b-a092-4926-94a3-b38e6be42394";
+    Tariff = 139;
+
+    Result = OPI_CDEK.CreateCustomerRefund(Token, UUID, Tariff, True);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint cdek CreateCustomerRefund \
+             --token "***" \
+             --uuid "531f89d4-ce21-4b3e-adc6-a60b9d51118e" \
+             --tariff 139 \
+             --testapi "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint cdek CreateCustomerRefund ^
+             --token "***" ^
+             --uuid "531f89d4-ce21-4b3e-adc6-a60b9d51118e" ^
+             --tariff 139 ^
+             --testapi "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "entity": {
+  "uuid": "a93fd1b1-55b3-4033-a52a-d2df7bb6b469"
+ },
+ "requests": [
+  {
+   "request_uuid": "25763491-0de1-4290-bd12-13079abb6223",
+   "type": "CREATE_CLIENT_RETURN",
+   "date_time": "2024-10-21T21:27:52+03:00",
+   "state": "ACCEPTED"
+  }
+ ],
+ "related_entities": []
+}
+```

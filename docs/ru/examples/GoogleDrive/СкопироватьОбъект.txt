@@ -1,8 +1,6 @@
-﻿  
-  НовоеИмя          = "Скопированный файл.jpeg";
-  НовоеРасположение = "1603PU_Hrkvj4HeFJKYSVxZJDRoGvd3SJ";
-  Идентификатор     = "1F8pfXPgltiOG2fPv88uStwegYj1tRoFk";
-  
-  Ответ = OPI_GoogleDrive.СкопироватьОбъект(Токен, Идентификатор, НовоеИмя, НовоеРасположение)  //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                                                   //Строка
-  
+﻿    Токен         = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Идентификатор = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+    НовоеИмя      = "Скопированный файл.jpeg";
+    НовыйРодитель = "root";
+
+    Результат = OPI_GoogleDrive.СкопироватьОбъект(Токен, Идентификатор, НовоеИмя, НовыйРодитель);

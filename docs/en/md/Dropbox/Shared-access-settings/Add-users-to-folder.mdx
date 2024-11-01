@@ -1,0 +1,65 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Add users to folder
+ Grants external users access to the directory
+
+
+
+`Function AddUsersToFolder(Val Token, Val FolderID, Val EmailAddresses, Val ViewOnly = True) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | FolderID | --folder | String | &#x2714; | ID of the public catalog (shared folder ID) |
+  | EmailAddresses | --emails | String, Array of String | &#x2714; | List of email addresses of users being added |
+  | ViewOnly | --readonly | Boolean | &#x2716; | Prohibits file editing for the external user |
+
+  
+  Returns:  Undefined - empty response
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Email  = "h5bk6ft62s@privaterelay.appleid.com";
+    Folder = "11861101505"; // shared_folder_id
+
+    Result = OPI_Dropbox.AddUsersToFolder(Token, Folder, Email, False);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox AddUsersToFolder \
+             --token "***" \
+             --folder "11905800481" \
+             --emails "['h5bk6ft62s@privaterelay.appleid.com']" \
+             --readonly true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox AddUsersToFolder ^
+             --token "***" ^
+             --folder "11905800481" ^
+             --emails "['h5bk6ft62s@privaterelay.appleid.com']" ^
+             --readonly true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{}
+```

@@ -1,23 +1,21 @@
-﻿  
+﻿    {
+ "kind": "drive#commentList",
+ "comments": [
   {
-  "comments": [
-  {
-  "content": "Новый комментарий",
-  "htmlContent": "Новый комментарий",
-  "author": {
-  "photoLink": "//lh3.googleusercontent.com/a/ACg8ocLx8JGurt0UjXFwwTiB6ZoDPWslW1EnfCTahrwrIllM6Q=s50-c-k-no",
-  "me": true,
-  "kind": "drive#user",
-  "displayName": "Антон Титовец"
-  },
-  "replies": [],
-  "modifiedTime": "2024-03-17T12:53:45.469Z",
-  "createdTime": "2024-03-17T12:53:45.469Z",
-  "kind": "drive#comment",
-  "deleted": false,
-  "id": "AAABI3NNNAY"
+   "id": "AAABW19Pq0I",
+   "kind": "drive#comment",
+   "createdTime": "2024-10-08T17:42:33.807Z",
+   "modifiedTime": "2024-10-08T17:42:33.807Z",
+   "replies": [],
+   "author": {
+    "displayName": "Антон Титовец",
+    "kind": "drive#user",
+    "me": true,
+    "photoLink": "//lh3.googleusercontent.com/a/ACg8ocKYttNv2CZ-cTTuE90Zmht_PwnGc0YnjM1IUllXsTVORfZFVPU=s50-c-k-no"
+   },
+   "deleted": false,
+   "htmlContent": "Текст комментария",
+   "content": "Текст комментария"
   }
-  ],
-  "kind": "drive#commentList"
-  }
-  
+ ]
+}

@@ -32,6 +32,7 @@
 // BSLLS:UnreachableCode-off
 // BSLLS:CommentedCode-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:NumberOfParams-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -45,143 +46,193 @@
 #Region DataRetrievalAndSettings
 
 // Get bot information
-// Executes the /getMe request, returning basic bot information: name, id, ability to add the bot to groups, etc..
-// 
+// Executes the request, returning basic bot information: name, id, ability to add the bot to groups, etc..
+//
+// Note
+// Method at API documentation: [getMe](@core.telegram.org/bots/api#getme)
+//
 // Parameters:
 // Token - String - Bot token - token
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function GetBotInformation(Val Token) Export
 
     OPI_TypeConversion.GetLine(Token);
-    
-    URL = "api.telegram.org/bot" + Token + "/getMe";
+
+    URL      = "api.telegram.org/bot" + Token + "/getMe";
     Response = OPI_Tools.Get(URL);
-    
+
     Return Response;
 
 EndFunction
 
 // Get updates
-// Executes a request /getUpdates, returning information about bot events. Used in polling mode
+// Executes a request, returning information about bot events. Used in polling mode
+//
+// Note
+// Method at API documentation: [getUpdates](@core.telegram.org/bots/api#getupdates)
 //
 // Parameters:
 // Token - String - Bot token - token
 // Timeout - String, Number - Waiting time for new events - timeout
 // Offset - String, Number - Offset in the list of received messages - offset
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function GetUpdates(Val Token, Val Timeout = 0, Val Offset = "") Export
 
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/getUpdates";
-    
+
     Parameters = New Structure;
     OPI_Tools.AddField("timeout", Timeout , "String", Parameters);
-    OPI_Tools.AddField("offset" , Offset, "String", Parameters);
-    
+    OPI_Tools.AddField("offset" , Offset  , "String", Parameters);
+
     Response = OPI_Tools.Get(URL, Parameters);
     Return Response;
 
 EndFunction
 
 // Set Webhook
-// Set webhook URL for bot event handling in webhook mode 
-//          
+// Set webhook URL for bot event handling in webhook mode
+//
+// Note
+// Method at API documentation: [setWebhook](@core.telegram.org/bots/api#setwebhook)
+//
 // Parameters:
 // Token - String - Bot token - token
 // URL - String - Request handling address from Telegram (with https:) - url
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SetWebhook(Val Token, Val URL) Export
 
     OPI_TypeConversion.GetLine(Token);
-    
+
     Parameters = New Structure;
     OPI_Tools.AddField("url", URL, "String", Parameters);
 
-    URL = "api.telegram.org/bot" + Token + "/setWebHook";
+    URL      = "api.telegram.org/bot" + Token + "/setWebHook";
     Response = OPI_Tools.Get(URL, Parameters);
-    
+
     Return Response;
 
 EndFunction
 
 // Delete webhook
 // Deletes the bot event handler URL for webhook operation
-// 
+//
+// Note
+// Method at API documentation: [deleteWebhook](@core.telegram.org/bots/api#deletewebhook)
+//
 // Parameters:
 // Token - String - Bot token - token
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function DeleteWebhook(Val Token) Export
 
     OPI_TypeConversion.GetLine(Token);
-    
-    URL = "api.telegram.org/bot" + Token + "/deleteWebHook";
+
+    URL      = "api.telegram.org/bot" + Token + "/deleteWebHook";
     Response = OPI_Tools.Get(URL);
-    
+
     Return Response;
 
 EndFunction
 
 // Download file
 // Download file from Telegram servers
-// 
+//
+// Note
+// Method at API documentation: [getFile](@core.telegram.org/bots/api#getfile)
+//
 // Parameters:
 // Token - String - Token - token
 // FileID - String - File ID for downloading - fileid
-// 
+//
 // Returns:
 // BinaryData - file's binary data
 Function DownloadFile(Val Token, Val FileID) Export
 
     Result = "result";
-    
-    OPI_TypeConversion.GetLine(Token); 
-    OPI_TypeConversion.GetLine(FileID);    
-            
+
+    OPI_TypeConversion.GetLine(Token);
+    OPI_TypeConversion.GetLine(FileID);
+
     Parameters = New Structure("file_id", FileID);
 
-    URL = "api.telegram.org/bot" + Token + "/getFile";
+    URL      = "api.telegram.org/bot" + Token + "/getFile";
     Response = OPI_Tools.Get(URL, Parameters);
-    
+
     Path = Response[Result]["file_path"];
-    
+
     If Not ValueIsFilled(Path) Then
-        Return Response;
+
+        Ready = False;
+
+        For N = 1 To 5 Do
+
+            OPI_Tools.Pause(N);
+
+            Response = OPI_Tools.Get(URL, Parameters);
+            Path     = Response[Result]["file_path"];
+
+            Ready = ValueIsFilled(Path);
+
+            If Ready Then
+                Break;
+            EndIf;
+
+        EndDo;
+
+        If Not Ready Then
+            Return Response;
+        EndIf;
+
     EndIf;
-    
-    URL = "api.telegram.org/file/bot" + Token + "/" + Path;
+
+    URL      = "api.telegram.org/file/bot" + Token + "/" + Path;
     Response = OPI_Tools.Get(URL, Parameters);
-    
-    Return Response;   
-    
+
+    Return Response;
+
 EndFunction
 
 // Process Telegram Mini App data
-// Processes TMA data and determines its validity
-// 
+// Processes Telegram Mini App data and determines its validity
+//
 // Parameters:
 // DataString - String - Query from Telegram.WebApp.initData
 // Token - String - Bot token
-// 
+//
 // Returns:
 // Map of String - Map of data with the result of verification in the passed field
 Function ProcessTMAData(Val DataString, Val Token) Export
 
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(DataString);
-    
-    DataString = DecodeString(DataString, StringEncodingMethod.URLencoding);
-    DataStructure = OPI_Tools.RequestParametersToMap(DataString);
+
+    If StrStartsWith(DataString, "?") Then
+        DataString = Right(DataString, StrLen(DataString) - 1);
+    EndIf;
+
+    EncodingString = OPI_Tools.RequestParametersToMap(DataString);
+    DataStructure  = New Map;
+
+    For Each DataElement In EncodingString Do
+
+        CurrentKey   = DecodeString(DataElement.Key, StringEncodingMethod.URLencoding);
+        CurrentValue = DecodeString(DataElement.Value, StringEncodingMethod.URLencoding);
+
+        DataStructure.Insert(CurrentKey, CurrentValue);
+
+    EndDo;
+
     KeyString = "WebAppData";
-    Hash = "";
+    Hash      = "";
     BinaryKey = GetBinaryDataFromString(KeyString);
 
     Result = OPI_Cryptography.HMACSHA256(BinaryKey, GetBinaryDataFromString(Token));
@@ -192,8 +243,8 @@ Function ProcessTMAData(Val DataString, Val Token) Export
 
     For Each Data In DataStructure Do
 
-        NewLine = TValue.Add();
-        NewLine.Key = Data.Key;
+        NewLine       = TValue.Add();
+        NewLine.Key   = Data.Key;
         NewLine.Value = Data.Value;
 
     EndDo;
@@ -201,11 +252,11 @@ Function ProcessTMAData(Val DataString, Val Token) Export
     TValue.Sort("Key");
 
     ReturnMapping = New Map;
-    DCS = "";
+    DCS           = "";
 
     For Each DataString In TValue Do
 
-        If DataString.Key <> "hash" Then
+        If DataString.Key <> "hash" And DataString.Key <> "cookie" Then
             DCS = DCS + DataString.Key + "=" + DataString.Value + Chars.LF;
             ReturnMapping.Insert(DataString.Key, DataString.Value);
         Else
@@ -214,12 +265,12 @@ Function ProcessTMAData(Val DataString, Val Token) Export
 
     EndDo;
 
-    DCS = Left(DCS, StrLen(DCS) - 1);
+    DCS       = Left(DCS, StrLen(DCS) - 1);
     Signature = OPI_Cryptography.HMACSHA256(Result, GetBinaryDataFromString(DCS));
 
     Final = GetHexStringFromBinaryData(Signature);
 
-    If Final = Upper(Hash) Then
+    If Final     = Upper(Hash) Then
         Response = True;
     Else
         Response = False;
@@ -237,39 +288,45 @@ EndFunction
 
 // Send text message
 // Sends a text message to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendMessage](@core.telegram.org/bots/api#sendmessage)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 // RepliedID - String, Number - Reply to message ID - reply
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendTextMessage(Val Token
-	, Val ChatID
-	, Val Text
-	, Val Keyboard = ""
-	, Val Markup = "Markdown"
-	, Val RepliedID = 0) Export
+    , Val ChatID
+    , Val Text
+    , Val Keyboard = ""
+    , Val Markup = "Markdown"
+    , Val RepliedID = 0) Export
 
-    OPI_TypeConversion.GetLine(Token);    
+    OPI_TypeConversion.GetLine(Token);
+    OPI_TypeConversion.GetLine(Text);
     OPI_Tools.ReplaceSpecialCharacters(Text, Markup);
-    
+
     String_ = "String";
-            
+
+    Text = DecodeString(Text, StringEncodingMethod.URLInURLEncoding);
+
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode" , Markup , String_ , Parameters);
-    OPI_Tools.AddField("text" , Text , String_ , Parameters);
-    OPI_Tools.AddField("reply_markup" , Keyboard , "FileString", Parameters);
-    OPI_Tools.AddField("reply_to_message_id", RepliedID, String_ , Parameters);
-    
+    OPI_Tools.AddField("parse_mode"         , Markup   , String_     , Parameters);
+    OPI_Tools.AddField("text"               , Text     , String_     , Parameters);
+    OPI_Tools.AddField("reply_markup"       , Keyboard , "FileString", Parameters);
+    OPI_Tools.AddField("reply_to_message_id", RepliedID, String_     , Parameters);
+
     AddChatIdentifier(ChatID, Parameters);
-    
-    URL = "api.telegram.org/bot" + Token + "/sendMessage";
-    Response = OPI_Tools.Get(URL, Parameters);
+
+    URL      = "api.telegram.org/bot" + Token + "/sendMessage";
+    Response = OPI_Tools.Post(URL, Parameters);
 
     Return Response;
 
@@ -277,23 +334,26 @@ EndFunction
 
 // Send image
 // Sends an image to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendPhoto](@core.telegram.org/bots/api#sendphoto)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// Image - BinaryData,String - Image file - picture
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// Image - BinaryData, String - Image file - picture
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendImage(Val Token
-	, Val ChatID
-	, Val Text
-	, Val Image
-	, Val Keyboard = ""
-	, Val Markup = "Markdown") Export
+    , Val ChatID
+    , Val Text
+    , Val Image
+    , Val Keyboard = ""
+    , Val Markup = "Markdown") Export
 
     Return SendFile(Token, ChatID, Text, Image, "photo", Keyboard, Markup);
 
@@ -301,23 +361,26 @@ EndFunction
 
 // Send video
 // Sends a video to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendVideo](@core.telegram.org/bots/api#sendvideo)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// Video - BinaryData,String - Video file - video
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// Video - BinaryData, String - Video file - video
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendVideo(Val Token
-	, Val ChatID
-	, Val Text
-	, Val Video
-	, Val Keyboard = ""
-	, Val Markup = "Markdown") Export
+    , Val ChatID
+    , Val Text
+    , Val Video
+    , Val Keyboard = ""
+    , Val Markup = "Markdown") Export
 
     Return SendFile(Token, ChatID, Text, Video, "video", Keyboard, Markup);
 
@@ -325,23 +388,26 @@ EndFunction
 
 // Send audio
 // Sends an audio file to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendAudio](@core.telegram.org/bots/api#sendaudio)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// Audio - BinaryData,String - Audio file - audio
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// Audio - BinaryData, String - Audio file - audio
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendAudio(Val Token
-	, Val ChatID
-	, Val Text
-	, Val Audio
-	, Val Keyboard = ""
-	, Val Markup = "Markdown") Export
+    , Val ChatID
+    , Val Text
+    , Val Audio
+    , Val Keyboard = ""
+    , Val Markup = "Markdown") Export
 
     Return SendFile(Token, ChatID, Text, Audio, "audio", Keyboard, Markup);
 
@@ -349,25 +415,28 @@ EndFunction
 
 // Send document
 // Sends a document to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendDocument](@core.telegram.org/bots/api#senddocument)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// Document - BinaryData,String - Document file - doc
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// Document - BinaryData, String - Document file - doc
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 // FileName - String - Custom displayed file name with extension, if necessary - filename
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendDocument(Val Token
-	, Val ChatID
-	, Val Text
-	, Val Document
-	, Val Keyboard = ""
-	, Val Markup = "Markdown"
-	, Val FileName = "") Export
+    , Val ChatID
+    , Val Text
+    , Val Document
+    , Val Keyboard = ""
+    , Val Markup = "Markdown"
+    , Val FileName = "") Export
 
     Return SendFile(Token, ChatID, Text, Document, "document", Keyboard, Markup, FileName);
 
@@ -375,23 +444,26 @@ EndFunction
 
 // Send GIF
 // Sends a GIF to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendAnimation](@core.telegram.org/bots/api#sendanimation)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// GIF - BinaryData,String - GIF file - gif
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// GIF - BinaryData, String - GIF file - gif
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendGif(Val Token
-	, Val ChatID
-	, Val Text
-	, Val GIF
-	, Val Keyboard = ""
-	, Val Markup = "Markdown") Export
+    , Val ChatID
+    , Val Text
+    , Val GIF
+    , Val Keyboard = ""
+    , Val Markup = "Markdown") Export
 
     Return SendFile(Token, ChatID, Text, GIF, "animation", Keyboard, Markup);
 
@@ -399,51 +471,53 @@ EndFunction
 
 // Send media group
 // Sends a set of files to a chat or channel. Media types: audio, document, photo, video
-// 
+//
+// Note
+// Method at API documentation: [sendMediaGroup](@core.telegram.org/bots/api#sendmediagroup)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// FileMapping - Map of String - File collection - media - File JSON or path to .json
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
+// FileMapping - Map of KeyAndValue - File collection: Key > File, Value > Media Type - media
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendMediaGroup(Val Token
-	, Val ChatID
-	, Val Text
-	, Val FileMapping
-	, Val Keyboard = ""
-	, Val Markup = "Markdown") Export
-    
+    , Val ChatID
+    , Val Text
+    , Val FileMapping
+    , Val Keyboard = ""
+    , Val Markup = "Markdown") Export
+
     // FileMapping
     // Key - File, Value - Type
     // Types: audio, document, photo, video
     // Different types cannot be mixed!
 
-	String_ = "String";
-	
+    String_ = "String";
+
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(ChatID);
     OPI_TypeConversion.GetCollection(FileMapping);
-    
+
     OPI_Tools.ReplaceSpecialCharacters(Text, Markup);
 
-    URL = "api.telegram.org/bot" + Token + "/sendMediaGroup";
-    FileStructure = New Structure;
-    Media = New Array;
+    URL        = "api.telegram.org/bot" + Token + "/sendMediaGroup";
+    Media      = New Array;
     Parameters = New Structure;
-    
+
     AddChatIdentifier(ChatID, Parameters);
-    FormMediaArray(FileMapping, Text, FileStructure, Media);
-    
-    OPI_Tools.AddField("parse_mode" , Markup , String_ , Parameters);
-    OPI_Tools.AddField("caption" , Text , String_ , Parameters);
-    OPI_Tools.AddField("media" , Media , String_ , Parameters);
+    ConvertFilesToMedia(FileMapping, Text, Media);
+
+    OPI_Tools.AddField("parse_mode"  , Markup  , String_     , Parameters);
+    OPI_Tools.AddField("caption"     , Text    , String_     , Parameters);
+    OPI_Tools.AddField("media"       , Media   , String_     , Parameters);
     OPI_Tools.AddField("reply_markup", Keyboard, "FileString", Parameters);
 
-    Response = OPI_Tools.PostMultipart(URL, Parameters, FileStructure, "mixed");
+    Response = OPI_Tools.PostMultipart(URL, Parameters, FileMapping, "mixed");
 
     Return Response;
 
@@ -451,30 +525,33 @@ EndFunction
 
 // Send location
 // Sends location by geographic latitude and longitude to a chat or channel
-// 
+//
+// Note
+// Method at API documentation: [sendLocation](@core.telegram.org/bots/api#sendlocation)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Latitude - String, Number - Geographic latitude - lat
 // Longitude - String, Number - Geographic longitude - long
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
-// 
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendLocation(Val Token, Val ChatID, Val Latitude, Val Longitude, Val Keyboard = "") Export
 
-	String_ = "String";
+    String_ = "String";
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(ChatID);
-    
+
     URL = "api.telegram.org/bot" + Token + "/sendLocation";
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode" , "Markdown" , String_ , Parameters);
-    OPI_Tools.AddField("latitude" , Latitude , String_ , Parameters);
-    OPI_Tools.AddField("longitude" , Longitude , String_ , Parameters);
-    OPI_Tools.AddField("reply_markup", Keyboard , "FileString", Parameters);
-    
+    OPI_Tools.AddField("parse_mode"  , "Markdown" , String_     , Parameters);
+    OPI_Tools.AddField("latitude"    , Latitude   , String_     , Parameters);
+    OPI_Tools.AddField("longitude"   , Longitude  , String_     , Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard   , "FileString", Parameters);
+
     AddChatIdentifier(ChatID, Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
@@ -485,32 +562,35 @@ EndFunction
 
 // Send contact
 // Sends a contact with name and phone number
-// 
+//
+// Note
+// Method at API documentation: [sendContact](@core.telegram.org/bots/api#sendcontact)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Name - String - Contact name - name
 // LastName - String - Contact last name - surname
 // Phone - String - Contact phone number - phone
-// Keyboard - String - See GenerateKeyboardFromArray - keyboard - Keyboard JSON or path to .json
-// 
+// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendContact(Val Token, Val ChatID, Val Name, Val LastName, Val Phone, Val Keyboard = "") Export
 
-	String_ = "String";
+    String_ = "String";
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(ChatID);
-    
+
     URL = "api.telegram.org/bot" + Token + "/sendContact";
 
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode" , "Markdown", String_ , Parameters);
-    OPI_Tools.AddField("first_name" , Name , String_ , Parameters);
-    OPI_Tools.AddField("last_name" , LastName , String_ , Parameters);
-    OPI_Tools.AddField("phone_number", Phone , String_ , Parameters);
-    OPI_Tools.AddField("reply_markup", Keyboard, "FileString", Parameters);
-    
+    OPI_Tools.AddField("parse_mode"  , "Markdown", String_     , Parameters);
+    OPI_Tools.AddField("first_name"  , Name      , String_     , Parameters);
+    OPI_Tools.AddField("last_name"   , LastName  , String_     , Parameters);
+    OPI_Tools.AddField("phone_number", Phone     , String_     , Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard  , "FileString", Parameters);
+
     AddChatIdentifier(ChatID, Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
@@ -521,16 +601,19 @@ EndFunction
 
 // Send poll
 // Sends a poll with answer options
-// 
+//
+// Note
+// Method at API documentation: [sendPoll](@core.telegram.org/bots/api#sendpoll)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Question - String - Poll question - question
 // AnswersArray - Array of String - Array of answer options - options
-// Anonymous - Boolean - Poll anonymity - anonymous
-// 
+// Anonymous - Boolean - Survey anonymity flag - anonymous
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function SendPoll(Val Token, Val ChatID, Val Question, Val AnswersArray, Val Anonymous = True) Export
 
     OPI_TypeConversion.GetLine(Token);
@@ -538,15 +621,15 @@ Function SendPoll(Val Token, Val ChatID, Val Question, Val AnswersArray, Val Ano
     OPI_TypeConversion.GetCollection(AnswersArray);
 
     OPI_TypeConversion.GetBoolean(Anonymous);
-    
+
     URL = "api.telegram.org/bot" + Token + "/sendPoll";
 
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode", "Markdown" , "String" , Parameters);
-    OPI_Tools.AddField("question" , Question , "String" , Parameters);
-    OPI_Tools.AddField("options" , AnswersArray, "FileString", Parameters);
-    
-    Parameters.Insert("is_anonymous", ?(Anonymous, 1, 0));   
+    OPI_Tools.AddField("parse_mode", "Markdown"  , "String"    , Parameters);
+    OPI_Tools.AddField("question"  , Question    , "String"    , Parameters);
+    OPI_Tools.AddField("options"   , AnswersArray, "FileString", Parameters);
+
+    Parameters.Insert("is_anonymous", ?(Anonymous, 1, 0));
     AddChatIdentifier(ChatID, Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
@@ -557,30 +640,33 @@ EndFunction
 
 // Forward message
 // Forwards a message between chats or within a chat
-// 
+//
+// Note
+// Method at API documentation: [forwardMessage](@core.telegram.org/bots/api#forwardmessage)
+//
 // Parameters:
 // Token - String - Bot token - token
 // OriginalID - String, Number - Original message ID - message
 // FromID - String, Number - Chat ID of the original message - from
 // ToID - String, Number - Target chat ID or ChatID*TopicID - to
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function ForwardMessage(Val Token, Val OriginalID, Val FromID, Val ToID) Export
 
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(OriginalID);
     OPI_TypeConversion.GetLine(FromID);
     OPI_TypeConversion.GetLine(ToID);
-    
+
     URL = "api.telegram.org/bot" + Token + "/forwardMessage";
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("from_chat_id", FromID , "String", Parameters);
-    OPI_Tools.AddField("message_id" , OriginalID, "String", Parameters);
+    OPI_Tools.AddField("from_chat_id", FromID    , "String", Parameters);
+    OPI_Tools.AddField("message_id"  , OriginalID, "String", Parameters);
 
     AddChatIdentifier(ToID, Parameters);
-    
+
     Response = OPI_Tools.Get(URL, Parameters);
 
     Return Response;
@@ -589,12 +675,15 @@ EndFunction
 
 // Generate keyboard from array of buttons
 // Generates a simple JSON keyboard from an array of buttons for a message or bottom panel
-// 
+//
+// Note
+// About keyboards in the API documentation: [InlineKeyboardMarkup](@core.telegram.org/bots/api#inlinekeyboardmarkup)
+//
 // Parameters:
-// ButtonArray - Array of String - Array of buttons - buttons 
+// ButtonArray - Array of String - Array of buttons - buttons
 // UnderMessage - Boolean - Keyboard under the message or on the bottom panel - under
 // OneByOne - Boolean - True > buttons are displayed in a column, False > in a row - column
-// 
+//
 // Returns:
 // String - Keyboard JSON
 Function FormKeyboardFromButtonArray(Val ButtonArray
@@ -604,7 +693,7 @@ Function FormKeyboardFromButtonArray(Val ButtonArray
     OPI_TypeConversion.GetBoolean(UnderMessage);
     OPI_TypeConversion.GetBoolean(OneByOne);
     OPI_TypeConversion.GetCollection(ButtonArray);
-    
+
     If OneByOne Then
         Strings = CreateTallKeyboard(ButtonArray);
     Else
@@ -612,7 +701,7 @@ Function FormKeyboardFromButtonArray(Val ButtonArray
     EndIf;
 
     If UnderMessage Then
-        ParameterStructure = New Structure("inline_keyboard,rows", Strings, 1);
+        ParameterStructure = New Structure("inline_keyboard,rows"    , Strings, 1);
     Else
         ParameterStructure = New Structure("keyboard,resize_keyboard", Strings, True);
     EndIf;
@@ -629,25 +718,28 @@ EndFunction
 
 // Ban
 // Bans a user in the selected chat
-// 
+//
+// Note
+// Method at API documentation: [banChatMember](@core.telegram.org/bots/api#banchatmember)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // UserID - String, Number - Target user ID - user
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function Ban(Val Token, Val ChatID, Val UserID) Export
 
-	String_ = "String";
+    String_ = "String";
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/banChatMember";
 
     Parameters = New Structure;
     OPI_Tools.AddField("parse_mode", "Markdown" , String_, Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , String_, Parameters);
-    OPI_Tools.AddField("user_id" , UserID, String_, Parameters);
+    OPI_Tools.AddField("chat_id"   , ChatID     , String_, Parameters);
+    OPI_Tools.AddField("user_id"   , UserID     , String_, Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
 
@@ -657,26 +749,29 @@ EndFunction
 
 // Unban
 // Unbans a previously banned user
-// 
+//
+// Note
+// Method at API documentation: [unbanChatMember](@core.telegram.org/bots/api#unbanchatmember)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // UserID - String, Number - Target user ID - user
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function Unban(Val Token, Val ChatID, Val UserID) Export
 
-	String_ = "String";
+    String_ = "String";
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/unbanChatMember";
 
-    Parameters = New Structure;   
-    OPI_Tools.AddField("parse_mode" , "Markdown" , String_ , Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , String_ , Parameters);
-    OPI_Tools.AddField("user_id" , UserID, String_ , Parameters);
-    OPI_Tools.AddField("only_if_banned", False , "Boolean", Parameters);
+    Parameters = New Structure;
+    OPI_Tools.AddField("parse_mode"    , "Markdown" , String_  , Parameters);
+    OPI_Tools.AddField("chat_id"       , ChatID     , String_  , Parameters);
+    OPI_Tools.AddField("user_id"       , UserID     , String_  , Parameters);
+    OPI_Tools.AddField("only_if_banned", False      , "Boolean", Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
 
@@ -686,34 +781,37 @@ EndFunction
 
 // Create invitation link
 // Creates a link for joining a closed chat
-// 
+//
+// Note
+// Method at API documentation: [createChatInviteLink](@core.telegram.org/bots/api#createchatinvitelink)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Title - String - Invitation title - title
 // ExpirationDate - Date - Link expiration date (permanent if not specified) - expire
 // UserLimit - Number - User limit (infinite if not specified) - limit
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function CreateInvitationLink(Val Token
     , Val ChatID
     , Val Title = ""
     , Val ExpirationDate = ""
     , Val UserLimit = 0) Export
 
-	String_ = "String";
+    String_ = "String";
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/createChatInviteLink";
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode" , "Markdown" , String_ , Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , String_ , Parameters);
-    OPI_Tools.AddField("name" , Title , String_ , Parameters);
-    OPI_Tools.AddField("member_limit" , UserLimit, String_ , Parameters);
-    OPI_Tools.AddField("expire_date" , ExpirationDate , "Date" , Parameters);
-    
+    OPI_Tools.AddField("parse_mode"   , "Markdown"     , String_ , Parameters);
+    OPI_Tools.AddField("chat_id"      , ChatID         , String_ , Parameters);
+    OPI_Tools.AddField("name"         , Title          , String_ , Parameters);
+    OPI_Tools.AddField("member_limit" , UserLimit      , String_ , Parameters);
+    OPI_Tools.AddField("expire_date"  , ExpirationDate , "Date"  , Parameters);
+
     Response = OPI_Tools.Get(URL, Parameters);
 
     Return Response;
@@ -722,26 +820,29 @@ EndFunction
 
 // Pin message
 // Pins a message in the chat header
-// 
+//
+// Note
+// Method at API documentation: [pinChatMessage](@core.telegram.org/bots/api#pinchatmessage)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Target chat ID - chat
 // MessageID - String, Number - Target message ID - message
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function PinMessage(Val Token, Val ChatID, Val MessageID) Export
-    
+
     String_ = "String";
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/pinChatMessage";
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode" , "Markdown" , String_ , Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , String_ , Parameters);
-    OPI_Tools.AddField("message_id" , MessageID, String_ , Parameters);
-    OPI_Tools.AddField("disable_notification", False , "Boolean", Parameters);
+    OPI_Tools.AddField("parse_mode"          , "Markdown" , String_  , Parameters);
+    OPI_Tools.AddField("chat_id"             , ChatID     , String_  , Parameters);
+    OPI_Tools.AddField("message_id"          , MessageID  , String_  , Parameters);
+    OPI_Tools.AddField("disable_notification", False      , "Boolean", Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
 
@@ -751,25 +852,28 @@ EndFunction
 
 // Unpin message
 // Unpins a message in the chat header
-// 
+//
+// Note
+// Method at API documentation: [unpinChatMessage](@core.telegram.org/bots/api#unpinchatmessage)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID - chat
 // MessageID - String, Number - Target message ID - message
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function UnpinMessage(Val Token, Val ChatID, Val MessageID) Export
-    
+
     String_ = "String";
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/unpinChatMessage";
-    
+
     Parameters = New Structure;
     OPI_Tools.AddField("parse_mode", "Markdown" , String_, Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , String_, Parameters);
-    OPI_Tools.AddField("message_id", MessageID, String_, Parameters);
+    OPI_Tools.AddField("chat_id"   , ChatID     , String_, Parameters);
+    OPI_Tools.AddField("message_id", MessageID  , String_, Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
 
@@ -779,22 +883,25 @@ EndFunction
 
 // Get participant count
 // Gets the total number of chat participants
-// 
+//
+// Note
+// Method at API documentation: [getChatMemberCount](@core.telegram.org/bots/api#getchatmembercount)
+//
 // Parameters:
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID - chat
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function GetParticipantCount(Val Token, Val ChatID) Export
 
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/getChatMemberCount";
-    
+
     Parameters = New Structure;
     OPI_Tools.AddField("parse_mode", "Markdown" , "String", Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , "String", Parameters);
+    OPI_Tools.AddField("chat_id"   , ChatID     , "String", Parameters);
 
     Response = OPI_Tools.Get(URL, Parameters);
 
@@ -804,26 +911,29 @@ EndFunction
 
 // Delete message
 // Delete message from chat or channel
-// 
+//
+// Note
+// Method at API documentation: [deleteMessage](@core.telegram.org/bots/api#deletemessage)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Target chat ID - chat
 // MessageID - String, Number - ID of message to delete - message
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function DeleteMessage(Val Token, Val ChatID, Val MessageID) Export
-	
-	OPI_TypeConversion.GetLine(Token);
-	
-	URL = "api.telegram.org/bot" + Token + "/deleteMessage";
-	
-	Parameters = New Structure;
-	OPI_Tools.AddField("message_id", MessageID, "String", Parameters);
-	OPI_Tools.AddField("chat_id" , ChatID , "String", Parameters);
-	
-	Response = OPI_Tools.Get(URL, Parameters);
-	Return Response;
+
+    OPI_TypeConversion.GetLine(Token);
+
+    URL = "api.telegram.org/bot" + Token + "/deleteMessage";
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("message_id", MessageID, "String", Parameters);
+    OPI_Tools.AddField("chat_id"   , ChatID   , "String", Parameters);
+
+    Response = OPI_Tools.Get(URL, Parameters);
+    Return Response;
 
 EndFunction
 
@@ -833,206 +943,236 @@ EndFunction
 
 // Get avatar icon list
 // Gets the mapping of Emoji IDs for setting as forum theme icons
-// 
+//
+// Note
+// Method at API documentation: [getForumTopicIconStickers](@core.telegram.org/bots/api#getforumtopiciconstickers)
+//
 // Parameters:
 // Token - String - Token - token
-// 
+//
 // Returns:
 // Map Of KeyAndValue - Key > ID, Value > Emoji
 Function GetAvatarIconList(Val Token) Export
-    
+
     OPI_TypeConversion.GetLine(Token);
-    
-    Result = "result";
-    URL = "api.telegram.org/bot" + Token + "/getForumTopicIconStickers";     
-    Response = OPI_Tools.Get(URL);    
-    Icons = Response[Result];
-    
+
+    Result   = "result";
+    URL      = "api.telegram.org/bot" + Token + "/getForumTopicIconStickers";
+    Response = OPI_Tools.Get(URL);
+    Icons    = Response[Result];
+
     If Not ValueIsFilled(Icons) Then
-    	Return Response;
-    EndIf; 
-    
+        Return Response;
+    EndIf;
+
     Collection = New Map;
-    
+
     For Each Icon In Icons Do
         Collection.Insert(Icon["custom_emoji_id"], Icon["emoji"]);
     EndDo;
-       
+
     Return Collection;
 
 EndFunction
 
 // Create forum thread
 // Creates a new thread in the group with theme functionality enabled
-// 
+//
+// Note
+// Method at API documentation: [createForumTopic](@core.telegram.org/bots/api#createforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread creation chat ID - forum
 // Title - String - Thread title - title
 // IconID - String - See GetAvatarIconList - icon
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function CreateForumThread(Val Token, Val ChatID, Val Title, Val IconID = "") Export
-	
+
     Return ForumTopicManagement(Token, ChatID, Title, IconID);
-    
+
 EndFunction
 
 // Edit forum thread
 // Creates a new thread in the group with theme functionality enabled
-// 
+//
+// Note
+// Method at API documentation: [editForumTopic](@core.telegram.org/bots/api#editforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread creation chat ID - forum
 // ThreadID - String, Number - Thread ID - topic
 // Title - String - New title - title
 // IconID - String - See GetAvatarIconList - icon
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function EditForumTopic(Val Token
     , Val ChatID
     , Val ThreadID
     , Val Title = Undefined
-    , Val IconID = Undefined) Export   
-     
+    , Val IconID = Undefined) Export
+
     Return ForumTopicManagement(Token, ChatID, Title, IconID, ThreadID);
 EndFunction
 
 // Close forum thread
 // Closes the thread for new messages
-// 
+//
+// Note
+// Method at API documentation: [closeForumTopic](@core.telegram.org/bots/api#closeforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
 // ThreadID - String, Number - Thread ID - topic
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function CloseForumThread(Val Token, Val ChatID, Val ThreadID = "") Export
-	
-    Return ManageForumThreadState(Token, ChatID, 2, ThreadID);  
-      
+
+    Return ManageForumThreadState(Token, ChatID, 2, ThreadID);
+
 EndFunction
 
 // Open forum thread
 // Reopens a previously closed forum thread
-// 
+//
+// Note
+// Method at API documentation: [reopenForumTopic](@core.telegram.org/bots/api#reopenforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
 // ThreadID - String, Number - Thread ID - topic
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function OpenForumThread(Val Token, Val ChatID, Val ThreadID = "") Export
-	
-    Return ManageForumThreadState(Token, ChatID, 1, ThreadID); 
-       
+
+    Return ManageForumThreadState(Token, ChatID, 1, ThreadID);
+
 EndFunction
 
 // Delete forum thread
 // Deletes a forum thread
-// 
+//
+// Note
+// Method at API documentation: [deleteForumTopic](@core.telegram.org/bots/api#deleteforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
 // ThreadID - String, Number - Thread ID - topic
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function DeleteForumTopic(Val Token, Val ChatID, Val ThreadID) Export
-	
-    Return ManageForumThreadState(Token, ChatID, 3, ThreadID);   
-     
+
+    Return ManageForumThreadState(Token, ChatID, 3, ThreadID);
+
 EndFunction
 
 // Hide main forum thread
 // Hides the main forum thread
-// 
+//
+// Note
+// Method at API documentation: [hideGeneralForumTopic](@core.telegram.org/bots/api#hidegeneralforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function HideMainForumTopic(Val Token, Val ChatID) Export
-	
+
     Return ManageMainTopicVisibility(Token, ChatID, True);
-    
+
 EndFunction
 
 // Show main forum thread
 // Shows a previously hidden main forum thread
-// 
+//
+// Note
+// Method at API documentation: [unhideGeneralForumTopic](@core.telegram.org/bots/api#unhidegeneralforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function ShowMainForumTopic(Val Token, Val ChatID) Export
-	
+
     Return ManageMainTopicVisibility(Token, ChatID, False);
-    
+
 EndFunction
 
 // Edit main forum thread name
 // Edits the name of the main forum thread
-// 
+//
+// Note
+// Method at API documentation: [editGeneralForumTopic](@core.telegram.org/bots/api#editgeneralforumtopic)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
 // Title - String - New main thread name - title
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function EditMainForumTopicName(Val Token, Val ChatID, Val Title) Export
-    
+
     OPI_TypeConversion.GetLine(Token);
-    
+
     URL = "api.telegram.org/bot" + Token + "/editGeneralForumTopic";
-    
+
     Parameters = New Structure;
     OPI_Tools.AddField("chat_id", ChatID , "String", Parameters);
-    OPI_Tools.AddField("name" , Title, "String", Parameters);
-    
+    OPI_Tools.AddField("name"   , Title  , "String", Parameters);
+
     Response = OPI_Tools.Get(URL, Parameters);
-    
+
     Return Response;
 
 EndFunction
 
 // Clear thread's pinned messages list
 // Clears the list of pinned messages in the forum thread
-// 
+//
+// Note
+// Method at API documentation: [unpinAllForumTopicMessages](@core.telegram.org/bots/api#unpinallforumtopicmessages)
+//
 // Parameters:
 // Token - String - Token - token
 // ChatID - String, Number - Thread chat ID - forum
 // ThreadID - String, Number - Thread ID. Main if not filled - topic
-// 
+//
 // Returns:
-// Map Of KeyAndValue - Serialized JSON response from Telegram
+// Map Of KeyAndValue - serialized JSON response from Telegram
 Function ClearThreadPinnedMessagesList(Val Token, Val ChatID, Val ThreadID = "") Export
-    
+
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(ChatID);
     OPI_TypeConversion.GetLine(ThreadID);
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("chat_id" , ChatID, "String", Parameters);
+    OPI_Tools.AddField("chat_id"          , ChatID  , "String", Parameters);
     OPI_Tools.AddField("message_thread_id", ThreadID, "String", Parameters);
-    
+
     If ValueIsFilled(ThreadID) Then
         Method = "/unpinAllForumTopicMessages";
     Else
         Method = "/unpinAllGeneralForumTopicMessages";
     EndIf;
-        
-    URL = "api.telegram.org/bot" + Token + Method;
+
+    URL      = "api.telegram.org/bot" + Token + Method;
     Response = OPI_Tools.Get(URL, Parameters);
-    
+
     Return Response;
 
 EndFunction
@@ -1055,27 +1195,30 @@ Function SendFile(Val Token
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetLine(ChatID);
     OPI_TypeConversion.GetLine(View);
+    OPI_TypeConversion.GetLine(Text);
 
-    Extension = "";
-    Method = "";
-    
-    DetermineSendMethod(View, Method, Extension);
-    ConvertFileData(File, Extension, View);
     OPI_Tools.ReplaceSpecialCharacters(Text, Markup);
-    
-    FileName = ?(ValueIsFilled(FileName), View + "|" + FileName, View + Extension);
-    
+
+    If Not ValueIsFilled(FileName) Then
+        FileName = ConvertFileData(File, View, "");
+    Else
+        OPI_TypeConversion.GetBinaryData(File);
+    EndIf;
+
+    FileName = View + "|" + FileName;
+
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode" , Markup , "String" , Parameters);
-    OPI_Tools.AddField("caption" , Text , "String" , Parameters);
+    OPI_Tools.AddField("parse_mode"  , Markup  , "String"    , Parameters);
+    OPI_Tools.AddField("caption"     , Text    , "String"    , Parameters);
     OPI_Tools.AddField("reply_markup", Keyboard, "FileString", Parameters);
-    
+
     AddChatIdentifier(ChatID, Parameters);
 
     FileMapping = New Map;
     FileMapping.Insert(FileName, File);
 
-    URL = "api.telegram.org/bot" + Token + Method;
+    Method   = DetermineSendMethod(View);
+    URL      = "api.telegram.org/bot" + Token + Method;
     Response = OPI_Tools.PostMultipart(URL, Parameters, FileMapping, "mixed");
 
     Return Response;
@@ -1084,57 +1227,56 @@ EndFunction
 
 Function ForumTopicManagement(Val Token
     , Val ChatID
-    , Val Title = Undefined
-    , Val IconID = Undefined
+    , Val Title    = Undefined
+    , Val IconID   = Undefined
     , Val ThreadID = "")
-    
+
     String_ = "String";
     OPI_TypeConversion.GetLine(Token);
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("name" , Title, String_, Parameters);
-    OPI_Tools.AddField("chat_id" , ChatID , String_, Parameters);
-    OPI_Tools.AddField("icon_custom_emoji_id", IconID , String_, Parameters);
-    OPI_Tools.AddField("message_thread_id" , ThreadID , String_, Parameters);
-    
+    OPI_Tools.AddField("name"                , Title    , String_, Parameters);
+    OPI_Tools.AddField("chat_id"             , ChatID   , String_, Parameters);
+    OPI_Tools.AddField("icon_custom_emoji_id", IconID   , String_, Parameters);
+    OPI_Tools.AddField("message_thread_id"   , ThreadID , String_, Parameters);
+
     If ValueIsFilled(ThreadID) Then
-        Method = "/editForumTopic";    
-    Else    
-        Method = "/createForumTopic";    
+        Method = "/editForumTopic";
+    Else
+        Method = "/createForumTopic";
     EndIf;
-    
-    OPI_Tools.RemoveEmptyCollectionFields(Parameters);       
+
     Response = OPI_Tools.Get("api.telegram.org/bot" + Token + Method, Parameters);
-    
+
     Return Response;
 
 EndFunction
 
-Function ManageForumThreadState(Val Token, Val ChatID, Val Status, Val ThreadID = "") 
-        
+Function ManageForumThreadState(Val Token, Val ChatID, Val Status, Val ThreadID = "")
+
     OPI_TypeConversion.GetLine(Token);
-    
+
     If ValueIsFilled(ThreadID) Then
         Forum = "Forum";
     Else
         Forum = "GeneralForum";
     EndIf;
-    
+
     Method = DetermineForumManagementMethod(Status, Forum);
-    
+
     Parameters = New Structure;
-    OPI_Tools.AddField("chat_id" , ChatID, "String", Parameters);
+    OPI_Tools.AddField("chat_id"          , ChatID  , "String", Parameters);
     OPI_Tools.AddField("message_thread_id", ThreadID, "String", Parameters);
-   
-    URL = "api.telegram.org/bot" + Token + Method;
+
+    URL      = "api.telegram.org/bot" + Token + Method;
     Response = OPI_Tools.Get(URL, Parameters);
 
     Return Response;
-    
+
 EndFunction
 
 Function ManageMainTopicVisibility(Val Token, Val ChatID, Val Hide)
-    
+
     OPI_TypeConversion.GetLine(Token);
     OPI_TypeConversion.GetBoolean(Hide);
 
@@ -1143,169 +1285,169 @@ Function ManageMainTopicVisibility(Val Token, Val ChatID, Val Hide)
     Else
         Method = "/unhideGeneralForumTopic";
     EndIf;
-    
+
     Parameters = New Structure;
     OPI_Tools.AddField("chat_id", ChatID, "String", Parameters);
-    
-    URL = "api.telegram.org/bot" + Token + Method;
+
+    URL      = "api.telegram.org/bot" + Token + Method;
     Response = OPI_Tools.Get(URL, Parameters);
-    
+
     Return Response;
 
-EndFunction                 
+EndFunction
 
-Function DetermineForumManagementMethod(Val Status, Val Forum) 
-    
-    Open = 1;
-    Close = 2;
+Function DetermineForumManagementMethod(Val Status, Val Forum)
+
+    Open   = 1;
+    Close  = 2;
     Delete = 3;
-    
-    If Status = Open Then 
-        Method = "/reopen" + Forum + "Topic";
+
+    If Status    = Open Then
+        Method   = "/reopen" + Forum + "Topic";
     ElsIf Status = Close Then
-        Method = "/close" + Forum + "Topic";
+        Method   = "/close" + Forum + "Topic";
     ElsIf Status = Delete Then
-        Method = "/deleteForumTopic";
-    Else 
+        Method   = "/deleteForumTopic";
+    Else
         Raise "Incorrect forum management status";
     EndIf;
-    
+
     Return Method;
 
 EndFunction
 
 Function CreateTallKeyboard(Val ButtonArray)
-    
+
     Strings = New Array;
-    
+
     For Each Button In ButtonArray Do
         Buttons = New Array;
-        Button = OPI_Tools.NumberToString(Button);
+        Button  = OPI_Tools.NumberToString(Button);
         Buttons.Add(New Structure("text,callback_data", Button, Button));
         Strings.Add(Buttons);
     EndDo;
 
     Return Strings;
-    
+
 EndFunction
 
 Function CreateLongKeyboard(Val ButtonArray)
-    
+
     Strings = New Array;
     Buttons = New Array;
-    
+
     For Each Button In ButtonArray Do
         Button = OPI_Tools.NumberToString(Button);
         Buttons.Add(New Structure("text,callback_data", Button, Button));
     EndDo;
-    
+
     Strings.Add(Buttons);
-    
+
     Return Strings;
 
 EndFunction
 
-Procedure FormMediaArray(Val FileMapping, Val Text, FileStructure, Media)
-    
-    Counter = 0;
-    
-    OPI_TypeConversion.GetCollection(FileMapping);
-    OPI_TypeConversion.GetLine(Text);
-    
-    If TypeOf(FileMapping) <> Type("Map") Then
-        // !OInt RaiseException("Failed to get information from json media!");
-        Return;
-    EndIf;
-   
-    For Each CurrentFile In FileMapping Do
-        
-        If Not TypeOf(CurrentFile.Key) = Type("BinaryData") Then
-            
-            Binary = CurrentFile.Key;
-            OPI_TypeConversion.GetBinaryData(Binary);
-            
-            ThisFile = New File(CurrentFile.Key);           
-            MediaName = CurrentFile.Value 
-                + String(Counter) 
-                + ?(CurrentFile.Value = "document", ThisFile.Extension, "");
-                
-            FullMediaName = StrReplace(MediaName, ".", "___");
-            
-        Else
-            Binary = CurrentFile.Key;
-            MediaName = CurrentFile.Value + String(Counter);
-            FullMediaName = MediaName;
-        EndIf;
-        
-        FileStructure.Insert(FullMediaName, Binary);
-        
-        MediaStructure = New Structure;
-        MediaStructure.Insert("type" , CurrentFile.Value);
-        MediaStructure.Insert("media", "attach://" + MediaName);
-        
-        If Counter = 0 Then
-            MediaStructure.Insert("caption", Text);
-        EndIf;
-        
-        Media.Add(MediaStructure);
-        
-        Counter = Counter + 1;
-        
-    EndDo;
+Function DetermineSendMethod(Val View)
 
-    Media = OPI_Tools.JSONString(Media);
-    
-EndProcedure
-
-Procedure AddChatIdentifier(Val ChatID, Parameters)
-    
-    ChatID = OPI_Tools.NumberToString(ChatID);
-    ChatArray = StrSplit(ChatID, "*", False);
-    
-    If ChatArray.Count() > 1 Then
-        
-        ChatID = ChatArray[0];
-        ThreadID = ChatArray[1];
-        
-        Parameters.Insert("message_thread_id", ThreadID);
-        
-    EndIf;
-    
-    Parameters.Insert("chat_id", ChatID);
-
-EndProcedure
-
-Procedure DetermineSendMethod(Val View, Method, Extension)
-    
-    If View = "photo" Then
+    If View    = "photo" Then
         Method = "/sendPhoto";
     ElsIf View = "video" Then
         Method = "/sendVideo";
     ElsIf View = "audio" Then
         Method = "/sendAudio";
-    ElsIf View = "document" Then
-        Method = "/sendDocument";
     ElsIf View = "animation" Then
         Method = "/sendAnimation";
-        Extension = ".gif";
     Else
-        Raise "Incorrect sending view";
+        Method = "/sendDocument";
     EndIf;
+
+    Return Method;
+
+EndFunction
+
+Function ConvertFileData(File, View, Counter)
+
+    FileName = "";
+
+    If TypeOf(File) = Type("String") And View = "document" Then
+
+        CurrentFile = New File(File);
+        FileName    = CurrentFile.Name;
+
+    EndIf;
+
+    If Not ValueIsFilled(FileName) Then
+        FileName = View + String(Counter);
+
+        If View      = "animation" Then
+            FileName = FileName + ".gif";
+        EndIf;
+
+    EndIf;
+
+    OPI_TypeConversion.GetBinaryData(File);
+
+    Return FileName;
+
+EndFunction
+
+Procedure ConvertFilesToMedia(FileMapping, Text, Media)
+
+    OPI_TypeConversion.GetCollection(FileMapping);
+    OPI_TypeConversion.GetLine(Text);
+
+    If TypeOf(FileMapping) <> Type("Map") Then
+        // !OInt RaiseException("Failed to get information from json media!");
+        Return;
+    EndIf;
+
+    TempMap = New Map;
+    Counter = 0;
+
+    For Each CurrentFile In FileMapping Do
+
+        CurrentData = CurrentFile.Key;
+        TypeOfMedia = CurrentFile.Value;
+
+        MediaName = ConvertFileData(CurrentData, TypeOfMedia, Counter);
+
+        TempMap.Insert(MediaName + "|" + MediaName, CurrentData);
+
+        MediaStructure = New Structure;
+        MediaStructure.Insert("type" , TypeOfMedia);
+        MediaStructure.Insert("media", "attach://" + MediaName);
+
+        If Counter = 0 Then
+            MediaStructure.Insert("caption", Text);
+        EndIf;
+
+        Media.Add(MediaStructure);
+
+        Counter = Counter + 1;
+
+    EndDo;
+
+    Media       = OPI_Tools.JSONString(Media);
+    FileMapping = TempMap;
 
 EndProcedure
 
-Procedure ConvertFileData(File, Extension, View)
-    
-    If Not TypeOf(File) = Type("BinaryData") Then
-        
-        CurrentFile = New File(File);
-        Extension = ?(View = "document", CurrentFile.Extension, Extension);
-        OPI_TypeConversion.GetBinaryData(File);
-        
+Procedure AddChatIdentifier(Val ChatID, Parameters)
+
+    ChatID    = OPI_Tools.NumberToString(ChatID);
+    ChatArray = StrSplit(ChatID, "*", False);
+
+    If ChatArray.Count() > 1 Then
+
+        ChatID   = ChatArray[0];
+        ThreadID = ChatArray[1];
+
+        Parameters.Insert("message_thread_id", ThreadID);
+
     EndIf;
 
-    Extension = StrReplace(Extension, ".", "___");
-    
+    Parameters.Insert("chat_id", ChatID);
+
 EndProcedure
 
 #EndRegion

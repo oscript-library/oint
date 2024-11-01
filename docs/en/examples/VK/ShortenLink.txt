@@ -1,0 +1,3 @@
+﻿    Parameters = GetVKParameters();
+
+    Result = OPI_VK.ShortenLink("https://github.com/Bayselonarrend/OpenIntegrations", Parameters);

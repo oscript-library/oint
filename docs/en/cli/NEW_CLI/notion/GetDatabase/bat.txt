@@ -1,0 +1,3 @@
+oint notion GetDatabase ^
+ --token "***" ^
+ --base "13182aa7-fc4e-8142-8661-c757f5f56c5c"

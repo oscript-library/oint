@@ -1,0 +1,78 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send ephemeral message
+Sends a message that arrives in the channel but is visible only to a specific user
+
+
+
+`Function SendEphemeralMessage(Val Token, Val Channel, Val Text = "", Val User = "", Val Blocks = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Channel | --channel | String | &#x2714; | Channel ID |
+  | Text | --text | String | &#x2716; | Message text |
+  | User | --user | String | &#x2716; | User ID |
+  | Blocks | --blocks | Array of Structure | &#x2716; | JSON array of block descriptions |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token   = "xoxb-6965308400114-696804637...";
+    Channel = "C06UFNUTKUL";
+    User    = "U06UABH3APP";
+    Image   = "https://api.athenaeum.digital/test_data/picture.jpg";
+    Text    = "Ephemeral message";
+
+    Block  = OPI_Slack.GenerateImageBlock(Image, "Image");
+    Result = OPI_Slack.SendEphemeralMessage(Token, Channel, Text, User, Block);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint slack SendEphemeralMessage \
+             --token "***" \
+             --channel "C06UFNUTKUL" \
+             --text "Ephemeral message" \
+             --user "U06UABH3APP" \
+             --blocks "{'type':'image','image_url':'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg','alt_text':'Image'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint slack SendEphemeralMessage ^
+             --token "***" ^
+             --channel "C06UFNUTKUL" ^
+             --text "Ephemeral message" ^
+             --user "U06UABH3APP" ^
+             --blocks "{'type':'image','image_url':'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg','alt_text':'Image'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "message_ts": "1728454511.000300"
+}
+```

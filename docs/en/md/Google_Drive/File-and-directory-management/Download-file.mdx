@@ -1,0 +1,59 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Download file
+ Gets file by ID
+
+
+
+`Function DownloadFile(Val Token, Val Identifier, Val SavePath = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Identifier | --object | String | &#x2714; | File identifier |
+  | SavePath | --out | String | &#x2716; | File save path |
+
+  
+  Returns:  BinaryData,String - Binary data or file path when SavePath parameter is specified
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token      = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Identifier = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+
+    Result = OPI_GoogleDrive.DownloadFile(Token, Identifier);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gdrive DownloadFile \
+             --token "***" \
+             --object "1MgRgtXCENs_8VuQjX6WFY7s6Yv9RoaJV"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gdrive DownloadFile ^
+             --token "***" ^
+             --object "1MgRgtXCENs_8VuQjX6WFY7s6Yv9RoaJV"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+NOT JSON: FF D8 FF E1 54 C1 45 78 69 66 00 00 49 49 2A 00 08 00 00 00 0B 00 0E 01 02 00 20 00 00 00 92 00 00 00 0F 01 02 00 05 00 00 00 B2 00 00 00 10 01 02 00 07 00 00 00 B8 00 00 00 12 01 03 00 01 00…
+```

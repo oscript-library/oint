@@ -1,5 +1,5 @@
-﻿  
-  Каталог   = "1VWoLK5w0uPVSjK3oyIXeiMtINN4jDOz4";
-  Ответ     = OPI_GoogleDrive.ПолучитьСписокФайлов(Токен, , Каталог);  //Соответствие
-  Ответ     = OPI_Инструменты.JSONСтрокой(Ответ);                      //Строка
-  
+﻿    Токен       = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Каталог     = "root";
+    ИмяСодержит = "data";
+
+    Результат   = OPI_GoogleDrive.ПолучитьСписокФайлов(Токен, ИмяСодержит, Каталог);

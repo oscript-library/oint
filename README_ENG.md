@@ -4,7 +4,7 @@
 
 # Open Integrations Package
 ![Версия](https://img.shields.io/badge/1C_version-8.3.9-yellow)
-[![OpenYellow](https://img.shields.io/endpoint?url=https://openyellow.neocities.org/badges/2/736878759.json)](https://openyellow.notion.site/openyellow/24727888daa641af95514b46bee4d6f2?p=f78cea2066114067ab9069f06206219d&amp;pm=s)
+[![OpenYellow](https://img.shields.io/endpoint?url=https://openyellow.org/data/badges/2/736878759.json)](https://openyellow.org/grid?data=top&repo=736878759)
 
 <br>
 An 1C/OneScript and CLI open-source toolkit for integrating with APIs of popular online services <br>
@@ -19,23 +19,56 @@ List of currently available APIs:
   <div>
   <a href="https://en.openintegrations.dev/docs/Instructions/Telegram/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Telegram.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Bitrix24/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Bitrix24.png?6" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/CDEK/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/CDEK.png?6" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/VK/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/VK.png" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/VKTeams/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/VKTeams.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Viber/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Viber.png" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/Ozon/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Ozon.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Twitter/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Twitter.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Notion/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Notion.png" width="40"></a>
-  <a href="https://en.openintegrations.dev/docs/Instructions/Yandex_Disk/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/YandexDisk.png" width="40"></a>
-  <a href="https://en.openintegrations.dev/docs/Instructions/Google_Calendar/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/GoogleCalendar.png" width="40"></a>
-  <a href="https://en.openintegrations.dev/docs/Instructions/Google_Drive/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/GoogleDrive.png" width="40"></a>
-  <a href="https://en.openintegrations.dev/docs/Instructions/Google_Sheets/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/GoogleSheets.png" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/YandexDisk/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/YandexDisk.png" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/GoogleCalendar/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/GoogleCalendar.png" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/GoogleDrive/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/GoogleDrive.png" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/GoogleSheets/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/GoogleSheets.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Slack/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Slack.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Airtable/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Airtable.png?6" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Dropbox/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Dropbox.png?6" width="40"></a>
+  <a href="https://en.openintegrations.dev/docs/Instructions/Neocities/"><img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/Neocities.png?6" width="40"></a>
 </div> 
+<br>
+
+## Work example
+
+Sending picture to Telegram chat for 1C/OneScript
+
+```bsl
+
+    Token    = "6129457865:AAFyzNYOAFbu...";
+    ChatID   = "461699897";
+    Text     = "Cool pic";
+    Picture  = "C:/picture.jpg";  // URL, disk path or Binary data
+
+    Result = OPI_Telegram.SendImage(Token, ChatID, Text, Picture);
+
+```
+
+Same thing, but for CLI (bash example)
+
+```bash
+    oint telegram SendImage \
+        --token "6129457865:AAFyzNYOAFbu..." \
+        --chat 461699897 \
+        --text "Cool pic" \
+        --picture "picture.jpg"
+```
+
+You can use the standard `>` redirect or the oint's `--out` option to save the response in the console. For more details of working with the CLI version, see the corresponding [documentation section](https://en.openintegrations.dev/docs/Start/CLI_version)
+
 <br>
  
 ## Releases ##
 
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bayselonarrend/OpenIntegrations/total?logo=github)](https://tooomm.github.io/github-release-stats/?username=bayselonarrend&repository=OpenIntegrations)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bayselonarrend/OpenIntegrations/total?logo=github)](https://github.com/Bayselonarrend/OpenIntegrations/releases/latest)
 
 <img src="https://github.com/Bayselonarrend/OpenIntegrations/raw/main/Media/icons.png" align="right">
 

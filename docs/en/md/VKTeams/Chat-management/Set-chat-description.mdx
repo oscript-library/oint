@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 13
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Set chat description
+ Sets new chat description
+
+
+
+`Function SetChatDescription(Val Token, Val ChatID, Val Text) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chatid | String, Number | &#x2714; | Chat ID |
+  | Text | --text | String | &#x2714; | Description text |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK Teams
+
+<br/>
+
+:::tip
+To call this method, the bot must be an administrator in the chat room.
+
+ Method at API documentation: [GET ​​/chats/setAbout](https://teams.vk.com/botapi/#/chats/get_chats_setAbout)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "001.3501506236.091...";
+    ChatID = "689203963@chat.agent";
+    Text   = "New description";
+
+    Result = OPI_VKTeams.SetChatDescription(Token, ChatID, Text);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vkteams SetChatDescription \
+             --token "***" \
+             --chatid "689203963@chat.agent" \
+             --text "New description"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vkteams SetChatDescription ^
+             --token "***" ^
+             --chatid "689203963@chat.agent" ^
+             --text "New description"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true
+}
+```

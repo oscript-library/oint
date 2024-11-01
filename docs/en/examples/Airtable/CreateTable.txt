@@ -1,0 +1,17 @@
+﻿    Token = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    Base  = "appeMvjrOQPJciL7O";
+
+    FieldArray = New Array;
+    FieldArray.Add(OPI_Airtable.GetNumberField("Number"));
+    FieldArray.Add(OPI_Airtable.GetStringField("String"));
+    FieldArray.Add(OPI_Airtable.GetAttachmentField("Attachment"));
+    FieldArray.Add(OPI_Airtable.GetCheckboxField("Checkbox"));
+    FieldArray.Add(OPI_Airtable.GetDateField("Date"));
+    FieldArray.Add(OPI_Airtable.GetPhoneField("Phone"));
+    FieldArray.Add(OPI_Airtable.GetEmailField("Email"));
+    FieldArray.Add(OPI_Airtable.GetLinkField("Link"));
+
+    Name        = "TestTable2";
+    Description = "NewTable";
+
+    Result = OPI_Airtable.CreateTable(Token, Base, Name, FieldArray, Description);

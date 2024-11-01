@@ -1,0 +1,72 @@
+﻿---
+sidebar_position: 16
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get product subscribers count
+ Gets the number of users who clicked Know about arrival button on the product page
+
+
+
+`Function GetProductSubscribersCount(Val ClientID, Val APIKey, Val SKU) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | ClientID | --clientid | String | &#x2714; | Client identifier |
+  | APIKey | --apikey | String | &#x2714; | API key |
+  | SKU | --sku | Number, Array Of Number | &#x2714; | Products identifiers in the Ozon system (SKU) |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+
+<br/>
+
+:::tip
+Method at API documentation: [post /v1/product/info/subscription](https://docs.ozon.ru/api/seller/#operation/ProductAPI_GetProductInfoSubscription)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    ClientID = "2128753";
+    APIKey   = "7cc90d26-33e4-499b...";
+    SKU      = 1626044001;
+
+    Result = OPI_Ozon.GetProductSubscribersCount(ClientID, APIKey, SKU);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon GetProductSubscribersCount \
+             --clientid "***" \
+             --apikey "***" \
+             --sku 1626044001
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon GetProductSubscribersCount ^
+             --clientid "***" ^
+             --apikey "***" ^
+             --sku 1626044001
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": [
+  {
+   "sku": 1626044001,
+   "count": 1
+  }
+ ]
+}
+```

@@ -1,0 +1,7 @@
+﻿    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+
+    PathsArray = New Array;
+    PathsArray.Add("/New/Dogs.mp3");
+    PathsArray.Add("/New/mydoc.docx");
+
+    Result = OPI_Dropbox.GetTagList(Token, PathsArray);

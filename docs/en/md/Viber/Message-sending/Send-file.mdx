@@ -1,0 +1,84 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send file
+ Sends a file (document) to a chat or channel
+
+
+
+`Function SendFile(Val Token, Val URL, Val UserID, Val SendingToChannel, Val Extension, Val Size = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | URL | --file | String | &#x2714; | File URL |
+  | UserID | --user | String, Number | &#x2714; | User ID. For channel > administrator, for bot > recipient |
+  | SendingToChannel | --ischannel | Boolean | &#x2714; | Sending to channel or bot chat |
+  | Extension | --ext | String | &#x2714; | File extension |
+  | Size | --size | Number | &#x2716; | File size. If not filled in > determined automatically by downloading the file |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Viber
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Extension = "docx";
+    URL       = "https://api.athenaeum.digital/test_data/document.docx";
+
+    UserID           = "d3jxe61Z4W73nmNkjYGgZg==";
+    Token            = "523b5b25ed27e6ec-fdf013e4...";
+    SendingToChannel = False;
+
+    Result = OPI_Viber.SendFile(Token, URL, UserID, SendingToChannel, Extension);
+
+    UserID           = "tMNGhftyUPrB3r1lD+bT4g==";
+    Token            = "523b58ba82afffaa-7ef3b426...";
+    SendingToChannel = True;
+
+    Result = OPI_Viber.SendFile(Token, URL, UserID, SendingToChannel, Extension);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint viber SendFile \
+             --token "***" \
+             --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/document.docx" \
+             --user "tMNGhftyUPrB3r1lD+bT4g==" \
+             --ischannel true \
+             --ext "docx"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint viber SendFile ^
+             --token "***" ^
+             --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/document.docx" ^
+             --user "tMNGhftyUPrB3r1lD+bT4g==" ^
+             --ischannel true ^
+             --ext "docx"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "status": 0,
+ "status_message": "ok",
+ "message_token": 6024682567270547758,
+ "chat_hostname": "SN-CHAT-01_",
+ "billing_status": 3
+}
+```

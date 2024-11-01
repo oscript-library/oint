@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить лист
+ Удаляет лист из книги
+
+
+
+`Функция УдалитьЛист(Знач Токен, Знач Книга, Знач Лист) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Книга | --spreadsheet | Строка | &#x2714; | Идентификатор книги |
+  | Лист | --sheet | Строка | &#x2714; | Идентификатор удаляемого листа |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен  = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Книга  = "1fktk0k_rOszr4c3t89Z1KXXSsRWPU0fFPgLImiN-MzI";
+    Лист   = "1012546035";
+
+    Результат = OPI_GoogleSheets.УдалитьЛист(Токен, Книга, Лист);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets УдалитьЛист \
+              --token "***" \
+              --spreadsheet "1fIjChG6dvYVrGfTUjHicj_lCDX351es5kCosec4Vf-w" \
+              --sheet "108922701"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets УдалитьЛист ^
+              --token "***" ^
+              --spreadsheet "1fIjChG6dvYVrGfTUjHicj_lCDX351es5kCosec4Vf-w" ^
+              --sheet "108922701"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "spreadsheetId": "1NH03Re5tvG0eZ8H3qgzKAMok6gim33SHvV4cRTHqlac",
+ "replies": [
+  {}
+ ]
+}
+```

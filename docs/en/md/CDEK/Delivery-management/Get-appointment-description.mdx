@@ -1,0 +1,80 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get appointment description
+ Gets the layout to create about delivery in the RegisterDeliveryAppointment function
+
+
+
+`Function GetAppointmentDescription(Val Clear = False, Val RequiredOnly = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+  | RequiredOnly | --required | Boolean | &#x2716; | True > only required fields will be in the set |
+
+  
+  Returns:  Structure of KeyAndValue - Fields structure
+
+<br/>
+
+:::tip
+Required fields may depend on the type of order or nesting. Be sure to read the CDEK documentation
+
+ Field descriptions in the documentation: [Registration of delivery appointment](https://api-docs.cdek.ru/36989576.html)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_CDEK.GetAppointmentDescription();
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint cdek GetAppointmentDescription \
+             --empty true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint cdek GetAppointmentDescription ^
+             --empty true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "date": "<Delivery date agreed with the recipient>",
+ "cdek_number": "<CDEK order number>",
+ "order_uuid": "<Order identifier in CDEK system>",
+ "time_from": "<Delivery time FROM agreed with the recipient>",
+ "time_to": "<Delivery time TO agreed with the recipient>",
+ "comment": "<Comment>",
+ "delivery_point": "<Alphanumeric code of CDEK POZ>",
+ "to_location": {
+  "code": "<CDEC locality code>",
+  "fias_guid": "<Unique FIAS identifier>",
+  "postal_code": "<Postal code>",
+  "longitude": "<Longitude>",
+  "latitude": "<Latitude>",
+  "country_code": "<Country code in ISO_3166-1_alpha-2 format>",
+  "region": "<Region name>",
+  "region_code": "<Region code>",
+  "sub_region": "<Name of the area of the region>",
+  "city": "<City name>",
+  "kladr_code": "<CLADR code>",
+  "address": "<Address string>"
+ }
+}
+```

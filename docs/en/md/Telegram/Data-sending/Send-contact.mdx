@@ -1,0 +1,101 @@
+﻿---
+sidebar_position: 9
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send contact
+ Sends a contact with name and phone number
+
+
+
+`Function SendContact(Val Token, Val ChatID, Val Name, Val LastName, Val Phone, Val Keyboard = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | Name | --name | String | &#x2714; | Contact name |
+  | LastName | --surname | String | &#x2714; | Contact last name |
+  | Phone | --phone | String | &#x2714; | Contact phone number |
+  | Keyboard | --keyboard | String | &#x2716; | Keyboard. See FormKeyboardFromButtonArray |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [sendContact](https://core.telegram.org/bots/api#sendcontact)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChatID    = "461699897";
+    ChannelID = "@testsichee";
+    Name      = "Петр";
+    LastName  = "Петров";
+    Phone     = "88005553535";
+
+    Result = OPI_Telegram.SendContact(Token, ChatID , Name, LastName, Phone);
+
+    Result = OPI_Telegram.SendContact(Token, ChannelID, Name, LastName, Phone);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram SendContact \
+             --token "***" \
+             --chat "@testsichee" \
+             --surname "Петров" \
+             --phone "88005553535" \
+             --name "Петр"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram SendContact ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --surname "Петров" ^
+             --phone "88005553535" ^
+             --name "Петр"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "message_id": 8313,
+  "from": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "chat": {
+   "id": 461699897,
+   "first_name": "Anton",
+   "last_name": "Titowets",
+   "username": "JKIee",
+   "type": "private"
+  },
+  "date": 1728453435,
+  "contact": {
+   "phone_number": "88005553535",
+   "first_name": "Петр",
+   "last_name": "Петров"
+  }
+ }
+}
+```

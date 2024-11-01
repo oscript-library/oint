@@ -1,0 +1,71 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create barcodes
+ Generates new barcodes for products
+
+
+
+`Function CreateBarcodes(Val ClientID, Val APIKey, Val ProductsID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | ClientID | --clientid | String | &#x2714; | Client identifier |
+  | APIKey | --apikey | String | &#x2714; | API key |
+  | ProductsID | --productids | String, Array of String | &#x2714; | Products IDs for barcodes creating |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+
+<br/>
+
+:::tip
+You can create barcodes for a maximum of 100 products per request
+
+ From one merchant account, you can use the method no more than 20 times per minute
+
+ Method at API documentation: [post /v1/barcode/generate](https://docs.ozon.ru/api/seller/#operation/generate-barcode)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    ClientID  = "2128753";
+    APIKey    = "7cc90d26-33e4-499b...";
+    ProductID = "1235184552";
+
+    Result = OPI_Ozon.CreateBarcodes(ClientID, APIKey, ProductID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon CreateBarcodes \
+             --clientid "***" \
+             --apikey "***" \
+             --productids 1237069598
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon CreateBarcodes ^
+             --clientid "***" ^
+             --apikey "***" ^
+             --productids 1237069598
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "errors": []
+}
+```

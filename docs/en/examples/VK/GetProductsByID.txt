@@ -1,0 +1,10 @@
+﻿    Parameters = GetVKParameters();
+
+    Item1 = "9826149";
+    Item2 = "9826150";
+
+    ProductsArray = New Array;
+    ProductsArray.Add(Item1);
+    ProductsArray.Add(Item2);
+
+    Result = OPI_VK.GetProductsByID(ProductsArray, Parameters);

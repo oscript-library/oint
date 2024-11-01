@@ -1,0 +1,3 @@
+oint slack ПолучитьИсториюКанала ^
+  --token "***" ^
+  --channel "C07UXGV9AGZ"

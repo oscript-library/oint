@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete product property variant
+ Deletes the previously created product property variant
+
+
+
+`Function DeleteProductPropertyVariant(Val Option, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Option | --option | String, Number | &#x2714; | Variant ID |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetVKParameters();
+
+    Option = "2682";
+
+    Result = OPI_VK.DeleteProductPropertyVariant(Option, Parameters);
+
+    OPI_TestDataRetrieval.Check_VKTrue(Result);
+
+    OPI_Tools.Pause(5);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk DeleteProductPropertyVariant \
+             --option 3006 \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk DeleteProductPropertyVariant ^
+             --option 3006 ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": 1
+}
+```

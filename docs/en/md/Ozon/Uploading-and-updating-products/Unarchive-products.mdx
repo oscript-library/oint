@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 13
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Unarchive products
+ Returns selected items from the archive
+
+
+
+`Function UnarchiveProducts(Val ClientID, Val APIKey, Val ProductsID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | ClientID | --clientid | String | &#x2714; | Client identifier |
+  | APIKey | --apikey | String | &#x2714; | API key |
+  | ProductsID | --products | String, Number, Array of String, Number | &#x2714; | Product IDs for recovery |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+
+<br/>
+
+:::tip
+You can restore from the archive no more than 10 products that were automatically archived per day. There are no restrictions on unarchiving products that were manually moved to the archive.
+
+ Method at API documentation: [post /v1/product/unarchive](https://docs.ozon.ru/api/seller/#operation/ProductAPI_ProductUnarchive)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    ClientID  = "2128753";
+    APIKey    = "7cc90d26-33e4-499b...";
+    ProductID = "1235184552";
+
+    Result = OPI_Ozon.UnarchiveProducts(ClientID, APIKey, ProductID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon UnarchiveProducts \
+             --clientid "***" \
+             --apikey "***" \
+             --products 1235207802
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon UnarchiveProducts ^
+             --clientid "***" ^
+             --apikey "***" ^
+             --products 1235207802
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": true
+}
+```

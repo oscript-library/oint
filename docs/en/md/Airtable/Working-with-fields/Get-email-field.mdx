@@ -1,0 +1,55 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get field (email)
+ Gets the description of an email field
+
+
+
+`Function GetEmailField(Val Name) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | Field name |
+
+  
+  Returns:  Structure - Field description
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Airtable.GetEmailField("Email");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable GetEmailField \
+             --title "Email"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable GetEmailField ^
+             --title "Email"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "name": "Email",
+ "type": "email"
+}
+```

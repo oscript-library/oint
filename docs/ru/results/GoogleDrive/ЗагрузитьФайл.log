@@ -1,8 +1,6 @@
-﻿  
-  {
-  "mimeType": "image/jpeg",
-  "name": "Новый файл.jpg",
-  "id": "16hPGNTMmbnXhz_g0vjGbrLP19h56RwIg",
-  "kind": "drive#file"
-  }
-  
+﻿    {
+ "kind": "drive#file",
+ "id": "1T0kBmfSFAMKbZsYxP0PZtbjs_leFF6nR",
+ "name": "Новый файл.jpg",
+ "mimeType": "image/jpeg"
+}

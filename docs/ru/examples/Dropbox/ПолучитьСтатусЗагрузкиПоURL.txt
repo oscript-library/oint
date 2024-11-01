@@ -1,13 +1,12 @@
-﻿    Токен    = "sl.B2ieEHcB9I9BTwJFjbf_MQtoZMKjGYgkpBqzQkvBfuSz41Qpy5r3d7a4ax22I5ILWhd9KLbN5L...";
-    ИДРаботы = "G8YbueOu2nsAAAAAAAAAAQ";
+﻿    Токен    = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    ИДРаботы = "TccHTo9aSaAAAAAAAAAAAQ";
     Статус   = "in_progress";
-    
-    Пока Статус = "in_progress" Цикл 
-        
+
+    Пока Статус = "in_progress" Цикл
+
         Результат = OPI_Dropbox.ПолучитьСтатусЗагрузкиПоURL(Токен, ИДРаботы);
         Статус    = Результат[".tag"];
-        
+
         OPI_Инструменты.Пауза(5);
-        
-        
+
     КонецЦикла;

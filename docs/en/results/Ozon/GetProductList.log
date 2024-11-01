@@ -1,0 +1,16 @@
+﻿ {
+ "result": {
+  "items": [
+   {
+    "product_id": 1215763512,
+    "offer_id": "143210609",
+    "is_fbo_visible": false,
+    "is_fbs_visible": false,
+    "archived": false,
+    "is_discounted": false
+   }
+  ],
+  "total": 1,
+  "last_id": "WzEyMTU3NjM1MTIsMTIxNTc2MzUxMl0="
+ }
+}

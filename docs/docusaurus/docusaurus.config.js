@@ -74,6 +74,21 @@ const config = {
         }
       },
 
+      customFields: {
+      yandexAdsBlock: `
+<div id="yandex_rtb_R-A-12294791-1"></div>
+<script>
+window.yaContextCb.push(() => {
+    Ya.Context.AdvManager.render({
+        "blockId": "R-A-12294791-1",
+        "renderTo": "yandex_rtb_R-A-12294791-1",
+        "type": "feed"
+    })
+})
+</script>
+      `,
+    },
+
       colorMode: {
         defaultMode: 'light',
         disableSwitch: true,
@@ -97,6 +112,8 @@ const config = {
             href: 'https://github.com/Bayselonarrend/OpenIntegrations',
             label: 'GitHub',
             position: 'right',
+            className: 'navbar-github-link', // Класс для кастомизации
+            'aria-label': 'GitHub repository',
           },
           {
             type: 'dropdown',
@@ -139,7 +156,7 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.github,
-		additionalLanguages: ['powershell','json','bsl']
+		additionalLanguages: ['powershell','json','bsl','batch','bash']
       },
     }),
 };

@@ -1,0 +1,4 @@
+﻿    Token    = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Calendar = "aed9a7a5ff01b42e80462afcfc08037e289b1a4dfb07820f5d4e2885e8ccd68e@group.calendar.google.com";
+
+    Result = OPI_GoogleCalendar.AddCalendarToList(Token, Calendar);

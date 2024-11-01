@@ -1,4 +1,4 @@
-﻿  
-  Ответ = OPI_GoogleCalendar.СоздатьКалендарь(Токен, "Тестовый календарь"); //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                               //Строка
-  
+﻿    Токен        = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Наименование = "Тестовый календарь";
+
+    Результат = OPI_GoogleCalendar.СоздатьКалендарь(Токен, Наименование);

@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get bot information
+ Executes the request, returning basic bot information: name, id, ability to add the bot to groups, etc..
+
+
+
+`Function GetBotInformation(Val Token) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [getMe](https://core.telegram.org/bots/api#getme)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "6129457865:AAFyzNYOAFbu...";
+    Result = OPI_Telegram.GetBotInformation(Token);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram GetBotInformation \
+             --token "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram GetBotInformation ^
+             --token "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "id": 6129457865,
+  "is_bot": true,
+  "first_name": "Бот Виталий",
+  "username": "sicheebot",
+  "can_join_groups": true,
+  "can_read_all_group_messages": false,
+  "supports_inline_queries": false,
+  "can_connect_to_business": false,
+  "has_main_web_app": false
+ }
+}
+```

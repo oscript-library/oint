@@ -1,0 +1,71 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Скоприровать объект
+ Копирует файл или каталог
+
+
+
+`Функция СкопироватьОбъект(Знач Токен, Знач Идентификатор, Знач НовоеИмя = "", Знач НовыйРодитель = "") Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Идентификатор | --object | Строка | &#x2714; | Идентификатор объекта |
+  | НовоеИмя | --title | Строка | &#x2716; | Новое имя объекта |
+  | НовыйРодитель | --catalog | Строка | &#x2716; | Новый каталог размещения |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен         = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Идентификатор = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+    НовоеИмя      = "Скопированный файл.jpeg";
+    НовыйРодитель = "root";
+
+    Результат = OPI_GoogleDrive.СкопироватьОбъект(Токен, Идентификатор, НовоеИмя, НовыйРодитель);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gdrive СкопироватьОбъект \
+              --token "***" \
+              --object "1GSicCGhG6-xQS_sepJD1aay0PVgwsZli" \
+              --title "Скопированный файл.jpeg" \
+              --catalog "root"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gdrive СкопироватьОбъект ^
+              --token "***" ^
+              --object "1GSicCGhG6-xQS_sepJD1aay0PVgwsZli" ^
+              --title "Скопированный файл.jpeg" ^
+              --catalog "root"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "kind": "drive#file",
+ "id": "1P8WK9Wn2710HiQYkKzYMFso2FmFenV6d",
+ "name": "Скопированный файл.jpeg",
+ "mimeType": "image/jpeg"
+}
+```

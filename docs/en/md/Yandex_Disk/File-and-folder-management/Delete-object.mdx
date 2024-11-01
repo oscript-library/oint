@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete object
+ Deletes an object at the specified path
+
+
+
+`Function DeleteObject(Val Token, Val Path, Val ToCart = True) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Path | --path | String | &#x2714; | Path to the folder or file to be deleted |
+  | ToCart | --can | Boolean | &#x2716; | To cart |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Yandex
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
+    Path  = "/ffee2803-bb02-480f-9196-b353e34699e7.png";
+
+    Result = OPI_YandexDisk.DeleteObject(Token, Path, False);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint yadisk DeleteObject \
+             --token "***" \
+             --path "/4b3a15e9-6bd8-499d-b1db-e053ca1b12ff.png" \
+             --can false
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint yadisk DeleteObject ^
+             --token "***" ^
+             --path "/4b3a15e9-6bd8-499d-b1db-e053ca1b12ff.png" ^
+             --can false
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+null
+```

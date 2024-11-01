@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить Webhook
+ Удаляет URL обработчика событий бота для работы в режиме Webhook
+
+
+
+`Функция УдалитьWebhook(Знач Токен) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен бота |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Telegram
+
+<br/>
+
+:::tip
+Метод в документации API: [deleteWebhook](https://core.telegram.org/bots/api#deletewebhook)
+:::
+<br/>
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен     = "6129457865:AAFyzNYOAFbu...";
+    Результат = OPI_Telegram.УдалитьWebhook(Токен);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram УдалитьWebhook \
+              --token "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram УдалитьWebhook ^
+              --token "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "ok": true,
+ "result": true,
+ "description": "Webhook was deleted"
+}
+```

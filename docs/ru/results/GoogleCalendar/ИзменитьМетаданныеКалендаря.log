@@ -1,15 +1,13 @@
-﻿  
-  {
-  "conferenceProperties": {
+﻿    {
+ "kind": "calendar#calendar",
+ "etag": "\"-qYh74xTwKSw29QLKr4MJFvKBgU\"",
+ "id": "cc92fd648db664e3e2fcd62db4c9fd9f458cc49bbc6382560c48f59105aede70@group.calendar.google.com",
+ "summary": "Новое наименование",
+ "description": "Новое описание",
+ "timeZone": "Europe/Moscow",
+ "conferenceProperties": {
   "allowedConferenceSolutionTypes": [
-  "hangoutsMeet"
+   "hangoutsMeet"
   ]
-  },
-  "description": "Тестовое описание",
-  "summary": "Тестовый календарь (изм.)",
-  "timeZone": "UTC",
-  "id": "75b64bec8700a640b004af3491867ac5e479884794f529699da23e7009f7d691@group.calendar.google.com",
-  "etag": "\"x8eLqpmgoxpEDEXmEbsZxxgmJhc\"",
-  "kind": "calendar#calendar"
-  }
-  
+ }
+}

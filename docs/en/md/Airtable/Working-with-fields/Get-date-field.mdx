@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get field (date)
+ Gets the description of a date field
+
+
+
+`Function GetDateField(Val Name) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | Field name |
+
+  
+  Returns:  Structure - Field description
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Airtable.GetDateField("Date");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable GetDateField \
+             --title "Date"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable GetDateField ^
+             --title "Date"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "name": "Date",
+ "type": "date",
+ "options": {
+  "dateFormat": {
+   "format": "YYYY-MM-DD",
+   "name": "iso"
+  }
+ }
+}
+```

@@ -1,30 +1,12 @@
-﻿  
+﻿    {
+ "records": [
   {
-  "records": [
-  {
-  "id": "recGyJ0MlN1H3GMuN",
-  "createdTime": "2024-05-10T19:39:51Z",
-  "fields": {
-  "Номер": 10,
-  "Строковое": "Привет\n"
+   "id": "rec9dR46CmDQMkUJ0",
+   "createdTime": "2024-10-08T17:44:49Z",
+   "fields": {
+    "Номер": 10,
+    "Строковое": "Привет\n"
+   }
   }
-  },
-  {
-  "id": "recV6DxeLQMBNJrUk",
-  "createdTime": "2024-05-10T19:39:51Z",
-  "fields": {
-  "Номер": 10,
-  "Строковое": "Привет\n"
-  }
-  },
-  {
-  "id": "recjHNKNZBWLZkZ7A",
-  "createdTime": "2024-05-10T19:39:51Z",
-  "fields": {
-  "Номер": 10,
-  "Строковое": "Привет\n"
-  }
-  }
-  ]
-  }
-  
+ ]
+}

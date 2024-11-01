@@ -1,0 +1,82 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get comments
+ Gets the list of comments for a record in the table
+
+
+
+`Function GetComments(Val Token, Val Base, Val Table, Val Record, Val Indent = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Base | --base | String | &#x2714; | Database identifier |
+  | Table | --table | String | &#x2714; | Table identifier |
+  | Record | --record | String | &#x2714; | Record identifier in the table |
+  | Indent | --offset | String | &#x2716; | Next page identifier of data from the previous request |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Airtable
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    Base   = "appeMvjrOQPJciL7O";
+    Table  = "tblQdiEo3yKV0e1cj";
+    Record = "reclJA9M8WL5gPBg3";
+
+    Result = OPI_Airtable.GetComments(Token, Base, Table, Record);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable GetComments \
+             --token "***" \
+             --base "appk3Fw5gwni4SWYj" \
+             --table "tblIT2QrATF0xn2YE" \
+             --record "recDitcY4es4W2qY3"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable GetComments ^
+             --token "***" ^
+             --base "appk3Fw5gwni4SWYj" ^
+             --table "tblIT2QrATF0xn2YE" ^
+             --record "recDitcY4es4W2qY3"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "comments": [
+  {
+   "id": "comwNg41PXtfEa4kj",
+   "author": {
+    "id": "usrFlaAHlTfYWAbVW",
+    "email": "bayselonarrend@gmail.com",
+    "name": "Антон Титовец"
+   },
+   "text": "Test comment (change.)",
+   "createdTime": "2024-10-09T06:15:49Z",
+   "lastUpdatedTime": "2024-10-09T06:15:50Z"
+  }
+ ],
+ "offset": null
+}
+```

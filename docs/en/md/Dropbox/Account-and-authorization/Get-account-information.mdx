@@ -1,0 +1,81 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get account information
+ Gets account information
+
+
+
+`Function GetAccountInformation(Val Token, Val Account = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Account | --account | String | &#x2716; | Account ID. Current token account if not filled |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+
+    Result = OPI_Dropbox.GetAccountInformation(Token);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox GetAccountInformation \
+             --token "***" \
+             --account "dbid:AAA4WKMCfgoW5LwuNQFeLOyp-X4omQiNDhE"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox GetAccountInformation ^
+             --token "***" ^
+             --account "dbid:AAA4WKMCfgoW5LwuNQFeLOyp-X4omQiNDhE"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "account_id": "dbid:AAA4WKMCfgoW5LwuNQFeLOyp-X4omQiNDhE",
+ "name": {
+  "given_name": "Антон",
+  "surname": "Титовец",
+  "familiar_name": "Антон",
+  "display_name": "Антон Титовец",
+  "abbreviated_name": "АТ"
+ },
+ "email": "bayselonarrend@gmail.com",
+ "email_verified": true,
+ "disabled": false,
+ "country": "BY",
+ "locale": "en",
+ "referral_link": "https://www.dropbox.com/referrals/AADQceVD6l02CM1dzgLM7s_o8gdaPXKc7oM?src=app9-2724483",
+ "is_paired": false,
+ "account_type": {
+  ".tag": "basic"
+ },
+ "root_info": {
+  ".tag": "user",
+  "root_namespace_id": "3179550035",
+  "home_namespace_id": "3179550035"
+ }
+}
+```

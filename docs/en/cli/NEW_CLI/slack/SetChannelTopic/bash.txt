@@ -1,0 +1,4 @@
+oint slack SetChannelTopic \
+ --token "***" \
+ --channel "C07UG92P5UJ" \
+ --theme "TestTopic"

@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Unpublish folder
+ Cancels the public access mode for the directory
+
+
+
+`Function CancelFolderPublication(Val Token, Val FolderID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | FolderID | --folder | String | &#x2714; | ID of the public catalog (shared folder ID) |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Folder = "11861101505";
+
+    Result = OPI_Dropbox.CancelFolderPublication(Token, Folder);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox CancelFolderPublication \
+             --token "***" \
+             --folder "11905800481"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox CancelFolderPublication ^
+             --token "***" ^
+             --folder "11905800481"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ ".tag": "async_job_id",
+ "async_job_id": "dbjid:AABIL_Y3eWbNQjjcels4kLWmUwVyjbJ-P7WpZzl6jIq3_fb2oSve73rWjYkC5VFtf8SOK2kP67Ms--L0g4pcUNzO"
+}
+```

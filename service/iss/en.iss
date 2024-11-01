@@ -1,10 +1,9 @@
 ﻿#define MyAppName "OInt"
-#define MyAppVersion "1.11.0"
+#define MyAppVersion "1.15.1"
 #define MyAppPublisher "bayselonarrend"
 #define MyAppURL "https://github.com/Bayselonarrend/OpenIntegrations"
-#define MyAppExeName "oint.exe"
-#define GDrive "G:"
-#define Repo "C:\Repos\OpI"
+#define MyAppExeName "oint.bat"
+#define Repo "C:\ProgramData\Jenkins\.jenkins\workspace\Release"
 
 [Setup]
 DisableWelcomePage      = no
@@ -21,34 +20,41 @@ DefaultDirName          = {autopf}\{#MyAppName}
 DefaultGroupName        = {#MyAppName}
 DisableProgramGroupPage = yes
 LicenseFile             = {#Repo}\LICENSE
-OutputDir               = "{#GDrive}\Мой диск\Проекты\ОПИ\Релизы\{#MyAppVersion}"
+OutputDir               = "{#Repo}\{#MyAppVersion}"
 Compression             = lzma
 SolidCompression        = yes
 WizardStyle             = modern
 OutputBaseFilename      = oint_{#MyAppVersion}_installer_en
 
 [Files]
-Source: "{#GDrive}\Мой диск\Проекты\ОПИ\Релизы\{#MyAppVersion}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#Repo}\ci\installer_set\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "{#Repo}\service\engine\windows\*"; DestDir: "{app}\share\oint\bin"; Flags: recursesubdirs
 Source: "{#Repo}\src\ru\cli\start.bat"; DestDir: "{app}"
 Source: "{#Repo}\Media\logo.bmp"; Flags: dontcopy
+Source: "{#Repo}\Media\ex.ico"; DestDir: "{app}\share\oint\icons"
+Source: "{#Repo}\Media\wizard.ico"; DestDir: "{app}\share\oint\icons"
+
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\start.bat"; IconFilename: "{#Repo}\Media\ex.ico"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\start.bat"; IconFilename: "{#Repo}\Media\ex.ico"; Tasks: desktopicon
-Name: "{group}\Uninstall OInt"; Filename: "{uninstallexe}"; IconFilename: "{#Repo}\Media\wizard.ico"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\start.bat"; IconFilename: "{app}\share\oint\icons\ex.ico"
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\start.bat"; IconFilename: "{app}\share\oint\icons\ex.ico"; Tasks: desktopicon
+Name: "{group}\Uninstall OInt"; Filename: "{uninstallexe}"; IconFilename: "{app}\share\oint\icons\wizard.ico"
 Name: "{group}\Web-documentation"; Filename: "https://www.en.openintegrations.dev/"  
 
 [Tasks]
 Name: desktopicon; Description: "Create a desktop shortcut"; 
 
+[InstallDelete]
+Type: filesandordirs; Name: "{app}\*"
+
 [Run]
-Filename: "{cmd}"; Parameters: "/k ""cd ""{app}"" && {#MyAppExeName}"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{cmd}"; Parameters: "/k ""cd ""{app}/bin"" && {#MyAppExeName}"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 Filename: "https://en.openintegrations.dev/docs/Start/CLI_version"; Flags: shellexec runasoriginaluser postinstall; Description: "Visit documentation en.openintegrations.dev"
 
 [Registry]
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
-    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}"; \
-    Check: NeedsAddPath(ExpandConstant('{app}'))
+    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\bin"; \
+    Check: NeedsAddPath(ExpandConstant('{app}\bin'))
 
 [Code]
 

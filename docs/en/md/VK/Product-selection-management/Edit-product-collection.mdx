@@ -1,0 +1,79 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Edit product selection
+ Edits the properties of a product selection
+
+
+
+`Function EditProductCollection(Val Name, Val Selection, Val Image = "", Val Main = False, Val Hidden = False, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | New selection name |
+  | Selection | --sel | String | &#x2714; | Selection ID |
+  | Image | --picture | String, BinaryData | &#x2716; | New selection image |
+  | Main | --main | Boolean | &#x2716; | Main |
+  | Hidden | --hidden | Boolean | &#x2716; | Hidden |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+:::tip
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetVKParameters();
+
+    Name      = "EditedCollection";
+    Selection = "137";
+
+    Result = OPI_VK.EditProductCollection(Name, Selection, , , , Parameters);
+
+    OPI_TestDataRetrieval.Check_VKTrue(Result);
+
+    OPI_Tools.Pause(5);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk EditProductCollection \
+             --title "EditedCollection" \
+             --sel 137 \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk EditProductCollection ^
+             --title "EditedCollection" ^
+             --sel 137 ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": 1
+}
+```

@@ -1,0 +1,62 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Close dialog
+ Closes an existing dialog
+
+
+
+`Function CloseDialog(Val Token, Val Dialog) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Dialog | --conv | String | &#x2714; | Dialog ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "xoxb-6965308400114-696804637...";
+    Dialog = "D06UAKK1C6R";
+
+    Result = OPI_Slack.CloseDialog(Token, Dialog);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack CloseDialog \
+             --token "***" \
+             --conv "D06UAKK1C6R"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack CloseDialog ^
+             --token "***" ^
+             --conv "D06UAKK1C6R"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "already_closed": false,
+ "no_op": false
+}
+```

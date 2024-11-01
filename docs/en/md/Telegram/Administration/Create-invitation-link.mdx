@@ -1,0 +1,93 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create invitation link
+ Creates a link for joining a closed chat
+
+
+
+`Function CreateInvitationLink(Val Token, Val ChatID, Val Title = "", Val ExpirationDate = "", Val UserLimit = 0) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | Title | --title | String | &#x2716; | Invitation title |
+  | ExpirationDate | --expire | Date | &#x2716; | Link expiration date (permanent if not specified) |
+  | UserLimit | --limit | Number | &#x2716; | User limit (infinite if not specified) |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [createChatInviteLink](https://core.telegram.org/bots/api#createchatinvitelink)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+  Token = "6129457865:AAFyzNYOAFbu...";
+  ChannelID = "@testsichee";
+  Day = 86400;
+  CurrentDate = OPI_Tools.GetCurrentDate();
+  
+  Title = "Link " + String(CurrentDate);
+  Expiration = CurrentDate + Day;
+  UnixExpiration = OPI_Tools.UNIXTime(Expiration);
+  
+  Result = OPI_Telegram.CreateInvitationLink(Token, ChannelID, Title, Expiration, 200);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram CreateInvitationLink \
+             --token "***" \
+             --chat "@testsichee" \
+             --expire "2024-11-01T16:03:24.7882728" \
+             --title "Link 31.10.2024 16:03:24" \
+             --limit 200
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram CreateInvitationLink ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --expire "2024-11-01T16:03:24.7882728" ^
+             --title "Link 31.10.2024 16:03:24" ^
+             --limit 200
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "invite_link": "https://t.me/+hUgH4yjb_7wyZDBi",
+  "name": "Link 09.10.2024 8:58:10",
+  "creator": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "expire_date": 1728547090,
+  "member_limit": 200,
+  "creates_join_request": false,
+  "is_primary": false,
+  "is_revoked": false
+ }
+}
+```

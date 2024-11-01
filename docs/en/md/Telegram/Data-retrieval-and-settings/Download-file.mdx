@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Download file
+ Download file from Telegram servers
+
+
+
+`Function DownloadFile(Val Token, Val FileID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | FileID | --fileid | String | &#x2714; | File ID for downloading |
+
+  
+  Returns:  BinaryData - file's binary data
+
+<br/>
+
+:::tip
+Method at API documentation: [getFile](https://core.telegram.org/bots/api#getfile)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    FileID = "CQACAgIAAx0EcNsaZQACKOBnIzy_esPtkTolfhAhstyxYWEfNAACyWgAAuEHGElI5ZlX6thOwTYE";
+    Token  = "6129457865:AAFyzNYOAFbu...";
+
+    Result = OPI_Telegram.DownloadFile(Token, FileID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram DownloadFile \
+             --token "***" \
+             --fileid "CQACAgIAAx0EcNsaZQACKPdnI3-qB8UHFmO56na464h_gBEltwACSF8AAuEHIEneQuxDOTqyxjYE"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram DownloadFile ^
+             --token "***" ^
+             --fileid "CQACAgIAAx0EcNsaZQACKPdnI3-qB8UHFmO56na464h_gBEltwACSF8AAuEHIEneQuxDOTqyxjYE"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+NOT JSON: 49 44 33 03 00 00 00 05 1F 76 54 49 54 32 00 00 00 0B 00 00 01 FF FE 44 00 6F 00 67 00 73 00 54 50 45 31 00 00 00 15 00 00 01 FF FE 4D 00 6F 00 74 00 6F 00 72 00 68 00 65 00 61 00 64 00 54 59…
+```

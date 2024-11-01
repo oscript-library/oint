@@ -1,0 +1,58 @@
+﻿---
+sidebar_position: 12
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Download folder
+ Downloads a zip archive with the contents of the specified directory
+
+
+
+`Function DownloadFolder(Val Token, Val Path) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Path | --path | String | &#x2714; | Path or ID of the directory |
+
+  
+  Returns:  BinaryData - binary data of the zip archive with the contents of the directory
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Path  = "/New";
+
+    Result = OPI_Dropbox.DownloadFolder(Token, Path);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox DownloadFolder \
+             --token "***" \
+             --path "/New"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox DownloadFolder ^
+             --token "***" ^
+             --path "/New"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+NOT JSON: 50 4B 03 04 14 00 00 08 00 00 78 94 48 59 00 00 00 00 00 00 00 00 00 00 00 00 04 00 09 00 4E 65 77 2F 55 54 05 00 01 84 7B 05 67 50 4B 03 04 14 00 08 08 00 00 4F 87 AF 58 00 00 00 00 00 00 00…
+```

@@ -1,0 +1,80 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create poll tweet
+ Creates a tweet with a poll
+
+
+
+`Function CreatePollTweet(Val Text, Val OptionArray, Val Duration, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Text | --text | String | &#x2714; | Tweet text |
+  | OptionArray | --options | Array of String | &#x2714; | Poll options array |
+  | Duration | --duration | String, Number | &#x2714; | Poll duration |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization data. See GetStandardParameters |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Twitter
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetTwitterAuthData();
+    Text       = "TestTweet" + String(New UUID);
+
+    AnswersArray = New Array;
+    AnswersArray.Add("Option 1");
+    AnswersArray.Add("Option 2");
+
+    Result = OPI_Twitter.CreatePollTweet(Text, AnswersArray, 60, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreatePollTweet \
+             --text "TestTweet61af1a69-4f0c-4822-9d60-f48cbc80e42d" \
+             --options "['Option 1','Option 2']" \
+             --duration 60 \
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreatePollTweet ^
+             --text "TestTweet61af1a69-4f0c-4822-9d60-f48cbc80e42d" ^
+             --options "['Option 1','Option 2']" ^
+             --duration 60 ^
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "data": {
+  "text": "TestTweetc6891802-9272-4c6d-bbd7-71cbb02f0702",
+  "edit_history_tweet_ids": [
+   "1843892524672258331"
+  ],
+  "id": "1843892524672258331"
+ }
+}
+```

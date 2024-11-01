@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить файл
+ Удаляет файл на Slack
+
+
+
+`Функция УдалитьФайл(Знач Токен, Знач ИдентификаторФайла) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен бота |
+  | ИдентификаторФайла | --fileid | Строка | &#x2714; | Идентификатор файла |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Slack
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен              = "xoxb-6965308400114-696804637...";
+    ИдентификаторФайла = "F07SF4PSRMM";
+
+    Результат = OPI_Slack.УдалитьФайл(Токен, ИдентификаторФайла);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack УдалитьФайл \
+              --token "***" \
+              --fileid "F07U7MZQ79T"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack УдалитьФайл ^
+              --token "***" ^
+              --fileid "F07U7MZQ79T"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "ok": true
+}
+```

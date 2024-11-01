@@ -1,0 +1,113 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Register delivery appointment
+ Fixes the delivery date, time and address agreed with the customer
+
+
+
+`Function RegisterDeliveryAppointment(Val Token, Val Appointment, Val TestAPI = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Auth token |
+  | Appointment | --appt | Structure of KeyAndValue | &#x2714; | Appointment description. See GetAppointmentDescription |
+  | TestAPI | --testapi | Boolean | &#x2716; | Flag to use test API for requests |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from CDEK
+
+<br/>
+
+:::tip
+Method at API documentation: [Registration of delivery appointment](https://api-docs.cdek.ru/36989576.html)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3MzAyNzQyOTksImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
+    OrderUUID = "9c3c739b-a092-4926-94a3-b38e6be42394";
+
+    Day          = 60 * 60 * 24;
+    CurrentDate  = BegOfDay(OPI_Tools.GetCurrentDate());
+    DeliveryDate = CurrentDate + Day * 14;
+
+    WHile DayOfWeek(DeliveryDate) > 5 Do
+        DeliveryDate = DeliveryDate + Day;
+    EndDo;
+
+    Appointment = New Structure;
+
+    Appointment.Insert("cdek_number", "1106207236");
+    Appointment.Insert("order_uuid" , OrderUUID);
+    Appointment.Insert("date"       , Format(DeliveryDate, "DF=yyyy-MM-dd"));
+    Appointment.Insert("time_from"  , "10:00");
+    Appointment.Insert("time_to"    , "17:00");
+    Appointment.Insert("comment"    , "Group office");
+
+        DeliveryLocation = New Structure;
+        DeliveryLocation.Insert("code"        , "270");
+        DeliveryLocation.Insert("fias_guid"   , "0c5b2444-70a0-4932-980c-b4dc0d3f02b5");
+        DeliveryLocation.Insert("postal_code" , "109004");
+        DeliveryLocation.Insert("longitude"   , 37.6204);
+        DeliveryLocation.Insert("latitude"    , 55.754);
+        DeliveryLocation.Insert("country_code", "RU");
+        DeliveryLocation.Insert("region"      , "Novosibirsk");
+        DeliveryLocation.Insert("sub_region"  , "Novosibirsk");
+        DeliveryLocation.Insert("city"        , "Novosibirsk");
+        DeliveryLocation.Insert("kladr_code"  , "7700000000000");
+        DeliveryLocation.Insert("address"     , "st. Bluchera, 33");
+
+    Appointment.Insert("to_location", DeliveryLocation);
+
+    Result = OPI_CDEK.RegisterDeliveryAppointment(Token, Appointment, True);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint cdek RegisterDeliveryAppointment \
+             --token "***" \
+             --appt "{'cdek_number':'1106207236','order_uuid':'0db9f44f-1bdd-4f79-b2ec-666910aae74f','date':'2024-11-14','time_from':'10:00','time_to':'17:00','comment':'Group office','to_location':{'code':'270','fias_guid':'0c5b2444-70a0-4932-980c-b4dc0d3f02b5','postal_code':'109004','longitude':37.6204,'latitude':55.754,'country_code':'RU','region':'Novosibirsk','sub_region':'Novosibirsk','city':'Novosibirsk','kladr_code':'7700000000000','address':'st. Bluchera, 33'}}" \
+             --testapi "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint cdek RegisterDeliveryAppointment ^
+             --token "***" ^
+             --appt "{'cdek_number':'1106207236','order_uuid':'0db9f44f-1bdd-4f79-b2ec-666910aae74f','date':'2024-11-14','time_from':'10:00','time_to':'17:00','comment':'Group office','to_location':{'code':'270','fias_guid':'0c5b2444-70a0-4932-980c-b4dc0d3f02b5','postal_code':'109004','longitude':37.6204,'latitude':55.754,'country_code':'RU','region':'Novosibirsk','sub_region':'Novosibirsk','city':'Novosibirsk','kladr_code':'7700000000000','address':'st. Bluchera, 33'}}" ^
+             --testapi "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "entity": {
+  "uuid": "72753031-4031-40bd-88e4-8e0b920aa014"
+ },
+ "requests": [
+  {
+   "request_uuid": "b250e29b-f5cb-4054-8f74-998ba95e11d6",
+   "type": "CREATE",
+   "date_time": "2024-10-21T21:28:17+03:00",
+   "state": "ACCEPTED"
+  }
+ ],
+ "related_entities": []
+}
+```

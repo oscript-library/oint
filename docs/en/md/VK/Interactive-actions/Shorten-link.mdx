@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Shorten link
+ Creates a shortened URL from a regular one
+
+
+
+`Function ShortenLink(Val URL, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | URL for shortening |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  String - Shortened URL
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetVKParameters();
+
+    Result = OPI_VK.ShortenLink("https://github.com/Bayselonarrend/OpenIntegrations", Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk ShortenLink \
+             --url "https://github.com/Bayselonarrend/OpenIntegrations" \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk ShortenLink ^
+             --url "https://github.com/Bayselonarrend/OpenIntegrations" ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+"https://vk.cc/ctL1sM"
+```

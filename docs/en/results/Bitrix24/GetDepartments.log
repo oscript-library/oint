@@ -1,0 +1,22 @@
+﻿ {
+ "result": [
+  {
+   "ID": "594",
+   "NAME": "Subordinate department",
+   "SORT": 500,
+   "PARENT": "592",
+   "UF_HEAD": "1"
+  }
+ ],
+ "total": 1,
+ "time": {
+  "start": 1728454927.4735,
+  "finish": 1728454927.50699,
+  "duration": 0.0334928035736084,
+  "processing": 0.00784516334533691,
+  "date_start": "2024-10-09T09:22:07+03:00",
+  "date_finish": "2024-10-09T09:22:07+03:00",
+  "operating_reset_at": 1728455527,
+  "operating": 0
+ }
+}

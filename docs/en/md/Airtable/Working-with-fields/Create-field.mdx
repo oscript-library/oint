@@ -1,0 +1,80 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create field
+ Creates a new field in the table
+
+
+
+`Function CreateField(Val Token, Val Base, Val Table, Val FieldStructure) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Base | --base | String | &#x2714; | Base identifier |
+  | Table | --table | String | &#x2714; | Table identifier |
+  | FieldStructure | --fielddata | Structure of KeyAndValue | &#x2714; | Description of the new field |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Airtable
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    Base  = "appeMvjrOQPJciL7O";
+    Table = "tblQdiEo3yKV0e1cj";
+    Name  = String(New UUID);
+
+    Field  = OPI_Airtable.GetNumberField(Name);
+    Result = OPI_Airtable.CreateField(Token, Base, Table, Field);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint airtable CreateField \
+             --token "***" \
+             --base "appk3Fw5gwni4SWYj" \
+             --table "tblIT2QrATF0xn2YE" \
+             --title "7a09c61f-6057-4d70-8b81-0ca8fb393e44" \
+             --fielddata "{'name':'7a09c61f-6057-4d70-8b81-0ca8fb393e44','type':'number','options':{'precision':0}}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint airtable CreateField ^
+             --token "***" ^
+             --base "appk3Fw5gwni4SWYj" ^
+             --table "tblIT2QrATF0xn2YE" ^
+             --title "7a09c61f-6057-4d70-8b81-0ca8fb393e44" ^
+             --fielddata "{'name':'7a09c61f-6057-4d70-8b81-0ca8fb393e44','type':'number','options':{'precision':0}}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "type": "number",
+ "options": {
+  "precision": 0
+ },
+ "id": "fldDqI1OXajeQw5Gg",
+ "name": "b3fd1280-83b2-4145-838d-3437b14adee3"
+}
+```

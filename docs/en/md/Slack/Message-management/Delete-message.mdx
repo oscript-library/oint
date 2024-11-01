@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete message
+ Deletes a channel message by timestamp
+
+
+
+`Function DeleteMessage(Val Token, Val Channel, Val Timestamp, Val IsDelayed = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Channel | --channel | String | &#x2714; | Channel ID |
+  | Timestamp | --stamp | String | &#x2714; | Timestamp or message ID |
+  | IsDelayed | --issheduled | Boolean | &#x2716; | Indicator of deleting a delayed message |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "xoxb-6965308400114-696804637...";
+    Channel   = "C06UFNUTKUL";
+    Timestamp = "1729541148.797409";
+
+    Result = OPI_Slack.DeleteMessage(Token, Channel, Timestamp);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack DeleteMessage \
+             --token "***" \
+             --channel "C06UFNUTKUL" \
+             --stamp "1730381068.292829"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack DeleteMessage ^
+             --token "***" ^
+             --channel "C06UFNUTKUL" ^
+             --stamp "1730381068.292829"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "channel": "C06UFNUTKUL",
+ "ts": "1728454508.757479"
+}
+```

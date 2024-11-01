@@ -15,19 +15,23 @@ sidebar_class_name: NachaloRaboty
 
 Быстрый переход по документации:
   <div>
-  <a href="/docs/Instructions/Telegram/"><img src={require('../../static/img/APIs/Telegram.png').default} width="32"/></a>
-  <a href="/docs/Instructions/VK/"><img src={require('../../static/img/APIs/VK.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Viber/"><img src={require('../../static/img/APIs/Viber.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Twitter/"><img src={require('../../static/img/APIs/Twitter.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Notion/"><img src={require('../../static/img/APIs/Notion.png').default} width="32"/></a>
-  <a href="/docs/Instructions/YandexDisk/"><img src={require('../../static/img/APIs/YandexDisk.png').default} width="32"/></a>
-  <a href="/docs/Instructions/GoogleCalendar/"><img src={require('../../static/img/APIs/GoogleCalendar.png').default} width="32"/></a>
-  <a href="/docs/Instructions/GoogleDrive/"><img src={require('../../static/img/APIs/GoogleDrive.png').default} width="32"/></a>
-  <a href="/docs/Instructions/GoogleSheets/"><img src={require('../../static/img/APIs/GoogleSheets.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Slack/"><img src={require('../../static/img/APIs/Slack.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Airtable/"><img src={require('../../static/img/APIs/Airtable.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Dropbox/"><img src={require('../../static/img/APIs/Dropbox.png').default} width="32"/></a>
-  <a href="/docs/Instructions/Bitrix24/"><img src={require('../../static/img/APIs/Bitrix24.png').default} width="32"/></a>
+ <a href="/docs/Instructions/Telegram/"><img src={require('../../static/img/APIs/Telegram.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Bitrix24/"><img src={require('../../static/img/APIs/Bitrix24.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/CDEK/"><img src={require('../../static/img/APIs/CDEK.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/VK/"><img src={require('../../static/img/APIs/VK.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/VKTeams/"><img src={require('../../static/img/APIs/VKTeams.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Viber/"><img src={require('../../static/img/APIs/Viber.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Ozon/"><img src={require('../../static/img/APIs/Ozon.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Twitter/"><img src={require('../../static/img/APIs/Twitter.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Notion/"><img src={require('../../static/img/APIs/Notion.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/YandexDisk/"><img src={require('../../static/img/APIs/YandexDisk.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/GoogleCalendar/"><img src={require('../../static/img/APIs/GoogleCalendar.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/GoogleDrive/"><img src={require('../../static/img/APIs/GoogleDrive.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/GoogleSheets/"><img src={require('../../static/img/APIs/GoogleSheets.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Slack/"><img src={require('../../static/img/APIs/Slack.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Airtable/"><img src={require('../../static/img/APIs/Airtable.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Dropbox/"><img src={require('../../static/img/APIs/Dropbox.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/Neocities/"><img src={require('../../static/img/APIs/Neocities.png').default} width="32" class="wp_logo"/></a>
 </div> 
 
 <br/>
@@ -46,7 +50,52 @@ sidebar_class_name: NachaloRaboty
 
 Подробнее о каждом варианте релиза в разделе [Про варианты релизов](/docs/Start/Release-variants)
 
-<br/>
+<hr/>
+
+## Примеры использования
+
+В качестве расширения 1С и OneScript пакета, Открытый пакет интеграций представляет из себя набор общих модулей с экспортными методами - по одному модулю на каждый из API. Все доступные методы являются функциями, т.е. возвращают значения. Как правило, это *Соответствия*, описывающие JSON ответа сервера, но также могут быть *Двоичные данные* (например, в методах скачивания файла) или *строки* (например в методах получения URL). Типы возвращаемых значений описаны для каждого метода в текущей документации и докумментирующих комментариях в самом коде библиотеки
+
+Простой пример использования ОПИ - отправка картинки в Telegram:
+
+```bsl
+
+    Токен    = "6129457865:AAFyzNYOAFbu...";
+    IDЧата   = "461699897";
+    Текст    = "Крутая картинка";
+    Картинка = "C:/picture.jpg";  // URL, путь на диске или Двоичные данные
+
+    Результат = OPI_Telegram.ОтправитьКартинку(Токен, IDЧата, Текст, Картинка);
+
+```
+
+Реализация ОПИ как CLI приложения, в свою очередь, повторяет функционал расширения и предоставляет доступ ко всем его методам из командной строки. Каждому параметру оригинальной функции соответствует опция, начинающаяся с символов `--`, например `--token`. Эти соответствия для каждого конкретного метода можно найти в текущей документации, а также в комментариях к функциям 1С/OneScript и встроенной справке приложения (справка по методоу отображается при вызове необходимого метода без параметров, подробнее см. [Работа с CLI версией](/docs/Start/CLI_version))
+
+Пример для CLI:
+
+```bash
+
+    oint telegram ОтправитьКартинку \
+        --token "6129457865:AAFyzNYOAFbu..." \
+        --chat 461699897 \
+        --text "Крутая картинка" \
+        --picture "picture.jpg"
+
+```
+
+<hr/>
+
+## О работе с текущей документацией
+
+Некоторые особенности данной документации, знание которых поможет использовать ее более эффективно и избежать недопониманий:
+
+1. **Каждый метод имеет свою страницу-описание**. Как правило, заголовок страницы-описания совпадает с именем метода (с добавлением пробелов) и находится в подразделе, имя которого совпадает с мененм области программного модуля. Если вы не можете найти страницу для конкретной интересующей вас функции, то попробуйте воспользоваться встроенным полнотекстовым поиском в правом верхнем углу
+
+2. **Параметры типа ДвоичныеДанные могут быть определены как пути к файлам или URL**. Зачастую, для параметров с типом данных *ДвоичныеДанные*, в примерах кода документации используются URL или пути к файлам на диске. Это допустимое поведение, так как в начале всех функций входящие параметры преобразуются (по возможности) к необходимым типам. В случае с двоичными данными, например, при передаче строки, будет выполнена попытка найти файл на диске, получить его из интернета или преобразовать из Base64
+
+3. **Примеры результатов функций приведены в формате JSON, но в 1С и OS это будут Соответствия**. Если в примере результата на странице-описании функции приведен JSON, то в 1С и OneScript это будет *Соответствие* - т.е. ответ будет сериализован. JSON строкой возвращается только в CLI версии
+
+<hr/>
 
 ## Структура модулей
 

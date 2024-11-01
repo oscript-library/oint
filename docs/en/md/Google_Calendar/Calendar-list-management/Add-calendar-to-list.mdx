@@ -1,0 +1,76 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Add calendar to list
+ Adds an existing calendar to the user's list
+
+
+
+`Function AddCalendarToList(Val Token, Val Calendar) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Calendar | --calendar | String | &#x2714; | Calendar ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token    = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Calendar = "aed9a7a5ff01b42e80462afcfc08037e289b1a4dfb07820f5d4e2885e8ccd68e@group.calendar.google.com";
+
+    Result = OPI_GoogleCalendar.AddCalendarToList(Token, Calendar);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gcalendar AddCalendarToList \
+             --token "***" \
+             --calendar "44a1d529f420a927dfc6b0056bfa43cd20368042124e5b248370409f1608e7c6@group.calendar.google.com"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gcalendar AddCalendarToList ^
+             --token "***" ^
+             --calendar "44a1d529f420a927dfc6b0056bfa43cd20368042124e5b248370409f1608e7c6@group.calendar.google.com"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "kind": "calendar#calendarListEntry",
+ "etag": "\"1728454322437000\"",
+ "id": "48ff105e488eea0a588031479250116f2e769f150c2ca1274b7e79c4b057b46b@group.calendar.google.com",
+ "summary": "New name",
+ "description": "New description",
+ "timeZone": "Europe/Moscow",
+ "colorId": "4",
+ "backgroundColor": "#fa573c",
+ "foregroundColor": "#000000",
+ "selected": true,
+ "accessRole": "owner",
+ "defaultReminders": [],
+ "conferenceProperties": {
+  "allowedConferenceSolutionTypes": [
+   "hangoutsMeet"
+  ]
+ }
+}
+```

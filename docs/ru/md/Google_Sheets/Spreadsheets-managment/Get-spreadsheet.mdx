@@ -1,0 +1,58 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить книгу
+ Получает информацию о книге по ID
+
+
+
+`Функция ПолучитьКнигу(Знач Токен, Знач Идентификатор) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Идентификатор | --spreadsheet | Строка | &#x2714; | Идентификатор книги |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен         = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Идентификатор = "1fktk0k_rOszr4c3t89Z1KXXSsRWPU0fFPgLImiN-MzI";
+
+    Результат = OPI_GoogleSheets.ПолучитьКнигу(Токен, Идентификатор);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets ПолучитьКнигу \
+              --token "***" \
+              --spreadsheet "1fIjChG6dvYVrGfTUjHicj_lCDX351es5kCosec4Vf-w"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets ПолучитьКнигу ^
+              --token "***" ^
+              --spreadsheet "1fIjChG6dvYVrGfTUjHicj_lCDX351es5kCosec4Vf-w"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+
+```

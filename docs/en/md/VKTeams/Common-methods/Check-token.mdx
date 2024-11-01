@@ -1,0 +1,59 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Check token
+ Checks if the bot token is functional
+
+
+
+`Function CheckToken(Val Token) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK Teams
+
+<br/>
+
+:::tip
+Method at API documentation: [GET /self/get](https://teams.vk.com/botapi/#/self/get_self_get)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "001.3501506236.091...";
+    Result = OPI_VKTeams.CheckToken(Token);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vkteams CheckToken \
+             --token "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vkteams CheckToken ^
+             --token "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "userId": "1011893356",
+ "ok": true
+}
+```

@@ -1,0 +1,64 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get participant count
+ Gets the total number of chat participants
+
+
+
+`Function GetParticipantCount(Val Token, Val ChatID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [getChatMemberCount](https://core.telegram.org/bots/api#getchatmembercount)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChannelID = "@testsichee";
+
+    Result = OPI_Telegram.GetParticipantCount(Token, ChannelID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram GetParticipantCount \
+             --token "***" \
+             --chat "@testsichee"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram GetParticipantCount ^
+             --token "***" ^
+             --chat "@testsichee"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": 2
+}
+```

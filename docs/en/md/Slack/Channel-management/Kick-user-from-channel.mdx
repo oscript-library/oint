@@ -1,0 +1,64 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Kick user from channel
+ Removes specified user from channel
+
+
+
+`Function KickUserFromChannel(Val Token, Val Channel, Val User) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Channel | --channel | String | &#x2714; | Channel ID |
+  | User | --user | String | &#x2714; | User ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token   = "xoxb-6965308400114-696804637...";
+    Channel = "C07SY62EY12";
+    User    = "U06UABH3APP";
+
+    Result = OPI_Slack.KickUserFromChannel(Token, Channel, User);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack KickUserFromChannel \
+             --token "***" \
+             --channel "C07UZU8ASMN" \
+             --user "U06UABH3APP"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack KickUserFromChannel ^
+             --token "***" ^
+             --channel "C07UZU8ASMN" ^
+             --user "U06UABH3APP"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true
+}
+```

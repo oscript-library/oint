@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 9
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Pin message
+ Pins the selected message in the chat room
+
+
+
+`Function PinMessage(Val Token, Val ChatID, Val MessageID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chatid | String, Number | &#x2714; | Chat ID |
+  | MessageID | --messageid | String, Number | &#x2714; | ID of the message to be pinned |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK Teams
+
+<br/>
+
+:::tip
+To call this method, the bot must be an administrator in the chat room
+
+ Method at API documentation: [GET /chats/pinMessage](https://teams.vk.com/botapi/#/chats/get_chats_pinMessage)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "001.3501506236.091...";
+    ChatID    = "689203963@chat.agent";
+    MessageID = "7428324441567793059";
+
+    Result = OPI_VKTeams.PinMessage(Token, ChatID, MessageID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vkteams PinMessage \
+             --token "***" \
+             --chatid "689203963@chat.agent" \
+             --messageid "7431934219846160783"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vkteams PinMessage ^
+             --token "***" ^
+             --chatid "689203963@chat.agent" ^
+             --messageid "7431934219846160783"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true
+}
+```

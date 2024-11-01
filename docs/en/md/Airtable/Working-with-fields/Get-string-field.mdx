@@ -1,0 +1,55 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get field (string)
+ Gets the description of a string field
+
+
+
+`Function GetStringField(Val Name) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | New field name |
+
+  
+  Returns:  Structure - Field description
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Airtable.GetStringField("String");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable GetStringField \
+             --title "String"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable GetStringField ^
+             --title "String"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "name": "String",
+ "type": "richText"
+}
+```

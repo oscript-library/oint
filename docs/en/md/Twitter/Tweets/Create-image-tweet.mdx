@@ -1,0 +1,86 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create image tweet
+ Creates a tweet with an image attachment
+
+
+
+`Function CreateImageTweet(Val Text, Val ImageArray, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Text | --text | String | &#x2714; | Tweet text |
+  | ImageArray | --pictures | Array of String, BinaryData | &#x2714; | Image files array |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization data. See GetStandardParameters |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Twitter
+
+<br/>
+
+:::tip
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetTwitterAuthData();
+    Text       = "TestTweet" + String(New UUID);
+
+    Image  = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Binary or Path to file
+    Image2 = "https://api.athenaeum.digital/test_data/picture2.jpg"; // URL, Binary or Path to file
+
+    ImageArray = New Array;
+    ImageArray.Add(Image);
+    ImageArray.Add(Image2);
+
+    Result = OPI_Twitter.CreateImageTweet(Text, ImageArray, Parameters);
+
+    Text   = "TestTweet" + String(New UUID);
+    Result = OPI_Twitter.CreateImageTweet(Text, Image, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreateImageTweet \
+             --text "TestTweet3d97d974-ac62-4f71-99f6-4a0b4826a58e" \
+             --pictures "C:\Users\Administrator\AppData\Local\Temp\prtpa4xzig1.tmp" \
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreateImageTweet ^
+             --text "TestTweet3d97d974-ac62-4f71-99f6-4a0b4826a58e" ^
+             --pictures "C:\Users\Administrator\AppData\Local\Temp\prtpa4xzig1.tmp" ^
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "data": {
+  "id": "1843891880246775903",
+  "edit_history_tweet_ids": [
+   "1843891880246775903"
+  ],
+  "text": "TestTweet451aa501-9a10-4e00-bcc5-0c3c8d61221a https://t.co/VWvjWsdQHs"
+ }
+}
+```

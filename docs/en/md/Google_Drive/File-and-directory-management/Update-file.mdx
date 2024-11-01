@@ -1,0 +1,74 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Update file
+ Updates file binary data
+
+
+
+`Function UpdateFile(Val Token, Val Identifier, Val File, Val NewName = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Identifier | --object | String | &#x2714; | Identifier of the object to update |
+  | File | --file | BinaryData,String | &#x2714; | File source for update |
+  | NewName | --title | String | &#x2716; | New file name (if necessary) |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+:::tip
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token      = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    NewName    = "UpdatedFile.jpg";
+    Identifier = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+    File       = "https://api.athenaeum.digital/test_data/picture2.jpg"; // URL, Binary Data or Path to file
+
+    Result = OPI_GoogleDrive.UpdateFile(Token, Identifier, File, NewName);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gdrive UpdateFile \
+             --token "***" \
+             --object "1MgRgtXCENs_8VuQjX6WFY7s6Yv9RoaJV" \
+             --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg" \
+             --title "UpdatedFile.jpg"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gdrive UpdateFile ^
+             --token "***" ^
+             --object "1MgRgtXCENs_8VuQjX6WFY7s6Yv9RoaJV" ^
+             --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg" ^
+             --title "UpdatedFile.jpg"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "kind": "drive#file",
+ "id": "1slRtvK9Yap08a-wh_iE5go6dkCMwZrYH",
+ "name": "UpdatedFile.jpg",
+ "mimeType": "image/jpeg"
+}
+```

@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 21
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get chats structure
+ Get chat fields structure
+
+
+
+`Function GetChatStructure(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty values, False > field types at values |
+
+  
+  Returns:  Structure of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Bitrix24.GetChatStructure();
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint bitrix24 GetChatStructure \
+             --empty false
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint bitrix24 GetChatStructure ^
+             --empty false
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "TYPE": "<Chat type OPEN (Public) | CHAT (Private)>",
+ "TITLE": "<Chat title>",
+ "DESCRIPTION": "<Chat description>",
+ "COLOR": "<Chat color: RED, GREEN, MINT, LIGHT_BLUE, DARK_BLUE, PURPLE, AQUA, ...>",
+ "MESSAGE": "<First chat message>",
+ "USERS": "<Chat members array>",
+ "AVATAR": "<Base64 chat picture>",
+ "OWNER_ID": "<ID of chat owner. Current user by default>"
+}
+```

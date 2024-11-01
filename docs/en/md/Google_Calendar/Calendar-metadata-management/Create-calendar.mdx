@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create calendar
+ Creates an empty calendar
+
+
+
+`Function CreateCalendar(Val Token, Val Name) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Name | --title | String | &#x2714; | Name of the created calendar |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Name  = "TestCalendar";
+
+    Result = OPI_GoogleCalendar.CreateCalendar(Token, Name);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gcalendar CreateCalendar \
+             --token "***" \
+             --title "TestCalendar"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gcalendar CreateCalendar ^
+             --token "***" ^
+             --title "TestCalendar"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "kind": "calendar#calendar",
+ "etag": "\"f-Xduc312TYuzWZZ-yIpBJJfeyo\"",
+ "id": "60613d53c4670abdceec3e7693ca475b0e88dc1678db7210521356b4940a6148@group.calendar.google.com",
+ "summary": "TestCalendar",
+ "timeZone": "Europe/Moscow",
+ "conferenceProperties": {
+  "allowedConferenceSolutionTypes": [
+   "hangoutsMeet"
+  ]
+ }
+}
+```

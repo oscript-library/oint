@@ -58,7 +58,7 @@
     NewLine.Метод       = "GetDirectoriesList";
     NewLine.МетодПоиска = "GETDIRECTORIESLIST";
     NewLine.Параметр    = "--depth";
-    NewLine.Описание    = "Adds a list of files to the directory fields (optional, def. val. - False)";
+    NewLine.Описание    = "Adds a list of files to the directory fields (optional, def. val. - No)";
     NewLine.Область     = "File and directory management";
 
 
@@ -102,13 +102,12 @@
     NewLine.Описание    = "Token";
     NewLine.Область     = "File and directory management";
     NewLine.ОписаниеМетода   = "Uploads a file to the drive
-    |
-    |    The structure of the JSON object data (parameter --props):
+    |    Data structure for option --props:
     |    {
-    |     ""MIME""        : ""image/jpeg"",
-    |     ""Name""         : ""New file.jpg"",
-    |     ""Description""    : ""This is a new file"",
-    |     ""Parent""    : ""root""
+    |     ""MIME"": ""image/jpeg"",
+    |     ""Name"": ""New file.jpg"",
+    |     ""Description"": ""This is a new file"",
+    |     ""Parent"": ""root""
     |    }
     |";
 
@@ -296,6 +295,17 @@
     NewLine.Параметр    = "--object";
     NewLine.Описание    = "Identifier of the object to delete";
     NewLine.Область     = "File and directory management";
+
+
+    NewLine = CompositionTable.Add();
+    NewLine.Библиотека  = "gdrive";
+    NewLine.Модуль      = "OPI_GoogleDrive";
+    NewLine.Метод       = "GetFileDescription";
+    NewLine.МетодПоиска = "GETFILEDESCRIPTION";
+    NewLine.Параметр    = "--empty";
+    NewLine.Описание    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Область     = "File and directory management";
+    NewLine.ОписаниеМетода   = "Gets a blank description template for uploading a file";
 
 
     NewLine = CompositionTable.Add();

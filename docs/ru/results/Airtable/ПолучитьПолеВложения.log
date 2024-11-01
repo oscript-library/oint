@@ -1,6 +1,4 @@
-﻿  
-  {
-  "name": "Вложение",
-  "type": "multipleAttachments"
-  }
-  
+﻿    {
+ "name": "Вложение",
+ "type": "multipleAttachments"
+}

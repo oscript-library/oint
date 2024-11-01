@@ -1,0 +1,24 @@
+﻿    CurrentDate = OPI_Tools.GetCurrentDate();
+    Token       = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Calendar    = "aed9a7a5ff01b42e80462afcfc08037e289b1a4dfb07820f5d4e2885e8ccd68e@group.calendar.google.com";
+    Name        = "New event";
+    Description = "TestEventDescription";
+    Hour        = 3600;
+
+    Image1      = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Binary or Path to file
+    Image2      = "https://api.athenaeum.digital/test_data/picture2.jpg"; // URL, Binary or Path to file
+    Attachments = New Map;
+
+    Attachments.Insert("Image1", Image1);
+    Attachments.Insert("Image2", Image2);
+
+    EventDescription = New Map;
+    EventDescription.Insert("Description"           , Description);
+    EventDescription.Insert("Title"                 , Name);
+    EventDescription.Insert("Venue"                 , "InOffice");
+    EventDescription.Insert("StartDate"             , CurrentDate);
+    EventDescription.Insert("EndDate"               , EventDescription["StartDate"] + Hour);
+    EventDescription.Insert("ArrayOfAttachmentURLs" , Attachments);
+    EventDescription.Insert("SendNotifications"     , True);
+
+    Result = OPI_GoogleCalendar.CreateEvent(Token, Calendar, EventDescription);

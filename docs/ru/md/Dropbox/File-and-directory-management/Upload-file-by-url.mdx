@@ -1,0 +1,65 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Загрузить файл по URL
+ Загружает файл на облачный диск, получая его по указанному URL
+
+
+
+`Функция ЗагрузитьФайлПоURL(Знач Токен, Знач URLФайла, Знач Путь) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | URLФайла | --url | Строка | &#x2714; | URL источник файла |
+  | Путь | --path | Строка | &#x2714; | Путь сохранения на Dropbox |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Путь  = "/New/url_doc.docx";
+    Токен = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    URL   = "https://api.athenaeum.digital/test_data/document.docx";
+
+    Результат = OPI_Dropbox.ЗагрузитьФайлПоURL(Токен, URL, Путь);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ЗагрузитьФайлПоURL \
+              --token "***" \
+              --url "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/document.docx" \
+              --path "/New/url_doc.docx"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ЗагрузитьФайлПоURL ^
+              --token "***" ^
+              --url "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/document.docx" ^
+              --path "/New/url_doc.docx"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ ".tag": "async_job_id",
+ "async_job_id": "4Z3HR2PdMNAAAAAAAAAAAQ"
+}
+```

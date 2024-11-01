@@ -1,0 +1,86 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create gif tweet
+ Creates a tweet with a gif attachment
+
+
+
+`Function CreateGifTweet(Val Text, Val GifsArray, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Text | --text | String | &#x2714; | Tweet text |
+  | GifsArray | --gifs | Array of String, BinaryData | &#x2714; | Gif files array |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization data. See GetStandardParameters |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Twitter
+
+<br/>
+
+:::tip
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetTwitterAuthData();
+    Text       = "TestTweet" + String(New UUID);
+
+    GIF  = "https://api.athenaeum.digital/test_data/animation.gif"; // URL, Binary or Path to file
+    Gif2 = "https://api.athenaeum.digital/test_data/animation.gif"; // URL, Binary or Path to file
+
+    GifsArray = New Array;
+    GifsArray.Add(GIF);
+    GifsArray.Add(Gif2);
+
+    Result = OPI_Twitter.CreateGifTweet(Text, GifsArray, Parameters);
+
+    Text   = "TestTweet" + String(New UUID);
+    Result = OPI_Twitter.CreateGifTweet(Text, GIF, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreateGifTweet \
+             --text "TestTweetf39ccc82-e7a0-4afc-9346-cd238dc3ed7f" \
+             --gifs "C:\Users\Administrator\AppData\Local\Temp\rnwdxztsez1.tmp" \
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint twitter CreateGifTweet ^
+             --text "TestTweetf39ccc82-e7a0-4afc-9346-cd238dc3ed7f" ^
+             --gifs "C:\Users\Administrator\AppData\Local\Temp\rnwdxztsez1.tmp" ^
+             --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "data": {
+  "text": "TestTweet27989425-2fb9-4d49-ac50-2b73dff7c69e https://t.co/m6q4Bzxea3",
+  "id": "1843892227023507612",
+  "edit_history_tweet_ids": [
+   "1843892227023507612"
+  ]
+ }
+}
+```

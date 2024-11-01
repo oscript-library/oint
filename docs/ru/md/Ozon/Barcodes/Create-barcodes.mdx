@@ -1,0 +1,71 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Создать штрихкоды
+ Генерирует новые штрихкоды для товаров
+
+
+
+`Функция СоздатьШтрихкоды(Знач IDКлиента, Знач КлючAPI, Знач IDТоваров) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | IDКлиента | --clientid | Строка | &#x2714; | Идентификатор клиента |
+  | КлючAPI | --apikey | Строка | &#x2714; | API ключ |
+  | IDТоваров | --productids | Строка, Массив Из Строка | &#x2714; | ID товаров для создания штрихкодов |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Ozon Seller API
+
+<br/>
+
+:::tip
+За один запрос вы можете создать штрихкоды не больше чем для 100 товаров
+
+ С одного аккаунта продавца можно использовать метод не больше 20 раз в минуту
+
+ Метод в документации API: [post /v1/barcode/generate](https://docs.ozon.ru/api/seller/#operation/generate-barcode)
+:::
+<br/>
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    IDКлиента  = "2128753";
+    КлючAPI    = "7cc90d26-33e4-499b...";
+    IDТовара   = "1235184552";
+
+    Результат = OPI_Ozon.СоздатьШтрихкоды(IDКлиента, КлючAPI, IDТовара);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon СоздатьШтрихкоды \
+              --clientid "***" \
+              --apikey "***" \
+              --productids 1237069598
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon СоздатьШтрихкоды ^
+              --clientid "***" ^
+              --apikey "***" ^
+              --productids 1237069598
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "errors": []
+}
+```

@@ -1,0 +1,31 @@
+﻿ {
+ "tables": [
+  {
+   "id": "tblbhqzh3PL3cS6Ch",
+   "name": "TestTable",
+   "primaryFieldId": "fld9JrMjoVLwSPy3C",
+   "fields": [
+    {
+     "type": "number",
+     "options": {
+      "precision": 0
+     },
+     "id": "fld9JrMjoVLwSPy3C",
+     "name": "Number"
+    },
+    {
+     "type": "richText",
+     "id": "fld044xLas7uBdddr",
+     "name": "String"
+    }
+   ],
+   "views": [
+    {
+     "id": "viwfJdwEI0dtqJMl6",
+     "name": "Grid view",
+     "type": "grid"
+    }
+   ]
+  }
+ ]
+}

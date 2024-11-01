@@ -1,0 +1,63 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить список складов
+ Получает список складов компании
+
+
+
+`Функция ПолучитьСписокСкладов(Знач IDКлиента, Знач КлючAPI) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | IDКлиента | --clientid | Строка | &#x2714; | Идентификатор клиента |
+  | КлючAPI | --apikey | Строка | &#x2714; | API ключ |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Ozon Seller API
+
+<br/>
+
+:::tip
+Метод в документации API: [post /v1/warehouse/list](https://docs.ozon.ru/api/seller/#operation/WarehouseAPI_WarehouseList)
+:::
+<br/>
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    IDКлиента     = "2128753";
+    КлючAPI       = "7cc90d26-33e4-499b...";
+
+    Результат = OPI_Ozon.ПолучитьСписокСкладов(IDКлиента, КлючAPI);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon ПолучитьСписокСкладов \
+              --clientid "***" \
+              --apikey "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon ПолучитьСписокСкладов ^
+              --clientid "***" ^
+              --apikey "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "result": []
+}
+```

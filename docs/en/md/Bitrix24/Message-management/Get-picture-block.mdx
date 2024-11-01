@@ -1,0 +1,66 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get picture block
+ Make picture block for SendMessage method
+
+
+
+`Function GetPictureBlock(Val Name, Val URL) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | Picture name |
+  | URL | --url | String | &#x2714; | URL of sending picture |
+
+  
+  Returns:  Structure - PictureBlock
+
+<br/>
+
+:::tip
+Blocks at API documentation: [Link](https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=93&CHAPTER_ID=07867)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Name = "Image";
+    URL  = "https://api.athenaeum.digital/test_data/picture.jpg";
+
+    Result = OPI_Bitrix24.GetPictureBlock(Name, URL);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint bitrix24 GetPictureBlock \
+             --title "Image" \
+             --url "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint bitrix24 GetPictureBlock ^
+             --title "Image" ^
+             --url "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "IMAGE": {
+  "NAME": "Image",
+  "LINK": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg"
+ }
+}
+```

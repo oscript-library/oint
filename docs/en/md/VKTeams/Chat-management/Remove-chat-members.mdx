@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Remove chat members
+ Removes users from the chat
+
+
+
+`Function RemoveChatMembers(Val Token, Val ChatID, Val Users) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chatid | String, Number | &#x2714; | Chat ID |
+  | Users | --members | String, Number, Array of String, Number | &#x2714; | The member or members of the chat room to remove |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK Teams
+
+<br/>
+
+:::tip
+Method at API documentation: [GET /chats/members/delete](https://teams.vk.com/botapi/#/chats/get_chats_members_delete)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "001.3501506236.091...";
+    ChatID = "689203963@chat.agent";
+    User   = 1011987091;
+
+    Result = OPI_VKTeams.RemoveChatMembers(Token, ChatID, User);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vkteams RemoveChatMembers \
+             --token "***" \
+             --chatid "689203963@chat.agent" \
+             --members 1011987091
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vkteams RemoveChatMembers ^
+             --token "***" ^
+             --chatid "689203963@chat.agent" ^
+             --members 1011987091
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true
+}
+```

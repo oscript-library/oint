@@ -1,0 +1,114 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send document
+ Sends a document to a chat or channel
+
+
+
+`Function SendDocument(Val Token, Val ChatID, Val Text, Val Document, Val Keyboard = "", Val Markup = "Markdown", Val FileName = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | Text | --text | String | &#x2714; | Message text |
+  | Document | --doc | BinaryData, String | &#x2714; | Document file |
+  | Keyboard | --keyboard | String | &#x2716; | Keyboard. See FormKeyboardFromButtonArray |
+  | Markup | --parsemode | String | &#x2716; | Text processing type (HTML, Markdown, MarkdownV2) |
+  | FileName | --filename | String | &#x2716; | Custom displayed file name with extension, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [sendDocument](https://core.telegram.org/bots/api#senddocument)<br/>
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChatID    = "461699897";
+    ChannelID = "@testsichee";
+    Text      = "Строковое значение";
+    Document  = "https://api.athenaeum.digital/test_data/document.docx";
+
+    DocumentPath = GetTempFileName("docx");
+    CopyFile(Document, DocumentPath);
+
+    DocumentDD = New BinaryData(DocumentPath);
+
+    Result = OPI_Telegram.SendDocument(Token, ChatID, Text, Document);
+
+    Result = OPI_Telegram.SendDocument(Token, ChatID, Text, Document, , , "customname.docx");
+
+    Result = OPI_Telegram.SendDocument(Token, ChannelID, Text, DocumentPath);
+
+    Result = OPI_Telegram.SendDocument(Token, ChannelID, Text, DocumentDD, , , "customname.docx");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram SendDocument \
+             --token "***" \
+             --chat "@testsichee" \
+             --text "Строковое значение" \
+             --doc "C:\Users\Administrator\AppData\Local\Temp\veorjiuummh.docx" \
+             --filename "custom.docx"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram SendDocument ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --text "Строковое значение" ^
+             --doc "C:\Users\Administrator\AppData\Local\Temp\veorjiuummh.docx" ^
+             --filename "custom.docx"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "message_id": 8307,
+  "from": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "chat": {
+   "id": 461699897,
+   "first_name": "Anton",
+   "last_name": "Titowets",
+   "username": "JKIee",
+   "type": "private"
+  },
+  "date": 1728453390,
+  "document": {
+   "file_name": "document.docx",
+   "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+   "file_id": "BQACAgIAAxkDAAIgc2cGGw4a6yPdiNLubNQsFLQQPLHoAAJPWgAC_cg4SJF9HYfiILIbNgQ",
+   "file_unique_id": "AgADT1oAAv3IOEg",
+   "file_size": 24069
+  },
+  "caption": "Строковое значение"
+ }
+}
+```

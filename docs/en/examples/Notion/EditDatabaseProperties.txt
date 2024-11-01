@@ -1,0 +1,11 @@
+﻿    Token = "secret_9RsfMrRMqZwqp0Zl0B...";
+    Base  = "12682aa7-fc4e-81c0-bdcd-c2e2dbfd727d";
+
+    Title       = "TestTitle";
+    Description = "TestDescription";
+
+    Properties = New Map;
+    Properties.Insert("Email", "rich_text"); // Type fields "Email" will changed with email to text
+    Properties.Insert("Website"); // Field "Website" will deleted
+
+    Result = OPI_Notion.EditDatabaseProperties(Token, Base, Properties, Title, Description);

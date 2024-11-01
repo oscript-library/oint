@@ -1,0 +1,45 @@
+﻿ {
+ "ok": true,
+ "result": {
+  "message_id": 8305,
+  "from": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "chat": {
+   "id": 461699897,
+   "first_name": "Anton",
+   "last_name": "Titowets",
+   "username": "JKIee",
+   "type": "private"
+  },
+  "date": 1728453323,
+  "video": {
+   "duration": 5,
+   "width": 640,
+   "height": 480,
+   "file_name": "video",
+   "mime_type": "video/mp4",
+   "thumbnail": {
+    "file_id": "AAMCAgADGQMAAiBxZwYayqajllz9GMFHYBYZ7YpNjTEAAktaAAL9yDhIF3QIvLsyAUIBAAdtAAM2BA",
+    "file_unique_id": "AQADS1oAAv3IOEhy",
+    "file_size": 20106,
+    "width": 320,
+    "height": 240
+   },
+   "thumb": {
+    "file_id": "AAMCAgADGQMAAiBxZwYayqajllz9GMFHYBYZ7YpNjTEAAktaAAL9yDhIF3QIvLsyAUIBAAdtAAM2BA",
+    "file_unique_id": "AQADS1oAAv3IOEhy",
+    "file_size": 20106,
+    "width": 320,
+    "height": 240
+   },
+   "file_id": "BAACAgIAAxkDAAIgcWcGGsqmo5Zc_RjBR2AWGe2KTY0xAAJLWgAC_cg4SBd0CLy7MgFCNgQ",
+   "file_unique_id": "AgADS1oAAv3IOEg",
+   "file_size": 1137878
+  },
+  "caption": "Строковое значение"
+ }
+}

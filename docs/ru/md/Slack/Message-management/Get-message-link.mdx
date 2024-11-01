@@ -1,0 +1,66 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить ссылку на сообщение
+ Получает постоянный UTL к сообщению канала
+
+
+
+`Функция ПолучитьСсылкуНаСообщение(Знач Токен, Знач Канал, Знач Отметка) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен бота |
+  | Канал | --channel | Строка | &#x2714; | Идентификатор канала |
+  | Отметка | --stamp | Строка | &#x2714; | Временная отметка или ID сообщения |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Slack
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен   = "xoxb-6965308400114-696804637...";
+    Канал   = "C06UFNUTKUL";
+    Отметка = "1729541148.797409";
+
+    Результат = OPI_Slack.ПолучитьСсылкуНаСообщение(Токен, Канал, Отметка);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack ПолучитьСсылкуНаСообщение \
+              --token "***" \
+              --channel "C06UFNUTKUL" \
+              --stamp "1730373056.112639"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack ПолучитьСсылкуНаСообщение ^
+              --token "***" ^
+              --channel "C06UFNUTKUL" ^
+              --stamp "1730373056.112639"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "ok": true,
+ "permalink": "https://openintegrationsgroup.slack.com/archives/C06UFNUTKUL/p1728409447484679",
+ "channel": "C06UFNUTKUL"
+}
+```

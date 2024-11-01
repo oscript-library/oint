@@ -1,0 +1,91 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Edit list calendar
+ Edits the properties of a calendar from the user's list
+
+
+
+`Function EditListCalendar(Val Token, Val Calendar, Val PrimaryColor, Val SecondaryColor, Val Hidden = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Calendar | --calendar | String | &#x2714; | Calendar ID |
+  | PrimaryColor | --primary | String | &#x2714; | HEX primary color (#ffffff) |
+  | SecondaryColor | --secondary | String | &#x2714; | HEX secondary color (#ffffff) |
+  | Hidden | --hidden | Boolean | &#x2716; | Hidden calendar |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token          = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Calendar       = "aed9a7a5ff01b42e80462afcfc08037e289b1a4dfb07820f5d4e2885e8ccd68e@group.calendar.google.com";
+    PrimaryColor   = "#000000";
+    SecondaryColor = "#ffd800";
+    Hidden         = False;
+
+    Result = OPI_GoogleCalendar.EditListCalendar(Token
+        , Calendar
+        , PrimaryColor
+        , SecondaryColor
+        , Hidden);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gcalendar EditListCalendar \
+             --token "***" \
+             --calendar "44a1d529f420a927dfc6b0056bfa43cd20368042124e5b248370409f1608e7c6@group.calendar.google.com" \
+             --primary "#000000" \
+             --secondary "#ffd800" \
+             --hidden false
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gcalendar EditListCalendar ^
+             --token "***" ^
+             --calendar "44a1d529f420a927dfc6b0056bfa43cd20368042124e5b248370409f1608e7c6@group.calendar.google.com" ^
+             --primary "#000000" ^
+             --secondary "#ffd800" ^
+             --hidden false
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "kind": "calendar#calendarListEntry",
+ "etag": "\"1728454322717000\"",
+ "id": "48ff105e488eea0a588031479250116f2e769f150c2ca1274b7e79c4b057b46b@group.calendar.google.com",
+ "summary": "New name",
+ "description": "New description",
+ "timeZone": "Europe/Moscow",
+ "colorId": "6",
+ "backgroundColor": "#ffd800",
+ "foregroundColor": "#000000",
+ "accessRole": "owner",
+ "defaultReminders": [],
+ "conferenceProperties": {
+  "allowedConferenceSolutionTypes": [
+   "hangoutsMeet"
+  ]
+ }
+}
+```

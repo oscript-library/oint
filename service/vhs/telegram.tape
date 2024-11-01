@@ -16,4 +16,8 @@ Set Height 619
 Type `oint telegram` Sleep 200ms Enter
 
 
-Sleep 15s
+Sleep 7s
+
+Type `oint telegram SendTextMessage` Sleep 200ms Enter
+
+Sleep 11s

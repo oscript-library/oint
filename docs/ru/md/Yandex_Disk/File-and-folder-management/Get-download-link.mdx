@@ -1,0 +1,62 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить ссылку для скачивания
+ Получает ссылку для скачивания файла
+
+
+
+`Функция ПолучитьСсылкуДляСкачивания(Знач Токен, Знач Путь) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Путь | --path | Строка | &#x2714; | Путь к файлу для скачивания |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Yandex
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен    = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
+    Путь     = "/d60811f5-8c4e-4580-9c23-df02e62f1a7a.png";
+
+    Результат = OPI_YandexDisk.ПолучитьСсылкуДляСкачивания(Токен, Путь);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint yadisk ПолучитьСсылкуДляСкачивания \
+              --token "***" \
+              --path "/45ee4146-05b6-4167-812c-939f5315d4e5.png"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint yadisk ПолучитьСсылкуДляСкачивания ^
+              --token "***" ^
+              --path "/45ee4146-05b6-4167-812c-939f5315d4e5.png"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "href": "https://downloader.disk.yandex.ru/disk/dd238bf4fdd879d13c37dc6b404e14c84ab2186704d640ce6e8213a30318e641/6705a64e/gwThwhLBKYvLhQCNnqAHirWAoEC4dKsPFFzSTeWuFK5ceIUkIDC7fKzI6e0Ic1rFWZAX7ZAMHvmKl9PvgqcSEQ%3D%3D?uid=1573541518&filename=6605347b-a937-40bd-9d48-b1d480048e0d.png&disposition=attachment&hash=&limit=0&content_type=multipart&owner_uid=1573541518&fsize=2114023&hid=03d7263840468e281bd0b238a26e7d0d&media_type=image&tknv=v2&etag=9e0176f87f6565a22f78e0f9b39a4d78",
+ "method": "GET",
+ "templated": false
+}
+```

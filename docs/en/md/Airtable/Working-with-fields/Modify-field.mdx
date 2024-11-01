@@ -1,0 +1,83 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Modify field
+ Changes the name and/or description of an existing table field
+
+
+
+`Function ModifyField(Val Token, Val Base, Val Table, Val Field, Val Name = "", Val Description = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Base | --base | String | &#x2714; | Base identifier Base |
+  | Table | --table | String | &#x2714; | Table identifier |
+  | Field | --field | String | &#x2714; | Field identifier |
+  | Name | --title | String | &#x2716; | New name |
+  | Description | --description | String | &#x2716; | New description |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Airtable
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    Base  = "appeMvjrOQPJciL7O";
+    Table = "tblQdiEo3yKV0e1cj";
+    Field = "flde0csjDBnhVqRca";
+
+    Name        = String(New UUID) + "(change.)";
+    Description = "New description";
+
+    Result = OPI_Airtable.ModifyField(Token, Base, Table, Field, Name, Description);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable ModifyField \
+             --token "***" \
+             --base "appk3Fw5gwni4SWYj" \
+             --table "tblIT2QrATF0xn2YE" \
+             --field "fldj4YEXLNyegv9Op" \
+             --title "4563616d-8171-4005-a423-d03743b2c2fd(change.)" \
+             --description "New description"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable ModifyField ^
+             --token "***" ^
+             --base "appk3Fw5gwni4SWYj" ^
+             --table "tblIT2QrATF0xn2YE" ^
+             --field "fldj4YEXLNyegv9Op" ^
+             --title "4563616d-8171-4005-a423-d03743b2c2fd(change.)" ^
+             --description "New description"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "type": "number",
+ "options": {
+  "precision": 0
+ },
+ "id": "fldDqI1OXajeQw5Gg",
+ "name": "2cf91139-d111-4599-87bf-e3510ea23584(change.)",
+ "description": "New description"
+}
+```

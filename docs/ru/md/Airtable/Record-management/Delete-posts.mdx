@@ -1,0 +1,73 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить записи
+ Удаляет одну или массив записей по идентификаторам
+
+
+
+`Функция УдалитьЗаписи(Знач Токен, Знач База, Знач Таблица, Знач Записи) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | База | --base | Строка | &#x2714; | Идентификатор базы данных |
+  | Таблица | --table | Строка | &#x2714; | Идентификатор таблицы |
+  | Записи | --records | Строка, Массив из Строка | &#x2714; | Идентификатор или массив индентификаторов записей |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Airtable
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен       = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    База        = "appeMvjrOQPJciL7O";
+    Таблица     = "tblQdiEo3yKV0e1cj";
+    Запись      = "reclJA9M8WL5gPBg3";
+
+    Результат = OPI_Airtable.УдалитьЗаписи(Токен, База, Таблица, Запись);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable УдалитьЗаписи \
+              --token "***" \
+              --base "appQHC2MLLWwYR8Ru" \
+              --table "tblH5f3dgkm8Ph1dY" \
+              --records "reco6pcIJjQboeTzX"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable УдалитьЗаписи ^
+              --token "***" ^
+              --base "appQHC2MLLWwYR8Ru" ^
+              --table "tblH5f3dgkm8Ph1dY" ^
+              --records "reco6pcIJjQboeTzX"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "records": [
+  {
+   "deleted": true,
+   "id": "rec9dR46CmDQMkUJ0"
+  }
+ ]
+}
+```

@@ -1,0 +1,79 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get office filter description
+ Gets an empty layout of the filter for getting the list of offices in the GetOfficeList function
+
+
+
+`Function GetOfficeFilterDescription(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+
+  
+  Returns:  Structure of KeyAndValue - Fields structure
+
+<br/>
+
+:::tip
+Required fields may depend on the type of order or nesting. Be sure to read the CDEK documentation
+
+ Field descriptions in the documentation: [List of pickup points](https://api-docs.cdek.ru/36990336.html)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_CDEK.GetOfficeFilterDescription();
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint cdek GetOfficeFilterDescription \
+             --empty true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint cdek GetOfficeFilterDescription ^
+             --empty true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "postal_code": "<Postal code of the city for which the list of offices is required>",
+ "city_code": "<CDEC locality code>",
+ "type": "<Office type: PVZ, POSTAMAT, ALL>",
+ "country_code": "<Country code in ISO_3166-1_alpha-2 format>",
+ "region_code": "<Region code according to CDEK database>",
+ "have_cashless": "<Availability of payment terminal>",
+ "have_cash": "<There is cash intake>",
+ "allowed_cod": "<Cash on delivery allowed>",
+ "is_dressing_room": "<Availability of fitting room>",
+ "weight_max": "<Maximum weight in kg that the office can accept>",
+ "weight_min": "<Minimum weight in kg that the office accepts>",
+ "lang": "<Localization of the office>",
+ "take_only": "<Is the office only a delivery point>",
+ "is_handout": "<Its a shipping point>",
+ "is_reception": "<Is there an office to take orders>",
+ "fias_guid": "<FIAS city code>",
+ "code": "<POZ code>",
+ "is_ltl": "<Does the office work with LTL>",
+ "fulfillment": "<Does the office work with Fullfilment.Arrival>",
+ "size": "<Limiting the result selection>",
+ "page": "<Result selection page number>"
+}
+```

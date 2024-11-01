@@ -1,12 +1,10 @@
-﻿  
-  {
-  "name": "Дата",
-  "type": "date",
-  "options": {
+﻿    {
+ "name": "Дата",
+ "type": "date",
+ "options": {
   "dateFormat": {
-  "format": "YYYY-MM-DD",
-  "name": "iso"
+   "format": "YYYY-MM-DD",
+   "name": "iso"
   }
-  }
-  }
-  
+ }
+}

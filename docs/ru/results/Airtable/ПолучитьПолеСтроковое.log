@@ -1,6 +1,4 @@
-﻿  
-  {
-  "name": "Строковое",
-  "type": "richText"
-  }
-  
+﻿    {
+ "name": "Строковое",
+ "type": "richText"
+}

@@ -1,0 +1,53 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get authorization link
+ Generates an authorization link for browser transition
+
+
+
+`Function GetAuthorizationLink(Val AppKey) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | AppKey | --appkey | String | &#x2714; | Application key |
+
+  
+  Returns:  String - URL for browser transition
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    AppKey = "oynqxds...";
+    Result = OPI_Dropbox.GetAuthorizationLink(AppKey);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox GetAuthorizationLink \
+             --appkey "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox GetAuthorizationLink ^
+             --appkey "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+"https://www.dropbox.com/oauth2/authorize?client_id=oynqxdsqft8oyky&response_type=code&token_access_type=offline"
+```

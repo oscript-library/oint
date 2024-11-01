@@ -1,0 +1,73 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить комментарий
+ Удаляет комментарий к записи таблицы
+
+
+
+`Функция УдалитьКомментарий(Знач Токен, Знач База, Знач Таблица, Знач Запись, Знач Комментарий) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | База | --base | Строка | &#x2714; | Идентификатор базы данных |
+  | Таблица | --table | Строка | &#x2714; | Идентификатор таблицы |
+  | Запись | --record | Строка | &#x2714; | Идентификатор записи в таблице |
+  | Комментарий | --comment | Строка | &#x2714; | Идентификатор комментария |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Airtable
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен       = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    База        = "appeMvjrOQPJciL7O";
+    Таблица     = "tblQdiEo3yKV0e1cj";
+    Запись      = "reclJA9M8WL5gPBg3";
+    Комментарий = "comD945ArYL8Ysdb7";
+
+    Результат = OPI_Airtable.УдалитьКомментарий(Токен, База, Таблица, Запись, Комментарий);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable УдалитьКомментарий \
+              --token "***" \
+              --base "appQHC2MLLWwYR8Ru" \
+              --table "tblH5f3dgkm8Ph1dY" \
+              --record "reco6pcIJjQboeTzX" \
+              --comment "comlBtHYn3mGCy08y"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable УдалитьКомментарий ^
+              --token "***" ^
+              --base "appQHC2MLLWwYR8Ru" ^
+              --table "tblH5f3dgkm8Ph1dY" ^
+              --record "reco6pcIJjQboeTzX" ^
+              --comment "comlBtHYn3mGCy08y"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "id": "comtbulEbTtAISgHM",
+ "deleted": true
+}
+```

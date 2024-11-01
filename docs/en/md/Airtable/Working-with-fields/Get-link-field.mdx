@@ -1,0 +1,55 @@
+﻿---
+sidebar_position: 10
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get field (url)
+ Gets the description of a URL field
+
+
+
+`Function GetLinkField(Val Name) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | Field name |
+
+  
+  Returns:  Structure - Field description
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Airtable.GetLinkField("Link");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable GetLinkField \
+             --title "Link"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable GetLinkField ^
+             --title "Link"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "name": "Link",
+ "type": "url"
+}
+```

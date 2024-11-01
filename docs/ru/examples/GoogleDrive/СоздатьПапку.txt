@@ -1,6 +1,5 @@
-﻿  
-  Имя = "Тестовая папка";
-  
-  Ответ = OPI_GoogleDrive.СоздатьПапку(Токен, Имя);  //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);        //Строка
-  
+﻿    Токен    = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Каталог  = "191iyaa6-2BCNRPOF0F8mQ0TuNWPNesdM";
+    Имя      = "Тестовая папка";
+
+    Результат = OPI_GoogleDrive.СоздатьПапку(Токен, Имя, Каталог);

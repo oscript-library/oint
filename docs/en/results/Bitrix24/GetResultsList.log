@@ -1,0 +1,38 @@
+﻿ {
+ "result": [
+  {
+   "id": 870,
+   "taskId": 2400,
+   "commentId": 5946,
+   "createdBy": 1,
+   "createdAt": "2024-10-09T09:19:54+03:00",
+   "updatedAt": "2024-10-09T09:19:54+03:00",
+   "status": 0,
+   "text": "The task has been changed, let's split up",
+   "formattedText": "The task has been changed, let's split up",
+   "files": []
+  },
+  {
+   "id": 868,
+   "taskId": 2400,
+   "commentId": 5944,
+   "createdBy": 1,
+   "createdAt": "2024-10-09T09:19:53+03:00",
+   "updatedAt": "2024-10-09T09:19:53+03:00",
+   "status": 0,
+   "text": "The task has been changed, do not split up",
+   "formattedText": "The task has been changed, do not split up",
+   "files": []
+  }
+ ],
+ "time": {
+  "start": 1728454795.04247,
+  "finish": 1728454795.07889,
+  "duration": 0.0364160537719727,
+  "processing": 0.00944018363952637,
+  "date_start": "2024-10-09T09:19:55+03:00",
+  "date_finish": "2024-10-09T09:19:55+03:00",
+  "operating_reset_at": 1728455395,
+  "operating": 0
+ }
+}

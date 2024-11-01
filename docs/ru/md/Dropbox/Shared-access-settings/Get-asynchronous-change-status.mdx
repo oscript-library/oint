@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить статус асинхронного изменения
+ Получает статус асинхронной работы по изменению доступов
+
+
+
+`Функция ПолучитьСтатусАсинхронногоИзменения(Знач Токен, Знач IDРаботы) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | IDРаботы | --job | Строка | &#x2714; | ID асинхронной работы |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен     = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    IDРаботы  = "dbjid:AAB0Lbggipt1m_8t1nHt37QTCgQjZsuHW7P9POxS343n5FswR8m4y2R3nvINw3D5gQPzXrbc7FfEnvXncC78w9Vj";
+
+    Результат = OPI_Dropbox.ПолучитьСтатусАсинхронногоИзменения(Токен, IDРаботы);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ПолучитьСтатусАсинхронногоИзменения \
+              --token "***" \
+              --job "dbjid:AADKFdB0Ae2pKIqgr9pPPCDr26yKtt0RwL7I2rSpzHsMibn1i5_ulX8weL6FjF1BOp0FfyRIL3VmgGye85KVY9k6"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ПолучитьСтатусАсинхронногоИзменения ^
+              --token "***" ^
+              --job "dbjid:AADKFdB0Ae2pKIqgr9pPPCDr26yKtt0RwL7I2rSpzHsMibn1i5_ulX8weL6FjF1BOp0FfyRIL3VmgGye85KVY9k6"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ ".tag": "complete"
+}
+```

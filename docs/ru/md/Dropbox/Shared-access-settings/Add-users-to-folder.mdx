@@ -1,0 +1,65 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Добавить пользователей к папке
+ Предоставляет стороннии пользователям доступ к каталогу
+
+
+
+`Функция ДобавитьПользователейКПапке(Знач Токен, Знач IDПапки, Знач АдресаПочты, Знач ТолькоПросмотр = Истина) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | IDПапки | --folder | Строка | &#x2714; | ID публичного каталога (shared folder ID) |
+  | АдресаПочты | --emails | Строка, Массив Из Строка | &#x2714; | Список адресов почты добавляемых пользователей |
+  | ТолькоПросмотр | --readonly | Булево | &#x2716; | Запрещает редактирование файла для стороннего пользователя |
+
+  
+  Возвращаемое значение:   Неопределено - пустой ответ
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен  = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Почта  = "h5bk6ft62s@privaterelay.appleid.com";
+    Папка  = "11861101505"; // shared_folder_id
+
+    Результат = OPI_Dropbox.ДобавитьПользователейКПапке(Токен, Папка, Почта, Ложь);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ДобавитьПользователейКПапке \
+              --token "***" \
+              --folder "11902109793" \
+              --emails "['h5bk6ft62s@privaterelay.appleid.com']" \
+              --readonly true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ДобавитьПользователейКПапке ^
+              --token "***" ^
+              --folder "11902109793" ^
+              --emails "['h5bk6ft62s@privaterelay.appleid.com']" ^
+              --readonly true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{}
+```

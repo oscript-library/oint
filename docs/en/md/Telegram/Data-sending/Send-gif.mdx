@@ -1,0 +1,147 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send GIF
+ Sends a GIF to a chat or channel
+
+
+
+`Function SendGif(Val Token, Val ChatID, Val Text, Val GIF, Val Keyboard = "", Val Markup = "Markdown") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | Text | --text | String | &#x2714; | Message text |
+  | GIF | --gif | BinaryData, String | &#x2714; | GIF file |
+  | Keyboard | --keyboard | String | &#x2716; | Keyboard. See FormKeyboardFromButtonArray |
+  | Markup | --parsemode | String | &#x2716; | Text processing type (HTML, Markdown, MarkdownV2) |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [sendAnimation](https://core.telegram.org/bots/api#sendanimation)<br/>
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChatID    = "461699897";
+    ChannelID = "@testsichee";
+    Text      = "Строковое значение";
+    GIF       = "https://api.athenaeum.digital/test_data/animation.gif";
+
+    GifPath = GetTempFileName("gif");
+    CopyFile(GIF, GifPath);
+
+    GifDD = New BinaryData(GifPath);
+
+    Result = OPI_Telegram.SendGif(Token, ChatID, Text, GIF);
+
+    Result = OPI_Telegram.SendGif(Token, ChannelID, Text, GifPath);
+
+    Result = OPI_Telegram.SendGif(Token, ChannelID, Text, GifDD);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram SendGif \
+             --token "***" \
+             --chat "@testsichee" \
+             --text "Строковое значение" \
+             --gif "C:\Users\Administrator\AppData\Local\Temp\chhowtpcdr2.gif"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram SendGif ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --text "Строковое значение" ^
+             --gif "C:\Users\Administrator\AppData\Local\Temp\chhowtpcdr2.gif"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "message_id": 8309,
+  "from": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "chat": {
+   "id": 461699897,
+   "first_name": "Anton",
+   "last_name": "Titowets",
+   "username": "JKIee",
+   "type": "private"
+  },
+  "date": 1728453403,
+  "animation": {
+   "file_name": "animation.gif.mp4",
+   "mime_type": "video/mp4",
+   "duration": 3,
+   "width": 220,
+   "height": 220,
+   "thumbnail": {
+    "file_id": "AAMCAgADGQMAAiB1ZwYbG5XFI99d3EFZLIRqZTuOqk8AAlFaAAL9yDhI7o6IErbGQG0BAAdtAAM2BA",
+    "file_unique_id": "AQADUVoAAv3IOEhy",
+    "file_size": 11352,
+    "width": 220,
+    "height": 220
+   },
+   "thumb": {
+    "file_id": "AAMCAgADGQMAAiB1ZwYbG5XFI99d3EFZLIRqZTuOqk8AAlFaAAL9yDhI7o6IErbGQG0BAAdtAAM2BA",
+    "file_unique_id": "AQADUVoAAv3IOEhy",
+    "file_size": 11352,
+    "width": 220,
+    "height": 220
+   },
+   "file_id": "CgACAgIAAxkDAAIgdWcGGxuVxSPfXdxBWSyEamU7jqpPAAJRWgAC_cg4SO6OiBK2xkBtNgQ",
+   "file_unique_id": "AgADUVoAAv3IOEg",
+   "file_size": 84941
+  },
+  "document": {
+   "file_name": "animation.gif.mp4",
+   "mime_type": "video/mp4",
+   "thumbnail": {
+    "file_id": "AAMCAgADGQMAAiB1ZwYbG5XFI99d3EFZLIRqZTuOqk8AAlFaAAL9yDhI7o6IErbGQG0BAAdtAAM2BA",
+    "file_unique_id": "AQADUVoAAv3IOEhy",
+    "file_size": 11352,
+    "width": 220,
+    "height": 220
+   },
+   "thumb": {
+    "file_id": "AAMCAgADGQMAAiB1ZwYbG5XFI99d3EFZLIRqZTuOqk8AAlFaAAL9yDhI7o6IErbGQG0BAAdtAAM2BA",
+    "file_unique_id": "AQADUVoAAv3IOEhy",
+    "file_size": 11352,
+    "width": 220,
+    "height": 220
+   },
+   "file_id": "CgACAgIAAxkDAAIgdWcGGxuVxSPfXdxBWSyEamU7jqpPAAJRWgAC_cg4SO6OiBK2xkBtNgQ",
+   "file_unique_id": "AgADUVoAAv3IOEg",
+   "file_size": 84941
+  },
+  "caption": "Строковое значение"
+ }
+}
+```

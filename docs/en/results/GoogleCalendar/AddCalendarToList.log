@@ -1,0 +1,19 @@
+﻿ {
+ "kind": "calendar#calendarListEntry",
+ "etag": "\"1728454322437000\"",
+ "id": "48ff105e488eea0a588031479250116f2e769f150c2ca1274b7e79c4b057b46b@group.calendar.google.com",
+ "summary": "New name",
+ "description": "New description",
+ "timeZone": "Europe/Moscow",
+ "colorId": "4",
+ "backgroundColor": "#fa573c",
+ "foregroundColor": "#000000",
+ "selected": true,
+ "accessRole": "owner",
+ "defaultReminders": [],
+ "conferenceProperties": {
+  "allowedConferenceSolutionTypes": [
+   "hangoutsMeet"
+  ]
+ }
+}

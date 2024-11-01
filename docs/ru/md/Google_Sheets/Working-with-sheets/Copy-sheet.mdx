@@ -1,0 +1,75 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Копировать лист
+ Копирует лист из одной книги в другую
+
+
+
+`Функция КопироватьЛист(Знач Токен, Знач Откуда, Знач Куда, Знач Лист) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Откуда | --from | Строка | &#x2714; | ID книги источника |
+  | Куда | --to | Строка | &#x2714; | ID книги приемника |
+  | Лист | --sheet | Строка | &#x2714; | ID копируемого листа |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен  = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Откуда = "1fktk0k_rOszr4c3t89Z1KXXSsRWPU0fFPgLImiN-MzI";
+    Куда   = "1E_lONA4hNRaXY56rV4D2MY7Jz9-5OvmE9HJKwHsU_4Q";
+    Лист   = "1012546035";
+
+    Результат = OPI_GoogleSheets.КопироватьЛист(Токен, Откуда, Куда, Лист);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets КопироватьЛист \
+              --token "***" \
+              --from "1fIjChG6dvYVrGfTUjHicj_lCDX351es5kCosec4Vf-w" \
+              --to "1PTIYuiyzdGsvC9RhcK5-fD_P3jHyRYywwUXS4-GLXB0" \
+              --sheet "108922701"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets КопироватьЛист ^
+              --token "***" ^
+              --from "1fIjChG6dvYVrGfTUjHicj_lCDX351es5kCosec4Vf-w" ^
+              --to "1PTIYuiyzdGsvC9RhcK5-fD_P3jHyRYywwUXS4-GLXB0" ^
+              --sheet "108922701"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "sheetId": 2030603781,
+ "title": "Лист1 (копия)",
+ "index": 2,
+ "sheetType": "GRID",
+ "gridProperties": {
+  "rowCount": 1000,
+  "columnCount": 26
+ }
+}
+```

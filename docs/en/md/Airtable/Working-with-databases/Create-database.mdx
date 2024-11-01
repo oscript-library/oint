@@ -1,0 +1,109 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create base
+ Creates a new database
+
+
+
+`Function CreateDatabase(Val Token, Val Workspace, Val Name, Val TableCollection) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Workspace | --ws | String | &#x2714; | Workspace identifier |
+  | Name | --title | String | &#x2714; | New base name |
+  | TableCollection | --tablesdata | Map Of KeyAndValue | &#x2714; | Table description: Key > name, Value > array of fields |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Airtable
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    Region = "wspdf8yl1yZz3PmWZ";
+    Name   = "TestDatabase";
+
+    FieldArray = New Array;
+    FieldArray.Add(OPI_Airtable.GetNumberField("Number"));
+    FieldArray.Add(OPI_Airtable.GetStringField("String"));
+
+    TableName = "TestTable";
+
+    TableMapping = New Map;
+    TableMapping.Insert(TableName, FieldArray);
+
+    Result = OPI_Airtable.CreateDatabase(Token, Region, Name, TableMapping);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint airtable CreateDatabase \
+             --token "***" \
+             --ws "wspdf8yl1yZz3PmWZ" \
+             --title "TestDatabase" \
+             --tablesdata "{'TestTable':[{'name':'Number','type':'number','options':{'precision':0}},{'name':'String','type':'richText'}]}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint airtable CreateDatabase ^
+             --token "***" ^
+             --ws "wspdf8yl1yZz3PmWZ" ^
+             --title "TestDatabase" ^
+             --tablesdata "{'TestTable':[{'name':'Number','type':'number','options':{'precision':0}},{'name':'String','type':'richText'}]}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "id": "appD2vawGftoNUTKW",
+ "tables": [
+  {
+   "id": "tblbhqzh3PL3cS6Ch",
+   "name": "TestTable",
+   "primaryFieldId": "fld9JrMjoVLwSPy3C",
+   "fields": [
+    {
+     "type": "number",
+     "options": {
+      "precision": 0
+     },
+     "id": "fld9JrMjoVLwSPy3C",
+     "name": "Number"
+    },
+    {
+     "type": "richText",
+     "id": "fld044xLas7uBdddr",
+     "name": "String"
+    }
+   ],
+   "views": [
+    {
+     "id": "viwfJdwEI0dtqJMl6",
+     "name": "Grid view",
+     "type": "grid"
+    }
+   ]
+  }
+ ]
+}
+```

@@ -1,13 +1,11 @@
-﻿  
-  {
-  "id": "comL1oGEDJvIQlMs1",
-  "author": {
+﻿    {
+ "id": "comtbulEbTtAISgHM",
+ "author": {
   "id": "usrFlaAHlTfYWAbVW",
   "email": "bayselonarrend@gmail.com",
   "name": "Антон Титовец"
-  },
-  "text": "Тестовый комментарий",
-  "createdTime": "2024-05-10T19:39:51.561Z",
-  "lastUpdatedTime": null
-  }
-  
+ },
+ "text": "Тестовый комментарий",
+ "createdTime": "2024-10-08T17:44:49.632Z",
+ "lastUpdatedTime": null
+}

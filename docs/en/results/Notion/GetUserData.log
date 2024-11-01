@@ -1,0 +1,11 @@
+﻿ {
+ "object": "user",
+ "id": "ed71865a-9891-46bc-86cd-a92aa499cfdb",
+ "name": "Techno Pizza",
+ "avatar_url": null,
+ "type": "person",
+ "person": {
+  "email": "iscript13@gmail.com"
+ },
+ "request_id": "a6fc9071-fac0-4069-84ba-e724b783d9ce"
+}

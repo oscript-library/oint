@@ -1,0 +1,16 @@
+﻿    Token   = "secret_9RsfMrRMqZwqp0Zl0B...";
+    Page    = "12682aa7-fc4e-8138-9f3e-f9e7e9aecee3";
+    Icon    = "https://api.athenaeum.digital/test_data/picture.jpg";
+    Cover   = "https://api.athenaeum.digital/test_data/picture2.jpg";
+    Archive = False;
+
+    Properties = New Map;
+    Properties.Insert("Active" , False);
+    Properties.Insert("Email"  , "vector@mail.ru");
+
+    Result = OPI_Notion.EditPageProperties(Token
+        , Page
+        , Properties
+        , Icon
+        , Cover
+        , Archive);

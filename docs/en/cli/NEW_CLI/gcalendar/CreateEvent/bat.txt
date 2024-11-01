@@ -1,0 +1,6 @@
+:: JSON data can also be passed as a path to a .json file
+
+oint gcalendar CreateEvent ^
+ --token "***" ^
+ --calendar "6419397843bcbdf4eb262302cbbbe186ccbb5eafbdf37c2a2d22b38801d673c9@group.calendar.google.com" ^
+ --props "{'Description':'TestEventDescription','Title':'New event','Venue':'InOffice','StartDate':'2024-11-01T14:14:15.3956971Z','EndDate':'2024-11-01T15:14:15.3956971Z','ArrayOfAttachmentURLs':{'Image1':'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg','Image2':'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg'},'SendNotifications':true}"

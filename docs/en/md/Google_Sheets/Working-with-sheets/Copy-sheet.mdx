@@ -1,0 +1,75 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Copy sheet
+ Copies a sheet from one spreadsheet to another
+
+
+
+`Function CopySheet(Val Token, Val From, Val Target, Val Sheet) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | From | --from | String | &#x2714; | Source spreadsheet ID |
+  | Target | --to | String | &#x2714; | Destination spreadsheet ID |
+  | Sheet | --sheet | String | &#x2714; | CopiedSheetID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token  = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    From   = "1fktk0k_rOszr4c3t89Z1KXXSsRWPU0fFPgLImiN-MzI";
+    Target = "1E_lONA4hNRaXY56rV4D2MY7Jz9-5OvmE9HJKwHsU_4Q";
+    Sheet  = "1012546035";
+
+    Result = OPI_GoogleSheets.CopySheet(Token, From, Target, Sheet);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets CopySheet \
+             --token "***" \
+             --from "1lNdwweEhK1C1fXq80MLl6-CWAj9y89EJYiUBziOrvhM" \
+             --to "1V14wboC-df-ag6_ayQ4u4bTssfqh01AYMWUEb8NNQak" \
+             --sheet "859602463"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets CopySheet ^
+             --token "***" ^
+             --from "1lNdwweEhK1C1fXq80MLl6-CWAj9y89EJYiUBziOrvhM" ^
+             --to "1V14wboC-df-ag6_ayQ4u4bTssfqh01AYMWUEb8NNQak" ^
+             --sheet "859602463"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "sheetId": 1272386935,
+ "title": "Sheet1 (копия)",
+ "index": 2,
+ "sheetType": "GRID",
+ "gridProperties": {
+  "rowCount": 1000,
+  "columnCount": 26
+ }
+}
+```

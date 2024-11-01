@@ -1,0 +1,5 @@
+﻿    Token  = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Email  = "h5bk6ft62s@privaterelay.appleid.com";
+    Folder = "11861101505"; // shared_folder_id
+
+    Result = OPI_Dropbox.AddUsersToFolder(Token, Folder, Email, False);

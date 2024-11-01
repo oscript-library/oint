@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Unban
+ Unbans a previously banned user
+
+
+
+`Function Unban(Val Token, Val ChatID, Val UserID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | UserID | --user | String, Number | &#x2714; | Target user ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [unbanChatMember](https://core.telegram.org/bots/api#unbanchatmember)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    UserID    = "461699897";
+    ChannelID = "@testsichee";
+
+    Result = OPI_Telegram.Unban(Token, ChannelID, UserID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram Unban \
+             --token "***" \
+             --chat "@testsichee" \
+             --user "461699897"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram Unban ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --user "461699897"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": false,
+ "error_code": 400,
+ "description": "Bad Request: can't remove chat owner"
+}
+```

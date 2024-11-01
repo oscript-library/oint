@@ -1,0 +1,4 @@
+﻿    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Path  = "/New catalog";
+
+    Result = OPI_Dropbox.CreateFolder(Token, Path);

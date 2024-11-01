@@ -1,0 +1,66 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get message link
+ Gets a permanent URL to the channel message
+
+
+
+`Function GetMessageLink(Val Token, Val Channel, Val Timestamp) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Channel | --channel | String | &#x2714; | Channel ID |
+  | Timestamp | --stamp | String | &#x2714; | Timestamp or message ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "xoxb-6965308400114-696804637...";
+    Channel   = "C06UFNUTKUL";
+    Timestamp = "1729541148.797409";
+
+    Result = OPI_Slack.GetMessageLink(Token, Channel, Timestamp);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack GetMessageLink \
+             --token "***" \
+             --channel "C06UFNUTKUL" \
+             --stamp "1730381068.292829"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack GetMessageLink ^
+             --token "***" ^
+             --channel "C06UFNUTKUL" ^
+             --stamp "1730381068.292829"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "permalink": "https://openintegrationsgroup.slack.com/archives/C06UFNUTKUL/p1728454508757479",
+ "channel": "C06UFNUTKUL"
+}
+```

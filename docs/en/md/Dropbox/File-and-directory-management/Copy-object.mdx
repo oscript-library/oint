@@ -1,0 +1,76 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Copy object
+ Copies a file or directory to the selected path
+
+
+
+`Function CopyObject(Val Token, Val From, Val Target) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | From | --from | String | &#x2714; | Path to the original object |
+  | Target | --to | String | &#x2714; | Target path for the new object |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Original = "/New/pic.png";
+    Copy     = "/New/pic_copy.png";
+    Token    = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+
+    Result = OPI_Dropbox.CopyObject(Token, Original, Copy);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox CopyObject \
+             --token "***" \
+             --from "/New/pic.png" \
+             --to "/New/pic_copy.png"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox CopyObject ^
+             --token "***" ^
+             --from "/New/pic.png" ^
+             --to "/New/pic_copy.png"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "metadata": {
+  ".tag": "file",
+  "name": "pic_copy.png",
+  "path_lower": "/new/pic_copy.png",
+  "path_display": "/New/pic_copy.png",
+  "id": "id:kJU6-a-pT48AAAAAAAAclQ",
+  "client_modified": "2024-10-09T06:15:59Z",
+  "server_modified": "2024-10-09T06:16:45Z",
+  "rev": "6240532c29927bd841553",
+  "size": 2114023,
+  "is_downloadable": true,
+  "content_hash": "0f3b18c255b0f252bd326cacc04c15c3aa57bd6b8234adb65aa7bb2987a65492"
+ }
+}
+```

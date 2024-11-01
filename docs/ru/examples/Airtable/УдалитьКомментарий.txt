@@ -1,9 +1,7 @@
-﻿  
-  База    = "apptm8Xqo7TwMaipQ";
-  Таблица = "tbl9G4jVoTJpxYwSY";
-  Запись  = "recV6DxeLQMBNJrUk";
-  Коммент = "comL1oGEDJvIQlMs1";
-  
-  Ответ = OPI_Airtable.УдалитьКомментарий(Токен, База, Таблица, Запись, Коммент); //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                                     //JSON строка
-  
+﻿    Токен       = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
+    База        = "appeMvjrOQPJciL7O";
+    Таблица     = "tblQdiEo3yKV0e1cj";
+    Запись      = "reclJA9M8WL5gPBg3";
+    Комментарий = "comD945ArYL8Ysdb7";
+
+    Результат = OPI_Airtable.УдалитьКомментарий(Токен, База, Таблица, Запись, Комментарий);

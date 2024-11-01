@@ -1,0 +1,66 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get list of files
+ Gets a list of files of the bot or channel
+
+
+
+`Function GetFilesList(Val Token, Val Channel = "", Val PageNumber = 1) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | Channel | --channel | String | &#x2716; | Channel for selection |
+  | PageNumber | --page | Number, String | &#x2716; | Page number |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Slack
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token   = "xoxb-6965308400114-696804637...";
+    Channel = "C06UFNUTKUL";
+
+    Result = OPI_Slack.GetFilesList(Token, Channel);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint slack GetFilesList \
+             --token "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint slack GetFilesList ^
+             --token "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "files": [],
+ "paging": {
+  "count": 100,
+  "total": 12,
+  "page": 1,
+  "pages": 1
+ }
+}
+```

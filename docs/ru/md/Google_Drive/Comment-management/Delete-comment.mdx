@@ -1,0 +1,62 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить комментарий
+ Удаляет комментарий по ID
+
+
+
+`Функция УдалитьКомментарий(Знач Токен, Знач ИДОбъекта, Знач ИДКомментария) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | ИДОбъекта | --object | Строка | &#x2714; | Идентификатор файла или каталога размещения комментария |
+  | ИДКомментария | --comment | Строка | &#x2714; | Идентификатор комментария |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен         = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Идентификатор = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+    ИДКомментария = "AAABXn3e5tY";
+
+    Результат = OPI_GoogleDrive.УдалитьКомментарий(Токен, Идентификатор, ИДКомментария);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gdrive УдалитьКомментарий \
+              --token "***" \
+              --object "1qvVAZNyQPx0PIEqDOFJv8mffJ-W8HHGz" \
+              --comment "AAABX5gyxzQ"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gdrive УдалитьКомментарий ^
+              --token "***" ^
+              --object "1qvVAZNyQPx0PIEqDOFJv8mffJ-W8HHGz" ^
+              --comment "AAABX5gyxzQ"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+null
+```

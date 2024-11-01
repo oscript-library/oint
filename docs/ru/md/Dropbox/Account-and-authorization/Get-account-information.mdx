@@ -1,0 +1,81 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить информацию об аккаунте
+ Получает информацию об аккаунте
+
+
+
+`Функция ПолучитьИнформациюОбАккаунте(Знач Токен, Знач Аккаунт = "") Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Аккаунт | --account | Строка | &#x2716; | ID аккаунта. Текущий аккаунт токена, если не заполнено |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+
+    Результат = OPI_Dropbox.ПолучитьИнформациюОбАккаунте(Токен);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ПолучитьИнформациюОбАккаунте \
+              --token "***" \
+              --account "dbid:AAA4WKMCfgoW5LwuNQFeLOyp-X4omQiNDhE"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ПолучитьИнформациюОбАккаунте ^
+              --token "***" ^
+              --account "dbid:AAA4WKMCfgoW5LwuNQFeLOyp-X4omQiNDhE"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "account_id": "dbid:AAA4WKMCfgoW5LwuNQFeLOyp-X4omQiNDhE",
+ "name": {
+  "given_name": "Антон",
+  "surname": "Титовец",
+  "familiar_name": "Антон",
+  "display_name": "Антон Титовец",
+  "abbreviated_name": "АТ"
+ },
+ "email": "bayselonarrend@gmail.com",
+ "email_verified": true,
+ "disabled": false,
+ "country": "BY",
+ "locale": "en",
+ "referral_link": "https://www.dropbox.com/referrals/AADQceVD6l02CM1dzgLM7s_o8gdaPXKc7oM?src=app9-2724483",
+ "is_paired": false,
+ "account_type": {
+  ".tag": "basic"
+ },
+ "root_info": {
+  ".tag": "user",
+  "root_namespace_id": "3179550035",
+  "home_namespace_id": "3179550035"
+ }
+}
+```

@@ -1,0 +1,19 @@
+﻿    Token  = "6129457865:AAFyzNYOAFbu...";
+    ChatID = "461699897";
+    Text   = "Строковое значение";
+    Image  = "https://api.athenaeum.digital/test_data/picture.jpg";
+    Video  = "https://api.athenaeum.digital/test_data/video.mp4";
+
+    ImagePath = GetTempFileName("png");
+    CopyFile(Image, ImagePath);
+
+    VideoPath = GetTempFileName("mp4");
+    CopyFile(Video, VideoPath);
+
+    VideoDD = New BinaryData(VideoPath);
+
+    MediaGroup = New Map;
+    MediaGroup.Insert(ImagePath, "photo");
+    MediaGroup.Insert(VideoDD  , "video");
+
+    Result = OPI_Telegram.SendMediaGroup(Token, ChatID, Text, MediaGroup);

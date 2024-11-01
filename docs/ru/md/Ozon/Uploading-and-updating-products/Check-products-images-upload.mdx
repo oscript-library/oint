@@ -1,0 +1,94 @@
+﻿---
+sidebar_position: 10
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Проверить загрузку изображений товаров
+ Проверяет загрузку изображений по массиву ID товаров
+
+
+
+`Функция ПроверитьЗагрузкуИзображенийТоваров(Знач IDКлиента, Знач КлючAPI, Знач IDТоваров) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | IDКлиента | --clientid | Строка | &#x2714; | Идентификатор клиента |
+  | КлючAPI | --apikey | Строка | &#x2714; | API ключ |
+  | IDТоваров | --products | Строка, Число, Массив Из Строка, Число | &#x2714; | ID товаров для проверки |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Ozon Seller API
+
+<br/>
+
+:::tip
+Метод в документации API: [post /v1/product/pictures/info](https://docs.ozon.ru/api/seller/#operation/ProductAPI_ProductInfoPictures)
+:::
+<br/>
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    IDКлиента = "2128753";
+    КлючAPI   = "7cc90d26-33e4-499b...";
+    IDТовара  = "1235184552";
+
+    Результат = OPI_Ozon.ПроверитьЗагрузкуИзображенийТоваров(IDКлиента, КлючAPI, IDТовара);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon ПроверитьЗагрузкуИзображенийТоваров \
+              --clientid "***" \
+              --apikey "***" \
+              --products 1235178231
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon ПроверитьЗагрузкуИзображенийТоваров ^
+              --clientid "***" ^
+              --apikey "***" ^
+              --products 1235178231
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "result": {
+  "pictures": [
+   {
+    "product_id": 1215208579,
+    "url": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg",
+    "state": "imported",
+    "is_primary": true,
+    "is_360": false,
+    "is_color": false
+   },
+   {
+    "product_id": 1215208579,
+    "url": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg",
+    "state": "imported",
+    "is_primary": false,
+    "is_360": false,
+    "is_color": false
+   },
+   {
+    "product_id": 1215208579,
+    "url": "GREEN",
+    "state": "imported",
+    "is_primary": false,
+    "is_360": false,
+    "is_color": true
+   }
+  ]
+ }
+}
+```

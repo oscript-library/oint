@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Remove product from selection
+ Removes a previously added product from the selection
+
+
+
+`Function RemoveProductFromSelection(Val Product, Val Selection, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Product | --item | String | &#x2714; | Product ID |
+  | Selection | --sel | String | &#x2714; | Selection ID |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+  Parameters = GetVKParameters();
+  
+  Product = "9372711";
+  Selection = "125";
+  
+  Result = OPI_VK.RemoveProductFromSelection(Product, Selection, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk RemoveProductFromSelection \
+             --sel 137 \
+             --item 9915990 \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk RemoveProductFromSelection ^
+             --sel 137 ^
+             --item 9915990 ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": 1
+}
+```

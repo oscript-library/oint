@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Ban
+ Bans a user in the selected chat
+
+
+
+`Function Ban(Val Token, Val ChatID, Val UserID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | UserID | --user | String, Number | &#x2714; | Target user ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [banChatMember](https://core.telegram.org/bots/api#banchatmember)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    UserID    = "461699897";
+    ChannelID = "@testsichee";
+
+    Result = OPI_Telegram.Ban(Token, ChannelID, UserID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram Ban \
+             --token "***" \
+             --chat "@testsichee" \
+             --user "461699897"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram Ban ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --user "461699897"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": false,
+ "error_code": 400,
+ "description": "Bad Request: can't remove chat owner"
+}
+```

@@ -1,0 +1,111 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get delivery appointment
+ Receives information about the delivery date, time and address agreed with the customer
+
+
+
+`Function GetDeliveryAppointment(Val Token, Val UUID, Val TestAPI = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Auth token |
+  | UUID | --uuid | String | &#x2714; | Appointment UUID |
+  | TestAPI | --testapi | Boolean | &#x2716; | Flag to use test API for requests |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from CDEK
+
+<br/>
+
+:::tip
+The appointment must be previously created. See RegisterDeliveryAppointment
+
+ Method at API documentation: [Information about delivery appointment](https://api-docs.cdek.ru/36989601.html)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3MzAyNzQyOTksImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
+    UUID  = "72753031-e1fc-4112-b846-7cfb3802b337";
+
+    Result = OPI_CDEK.GetDeliveryAppointment(Token, UUID, True);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint cdek GetDeliveryAppointment \
+             --token "***" \
+             --uuid "72753031-2054-4854-91e1-f08aae7060d6" \
+             --testapi "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint cdek GetDeliveryAppointment ^
+             --token "***" ^
+             --uuid "72753031-2054-4854-91e1-f08aae7060d6" ^
+             --testapi "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "entity": {
+  "cdek_number": "1106094898",
+  "order_uuid": "35597722-0c5e-4988-8e2b-57ea3ede7e5f",
+  "date": "2024-10-23",
+  "time_from": "10:00",
+  "time_to": "17:00",
+  "comment": "Group office",
+  "to_location": {
+   "code": 270,
+   "city_uuid": "4e938d63-e189-454d-bb5c-54bfb2f1e4e2",
+   "city": "Новосибирск",
+   "kladr_code": "5400000100000",
+   "country_code": "RU",
+   "country": "Россия",
+   "region": "Новосибирская область",
+   "region_code": 23,
+   "sub_region": "городской округ Новосибирск",
+   "longitude": 82.906928,
+   "latitude": 55.028739,
+   "address": "st. Bluchera, 33"
+  },
+  "uuid": "72753031-4031-40bd-88e4-8e0b920aa014",
+  "statuses": [
+   {
+    "code": "REGISTERED",
+    "name": "Зарегистрирована",
+    "date_time": "2024-10-21T21:28:29+03:00"
+   },
+   {
+    "code": "ACCEPTED",
+    "name": "Принята",
+    "date_time": "2024-10-21T21:28:17+03:00"
+   }
+  ]
+ },
+ "requests": [
+  {
+   "request_uuid": "b250e29b-f5cb-4054-8f74-998ba95e11d6",
+   "type": "CREATE",
+   "date_time": "2024-10-21T21:28:17+03:00",
+   "state": "SUCCESSFUL"
+  }
+ ],
+ "related_entities": []
+}
+```

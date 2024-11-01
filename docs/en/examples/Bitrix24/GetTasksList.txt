@@ -1,0 +1,21 @@
+﻿    CurrentDate = OPI_Tools.GetCurrentDate();
+
+    // Full filter structure you can find at GetTasksFilterStructure method
+    Filter = New Map;
+    Filter.Insert("CREATED_BY" , 1); // Producer with ID 1
+    Filter.Insert("!RESPONSIBLE_ID", 10); // Performers with ID not equal to 10
+    Filter.Insert(">=CREATED_DATE ", CurrentDate - 60 * 60 * 24); // Creation date >= yesterday
+
+    Fields = New Array;
+    Fields.Add("UF_CRM_TASK");
+    Fields.Add("CREATED_BY");
+
+    Indent = 1;
+    URL    = "https://b24-ar17wx.bitrix24.by/rest/1/1o2...";
+
+    Result = OPI_Bitrix24.GetTasksList(URL, Filter, , , Fields);
+
+    URL   = "b24-ar17wx.bitrix24.by";
+    Token = "35c31667006e9f06006b12e400000001000...";
+
+    Result = OPI_Bitrix24.GetTasksList(URL, , Indent, Token);

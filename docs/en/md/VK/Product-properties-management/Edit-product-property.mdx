@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Edit product property
+ Edits the existing product property
+
+
+
+`Function EditProductProperty(Val Name, Val Property, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --title | String | &#x2714; | New name |
+  | Property | --prop | String, Number | &#x2714; | Property ID |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetVKParameters();
+
+    Name     = "Color (change.)";
+    Property = "912";
+
+    Result = OPI_VK.EditProductProperty(Name, Property, Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk EditProductProperty \
+             --title "Color (change.)" \
+             --prop "958" \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk EditProductProperty ^
+             --title "Color (change.)" ^
+             --prop "958" ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": 1
+}
+```

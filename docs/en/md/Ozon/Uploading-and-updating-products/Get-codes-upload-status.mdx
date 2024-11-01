@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 19
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get codes upload status
+ Gets the status of digital item codes upload by task ID
+
+
+
+`Function GetCodesUploadStatus(Val ClientID, Val APIKey, Val TaskID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | ClientID | --clientid | String | &#x2714; | Client identifier |
+  | APIKey | --apikey | String | &#x2714; | API key |
+  | TaskID | --taskid | String, Number | &#x2714; | Add product task ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+
+<br/>
+
+:::tip
+Method at API documentation: [post /v1/product/upload_digital_codes/info](https://docs.ozon.ru/api/seller/#operation/ProductAPI_UploadDigitalCodeInfo)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    ClientID = "2128753";
+    APIKey   = "7cc90d26-33e4-499b...";
+    TaskID   = "1";
+
+    Result = OPI_Ozon.GetCodesUploadStatus(ClientID, APIKey, TaskID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon GetCodesUploadStatus \
+             --clientid "***" \
+             --apikey "***" \
+             --taskid 1
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon GetCodesUploadStatus ^
+             --clientid "***" ^
+             --apikey "***" ^
+             --taskid 1
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "code": 7,
+ "message": "s2s: method \"/endpoints.v1.Service/GetDigitalCodesTaskByID\" is not allowed for the provided access tokens: permission denied",
+ "details": []
+}
+```

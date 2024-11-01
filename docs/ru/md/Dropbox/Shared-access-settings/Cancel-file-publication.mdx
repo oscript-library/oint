@@ -1,0 +1,58 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Отменить публикацию файла
+ Запрещает доступ к файлу для внешних пользователей
+
+
+
+`Функция ОтменитьПубликациюФайла(Знач Токен, Знач IDФайла) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | IDФайла | --fileid | Строка | &#x2714; | ID файла, к которому предоставляется доступ |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен    = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Файл     = "kJU6-a-pT48AAAAAAAAABw";
+
+    Результат = OPI_Dropbox.ОтменитьПубликациюФайла(Токен, Файл);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ОтменитьПубликациюФайла \
+              --token "***" \
+              --fileid "kJU6-a-pT48AAAAAAAAABw"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ОтменитьПубликациюФайла ^
+              --token "***" ^
+              --fileid "kJU6-a-pT48AAAAAAAAABw"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{}
+```

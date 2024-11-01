@@ -1,6 +1,4 @@
-﻿  
-  {
-  "name": "Телефон",
-  "type": "phoneNumber"
-  }
-  
+﻿    {
+ "name": "Телефон",
+ "type": "phoneNumber"
+}

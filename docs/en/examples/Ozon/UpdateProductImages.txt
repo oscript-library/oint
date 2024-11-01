@@ -1,0 +1,19 @@
+﻿    ClientID  = "2128753";
+    APIKey    = "7cc90d26-33e4-499b...";
+    ProductID = "1235184552";
+
+    Image1 = "https://api.athenaeum.digital/test_data/picture.jpg";
+    Image2 = "https://api.athenaeum.digital/test_data/picture2.jpg";
+
+    MarketingColor = "GREEN";
+
+    ImagesArray = New Array;
+    ImagesArray.Add(Image1);
+    ImagesArray.Add(Image2);
+
+    Result = OPI_Ozon.UpdateProductImages(ClientID
+        , APIKey
+        , ProductID
+        , ImagesArray
+        ,
+        , MarketingColor);

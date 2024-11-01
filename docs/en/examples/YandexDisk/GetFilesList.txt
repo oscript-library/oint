@@ -1,0 +1,6 @@
+﻿    Token           = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
+    Count           = 2;
+    OffsetFromStart = 1;
+    FilterByType    = "image";
+
+    Result = OPI_YandexDisk.GetFilesList(Token, Count, OffsetFromStart, FilterByType);

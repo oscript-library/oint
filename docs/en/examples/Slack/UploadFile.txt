@@ -1,0 +1,10 @@
+﻿    Token   = "xoxb-6965308400114-696804637...";
+    Channel = "C06UFNUTKUL";
+    File    = "https://api.athenaeum.digital/test_data/document.docx"; // URL, Binary Data or Path to file
+
+    FileName = "megadoc.docx";
+    Title    = "NewFile";
+
+    Result = OPI_Slack.UploadFile(Token, File, FileName, Title);
+
+    Result = OPI_Slack.UploadFile(Token, File, FileName, Title, Channel);

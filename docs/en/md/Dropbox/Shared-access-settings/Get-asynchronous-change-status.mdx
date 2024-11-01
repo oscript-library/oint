@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get asynchronous change status
+ Get async job status for access changes
+
+
+
+`Function GetAsynchronousChangeStatus(Val Token, Val JobID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | JobID | --job | String | &#x2714; | AsynchronousJobID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    JobID = "dbjid:AAB0Lbggipt1m_8t1nHt37QTCgQjZsuHW7P9POxS343n5FswR8m4y2R3nvINw3D5gQPzXrbc7FfEnvXncC78w9Vj";
+
+    Result = OPI_Dropbox.GetAsynchronousChangeStatus(Token, JobID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox GetAsynchronousChangeStatus \
+             --token "***" \
+             --job "dbjid:AADCJAyajX_mICGmGC5FswF2zE-0d6ZdI384WHvu4K5WhmhD9Tk61Xf1QoWTjr2-Mo96LtBQTjBnQgaLzl_zFQm6"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox GetAsynchronousChangeStatus ^
+             --token "***" ^
+             --job "dbjid:AADCJAyajX_mICGmGC5FswF2zE-0d6ZdI384WHvu4K5WhmhD9Tk61Xf1QoWTjr2-Mo96LtBQTjBnQgaLzl_zFQm6"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ ".tag": "complete"
+}
+```

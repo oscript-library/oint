@@ -1,4 +1,4 @@
-﻿// CLI Command: tools
+﻿// CLI: tools
 
 Var MaximumNesting;
 Var DesiredParameter;
@@ -169,7 +169,7 @@ Procedure GetCollection(Value, Val Encoding)
 	Else
 		
 		If TypeOf(Value) = Type("BinaryData") Then
-			Value = GetStringFromBinaryData(Value, Encoding);
+			Value = ПолучитьСтрокуИзДвоичныхДанных(Value, Encoding);
 		Else
 			Value = String(Value);
 		EndIf;

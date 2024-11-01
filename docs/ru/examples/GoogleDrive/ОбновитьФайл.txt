@@ -1,8 +1,6 @@
-﻿  
-  НовоеИмя          = "Обновленный файл.jpeg";
-  КартинкаЗамены    = "C:\OPI\image2.jpg";
-  Идентификатор     = "1V0oaZh3qQZ7-wbARC8-vrErAFllsBGSJ";
-  
-  Ответ = OPI_GoogleDrive.ОбновитьФайл(Токен, Идентификатор, КартинкаЗамены, НовоеИмя)  //Соответствие
-  Ответ = OPI_Инструменты.JSONСтрокой(Ответ);                                           //Строка
-  
+﻿    Токен         = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    НовоеИмя      = "Обновленный файл.jpg";
+    Идентификатор = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+    Файл          = "https://api.athenaeum.digital/test_data/picture2.jpg"; // URL, Двоичные данные или Путь к файлу
+
+    Результат = OPI_GoogleDrive.ОбновитьФайл(Токен, Идентификатор, Файл, НовоеИмя);

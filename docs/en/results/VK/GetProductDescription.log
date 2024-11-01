@@ -1,0 +1,18 @@
+﻿ {
+ "Name": "New product",
+ "Description": "Product description",
+ "Category": "20173",
+ "Price": 1,
+ "OldPrice": null,
+ "MainPhoto": null,
+ "URL": null,
+ "AdditionalPhotos": [],
+ "PropertyValues": [],
+ "MainInGroup": false,
+ "Width": null,
+ "Height": null,
+ "Depth": null,
+ "Weight": null,
+ "SKU": null,
+ "AvailableBalance": 1
+}

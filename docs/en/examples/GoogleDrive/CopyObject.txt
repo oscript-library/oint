@@ -1,0 +1,6 @@
+﻿    Token      = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Identifier = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+    NewName    = "CopiedFile.jpeg";
+    NewParent  = "root";
+
+    Result = OPI_GoogleDrive.CopyObject(Token, Identifier, NewName, NewParent);

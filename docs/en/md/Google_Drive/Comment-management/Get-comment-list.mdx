@@ -1,0 +1,78 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get list of comments
+ Gets the list of all comments of the object
+
+
+
+`Function GetCommentList(Val Token, Val ObjectID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | ObjectID | --object | String | &#x2714; | Object identifier |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token      = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Identifier = "1Uw6seoqvBcqUeIFLkklWn8ZNBc6nQkpY";
+
+    Result = OPI_GoogleDrive.GetCommentList(Token, Identifier);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gdrive GetCommentList \
+             --token "***" \
+             --object "11Yr24ZKEU8wnBOx0DJLOc7hFwaXuxM_Z"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gdrive GetCommentList ^
+             --token "***" ^
+             --object "11Yr24ZKEU8wnBOx0DJLOc7hFwaXuxM_Z"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "kind": "drive#commentList",
+ "comments": [
+  {
+   "id": "AAABW5rdEaE",
+   "kind": "drive#comment",
+   "createdTime": "2024-10-09T06:13:52.313Z",
+   "modifiedTime": "2024-10-09T06:13:52.313Z",
+   "replies": [],
+   "author": {
+    "displayName": "Антон Титовец",
+    "kind": "drive#user",
+    "me": true,
+    "photoLink": "//lh3.googleusercontent.com/a/ACg8ocKYttNv2CZ-cTTuE90Zmht_PwnGc0YnjM1IUllXsTVORfZFVPU=s50-c-k-no"
+   },
+   "deleted": false,
+   "htmlContent": "Comment text",
+   "content": "Comment text"
+  }
+ ]
+}
+```

@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить поле (дата)
+ Получает описание поля типа дата
+
+
+
+`Функция ПолучитьПолеДаты(Знач Наименование) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Наименование | --title | Строка | &#x2714; | Наименование поля |
+
+  
+  Возвращаемое значение:   Структура -  Описание поля
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Результат = OPI_Airtable.ПолучитьПолеДаты("Дата");
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint airtable ПолучитьПолеДаты \
+              --title "Дата"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint airtable ПолучитьПолеДаты ^
+              --title "Дата"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "name": "Дата",
+ "type": "date",
+ "options": {
+  "dateFormat": {
+   "format": "YYYY-MM-DD",
+   "name": "iso"
+  }
+ }
+}
+```

@@ -1,0 +1,7 @@
+:: JSON data can also be passed as a path to a .json file
+
+oint gcalendar EditEvent ^
+ --token "***" ^
+ --calendar "3854fcc1bd673d227f0e5cb45bc4cbbb3bb3d79132ae16df3f1e8cd1963c8d56@group.calendar.google.com" ^
+ --props "{'Description':'New event description'}" ^
+ --event "pg6d343hfh1i4e9tuastbstlug"

@@ -1,0 +1,92 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create advertising post
+ Creates an advertising post based on a post
+
+
+
+`Function CreateAd(Val CampaignNumber, Val DailyLimit, Val CategoryNumber, Val PostID, Val AccountID, Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | CampaignNumber | --campaign | String, Number | &#x2714; | Advertising campaign ID |
+  | DailyLimit | --limit | String, Number | &#x2714; | Daily limit in rubles |
+  | CategoryNumber | --category | String, Number | &#x2714; | Advertising category number |
+  | PostID | --post | String, Number | &#x2714; | ID of the post used for advertising |
+  | AccountID | --cabinet | String, Number | &#x2714; | Advertising account ID |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetVKParameters();
+
+    CampaignNumber = "1030742088";
+    DailyLimit     = 150;
+    CategoryNumber = 126;
+    PostID         = "4930";
+    AccountID      = "1607951446";
+
+    Result = OPI_VK.CreateAd(CampaignNumber
+        , DailyLimit
+        , CategoryNumber
+        , PostID
+        , AccountID
+        , Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk CreateAd \
+             --campaign 1030772221 \
+             --limit 150 \
+             --category 126 \
+             --post 5131 \
+             --cabinet "1607951446" \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk CreateAd ^
+             --campaign 1030772221 ^
+             --limit 150 ^
+             --category 126 ^
+             --post 5131 ^
+             --cabinet "1607951446" ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": [
+  {
+   "id": 0,
+   "error_code": 603,
+   "error_desc": "Some ads error occurs: ORD details must be presented."
+  }
+ ]
+}
+```

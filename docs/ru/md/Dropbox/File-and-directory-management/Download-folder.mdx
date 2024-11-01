@@ -1,0 +1,58 @@
+﻿---
+sidebar_position: 12
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Скачать папку
+ Скачивает zip архив с содержимым указанного каталога
+
+
+
+`Функция СкачатьПапку(Знач Токен, Знач Путь) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Путь | --path | Строка | &#x2714; | Путь или ID каталога |
+
+  
+  Возвращаемое значение:   ДвоичныеДанные - двоичные данные zip архива с содержимым каталога
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен     = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    Путь      = "/New";
+
+    Результат = OPI_Dropbox.СкачатьПапку(Токен, Путь);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox СкачатьПапку \
+              --token "***" \
+              --path "/New"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox СкачатьПапку ^
+              --token "***" ^
+              --path "/New"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+НЕ JSON: 50 4B 03 04 14 00 00 08 00 00 F2 9A 47 59 00 00 00 00 00 00 00 00 00 00 00 00 04 00 09 00 4E 65 77 2F 55 54 05 00 01 38 35 04 67 50 4B 03 04 14 00 08 08 00 00 4F 87 AF 58 00 00 00 00 00 00 00…
+```

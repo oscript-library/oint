@@ -1,33 +1,31 @@
-﻿  
+﻿    {
+ "tables": [
   {
-  "tables": [
-  {
-  "id": "tblqZzW78Rvsdt9gt",
-  "name": "Тестовая таблица",
-  "primaryFieldId": "fldj9Z3fEpLzv40d0",
-  "fields": [
-  {
-  "type": "number",
-  "options": {
-  "precision": 0
-  },
-  "id": "fldj9Z3fEpLzv40d0",
-  "name": "Номер"
-  },
-  {
-  "type": "richText",
-  "id": "fldX1kR7lienmcdEj",
-  "name": "Строковое"
+   "id": "tblPK7iM6QVCGbral",
+   "name": "Тестовая таблица",
+   "primaryFieldId": "fldiLeIBGEKLvCGHn",
+   "fields": [
+    {
+     "type": "number",
+     "options": {
+      "precision": 0
+     },
+     "id": "fldiLeIBGEKLvCGHn",
+     "name": "Номер"
+    },
+    {
+     "type": "richText",
+     "id": "flduxcmTlD7hCz9ZS",
+     "name": "Строковое"
+    }
+   ],
+   "views": [
+    {
+     "id": "viw5lk0HjJwqDX1vM",
+     "name": "Grid view",
+     "type": "grid"
+    }
+   ]
   }
-  ],
-  "views": [
-  {
-  "id": "viwbKE3PS9jl6bqJl",
-  "name": "Grid view",
-  "type": "grid"
-  }
-  ]
-  }
-  ]
-  }
-  
+ ]
+}

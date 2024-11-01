@@ -1,14 +1,8 @@
-﻿  
+﻿    {
+ "records": [
   {
-  "records": [
-  {
-  "deleted": true,
-  "id": "recjHNKNZBWLZkZ7A"
-  },
-  {
-  "deleted": true,
-  "id": "recGyJ0MlN1H3GMuN"
+   "deleted": true,
+   "id": "rec9dR46CmDQMkUJ0"
   }
-  ]
-  }
-  
+ ]
+}

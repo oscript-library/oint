@@ -1,0 +1,68 @@
+﻿---
+sidebar_position: 9
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Edit main forum thread name
+ Edits the name of the main forum thread
+
+
+
+`Function EditMainForumTopicName(Val Token, Val ChatID, Val Title) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | ChatID | --forum | String, Number | &#x2714; | Thread chat ID |
+  | Title | --title | String | &#x2714; | New main thread name |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [editGeneralForumTopic](https://core.telegram.org/bots/api#editgeneralforumtopic)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+  Title = "New main thread name " + String(New UUID);
+  Token = "6129457865:AAFyzNYOAFbu...";
+  Chat = "-1001971186208";
+  
+  Result = OPI_Telegram.EditMainForumTopicName(Token, Chat, Title);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram EditMainForumTopicName \
+             --token "***" \
+             --forum "-1001971186208" \
+             --title "New main thread name 33b4d612-706c-4608-878a-46cfd4e1d64d"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram EditMainForumTopicName ^
+             --token "***" ^
+             --forum "-1001971186208" ^
+             --title "New main thread name 33b4d612-706c-4608-878a-46cfd4e1d64d"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": true
+}
+```

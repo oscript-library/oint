@@ -1,0 +1,8 @@
+﻿    Token = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Name  = "TestTable";
+
+    SheetArray = New Array;
+    SheetArray.Add("Sheet1");
+    SheetArray.Add("Sheet2");
+
+    Result = OPI_GoogleSheets.CreateSpreadsheet(Token, Name, SheetArray);

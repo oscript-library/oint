@@ -246,8 +246,19 @@
     NewLine.Метод       = "EditListCalendar";
     NewLine.МетодПоиска = "EDITLISTCALENDAR";
     NewLine.Параметр    = "--hidden";
-    NewLine.Описание    = "Hidden calendar (optional, def. val. - False)";
+    NewLine.Описание    = "Hidden calendar (optional, def. val. - No)";
     NewLine.Область     = "Calendar list management";
+
+
+    NewLine = CompositionTable.Add();
+    NewLine.Библиотека  = "gcalendar";
+    NewLine.Модуль      = "OPI_GoogleCalendar";
+    NewLine.Метод       = "GetEventDescription";
+    NewLine.МетодПоиска = "GETEVENTDESCRIPTION";
+    NewLine.Параметр    = "--empty";
+    NewLine.Описание    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Область     = "Event management";
+    NewLine.ОписаниеМетода   = "Gets an empty layout to create the event";
 
 
     NewLine = CompositionTable.Add();
@@ -311,21 +322,20 @@
     NewLine.Описание    = "Token";
     NewLine.Область     = "Event management";
     NewLine.ОписаниеМетода   = "Creates a new event
-    |
-    |    The structure of the JSON event data (parameter --props):
+    |    Data structure for option --props:
     |    {
-    |     ""Description""                : """", 
-    |     ""Title""               : """", 
-    |     ""Venue""         : """", 
-    |     ""StartDate""              : """",
-    |     ""EndDate""           : """",      
-    |     ""ArrayOfAttachmentURLs"" :           
+    |     ""Description"": """", 
+    |     ""Title"": """", 
+    |     ""Venue"": """", 
+    |     ""StartDate"": """",
+    |     ""EndDate"": """",      
+    |     ""ArrayOfAttachmentURLs"":           
     |         {
-    |          ""NameFile1"" : ""FileURL1"",
-    |          ""NameFile2"" : ""FileURL2"",
+    |          ""NameFile1"": ""FileURL1"",
+    |          ""NameFile2"": ""FileURL2"",
     |          ...
     |         },
-    |     ""SendNotifications""   : true       
+    |     ""SendNotifications"": true       
     |    }
     |";
 
@@ -400,21 +410,20 @@
     NewLine.Описание    = "Token";
     NewLine.Область     = "Event management";
     NewLine.ОписаниеМетода   = "Edits an existing event
-    |
-    |    The structure of the JSON event data (parameter --props):
+    |    Data structure for option --props:
     |    {
-    |     ""Description""                : """", 
-    |     ""Title""               : """", 
-    |     ""Venue""         : """", 
-    |     ""StartDate""              : """",
-    |     ""EndDate""           : """",      
-    |     ""ArrayOfAttachmentURLs"" :           
+    |     ""Description"": """", 
+    |     ""Title"": """", 
+    |     ""Venue"": """", 
+    |     ""StartDate"": """",
+    |     ""EndDate"": """",      
+    |     ""ArrayOfAttachmentURLs"":           
     |         {
-    |          ""NameFile1"" : ""FileURL1"",
-    |          ""NameFile2"" : ""FileURL2"",
+    |          ""NameFile1"": ""FileURL1"",
+    |          ""NameFile2"": ""FileURL2"",
     |          ...
     |         },
-    |     ""SendNotifications""   : true       
+    |     ""SendNotifications"": true       
     |    }
     |";
 

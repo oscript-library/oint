@@ -1,0 +1,24 @@
+﻿ {
+ "result": {
+  "id": 868,
+  "taskId": 2400,
+  "commentId": 5944,
+  "createdBy": 1,
+  "createdAt": "2024-10-09T09:19:53+03:00",
+  "updatedAt": "2024-10-09T09:19:53+03:00",
+  "status": 0,
+  "text": "The task has been changed, do not split up",
+  "formattedText": "The task has been changed, do not split up",
+  "files": null
+ },
+ "time": {
+  "start": 1728454794.68249,
+  "finish": 1728454794.74066,
+  "duration": 0.0581729412078857,
+  "processing": 0.0346870422363281,
+  "date_start": "2024-10-09T09:19:54+03:00",
+  "date_finish": "2024-10-09T09:19:54+03:00",
+  "operating_reset_at": 1728455394,
+  "operating": 0
+ }
+}

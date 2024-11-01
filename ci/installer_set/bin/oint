@@ -1,0 +1,1 @@
+/usr/share/oint/bin/oscript /usr/share/oint/lib/oint-cli/core/Classes/app.os "$@"

@@ -1,0 +1,78 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить статус загрузки по URL
+ Получает статус загрузки файла по URL
+
+
+
+`Функция ПолучитьСтатусЗагрузкиПоURL(Знач Токен, Знач IDРаботы) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | IDРаботы | --job | Строка | &#x2714; | ID асинхронной работы из ответа ЗагрузитьФайлПоURL |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Dropbox
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен    = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    ИДРаботы = "TccHTo9aSaAAAAAAAAAAAQ";
+    Статус   = "in_progress";
+
+    Пока Статус = "in_progress" Цикл
+
+        Результат = OPI_Dropbox.ПолучитьСтатусЗагрузкиПоURL(Токен, ИДРаботы);
+        Статус    = Результат[".tag"];
+
+        OPI_Инструменты.Пауза(5);
+
+    КонецЦикла;
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox ПолучитьСтатусЗагрузкиПоURL \
+              --token "***" \
+              --job "7Kmm61Hxi8kAAAAAAAAAAQ"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox ПолучитьСтатусЗагрузкиПоURL ^
+              --token "***" ^
+              --job "7Kmm61Hxi8kAAAAAAAAAAQ"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ ".tag": "complete",
+ "name": "url_doc.docx",
+ "path_lower": "/new/url_doc.docx",
+ "path_display": "/New/url_doc.docx",
+ "id": "id:kJU6-a-pT48AAAAAAAAcXA",
+ "client_modified": "2024-10-08T17:46:00Z",
+ "server_modified": "2024-10-08T17:46:01Z",
+ "rev": "623fab5ed0205bd841553",
+ "size": 24069,
+ "is_downloadable": true,
+ "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+}
+```

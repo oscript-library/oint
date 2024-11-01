@@ -1,14 +1,12 @@
-﻿  
-  {
-  "conferenceProperties": {
+﻿    {
+ "kind": "calendar#calendar",
+ "etag": "\"3HshD0LA889W8w5lSPGvE18X3Co\"",
+ "id": "f8cb253516cc990d1f36a7d15cdb825ffdc15c6ceeaa25ef78924de9beea3a56@group.calendar.google.com",
+ "summary": "Тестовый календарь",
+ "timeZone": "Europe/Moscow",
+ "conferenceProperties": {
   "allowedConferenceSolutionTypes": [
-  "hangoutsMeet"
+   "hangoutsMeet"
   ]
-  },
-  "summary": "Тестовый календарь",
-  "timeZone": "UTC",
-  "id": "75b64bec8700a640b004af3491867ac5e479884794f529699da23e7009f7d691@group.calendar.google.com",
-  "etag": "\"ZlOrbHnYjwJB0APkTQupgFm7F3s\"",
-  "kind": "calendar#calendar"
-  }
-  
+ }
+}

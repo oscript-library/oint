@@ -1,0 +1,126 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send video
+ Sends a video to a chat or channel
+
+
+
+`Function SendVideo(Val Token, Val ChatID, Val Text, Val Video, Val Keyboard = "", Val Markup = "Markdown") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Bot token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID or ChatID*TopicID |
+  | Text | --text | String | &#x2714; | Message text |
+  | Video | --video | BinaryData, String | &#x2714; | Video file |
+  | Keyboard | --keyboard | String | &#x2716; | Keyboard. See FormKeyboardFromButtonArray |
+  | Markup | --parsemode | String | &#x2716; | Text processing type (HTML, Markdown, MarkdownV2) |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [sendVideo](https://core.telegram.org/bots/api#sendvideo)<br/>
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChatID    = "461699897";
+    ChannelID = "@testsichee";
+    Text      = "Строковое значение";
+    Video     = "https://api.athenaeum.digital/test_data/video.mp4";
+
+    VideoPath = GetTempFileName("mp4");
+    CopyFile(Video, VideoPath);
+
+    VideoDD = New BinaryData(VideoPath);
+
+    Result = OPI_Telegram.SendVideo(Token, ChatID, Text, Video);
+
+    Result = OPI_Telegram.SendVideo(Token, ChannelID, Text, VideoPath);
+
+    Result = OPI_Telegram.SendVideo(Token, ChannelID, Text, VideoDD);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram SendVideo \
+             --token "***" \
+             --chat "@testsichee" \
+             --text "Строковое значение" \
+             --video "C:\Users\Administrator\AppData\Local\Temp\lz5hhfr2bln.mp4"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram SendVideo ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --text "Строковое значение" ^
+             --video "C:\Users\Administrator\AppData\Local\Temp\lz5hhfr2bln.mp4"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "message_id": 8305,
+  "from": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "chat": {
+   "id": 461699897,
+   "first_name": "Anton",
+   "last_name": "Titowets",
+   "username": "JKIee",
+   "type": "private"
+  },
+  "date": 1728453323,
+  "video": {
+   "duration": 5,
+   "width": 640,
+   "height": 480,
+   "file_name": "video",
+   "mime_type": "video/mp4",
+   "thumbnail": {
+    "file_id": "AAMCAgADGQMAAiBxZwYayqajllz9GMFHYBYZ7YpNjTEAAktaAAL9yDhIF3QIvLsyAUIBAAdtAAM2BA",
+    "file_unique_id": "AQADS1oAAv3IOEhy",
+    "file_size": 20106,
+    "width": 320,
+    "height": 240
+   },
+   "thumb": {
+    "file_id": "AAMCAgADGQMAAiBxZwYayqajllz9GMFHYBYZ7YpNjTEAAktaAAL9yDhIF3QIvLsyAUIBAAdtAAM2BA",
+    "file_unique_id": "AQADS1oAAv3IOEhy",
+    "file_size": 20106,
+    "width": 320,
+    "height": 240
+   },
+   "file_id": "BAACAgIAAxkDAAIgcWcGGsqmo5Zc_RjBR2AWGe2KTY0xAAJLWgAC_cg4SBd0CLy7MgFCNgQ",
+   "file_unique_id": "AgADS1oAAv3IOEg",
+   "file_size": 1137878
+  },
+  "caption": "Строковое значение"
+ }
+}
+```

@@ -1,0 +1,110 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Move event
+ Moves an event to another calendar
+
+
+
+`Function MoveEvent(Val Token, Val SourceCalendar, Val TargetCalendar, Val Event) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | SourceCalendar | --from | String | &#x2714; | ID of the source calendar |
+  | TargetCalendar | --to | String | &#x2714; | ID of the target calendar |
+  | Event | --event | String | &#x2714; | ID of the source calendar event |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "ya29.a0AcM612wmWdggP-K6tOc3UqW0KxYMjUi60_Uhu-ERltTaavHGbML0nRBXqkuiBcr0GNmR_1gHKowaF1Rd_4Q5Amc9O23DEBZ95sNEGnpR5...";
+    Event = "hcqslmklah35bb514mtfaf9p50";
+
+    SourceCalendar = "aed9a7a5ff01b42e80462afcfc08037e289b1a4dfb07820f5d4e2885e8ccd68e@group.calendar.google.com";
+    TargetCalendar = "bayselonarrend@gmail.com";
+
+    Result = OPI_GoogleCalendar.MoveEvent(Token, SourceCalendar, TargetCalendar, Event);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gcalendar MoveEvent \
+             --token "***" \
+             --from "c341836eae1daa0e494bf49a9dce47af064c9e48f14a7c5c173dd73ac911a621@group.calendar.google.com" \
+             --to "bayselonarrend@gmail.com" \
+             --event "h0nu19bo5mhbja637v1v4s39sg"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gcalendar MoveEvent ^
+             --token "***" ^
+             --from "c341836eae1daa0e494bf49a9dce47af064c9e48f14a7c5c173dd73ac911a621@group.calendar.google.com" ^
+             --to "bayselonarrend@gmail.com" ^
+             --event "h0nu19bo5mhbja637v1v4s39sg"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "kind": "calendar#event",
+ "etag": "\"3456908680754000\"",
+ "id": "7rfbn0fb8nai4i7v4l435tgl1c",
+ "status": "cancelled",
+ "htmlLink": "https://www.google.com/calendar/event?eid=N3JmYm4wZmI4bmFpNGk3djRsNDM1dGdsMWMgNjA2MTNkNTNjNDY3MGFiZGNlZWMzZTc2OTNjYTQ3NWIwZTg4ZGMxNjc4ZGI3MjEwNTIxMzU2YjQ5NDBhNjE0OEBn",
+ "created": "2024-10-09T06:12:19Z",
+ "updated": "2024-10-09T06:12:20.377Z",
+ "summary": "New event",
+ "description": "New event description",
+ "location": "InOffice",
+ "creator": {
+  "email": "bayselonarrend@gmail.com"
+ },
+ "organizer": {
+  "email": "bayselonarrend@gmail.com"
+ },
+ "start": {
+  "dateTime": "2024-10-09T12:12:19+03:00",
+  "timeZone": "Europe/Moscow"
+ },
+ "end": {
+  "dateTime": "2024-10-09T13:12:19+03:00",
+  "timeZone": "Europe/Moscow"
+ },
+ "iCalUID": "7rfbn0fb8nai4i7v4l435tgl1c@google.com",
+ "sequence": 0,
+ "reminders": {
+  "useDefault": true
+ },
+ "attachments": [
+  {
+   "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg",
+   "title": "Image1",
+   "iconLink": ""
+  },
+  {
+   "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg",
+   "title": "Image2",
+   "iconLink": ""
+  }
+ ],
+ "eventType": "default"
+}
+```

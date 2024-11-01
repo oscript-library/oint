@@ -1,0 +1,3 @@
+oint vkteams ПолучитьИнформациюОФайле \
+  --token "***" \
+  --fileid "otFSqLaMsL8Mo1eEAIOey767253ed31bd"

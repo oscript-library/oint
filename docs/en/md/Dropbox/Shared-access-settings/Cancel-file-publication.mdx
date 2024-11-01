@@ -1,0 +1,58 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Unpublish file
+ Prohibits access to the file for external users
+
+
+
+`Function CancelFilePublication(Val Token, Val FileID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | FileID | --fileid | String | &#x2714; | ID of the file to be accessed |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Dropbox
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+    File  = "kJU6-a-pT48AAAAAAAAABw";
+
+    Result = OPI_Dropbox.CancelFilePublication(Token, File);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint dropbox CancelFilePublication \
+             --token "***" \
+             --fileid "kJU6-a-pT48AAAAAAAAABw"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint dropbox CancelFilePublication ^
+             --token "***" ^
+             --fileid "kJU6-a-pT48AAAAAAAAABw"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{}
+```

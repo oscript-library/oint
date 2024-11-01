@@ -1,0 +1,4 @@
+﻿    Наименование = "Картинка";
+    URL          = "https://api.athenaeum.digital/test_data/picture.jpg";
+
+    Результат = OPI_Bitrix24.ПолучитьБлокКартинки(Наименование, URL);

@@ -1,24 +1,22 @@
-﻿  
-  {
-  "revision": 1707461457546792,
-  "comment_ids": {
-  "public_resource": "1573541518:ba32b9efac79ab1b04707a4278a1ff583d7b0403ea306035f1b910e56c6ef3ac",
-  "private_resource": "1573541518:ba32b9efac79ab1b04707a4278a1ff583d7b0403ea306035f1b910e56c6ef3ac"
-  },
-  "path": "disk:/Тестовая папка",
-  "modified": "2024-02-09T06:50:57+00:00",
-  "created": "2024-02-09T06:50:57+00:00",
-  "resource_id": "1573541518:ba32b9efac79ab1b04707a4278a1ff583d7b0403ea306035f1b910e56c6ef3ac",
-  "type": "dir",
-  "name": "Тестовая папка",
-  "exif": {},
-  "_embedded": {
-  "total": 0,
-  "path": "disk:/Тестовая папка",
+﻿    {
+ "_embedded": {
+  "sort": "",
+  "items": [],
   "limit": 20,
   "offset": 0,
-  "items": [],
-  "sort": ""
-  }
-  }
-  
+  "path": "disk:/e422cffd-fe43-4f0d-8854-b240e020678c",
+  "total": 0
+ },
+ "name": "e422cffd-fe43-4f0d-8854-b240e020678c",
+ "exif": {},
+ "resource_id": "1573541518:2ac953f1aae933a16a37a5bc21259e31be9d53633aab0c2fbc267d249a8897cf",
+ "created": "2024-10-08T20:36:28+03:00",
+ "modified": "2024-10-08T20:36:28+03:00",
+ "path": "disk:/e422cffd-fe43-4f0d-8854-b240e020678c",
+ "comment_ids": {
+  "private_resource": "1573541518:2ac953f1aae933a16a37a5bc21259e31be9d53633aab0c2fbc267d249a8897cf",
+  "public_resource": "1573541518:2ac953f1aae933a16a37a5bc21259e31be9d53633aab0c2fbc267d249a8897cf"
+ },
+ "type": "dir",
+ "revision": 1728408988944976
+}

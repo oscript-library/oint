@@ -1,0 +1,53 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create token retrieval link
+Getting a link for interactive token retrieval (access_token), which is necessary for further actions
+
+
+
+`Function CreateTokenRetrievalLink(Val App_id) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | app_id | --app | String, Number | &#x2714; | app_id from application settings |
+
+  
+  Returns:  String - URL to go to in the browser
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Application = "51694790";
+    Result      = OPI_VK.CreateTokenRetrievalLink(Application);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint vk CreateTokenRetrievalLink \
+             --app "51694790"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint vk CreateTokenRetrievalLink ^
+             --app "51694790"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+"https://oauth.vk.com/authorize?client_id=51694790&scope=offline,wall,groups,photos,stats,stories,ads,market,video&v=5.131&response_type=token&redirect_uri=https://api.vk.com/blank.html"
+```

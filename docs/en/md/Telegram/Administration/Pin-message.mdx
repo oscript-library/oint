@@ -1,0 +1,68 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Pin message
+ Pins a message in the chat header
+
+
+
+`Function PinMessage(Val Token, Val ChatID, Val MessageID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID |
+  | MessageID | --message | String, Number | &#x2714; | Target message ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [pinChatMessage](https://core.telegram.org/bots/api#pinchatmessage)
+:::
+<br/>
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChannelID = "@testsichee";
+    MessageID = "10111";
+
+    Result = OPI_Telegram.PinMessage(Token, ChannelID, MessageID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram PinMessage \
+             --token "***" \
+             --chat "@testsichee" \
+             --message "10481"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram PinMessage ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --message "10481"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": true
+}
+```
