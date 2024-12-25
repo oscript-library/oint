@@ -1,5 +1,5 @@
-﻿    Токен    = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
-    ИДРаботы = "TccHTo9aSaAAAAAAAAAAAQ";
+﻿    Токен    = "sl.CDM2TsVftn5aH3_nUX4tbw3JdByXhgO0FyL2ev0gBXGOhHv5k_uHgwYs0N_qMH4TQLm-nWvPGq...";
+    ИДРаботы = "YWsOra9WhqYAAAAAAAAAAQ";
     Статус   = "in_progress";
 
     Пока Статус = "in_progress" Цикл

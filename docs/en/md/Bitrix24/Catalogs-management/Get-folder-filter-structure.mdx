@@ -1,0 +1,78 @@
+﻿---
+sidebar_position: 11
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get fields structure for folder items filter
+ Returns filter structure for child folder items
+
+
+
+`Function GetFolderFilterStructure(Val URL, Val Clear = False, Val Token = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | URL of webhook or a Bitrix24 domain, when token used |
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty values, False > field types at values |
+  | Token | --token | String | &#x2716; | Access token, when app auth method used |
+
+  
+  Returns:  Structure of KeyAndValue - Fields structure
+
+<br/>
+
+:::tip
+Method at API documentation: [disk.folder.getfields](https://dev.1c-bitrix.ru/rest_help/disk/folder/disk_folder_getfields.php)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL = "https://b24-ar17wx.bitrix24.by/rest/1/ps5...";
+
+    Result = OPI_Bitrix24.GetFolderFilterStructure(URL);
+
+    URL   = "b24-ar17wx.bitrix24.by";
+    Token = "70f46a67006e9f06006b12e400000001000...";
+
+    Result = OPI_Bitrix24.GetFolderFilterStructure(URL, True, Token);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint bitrix24 GetFolderFilterStructure \
+             --url "b24-ar17wx.bitrix24.by" \
+             --token "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint bitrix24 GetFolderFilterStructure ^
+             --url "b24-ar17wx.bitrix24.by" ^
+             --token "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ID": "",
+ "NAME": "",
+ "TYPE": "",
+ "CODE": "",
+ "STORAGE_ID": "",
+ "PARENT_ID": "",
+ "CREATE_TIME": "",
+ "UPDATE_TIME": "",
+ "DELETE_TIME": "",
+ "DELETED_TYPE": ""
+}
+```

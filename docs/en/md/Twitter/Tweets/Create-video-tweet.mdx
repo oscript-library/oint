@@ -29,6 +29,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 <br/>
 
 
+
 ```bsl title="1C:Enterprise/OneScript code example"
     Parameters = GetTwitterAuthData();
     Text       = "TestTweet" + String(New UUID);
@@ -54,8 +55,8 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             # JSON data can also be passed as a path to a .json file
             
             oint twitter CreateVideoTweet \
-             --text "TestTweet0726feb3-7dfe-4d21-885c-91f7d139abd9" \
-             --videos "C:\Users\Administrator\AppData\Local\Temp\teucvmep3s5.tmp" \
+             --text "TestTweetb4874f57-7bd7-428d-8ebc-c9773d51bc3a" \
+             --videos "C:\Users\Administrator\AppData\Local\Temp\amyvshg0h51.tmp" \
              --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
@@ -65,8 +66,8 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             :: JSON data can also be passed as a path to a .json file
             
             oint twitter CreateVideoTweet ^
-             --text "TestTweet0726feb3-7dfe-4d21-885c-91f7d139abd9" ^
-             --videos "C:\Users\Administrator\AppData\Local\Temp\teucvmep3s5.tmp" ^
+             --text "TestTweetb4874f57-7bd7-428d-8ebc-c9773d51bc3a" ^
+             --videos "C:\Users\Administrator\AppData\Local\Temp\amyvshg0h51.tmp" ^
              --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>

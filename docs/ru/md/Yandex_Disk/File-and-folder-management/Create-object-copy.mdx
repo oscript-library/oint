@@ -28,9 +28,9 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Токен     = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
-    Оригинал  = "/de1a1a0b-5c7b-49c8-84a9-5ee3d54479cf.png";
-    Путь      = "/" + Строка(Новый УникальныйИдентификатор) + ".png";
+    Токен    = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
+    Оригинал = "/acb4b279-d885-47a6-b5c8-ef4f0c6709c4.png";
+    Путь     = "/" + Строка(Новый УникальныйИдентификатор) + ".png";
 
     Результат = OPI_YandexDisk.СоздатьКопиюОбъекта(Токен, Оригинал, Путь, Истина);
 ```
@@ -42,8 +42,8 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint yadisk СоздатьКопиюОбъекта \
               --token "***" \
-              --from "/4efdae56-f17e-4e44-8e47-ea0789eee484.png" \
-              --to "/1494fb3d-8cd9-450c-9b0d-0de84c5695a7.png" \
+              --from "/0ead0cfc-8c6b-41df-a0e3-c34f6599e1e0.png" \
+              --to "/cd452c16-06f2-438a-a23a-3c77e3eb2ba5.png" \
               --rewrite true
         ```
     </TabItem>
@@ -52,8 +52,8 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint yadisk СоздатьКопиюОбъекта ^
               --token "***" ^
-              --from "/4efdae56-f17e-4e44-8e47-ea0789eee484.png" ^
-              --to "/1494fb3d-8cd9-450c-9b0d-0de84c5695a7.png" ^
+              --from "/0ead0cfc-8c6b-41df-a0e3-c34f6599e1e0.png" ^
+              --to "/cd452c16-06f2-438a-a23a-3c77e3eb2ba5.png" ^
               --rewrite true
         ```
     </TabItem>

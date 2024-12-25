@@ -150,7 +150,7 @@ EndFunction
 
 #EndRegion
 
-#Region FeedPostsManagment
+#Region FeedPostsManagement
 
 // Create post
 // Create a new post at news feed
@@ -387,7 +387,7 @@ EndFunction
 
 #EndRegion
 
-#Region TasksManagment
+#Region TasksManagement
 
 // Get task
 // Get task by ID
@@ -1038,7 +1038,7 @@ EndFunction
 
 #EndRegion
 
-#Region CustomsTasksFieldsManagment
+#Region CustomsTasksFieldsManagement
 
 // Get list of custom task fields
 // Gets list of custom task fields
@@ -1199,7 +1199,7 @@ EndFunction
 
 #EndRegion
 
-#Region TasksChecklistsManagment
+#Region TasksChecklistsManagement
 
 // Add tasks checklist element
 // Adds new element of tasks checklist
@@ -1287,7 +1287,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeleteTasksChecklistElement(Val URL, Val TaskID, Val ElementID, Val Token = "") Export
 
-    Response = ChecklistElementManagment(URL, TaskID, ElementID, "task.checklistitem.delete", Token);
+    Response = ChecklistElementManagement(URL, TaskID, ElementID, "task.checklistitem.delete", Token);
 
     Return Response;
 
@@ -1334,7 +1334,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetTasksChecklistElement(Val URL, Val TaskID, Val ElementID, Val Token = "") Export
 
-    Response = ChecklistElementManagment(URL, TaskID, ElementID, "task.checklistitem.get", Token);
+    Response = ChecklistElementManagement(URL, TaskID, ElementID, "task.checklistitem.get", Token);
 
     Return Response;
 
@@ -1356,7 +1356,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function CompleteTasksChecklistElement(Val URL, Val TaskID, Val ElementID, Val Token = "") Export
 
-    Response = ChecklistElementManagment(URL, TaskID, ElementID, "task.checklistitem.complete", Token);
+    Response = ChecklistElementManagement(URL, TaskID, ElementID, "task.checklistitem.complete", Token);
 
     Return Response;
 
@@ -1378,7 +1378,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function RenewTasksChecklistElement(Val URL, Val TaskID, Val ElementID, Val Token = "") Export
 
-    Response = ChecklistElementManagment(URL, TaskID, ElementID, "task.checklistitem.renew", Token);
+    Response = ChecklistElementManagement(URL, TaskID, ElementID, "task.checklistitem.renew", Token);
 
     Return Response;
 
@@ -1386,7 +1386,7 @@ EndFunction
 
 #EndRegion
 
-#Region CommentsAndResultsManagment
+#Region CommentsAndResultsManagement
 
 // Get comments list for a task
 // Get user comments list for a task
@@ -2141,7 +2141,7 @@ EndFunction
 
 #EndRegion
 
-#Region StoragesManagment
+#Region StoragesManagement
 
 // Get list of storages
 // Get list of available files storages
@@ -2285,7 +2285,7 @@ EndFunction
 
 #EndRegion
 
-#Region CatalogsManagment
+#Region CatalogsManagement
 
 // Get information about folder
 // Get folder information
@@ -2566,7 +2566,7 @@ EndFunction
 
 #EndRegion
 
-#Region FileManagment
+#Region FileManagement
 
 // Upload file to a storage
 // Upload file to storage root
@@ -2851,7 +2851,7 @@ EndFunction
 
 #EndRegion
 
-#Region ChatsAndDialogsManagment
+#Region ChatsAndDialogsManagement
 
 // Create chat
 // Creates a new chat based on the field structure
@@ -2897,7 +2897,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetChatUsers(Val URL, Val ChatID, Val Token = "") Export
 
-    Response = ChatManagment(URL, ChatID, "im.chat.user.list", Token);
+    Response = ChatManagement(URL, ChatID, "im.chat.user.list", Token);
     Return Response;
 
 EndFunction
@@ -2917,7 +2917,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function LeaveChat(Val URL, Val ChatID, Val Token = "") Export
 
-    Response = ChatManagment(URL, ChatID, "im.chat.leave", Token);
+    Response = ChatManagement(URL, ChatID, "im.chat.leave", Token);
     Return Response;
 
 EndFunction
@@ -3357,7 +3357,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetChatFilesFolder(Val URL, Val ChatID, Val Token = "") Export
 
-    Response = ChatManagment(URL, ChatID, "im.disk.folder.get", Token);
+    Response = ChatManagement(URL, ChatID, "im.disk.folder.get", Token);
     Return Response;
 
 EndFunction
@@ -3640,7 +3640,7 @@ EndFunction
 
 #EndRegion
 
-#Region NotificationsManagment
+#Region NotificationsManagement
 
 // Create personal notification
 // Creates a personal notification to the user
@@ -3665,11 +3665,13 @@ Function CreatePersonalNotification(Val URL
     , Val Attachments = ""
     , Val Token = "") Export
 
+    String_ = "String";
+
     Parameters = NormalizeAuth(URL, Token, "im.notify.personal.add");
 
-    OPI_Tools.AddField("USER_ID", UserID      , "String", Parameters);
-    OPI_Tools.AddField("MESSAGE", Text        , "String", Parameters);
-    OPI_Tools.AddField("TAG"    , Tag         , "String", Parameters);
+    OPI_Tools.AddField("USER_ID", UserID      , String_ , Parameters);
+    OPI_Tools.AddField("MESSAGE", Text        , String_ , Parameters);
+    OPI_Tools.AddField("TAG"    , Tag         , String_ , Parameters);
     OPI_Tools.AddField("ATTACH" , Attachments , "Array" , Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
@@ -3701,11 +3703,13 @@ Function CreateSystemNotification(Val URL
     , Val Attachments = ""
     , Val Token = "") Export
 
+    String_ = "String";
+
     Parameters = NormalizeAuth(URL, Token, "im.notify.system.add");
 
-    OPI_Tools.AddField("USER_ID", UserID      , "String", Parameters);
-    OPI_Tools.AddField("MESSAGE", Text        , "String", Parameters);
-    OPI_Tools.AddField("TAG"    , Tag         , "String", Parameters);
+    OPI_Tools.AddField("USER_ID", UserID      , String_ , Parameters);
+    OPI_Tools.AddField("MESSAGE", Text        , String_ , Parameters);
+    OPI_Tools.AddField("TAG"    , Tag         , String_ , Parameters);
     OPI_Tools.AddField("ATTACH" , Attachments , "Array" , Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
@@ -3741,7 +3745,7 @@ EndFunction
 
 #EndRegion
 
-#Region DepartmentsManagment
+#Region DepartmentsManagement
 
 // Create department
 // Creates a new department
@@ -3764,11 +3768,13 @@ Function CreateDepartment(Val URL
     , Val HeadID = ""
     , Val Token = "") Export
 
+    String_ = "String";
+
     Parameters = NormalizeAuth(URL, Token, "department.add");
 
-    OPI_Tools.AddField("NAME"   , Name     , "String", Parameters);
-    OPI_Tools.AddField("PARENT" , ParentID , "String", Parameters);
-    OPI_Tools.AddField("UF_HEAD", HeadID   , "String", Parameters);
+    OPI_Tools.AddField("NAME"   , Name     , String_, Parameters);
+    OPI_Tools.AddField("PARENT" , ParentID , String_, Parameters);
+    OPI_Tools.AddField("UF_HEAD", HeadID   , String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
 
@@ -3799,12 +3805,14 @@ Function UpdateDepartment(Val URL
     , Val HeadID = ""
     , Val Token = "") Export
 
+    String_ = "String";
+
     Parameters = NormalizeAuth(URL, Token, "department.update");
 
-    OPI_Tools.AddField("ID"     , DepartmentID, "String", Parameters);
-    OPI_Tools.AddField("NAME"   , Name        , "String", Parameters);
-    OPI_Tools.AddField("PARENT" , ParentID    , "String", Parameters);
-    OPI_Tools.AddField("UF_HEAD", HeadID      , "String", Parameters);
+    OPI_Tools.AddField("ID"     , DepartmentID, String_, Parameters);
+    OPI_Tools.AddField("NAME"   , Name        , String_, Parameters);
+    OPI_Tools.AddField("PARENT" , ParentID    , String_, Parameters);
+    OPI_Tools.AddField("UF_HEAD", HeadID      , String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
 
@@ -3835,12 +3843,14 @@ Function GetDepartments(Val URL
     , Val HeadID = ""
     , Val Token = "") Export
 
+    String_ = "String";
+
     Parameters = NormalizeAuth(URL, Token, "department.get");
 
-    OPI_Tools.AddField("ID"     , DepartmentID, "String", Parameters);
-    OPI_Tools.AddField("NAME"   , Name        , "String", Parameters);
-    OPI_Tools.AddField("PARENT" , ParentID    , "String", Parameters);
-    OPI_Tools.AddField("UF_HEAD", HeadID      , "String", Parameters);
+    OPI_Tools.AddField("ID"     , DepartmentID, String_, Parameters);
+    OPI_Tools.AddField("NAME"   , Name        , String_, Parameters);
+    OPI_Tools.AddField("PARENT" , ParentID    , String_, Parameters);
+    OPI_Tools.AddField("UF_HEAD", HeadID      , String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
 
@@ -3875,7 +3885,7 @@ EndFunction
 
 #EndRegion
 
-#Region UsersManagment
+#Region UsersManagement
 
 // Get current user
 // Get current user data
@@ -4093,7 +4103,7 @@ EndFunction
 
 #EndRegion
 
-#Region LeadsManagment
+#Region LeadsManagement
 
 // Create lead
 // Creates a new lead by fields structure (see GetLeadStructure)
@@ -4286,7 +4296,7 @@ EndFunction
 
 #EndRegion
 
-#Region DealsManagment
+#Region DealsManagement
 
 // Create deal
 // Creates a new deal by field structure (see. GetDealStructure)
@@ -4585,7 +4595,7 @@ Function FileManagement(Val URL, Val FileID, Val Method, Val Token = "")
 
 EndFunction
 
-Function ChecklistElementManagment(Val URL, Val TaskID, Val ElementID, Val Method, Val Token = "")
+Function ChecklistElementManagement(Val URL, Val TaskID, Val ElementID, Val Method, Val Token = "")
 
     Parameters = NormalizeAuth(URL, Token, Method);
 
@@ -4598,7 +4608,7 @@ Function ChecklistElementManagment(Val URL, Val TaskID, Val ElementID, Val Metho
 
 EndFunction
 
-Function ChatManagment(Val URL, Val ChatID, Val Method, Val Token = "")
+Function ChatManagement(Val URL, Val ChatID, Val Method, Val Token = "")
 
     Parameters = NormalizeAuth(URL, Token, Method);
     OPI_Tools.AddField("CHAT_ID", ChatID, "String", Parameters);

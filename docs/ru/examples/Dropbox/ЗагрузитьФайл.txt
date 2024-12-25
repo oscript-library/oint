@@ -1,6 +1,6 @@
-﻿    Путь      = "/New/pic.png";
-    Токен     = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
-    Картинка  = "https://api.athenaeum.digital/test_data/picture.jpg";
+﻿    Путь     = "/New/pic.png";
+    Токен    = "sl.CDM2TsVftn5aH3_nUX4tbw3JdByXhgO0FyL2ev0gBXGOhHv5k_uHgwYs0N_qMH4TQLm-nWvPGq...";
+    Картинка = "https://api.athenaeum.digital/test_data/picture.jpg";
 
     КартинкаПуть = ПолучитьИмяВременногоФайла("png");
     КопироватьФайл(Картинка, КартинкаПуть);

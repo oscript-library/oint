@@ -60,12 +60,14 @@
 // Map Of KeyAndValue - serialized JSON response from CDEK
 Function GetToken(Val Account, Val Password, TestAPI = False) Export
 
+    String_ = "String";
+
     URL = FormURL("/oauth/token", TestAPI);
 
     Parameters = New Structure;
-    OPI_Tools.AddField("grant_type"   , "client_credentials", "String", Parameters);
-    OPI_Tools.AddField("client_id"    , Account             , "String", Parameters);
-    OPI_Tools.AddField("client_secret", Password            , "String", Parameters);
+    OPI_Tools.AddField("grant_type"   , "client_credentials", String_, Parameters);
+    OPI_Tools.AddField("client_id"    , Account             , String_, Parameters);
+    OPI_Tools.AddField("client_secret", Password            , String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, , False);
 
@@ -180,6 +182,41 @@ Function GetOfficeList(Val Token, Val Filter = "", Val TestAPI = False) Export
 
 EndFunction
 
+// Get regions list
+// Gets the list of available regions
+//
+// Note
+// Method at API documentation: [List of Regions](@api-docs.cdek.ru/33829453.html)
+//
+// Parameters:
+// Token - String - Auth token - token
+// Countrues - Array Of String - Array of country codes in ISO_31661_alpha2 format for selection - countries
+// Page - Number - Result page - page
+// Lang - String - Language: rus, eng, zho - lang
+// TestAPI - Boolean - Flag to use test API for requests - testapi
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from CDEK
+Function GetRegionsList(Val Token
+    , Val Countrues = Undefined
+    , Val Page = 0
+    , Val Lang = "rus"
+    , Val TestAPI = False) Export
+
+    URL     = FormURL("/location/regions", TestAPI);
+    Headers = CreateRequestHeaders(Token);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("country_codes", Countrues , "Array"  , Parameters);
+    OPI_Tools.AddField("page"         , Page      , "Number" , Parameters);
+    OPI_Tools.AddField("lang"         , Lang      , "String" , Parameters);
+
+    Response = OPI_Tools.Get(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
 // Get office filter description
 // Gets an empty layout of the filter for getting the list of offices in the GetOfficeList function
 //
@@ -230,7 +267,7 @@ EndFunction
 
 #EndRegion
 
-#Region OrdersManagment
+#Region OrdersManagement
 
 // Create order
 // Creates an order based on field descriptions
@@ -643,6 +680,8 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON response from CDEK
 Function CreatePrealert(Val Token, Val UUIDArray, Val TransferDate, Val Point, Val TestAPI = False) Export
 
+    Planned_date_ = "planned_date";
+
     OPI_TypeConversion.GetArray(UUIDArray);
 
     URL     = FormURL("/prealert", TestAPI);
@@ -659,10 +698,10 @@ Function CreatePrealert(Val Token, Val UUIDArray, Val TransferDate, Val Point, V
     EndDo;
 
     OPI_Tools.AddField("orders"        , ArrayOfOrders, "Array"   , Parameters);
-    OPI_Tools.AddField("planned_date"  , TransferDate , "DateISO" , Parameters);
+    OPI_Tools.AddField(Planned_date_   , TransferDate , "DateISO" , Parameters);
     OPI_Tools.AddField("shipment_point", Point        , "String"  , Parameters);
 
-    Parameters["planned_date"] = Parameters["planned_date"] + "+0000";
+    Parameters[Planned_date_] = Parameters[Planned_date_] + "+0000";
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -766,6 +805,8 @@ EndFunction
 // Returns:
 // Structure of KeyAndValue - Fields structure
 Function GetOrderDescription(Val Clear = False, Val RequiredOnly = False, Val OnlineStore = False) Export
+
+    // BSLLS:DuplicateStringLiteral-off
 
     OPI_TypeConversion.GetBoolean(Clear);
     OPI_TypeConversion.GetBoolean(RequiredOnly);
@@ -944,6 +985,8 @@ Function GetOrderDescription(Val Clear = False, Val RequiredOnly = False, Val On
 
     //@skip-check constructor-function-return-section
     Return OrderStructure;
+
+    // BSLLS:DuplicateStringLiteral-on
 
 EndFunction
 
@@ -1124,6 +1167,8 @@ EndFunction
 // Structure of KeyAndValue - Fields structure
 Function GetCourierInvitationsDescription(Val Clear = False, Val RequiredOnly = False) Export
 
+    // BSLLS:DuplicateStringLiteral-off
+
     OPI_TypeConversion.GetBoolean(Clear);
     OPI_TypeConversion.GetBoolean(RequiredOnly);
 
@@ -1190,6 +1235,8 @@ Function GetCourierInvitationsDescription(Val Clear = False, Val RequiredOnly = 
 
     //@skip-check constructor-function-return-section
     Return InvitationStructure;
+
+    // BSLLS:DuplicateStringLiteral-on
 
 EndFunction
 
@@ -1264,7 +1311,7 @@ Function FormURL(Val Method, Val TestAPI)
     If TestAPI Then
         URL = "https://api.edu.cdek.ru/v2";
     Else
-        URL = "https://api.cdek.ru";
+        URL = "https://api.cdek.ru/v2";
     EndIf;
 
     URL = URL + Method;

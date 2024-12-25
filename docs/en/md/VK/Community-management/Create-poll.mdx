@@ -1,0 +1,79 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create poll
+ Creates a poll with answer options
+
+
+
+`Function CreatePoll(Val Question, Val AnswersArray, Val Image = "", Val Parameters = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Question | --question | String | &#x2714; | Poll question |
+  | AnswersArray | --options | Array of String | &#x2714; | Array of answer options |
+  | Image | --picture | String, BinaryData | &#x2716; | Poll image |
+  | Parameters | --auth | Structure Of String | &#x2716; | Authorization JSON or path to .json |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from VK
+
+<br/>
+
+:::tip
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Parameters = GetVKParameters();
+    Question   = "What's your favorite color?";
+
+    OptionArray = New Array;
+    OptionArray.Add("Red");
+    OptionArray.Add("Yellow");
+    OptionArray.Add("Green");
+
+    Result = OPI_VK.CreatePoll(Question, OptionArray, , Parameters);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint vk CreatePoll \
+             --question "What's your favorite color?" \
+             --options "['Red','Yellow','Green']" \
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint vk CreatePoll ^
+             --question "What's your favorite color?" ^
+             --options "['Red','Yellow','Green']" ^
+             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "response": {
+  "post_id": 4556
+ }
+}
+```

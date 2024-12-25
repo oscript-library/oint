@@ -1,0 +1,83 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Put bucket encryption
+ Sets bucket encryption by XML configuration
+
+
+
+`Function PutBucketEncryption(Val Name, Val BasicData, Val XmlConfig, Val Directory = False, Val Headers = Undefined) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --name | String | &#x2714; | Bucket name |
+  | BasicData | --basic | Structure of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
+  | XmlConfig | --conf | String | &#x2714; | XML string or file of encryption configuration |
+  | Directory | --dir | Boolean | &#x2716; | True > Directory Bucket, False > General Purpose Bucket |
+  | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Structure of KeyAndValue - serialized JSON response from storage
+
+<br/>
+
+:::tip
+Method at AWS documentation: [PutBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL       = "storage-155.s3hoster.by";
+    AccessKey = "BRN5RKJE67...";
+    SecretKey = "NNhv+i9PrytpT8Tu0C1N...";
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Name      = "opi-newbucket2";
+    XmlConfig = "<ServerSideEncryptionConfiguration xmlns=""http://s3.amazonaws.com/doc/2006-03-01/"">
+    | <Rule>
+    | <ApplyServerSideEncryptionByDefault>
+    | <SSEAlgorithm>AES256</SSEAlgorithm>
+    | </ApplyServerSideEncryptionByDefault>
+    | </Rule>
+    |</ServerSideEncryptionConfiguration>";
+
+    Result = OPI_S3.PutBucketEncryption(Name, BasicData, XmlConfig);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint s3 PutBucketEncryption \
+             --name "opi-newbucket2" \
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+             --conf "C:\Users\Administrator\AppData\Local\Temp\0upo340nq5b.xml" \
+             --dir false
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint s3 PutBucketEncryption ^
+             --name "opi-newbucket2" ^
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+             --conf "C:\Users\Administrator\AppData\Local\Temp\0upo340nq5b.xml" ^
+             --dir false
+        ```
+    </TabItem>
+</Tabs>
+
+
+

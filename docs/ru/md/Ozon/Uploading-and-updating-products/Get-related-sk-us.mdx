@@ -26,17 +26,18 @@ import TabItem from '@theme/TabItem';
 :::tip
 В ответе будут все SKU, связанные с переданными. Метод может обработать любые SKU, даже скрытые или удалённые.
 
- Передавайте до 200 SKU в одном запросе.
+Передавайте до 200 SKU в одном запросе.
 
- Метод в документации API: [post /v1/product/related-sku/get](https://docs.ozon.ru/api/seller/#operation/ProductAPI_ProductGetRelatedSKU)
+Метод в документации API: [post /v1/product/related-sku/get](https://docs.ozon.ru/api/seller/#operation/ProductAPI_ProductGetRelatedSKU)
 :::
 <br/>
 
 
+
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    IDКлиента  = "2128753";
-    КлючAPI    = "7cc90d26-33e4-499b...";
-    SKU        = 1626044001;
+    IDКлиента = "2479669";
+    КлючAPI   = "09f65e9f-262d-4aca...";
+    SKU       = 1626044001;
 
     Результат = OPI_Ozon.ПолучитьСвязанныеSKU(IDКлиента, КлючAPI, SKU);
 ```

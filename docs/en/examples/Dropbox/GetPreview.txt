@@ -1,4 +1,4 @@
-﻿    Token = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
+﻿    Token = "sl.CDM2TsVftn5aH3_nUX4tbw3JdByXhgO0FyL2ev0gBXGOhHv5k_uHgwYs0N_qMH4TQLm-nWvPGq...";
     Path  = "/New/mydoc.docx";
 
     Result = OPI_Dropbox.GetPreview(Token, Path);

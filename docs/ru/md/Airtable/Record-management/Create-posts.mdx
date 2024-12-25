@@ -29,8 +29,8 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Токен   = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
-    База    = "appeMvjrOQPJciL7O";
-    Таблица = "tblQdiEo3yKV0e1cj";
+    База    = "appHoWksfa7zimnal";
+    Таблица = "tblQJewPd43rzDI9q";
 
     Номер     = 10;
     Строковое = "Привет";
@@ -38,7 +38,7 @@ import TabItem from '@theme/TabItem';
     ОписаниеСтроки1 = Новый Структура("Номер,Строковое", Номер, Строковое);
     ОписаниеСтроки2 = Новый Структура("Номер,Строковое", Номер, Строковое);
 
-    МассивОписаний  = Новый Массив;
+    МассивОписаний = Новый Массив;
     МассивОписаний.Добавить(ОписаниеСтроки1);
     МассивОписаний.Добавить(ОписаниеСтроки2);
 
@@ -54,8 +54,8 @@ import TabItem from '@theme/TabItem';
             
             oint airtable СоздатьЗаписи \
               --token "***" \
-              --base "appQHC2MLLWwYR8Ru" \
-              --table "tblH5f3dgkm8Ph1dY" \
+              --base "appZtwH2vDyfB649R" \
+              --table "tblSQiRWDglF4ib7u" \
               --data "{'Номер':10,'Строковое':'Привет'}"
         ```
     </TabItem>
@@ -66,8 +66,8 @@ import TabItem from '@theme/TabItem';
             
             oint airtable СоздатьЗаписи ^
               --token "***" ^
-              --base "appQHC2MLLWwYR8Ru" ^
-              --table "tblH5f3dgkm8Ph1dY" ^
+              --base "appZtwH2vDyfB649R" ^
+              --table "tblSQiRWDglF4ib7u" ^
               --data "{'Номер':10,'Строковое':'Привет'}"
         ```
     </TabItem>

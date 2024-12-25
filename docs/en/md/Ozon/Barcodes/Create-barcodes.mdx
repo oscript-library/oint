@@ -26,17 +26,18 @@ import TabItem from '@theme/TabItem';
 :::tip
 You can create barcodes for a maximum of 100 products per request
 
- From one merchant account, you can use the method no more than 20 times per minute
+From one merchant account, you can use the method no more than 20 times per minute
 
- Method at API documentation: [post /v1/barcode/generate](https://docs.ozon.ru/api/seller/#operation/generate-barcode)
+Method at API documentation: [post /v1/barcode/generate](https://docs.ozon.ru/api/seller/#operation/generate-barcode)
 :::
 <br/>
 
 
+
 ```bsl title="1C:Enterprise/OneScript code example"
-    ClientID  = "2128753";
-    APIKey    = "7cc90d26-33e4-499b...";
-    ProductID = "1235184552";
+    ClientID  = "2479669";
+    APIKey    = "09f65e9f-262d-4aca...";
+    ProductID = "1311509998";
 
     Result = OPI_Ozon.CreateBarcodes(ClientID, APIKey, ProductID);
 ```
@@ -49,7 +50,7 @@ You can create barcodes for a maximum of 100 products per request
             oint ozon CreateBarcodes \
              --clientid "***" \
              --apikey "***" \
-             --productids 1237069598
+             --productids 1311561494
         ```
     </TabItem>
   
@@ -58,7 +59,7 @@ You can create barcodes for a maximum of 100 products per request
             oint ozon CreateBarcodes ^
              --clientid "***" ^
              --apikey "***" ^
-             --productids 1237069598
+             --productids 1311561494
         ```
     </TabItem>
 </Tabs>

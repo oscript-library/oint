@@ -4,11 +4,11 @@ sidebar_position: 2
 
 # Working with CLI app
 
-OInt CLI - a command-line application that allows you to use methods of the Open Integration Package independently of 1C and OneScript. It requires .Net Framework 4.8 or a compatible Mono Runtime (automatically installed when using deb and rpm packages) 
+OInt CLI - a command-line application that allows you to use methods of the Open Integration Package independently of 1C and OneScript
 
 ## First start
 
-To get started, you need to call the command `oint` from the command prompt/terminal. If app was installed from packages (Linux) or installer (Windows, after reboot), you can do this from any place without additional actions. When using the portable version (exe executable file), `oint` needs to be run with the full path to the file. In Linux distributions, you may also need to execute `chmod +x <path to file>/oint beforehand` 
+To get started, you need to call the command `oint` from the command prompt/terminal. If app was installed from packages (Linux) or installer (Windows, after reboot), you can do this from any place without additional actions. When using the portable version (single executable file), `oint` needs to be run with the full path to the file. In Linux distributions, you may also need to execute `chmod +x <path to file>/oint beforehand` 
 
 To run the portable version in RHEL/Fedora/CentOS (distributions using rpm packages), use the command <br/>`mono <path to oint>/oint "$@"`
 
@@ -38,5 +38,17 @@ When it comes to parameters, most often the data passed there are strings. This 
 After executing the requested action, the program outputs the result and exits. By default, the output is displayed in the console, but you can redirect it to a file using either the standard method `>` or by using the common parameter `--out`. The difference between these two methods lies in the encoding of the saved file: when using `>`, it will be the encoding of the shell, whereas when using `--out`, it will be UTF-8 (used internally by OInt). Additionally, using `--out` is mandatory for methods returning binary data in the response (such as downloading a file from Google Drive, for example)
 
 ![demo](./img/3.gif) 
+
+## Escape sequences
+
+The standard escape sequences `\n`, `\r`, `\v`, and `\f` may be used in the passed parameters. These are converted to line breaks, carriage returns, vertical tabs, and form feeds, respectively, in all arguments, except:
+
++ Array parameters and JSON-formatted parameters (i.e., those beginning with `{` or `[`)
++ File paths, if a file on that path exists
++ Standard `--out` parameter
+
+In order to avoid esapce sequence conversions where they should not be, it is necessary to escape them with a second character `\` (e.g., `\\n`).
+
+<hr/>
 
 You can find all further information you might need for work in other sections of this documentation, as well as in the built-in help of OInt CLI

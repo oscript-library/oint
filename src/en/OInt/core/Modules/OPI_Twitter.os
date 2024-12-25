@@ -33,6 +33,7 @@
 // BSLLS:IncorrectLineBreak-off
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:LineLength-off
 
 //@skip-check method-too-many-params
 //@skip-check module-structure-top-region
@@ -382,7 +383,6 @@ Function UploadMediaInParts(Val File, Val Type, Val RequestType, Val URL, Parame
     ChunkSize    = Count * Unit * Unit;
     ArrayReading = РазделитьДвоичныеДанные(File, ChunkSize);
 
-
     Fields = New Structure;
     Fields.Insert(Command         , "INIT");
     Fields.Insert("total_bytes"   , OPI_Tools.NumberToString(Size));
@@ -403,10 +403,10 @@ Function UploadMediaInParts(Val File, Val Type, Val RequestType, Val URL, Parame
     For Each Part In ArrayReading Do
 
         Fields = New Structure;
-        Fields.Insert(Command         , "APPEND");
-        Fields.Insert("media_id"      , InitializationIDS);
-        Fields.Insert("segment_index" , OPI_Tools.NumberToString(Counter));
-        Fields.Insert("media"         , Part);
+        Fields.Insert(Command        , "APPEND");
+        Fields.Insert(MID            , InitializationIDS);
+        Fields.Insert("segment_index", OPI_Tools.NumberToString(Counter));
+        Fields.Insert("media"        , Part);
 
         Authorization = CreateAuthorizationHeaderV1(Parameters, New Structure, RequestType, URL);
 
@@ -417,8 +417,8 @@ Function UploadMediaInParts(Val File, Val Type, Val RequestType, Val URL, Parame
     EndDo;
 
     Fields = New Structure;
-    Fields.Insert(Command   , "FINALIZE");
-    Fields.Insert("media_id", InitializationIDS);
+    Fields.Insert(Command, "FINALIZE");
+    Fields.Insert(MID    , InitializationIDS);
 
     ProcessingStatus = GetProcessingStatus(Parameters, Fields, URL);
 
@@ -441,7 +441,7 @@ Function WaitForProcessingCompletion(Val ProcessingStatus, Val InitializationID,
     Fields.Insert(Command   , "STATUS");
     Fields.Insert("media_id", InitializationID);
 
-    WHile String(ProcessingStatus) = "pending" Or String(ProcessingStatus) = "in_progress" Do
+    While String(ProcessingStatus) = "pending" Or String(ProcessingStatus) = "in_progress" Do
 
         Authorization = CreateAuthorizationHeaderV1(Parameters, Fields, "GET", URL);
         Response      = OPI_Tools.Get(URL, Fields, Authorization);
@@ -545,8 +545,8 @@ Function CreateAuthorizationHeaderV1(Val Parameters, Val Fields, Val RequestType
     APIVersion          = "1.0";
     SignatureString     = "";
     Signature           = "";
-    OCK = "oauth_consumer_key";
-    OTK = "oauth_token";
+    OCK                 = "oauth_consumer_key";
+    OTK                 = "oauth_token";
     CurrentUNIXDate     = OPI_Tools.UNIXTime(CurrentDate);
     CurrentUNIXDate     = OPI_Tools.NumberToString(CurrentUNIXDate);
     ParametersTable     = New ValueTable;

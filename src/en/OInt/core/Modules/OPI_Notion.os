@@ -318,7 +318,7 @@ EndFunction
 
 #EndRegion
 
-#Region BlocksManagment
+#Region BlocksManagement
 
 // Create block
 // Creates a new block based on an existing block
@@ -551,7 +551,7 @@ Procedure AddPageHeader(Val Title, MainStructure)
     DataStructure        = New Structure;
     TextStructure        = New Structure;
     DataArray            = New Array;
-    Title = "title";
+    Title                = "title";
 
     TextStructure.Insert("content", Title);
     TextStructure.Insert("link"   , Undefined);

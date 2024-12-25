@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Change spreadsheet name
+ Changes the name of the existing spreadsheet
+
+
+
+`Function EditSpreadsheetTitle(Val Token, Val Spreadsheet, Val Name) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Spreadsheet | --spreadsheet | String | &#x2714; | SpreadsheetID |
+  | Name | --title | String | &#x2714; | New name |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token       = "ya29.a0ARW5m77a_UJFBB7n_sa8IAV8ycWLvz55tDaGZ7CsG1xiFYCSMm_kCJknxrGekLItp4p6eF054EBz7apAKFGnuUYhTJMy2lu6N7NTFAvHM...";
+    Spreadsheet = "1wi9P5LEVBp4UT9eT7npO0DN5uIfnpmCgilL9D6QBH10";
+    Name        = "Test table (changed.)";
+
+    Result = OPI_GoogleSheets.EditSpreadsheetTitle(Token, Spreadsheet, Name);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets EditSpreadsheetTitle \
+             --token "***" \
+             --spreadsheet "1aZuldjAXQiXak_Mxd_a6uKcQmRR0t_sRv8M4fEY-hD0" \
+             --title "Test table (changed.)"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets EditSpreadsheetTitle ^
+             --token "***" ^
+             --spreadsheet "1aZuldjAXQiXak_Mxd_a6uKcQmRR0t_sRv8M4fEY-hD0" ^
+             --title "Test table (changed.)"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "spreadsheetId": "1psqJkXdtlHOc7Qzr4ficNkFth5dWLl0HdmMDhSTM7ZQ",
+ "replies": [
+  {}
+ ]
+}
+```

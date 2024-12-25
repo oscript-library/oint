@@ -27,10 +27,12 @@ import TabItem from '@theme/TabItem';
 <br/>
 
 :::tip
-Метод в документации API: [sendAnimation](https://core.telegram.org/bots/api#sendanimation)<br/>
+Метод в документации API: [sendAnimation](https://core.telegram.org/bots/api#sendanimation)
+
 Параметры с типом данных Двоичные данные могут принимать также пути к файлам на диске и URL
 :::
 <br/>
+
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
@@ -43,7 +45,7 @@ import TabItem from '@theme/TabItem';
     ГифкаПуть = ПолучитьИмяВременногоФайла("gif");
     КопироватьФайл(Гифка, ГифкаПуть);
 
-    ГифкаДД   = Новый ДвоичныеДанные(ГифкаПуть);
+    ГифкаДД = Новый ДвоичныеДанные(ГифкаПуть);
 
     Результат = OPI_Telegram.ОтправитьГифку(Токен, IDЧата, Текст, Гифка);
 
@@ -61,7 +63,7 @@ import TabItem from '@theme/TabItem';
               --token "***" \
               --chat "@testsichee" \
               --text "Строковое значение" \
-              --gif "C:\Users\Administrator\AppData\Local\Temp\rwr4b0ylurf.gif"
+              --gif "C:\Users\Administrator\AppData\Local\Temp\nw1iim51ajf.gif"
         ```
     </TabItem>
   
@@ -71,7 +73,7 @@ import TabItem from '@theme/TabItem';
               --token "***" ^
               --chat "@testsichee" ^
               --text "Строковое значение" ^
-              --gif "C:\Users\Administrator\AppData\Local\Temp\rwr4b0ylurf.gif"
+              --gif "C:\Users\Administrator\AppData\Local\Temp\nw1iim51ajf.gif"
         ```
     </TabItem>
 </Tabs>

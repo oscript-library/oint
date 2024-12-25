@@ -115,3 +115,18 @@ Function RefreshToken(Val ClientId, Val ClientSecret, Val RefreshToken) Export /
 EndFunction
 
 #EndRegion
+
+#Region Internal
+
+Function GetAuthorizationHeader(Val Token) Export
+
+    OPI_TypeConversion.GetLine(Token);
+
+    Headers = New Map;
+    Headers.Insert("Authorization", "OAuth " + Token);
+
+    Return Headers;
+
+EndFunction
+
+#EndRegion

@@ -1,0 +1,66 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Вернуть дочерние блоки
+ Созвращает список дочерних блоков блока-родителя
+
+
+
+`Функция ВернутьДочерниеБлоки(Знач Токен, Знач ИДБлока) Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | ИДБлока | --block | Строка | &#x2714; | ID блока родителя |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Notion
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен = "secret_9RsfMrRMqZwqp0Zl0B...";
+    Блок  = "16682aa7-fc4e-81d0-8c36-ca4568a65213";
+
+    Результат = OPI_Notion.ВернутьДочерниеБлоки(Токен, Блок);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint notion ВернутьДочерниеБлоки \
+              --token "***" \
+              --block "16682aa7-fc4e-81de-b3a6-c3746d410a27"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint notion ВернутьДочерниеБлоки ^
+              --token "***" ^
+              --block "16682aa7-fc4e-81de-b3a6-c3746d410a27"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "object": "list",
+ "results": [],
+ "next_cursor": null,
+ "has_more": false,
+ "type": "block",
+ "block": {},
+ "request_id": "29c8abb1-7a13-448b-82ef-449646b1ae63"
+}
+```

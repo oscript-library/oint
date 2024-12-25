@@ -117,7 +117,7 @@ EndFunction
 
 #EndRegion
 
-#Region FileManagment
+#Region FileManagement
 
 // Upload file
 // Upload single file to Neocities
@@ -368,9 +368,13 @@ Function MakeSynchronization(Token, ArrayOfDeletions, LocalPaths)
 
         Else
 
+            // BSLLS:UnusedLocalVariable-off
+
             //@skip-check module-unused-local-variable
             DeletingMessage = StrTemplate("Removed %1 unnecessary files", String(ArrayOfDeletions.Count()));
             Message(DeletingMessage);
+
+            // BSLLS:UnusedLocalVariable-on
 
         EndIf;
 
@@ -389,12 +393,15 @@ Function MakeSynchronization(Token, ArrayOfDeletions, LocalPaths)
 
         Else
 
+            // BSLLS:UnusedLocalVariable-off
+
             //@skip-check module-unused-local-variable
             Progress = "[" + OPI_Tools.NumberToString(Counter) + "/" + Total + "] ";
             Message(Progress + LocalPath.Key + Chars.LF + Response["message"] + Chars.LF);
 
-        EndIf;
+            // BSLLS:UnusedLocalVariable-on
 
+        EndIf;
 
         Counter = Counter + 1;
 

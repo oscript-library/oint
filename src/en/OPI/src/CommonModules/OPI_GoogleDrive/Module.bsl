@@ -451,9 +451,10 @@ EndFunction
 
 Procedure GetObjectsListRecursively(Val Headers, ArrayOfObjects, Detailed = False, Filter = "", Page = "")
 
-    URL        = "https://www.googleapis.com/drive/v3/files";
-    Files      = "files";
-    NPT        = "nextPageToken";
+    URL   = "https://www.googleapis.com/drive/v3/files";
+    Files = "files";
+    NPT   = "nextPageToken";
+
     Parameters = New Structure;
     Parameters.Insert("fields", "*");
 
@@ -462,7 +463,7 @@ Procedure GetObjectsListRecursively(Val Headers, ArrayOfObjects, Detailed = Fals
     EndIf;
 
     If ValueIsFilled(Filter) And TypeOf(Filter) = Type("Array") Then
-        FilterString = StrConcat(Filter, " and ");
+        FilterString                            = StrConcat(Filter, " and ");
         Parameters.Insert("q", FilterString);
     EndIf;
 
@@ -569,9 +570,9 @@ Function FileManagement(Val Token, Val File = "", Val Description = "", Val Iden
         FileMapping.Insert(File, MIME);
 
         If Size < ChunkSize And TypeOf(File) = Type("BinaryData") Then
-            Response = UploadSmallFile(JSONDescription, FileMapping, Headers, Identifier);
+            Response                         = UploadSmallFile(JSONDescription, FileMapping, Headers, Identifier);
         Else
-            Response = UploadLargeFile(Description, FileMapping, Headers, Identifier);
+            Response                         = UploadLargeFile(Description, FileMapping, Headers, Identifier);
         EndIf;
 
     Else
@@ -639,7 +640,7 @@ Function UploadFileInParts(Val Binary, Val UploadURL)
     DataReader      = New DataReader(Binary);
     SourceStream    = DataReader.SourceStream();
 
-    WHile BytesRead < TotalSize Do
+    While BytesRead < TotalSize Do
 
         BytesRead    = SourceStream.CurrentPosition();
         Result       = DataReader.Read(ChunkSize);
@@ -671,9 +672,9 @@ Function UploadFileInParts(Val Binary, Val UploadURL)
             Return CheckResult;
         EndIf;
 
-        // !OInt KB = 1024;
-        // !OInt MB = KB * KB;
-        // !OInt Message(OPI_Tools.ProgressInfo(CurrentPosition, TotalSize, "MB", MB));
+        KBytes = 1024;
+        MByte  = KBytes * KBytes;
+        OPI_Tools.ProgressInformation(CurrentPosition, TotalSize, "MB", MByte);
 
         // !OInt RunGarbageCollection();
         // !OInt FreeObject(CurrentData);

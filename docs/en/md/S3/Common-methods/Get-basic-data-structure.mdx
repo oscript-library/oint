@@ -1,0 +1,73 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get basic data structure
+ Returns the basic data for request in structured form
+
+
+
+`Function GetBasicDataStructure(Val URL, Val AccessKey, Val SecretKey, Val Region, Val Service = "s3") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | URL: domain for common methods or full URL with parameters for direct request sending |
+  | AccessKey | --access | String | &#x2714; | Access key for authorization |
+  | SecretKey | --secret | String | &#x2714; | Secret key for authorization |
+  | Region | --region | String | &#x2714; | Service region |
+  | Service | --service | String | &#x2716; | Type of service, if different from s3 |
+
+  
+  Returns:  Structure of KeyAndValue - Basic request data structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL       = "storage-155.s3hoster.by";
+    AccessKey = "BRN5RKJE67...";
+    SecretKey = "NNhv+i9PrytpT8Tu0C1N...";
+    Region    = "BTC";
+
+    Result = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint s3 GetBasicDataStructure \
+             --url "storage-155.s3hoster.by" \
+             --access "BRN5RKJE67YCVDZRRQVI" \
+             --secret "***" \
+             --region "BTC"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint s3 GetBasicDataStructure ^
+             --url "storage-155.s3hoster.by" ^
+             --access "BRN5RKJE67YCVDZRRQVI" ^
+             --secret "***" ^
+             --region "BTC"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "URL": "storage-155.s3hoster.by",
+ "AccessKey": "BRN5RKJE67YCVDZRRQVI",
+ "SecretKey": "***",
+ "Region": "BTC",
+ "Service": "s3"
+}
+```

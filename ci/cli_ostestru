@@ -3,8 +3,8 @@ pipeline {
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.15.1.ospx; del oint-1.15.1.ospx'
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/cli; opm build; opm install oint-cli-1.15.1.ospx; del oint-cli-1.15.1.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.17.0.ospx; del oint-1.17.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/cli; opm build; opm install oint-cli-1.17.0.ospx; del oint-cli-1.17.0.ospx'
             withCredentials([string(credentialsId: 'gpgkey', variable: 'GPGKEY')]) {
                bat encoding: 'UTF-8', script:'"C:/Program Files (x86)/GnuPG/bin/gpg.exe" --quiet --batch --yes --decrypt --passphrase="%GPGKEY%" --output ./data.json ./data.json.gpg'
             }
@@ -585,6 +585,10 @@ pipeline {
 					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_ОзонАПИ_РаботаСоСкладами"'
                }
 
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_ОзонАПИ_СхемаFBO"'
+               }
+
 			}
 		}
 
@@ -617,6 +621,51 @@ pipeline {
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_СдэкАПИ_РаботаСЗаявкамиНаВызовКурьера"'
+               }
+
+			}
+		}
+
+        stage('Testing-YandexMetrika') {
+			steps {
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_ЯМетрика_УправлениеМетками"'
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_ЯМетрика_УправлениеСчетчиками"'
+               }
+
+			}
+		}
+
+        stage('Testing-S3') {
+			steps {
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_AWS_ОбщиеМетоды"'
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_AWS_РаботаСБакетами"'
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_AWS_РаботаСОбъектами"'
+               }
+
+			}
+		}
+
+        stage('Testing-TCP') {
+			steps {
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_TC_Клиент"'
                }
 
 			}

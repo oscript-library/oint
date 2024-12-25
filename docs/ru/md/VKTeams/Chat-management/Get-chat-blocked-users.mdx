@@ -25,14 +25,15 @@ import TabItem from '@theme/TabItem';
 :::tip
 Для вызова этого метода бот должен быть администратором в чате.
 
- Метод в документации API: [GET ​/chats​/getBlockedUsers](https://teams.vk.com/botapi/#/chats/get_chats_getBlockedUsers)
+Метод в документации API: [GET ​/chats​/getBlockedUsers](https://teams.vk.com/botapi/#/chats/get_chats_getBlockedUsers)
 :::
 <br/>
 
 
+
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Токен    = "001.3501506236.091...";
-    IDЧата   = "AoLI0egLWBSLR1Ngn2w";
+    Токен  = "001.3501506236.091...";
+    IDЧата = "AoLI0egLWBSLR1Ngn2w";
 
     Результат = OPI_VKTeams.ПолучитьЗаблокированныхПользователейЧата(Токен, IDЧата);
 ```

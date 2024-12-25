@@ -37,7 +37,7 @@
 #Use "./internal"
 #Region Internal
 
-Procedure GetBinaryData(Value) Export
+Procedure GetBinaryData(Value, Val Force = False, Val TryB64 = True) Export
 
     If Value = Undefined Then
         Return;
@@ -48,21 +48,18 @@ Procedure GetBinaryData(Value) Export
         If TypeOf(Value) = Type("BinaryData") Then
             Return;
         Else
-
-            File = New File(Value);
-
-            If File.Exist() Then
-                Value = New BinaryData(Value);
-            ElsIf StrFind(Value, "//") Then
-                Value = OPI_Tools.Get(Value);
-            Else
-                Value = Base64Value(Value);
-            EndIf;
-
+            ConvertSourceToValue(Value, TryB64);
         EndIf;
 
     Except
-        Raise "Error getting binary data from parameter: " + ErrorDescription();
+
+        If Force Then
+            Value = OPI_Tools.NumberToString(Value);
+            Value = ПолучитьДвоичныеДанныеИзСтроки(Value);
+        Else
+            Raise "Error getting binary data from parameter: " + ErrorDescription();
+        EndIf;
+
     EndTry;
 
 EndProcedure
@@ -115,7 +112,8 @@ Procedure GetCollection(Value) Export
 
                 JSONReader.OpenFile(Value);
 
-            ElsIf StrStartsWith(Lower(Value), "http") Then
+            ElsIf StrStartsWith(TrimL(Value), "http://")
+                Or StrStartsWith(TrimL(Value), "https://") Then
 
                 TFN = GetTempFileName();
                 CopyFile(Value, TFN);
@@ -136,7 +134,7 @@ Procedure GetCollection(Value) Export
             If (Not ThisIsCollection(Value)) Or Not ValueIsFilled(Value) Then
 
                 Value = InitialValue;
-                GetArray(Value);
+                OPI_Tools.ValueToArray(Value);
 
             EndIf;
 
@@ -145,9 +143,19 @@ Procedure GetCollection(Value) Export
     Except
 
         Value = InitialValue;
-        GetArray(Value);
+        OPI_Tools.ValueToArray(Value);
 
     EndTry;
+
+EndProcedure
+
+Procedure GetKeyValueCollection(Value, Val ErrorText) Export
+
+    GetCollection(Value);
+
+    If TypeOf(Value) = Type("Array") Then
+        Raise ErrorText;
+    EndIf;
 
 EndProcedure
 
@@ -157,27 +165,7 @@ Procedure GetArray(Value) Export
         Return;
     EndIf;
 
-    If TypeOf(Value) = Type("String") Then
-
-        Value_ = TrimAll(Value);
-
-        If StrStartsWith(Value_, "{") Or StrStartsWith(Value_, "[") Then
-
-            JSONReader = New JSONReader;
-            JSONReader.SetString(Value);
-            Value      = ReadJSON(JSONReader);
-            JSONReader.Close();
-        EndIf;
-
-    Else
-
-        If TypeOf(Value) = Type("Number") Then
-
-            Value = OPI_Tools.NumberToString(Value);
-
-        EndIf;
-
-    EndIf;
+    GetCollection(Value);
 
     If Not TypeOf(Value) = Type("Array") Then
         OPI_Tools.ValueToArray(Value);
@@ -233,20 +221,15 @@ Procedure GetLine(Value, Val FromSource = False) Export
                 Value      = TextReader.Read();
                 TextReader.Close();
 
-            ElsIf StrStartsWith(Lower(Value), "http") Then
+            ElsIf StrStartsWith(TrimL(Value), "http://")
+                Or StrStartsWith(TrimL(Value), "https://") Then
 
-                TFN = GetTempFileName();
-                CopyFile(Value, TFN);
-
-                TextReader = New TextReader(TFN);
-                Value      = TextReader.Read();
-                TextReader.Close();
-
-                DeleteFiles(TFN);
+                Value = OPI_Tools.Get(Value);
+                GetLine(Value);
 
             Else
 
-                Return;
+                Value = OPI_Tools.NumberToString(Value);
 
             EndIf;
 
@@ -257,6 +240,10 @@ Procedure GetLine(Value, Val FromSource = False) Export
         ElsIf ThisIsCollection(Value) Then
 
             Value = OPI_Tools.JSONString(Value);
+
+        ElsIf TypeOf(Value) = Type("XMLWriter") Then
+
+            Value = Value.Close();
 
         Else
             Return;
@@ -322,5 +309,30 @@ Function ThisIsSymbolic(Val Value)
         Or TypeOf(Value) = Type("Date");
 
 EndFunction
+
+Procedure ConvertSourceToValue(Value, TryB64)
+
+    File = New File(Value);
+
+    If File.Exist() Then
+
+        Value = New BinaryData(Value);
+
+    ElsIf StrStartsWith(TrimL(Value), "http://")
+        Or StrStartsWith(TrimL(Value), "https://") Then
+
+        Value = OPI_Tools.Get(Value);
+
+    Else
+
+        If TryB64 Then
+            Value = Base64Value(Value);
+        Else
+            Raise "value is not a file path or valid Base64 string";
+        EndIf;
+
+    EndIf;
+
+EndProcedure
 
 #EndRegion

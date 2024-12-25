@@ -4,7 +4,7 @@ pipeline {
    	stages {
           stage('Prepare'){
              steps{
-                powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.15.1.ospx; del oint-1.15.1.ospx'
+                powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.17.0.ospx; del oint-1.17.0.ospx'
                 powershell encoding: 'UTF-8', script:'oscript -make ./src/ru/cli/core/Classes/app.os oint.exe'          
              }
           }
@@ -56,6 +56,11 @@ pipeline {
                 test_google()
              }
           }
+          stage('mongodb'){
+             steps{
+                test_mongodb()
+             }
+          }
           stage('neocities'){
              steps{
                 test_neocities()
@@ -71,9 +76,19 @@ pipeline {
                 test_ozon()
              }
           }
+          stage('s3'){
+             steps{
+                test_s3()
+             }
+          }
           stage('slack'){
              steps{
                 test_slack()
+             }
+          }
+          stage('tcp'){
+             steps{
+                test_tcp()
              }
           }
           stage('telegram'){
@@ -109,6 +124,16 @@ pipeline {
           stage('yandex'){
              steps{
                 test_yandex()
+             }
+          }
+          stage('yamarket'){
+             steps{
+                test_yamarket()
+             }
+          }
+          stage('metrika'){
+             steps{
+                test_metrika()
              }
           }
    } 
@@ -899,6 +924,10 @@ def test_cdek(){
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe cdek ПолучитьСписокРегионов --token "test" --countries "test" --page "test" --lang "test" --testapi "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe cdek ПолучитьОписаниеФильтраОфисов --empty "test" --debug --test '
                }
 
@@ -1315,6 +1344,16 @@ def test_google(){
 }
 
 
+def test_mongodb(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe mongodb ПолучитьСписокБаз --connect "test" --debug --test '
+               }
+
+}
+
+
 def test_neocities(){
 					
 
@@ -1590,6 +1629,172 @@ def test_ozon(){
 					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьСписокСкладов --clientid "test" --apikey "test" --debug --test '
                }
 
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьСписокКластеров --clientid "test" --apikey "test" --type "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьСписокСкладовОтгрузки --clientid "test" --apikey "test" --search "test" --type "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьСписокОтправленийFBO --clientid "test" --apikey "test" --filter "test" --with "test" --offset "test" --trlt "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon СоздатьЧерновикЗаявкиFBO --clientid "test" --apikey "test" --clusters "test" --items "test" --type "test" --point "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьЧерновикЗаявкиFBO --clientid "test" --apikey "test" --oper "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьТаймслотыFBO --clientid "test" --apikey "test" --from "test" --to "test" --draft "test" --whs "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьСтруктуруДопПолейОтправления --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ozon ПолучитьСтруктуруФильтраОтправлений --empty "test" --debug --test '
+               }
+
+}
+
+
+def test_s3(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьСтруктуруДанных --url "test" --access "test" --secret "test" --region "test" --service "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ОтправитьЗапросБезТела --method "test" --basic "test" --binary "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ОтправитьЗапросСТелом --method "test" --basic "test" --body "test" --binary "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 СоздатьБакет --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УдалитьБакет --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПроверитьДоступностьБакета --name "test" --basic "test" --dir "test" --account "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УстановитьШифрованиеБакета --name "test" --basic "test" --conf "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьШифрованиеБакета --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УдалитьШифрованиеБакета --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УстановитьТегиБакета --name "test" --basic "test" --tagset "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьТегиБакета --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УдалитьТегиБакета --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УстановитьНастройкиВерсионированияБакета --name "test" --basic "test" --status "test" --mfad "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьНастройкийВерсионированияБакета --name "test" --basic "test" --dir "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьСписокБакетов --basic "test" --prefix "test" --region "test" --ctoken "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ЗагрузитьОбъект --name "test" --bucket "test" --data "test" --basic "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ЗагрузитьОбъектЦеликом --name "test" --bucket "test" --data "test" --basic "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ИнициализироватьЗагрузкуЧастями --name "test" --bucket "test" --basic "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ЗагрузитьЧастьОбъекта --name "test" --bucket "test" --basic "test" --upload "test" --part "test" --content "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ЗавершитьЗагрузкуЧастями --name "test" --bucket "test" --basic "test" --upload "test" --tags "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ОтменитьЗагрузкуЧастями --name "test" --bucket "test" --basic "test" --upload "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьОписаниеОбъекта --name "test" --bucket "test" --basic "test" --ver "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьОбъект --name "test" --bucket "test" --basic "test" --ver "test" --headers "test" --out "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УдалитьОбъект --name "test" --bucket "test" --basic "test" --ver "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 КопироватьОбъект --sname "test" --sbucket "test" --name "test" --bucket "test" --basic "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УстановитьТегиОбъекта --name "test" --bucket "test" --basic "test" --tagset "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьТегиОбъекта --name "test" --bucket "test" --basic "test" --ver "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 УдалитьТегиОбъекта --name "test" --bucket "test" --basic "test" --ver "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьСписокОбъектов --bucket "test" --basic "test" --prefix "test" --ctoken "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьСписокВерсийОбъектов --bucket "test" --basic "test" --prefix "test" --ver "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьСсылкуСкачиванияОбъекта --name "test" --bucket "test" --basic "test" --expires "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe s3 ПолучитьСсылкуЗагрузкиОбъекта --name "test" --bucket "test" --basic "test" --expires "test" --headers "test" --debug --test '
+               }
+
 }
 
 
@@ -1742,6 +1947,16 @@ def test_slack(){
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe slack СформироватьБлокКартинку --picture "test" --alt "test" --debug --test '
+               }
+
+}
+
+
+def test_tcp(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe tcp ОбработатьЗапрос --address "test" --data "test" --string "test" --debug --test '
                }
 
 }
@@ -2407,12 +2622,108 @@ def test_yandex(){
                }
 
 }
+
+
+def test_yamarket(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьСписокМагазинов --Key) "test" --page "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьМагазин --Key) "test" --campaign "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьНастройкиКабинета --Key) "test" --business "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьНастройкиМагазина --Key) "test" --campaign "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ДобавитьОбновитьТовары --Key) "test" --business "test" --offers "test" --pmedia "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьТоварыМагазина --Key) "test" --business "test" --filters "test" --page "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьТоварыКабинета --Key) "test" --business "test" --filters "test" --page "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe yamarket ПолучитьСтруктуруТовара --empty "test" --debug --test '
+               }
+
+}
+
+
+def test_metrika(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika СоздатьМетку --token "test" --title "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ИзменитьМетку --token "test" --label "test" --title "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьМетку --token "test" --label "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika УдалитьМетку --token "test" --label "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСписокМеток --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika СоздатьСчетчик --token "test" --fields "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ИзменитьСчетчик --token "test" --counter "test" --fields "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСчетчик --token "test" --counter "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika УдалитьСчетчик --token "test" --counter "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ВосстановитьСчетчик --token "test" --counter "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСписокСчетчиков --token "test" --filter "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСтруктуруСчетчика --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСтруктуруФильтраСчетчиков --empty "test" --debug --test '
+               }
+
+}
 pipeline {
    agent any
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.15.1.ospx; del oint-1.15.1.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.17.0.ospx; del oint-1.17.0.ospx'
             powershell encoding: 'UTF-8', script:'oscript -make ./src/ru/cli/core/Classes/app.os oint.exe'          
          }
       }
@@ -2427,10 +2738,13 @@ test_gcalendar()
 test_gdrive()
 test_gsheets()
 test_google()
+test_mongodb()
 test_neocities()
 test_notion()
 test_ozon()
+test_s3()
 test_slack()
+test_tcp()
 test_telegram()
 test_twitter()
 test_viber()
@@ -2438,6 +2752,8 @@ test_vk()
 test_vkteams()
 test_yadisk()
 test_yandex()
+test_yamarket()
+test_metrika()
 
          }
       }

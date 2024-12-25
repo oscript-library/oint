@@ -1,0 +1,55 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send line 
+ Sends data as a string over the specified connection
+
+
+
+`Function SendLine(Val Connection, Val Data, Val Encoding = "UTF-8", Val Timeout = 5000) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Connection | - | Arbitrary | &#x2714; | Connection, see. CreateConnection |
+  | Data | - | String | &#x2714; | Data to be sent as a string |
+  | Encoding | - | String | &#x2716; | Encoding for writing the outgoing string to the stream |
+  | Timeout | - | Number | &#x2716; | Data reading timeout (ms). 0 > no limit |
+
+  
+  Returns:  Boolean - Flag of successful delivery
+
+<br/>
+
+
+:::caution
+**NOCLI:** this method is not available in CLI version
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Address    = "45.79.112.203:4242";
+    Connection = OPI_TCP.CreateConnection(Address);
+    Data       = "Hello server!" + Chars.LF;
+
+    Result = OPI_TCP.SendLine(Connection, Data);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    // End of message marker to avoid waiting for the end of timeout
+    Marker = Chars.LF;
+    Response = OPI_TCP.ReadLine(Connection, , Marker);
+
+    OPI_TCP.CloseConnection(Connection);
+```
+ 
+
+
+
+```json title="Result"
+true
+```

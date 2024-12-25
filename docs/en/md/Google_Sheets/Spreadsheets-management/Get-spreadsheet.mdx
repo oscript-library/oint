@@ -1,0 +1,56 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get spreadsheet
+ Gets information about the spreadsheet by ID
+
+
+
+`Function GetSpreadsheet(Val Token, Val Identifier) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | Identifier | --spreadsheet | String | &#x2714; | Spreadsheet identifier |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Google
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token      = "ya29.a0ARW5m77a_UJFBB7n_sa8IAV8ycWLvz55tDaGZ7CsG1xiFYCSMm_kCJknxrGekLItp4p6eF054EBz7apAKFGnuUYhTJMy2lu6N7NTFAvHM...";
+    Identifier = "1wi9P5LEVBp4UT9eT7npO0DN5uIfnpmCgilL9D6QBH10";
+
+    Result = OPI_GoogleSheets.GetSpreadsheet(Token, Identifier);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets GetSpreadsheet \
+             --token "***" \
+             --spreadsheet "1aZuldjAXQiXak_Mxd_a6uKcQmRR0t_sRv8M4fEY-hD0"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets GetSpreadsheet ^
+             --token "***" ^
+             --spreadsheet "1aZuldjAXQiXak_Mxd_a6uKcQmRR0t_sRv8M4fEY-hD0"
+        ```
+    </TabItem>
+</Tabs>
+
+
+

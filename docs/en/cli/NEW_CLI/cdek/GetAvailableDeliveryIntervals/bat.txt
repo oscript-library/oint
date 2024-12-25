@@ -1,4 +1,4 @@
 oint cdek GetAvailableDeliveryIntervals ^
  --token "***" ^
- --uuid "3691fef5-bcfa-4543-84f2-bf867826e494" ^
+ --uuid "a08ec891-1573-4fb3-8531-0eca5b4aea01" ^
  --testapi "***"

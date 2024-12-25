@@ -96,14 +96,16 @@ Function GetCategoryAttributes(Val ClientID
     , Val TypeID
     , Val Lang = "DEFAULT") Export
 
+    String_ = "String";
+
     URL = "https://api-seller.ozon.ru/v1/description-category/attribute";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
 
     Parameters = New Structure;
-    OPI_Tools.AddField("description_category_id", CategoryID, "String", Parameters);
-    OPI_Tools.AddField("type_id"                , TypeID    , "String", Parameters);
-    OPI_Tools.AddField("language"               , Lang      , "String", Parameters);
+    OPI_Tools.AddField("description_category_id", CategoryID, String_, Parameters);
+    OPI_Tools.AddField("type_id"                , TypeID    , String_, Parameters);
+    OPI_Tools.AddField("language"               , Lang      , String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -137,18 +139,20 @@ Function GetAttributeValues(Val ClientID
     , Val CatalogID = 1
     , Val Lang = "DEFAULT") Export
 
+    String_ = "String";
+
     URL = "https://api-seller.ozon.ru/v1/description-category/attribute/values";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 200;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("description_category_id", CategoryID   , "String", Parameters);
-    OPI_Tools.AddField("type_id"                , TypeID       , "String", Parameters);
-    OPI_Tools.AddField("attribute_id"           , AttributeID  , "String", Parameters);
-    OPI_Tools.AddField("language"               , Lang         , "String", Parameters);
-    OPI_Tools.AddField("limit"                  , Limit        , "String", Parameters);
-    OPI_Tools.AddField("last_value_id"          , CatalogID - 1, "String", Parameters);
+    OPI_Tools.AddField("description_category_id", CategoryID   , String_, Parameters);
+    OPI_Tools.AddField("type_id"                , TypeID       , String_, Parameters);
+    OPI_Tools.AddField("attribute_id"           , AttributeID  , String_, Parameters);
+    OPI_Tools.AddField("language"               , Lang         , String_, Parameters);
+    OPI_Tools.AddField("limit"                  , Limit        , String_, Parameters);
+    OPI_Tools.AddField("last_value_id"          , CatalogID - 1, String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -180,17 +184,19 @@ Function SearchAttributeValue(Val ClientID
     , Val AttributeID
     , Val Value) Export
 
+    String_ = "String";
+
     URL = "https://api-seller.ozon.ru/v1/description-category/attribute/values/search";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 100;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("description_category_id", CategoryID  , "String", Parameters);
-    OPI_Tools.AddField("type_id"                , TypeID      , "String", Parameters);
-    OPI_Tools.AddField("attribute_id"           , AttributeID , "String", Parameters);
-    OPI_Tools.AddField("limit"                  , Limit       , "String", Parameters);
-    OPI_Tools.AddField("value"                  , Value       , "String", Parameters);
+    OPI_Tools.AddField("description_category_id", CategoryID  , String_, Parameters);
+    OPI_Tools.AddField("type_id"                , TypeID      , String_, Parameters);
+    OPI_Tools.AddField("attribute_id"           , AttributeID , String_, Parameters);
+    OPI_Tools.AddField("limit"                  , Limit       , String_, Parameters);
+    OPI_Tools.AddField("value"                  , Value       , String_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -199,7 +205,7 @@ Function SearchAttributeValue(Val ClientID
 EndFunction
 
 // Get products requests limits
-// Get requests limits for products managment methods
+// Get requests limits for products management methods
 //
 // Note
 // Method at API documentation: [post /v4/product/info/limit](@docs.ozon.ru/api/seller/#operation/ProductAPI_GetUploadQuota)
@@ -242,18 +248,20 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON response from Ozon Seller API
 Function GetProductList(Val ClientID, Val APIKey, Val Filter = "", Val LastID = 0) Export
 
+    Filter_ = "filter";
+
     URL = "https://api-seller.ozon.ru/v2/product/list";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 200;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("filter" , Filter , "Collection", Parameters);
+    OPI_Tools.AddField(Filter_  , Filter , "Collection", Parameters);
     OPI_Tools.AddField("limit"  , Limit  , "String"    , Parameters);
     OPI_Tools.AddField("last_id", LastID , "String"    , Parameters);
 
-    If Not Parameters.Property("filter") Then
-        Parameters.Insert("filter", New Structure);
+    If Not Parameters.Property(Filter_) Then
+        Parameters.Insert(Filter_, New Structure);
     EndIf;
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
@@ -281,18 +289,20 @@ Function GetProductsAttributesData(Val ClientID
     , Val Filter = ""
     , Val LastID = 0) Export
 
+    Filter_ = "filter";
+
     URL = "https://api-seller.ozon.ru/v3/products/info/attributes";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 200;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("filter" , Filter , "Collection", Parameters);
+    OPI_Tools.AddField(Filter_  , Filter , "Collection", Parameters);
     OPI_Tools.AddField("limit"  , Limit  , "String"    , Parameters);
     OPI_Tools.AddField("last_id", LastID , "String"    , Parameters);
 
-    If Not Parameters.Property("filter") Then
-        Parameters.Insert("filter", New Structure);
+    If Not Parameters.Property(Filter_) Then
+        Parameters.Insert(Filter_, New Structure);
     EndIf;
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
@@ -326,14 +336,16 @@ Function GetProductsInformation(Val ClientID
     , Val SKU = 0
     , Val Articles = "") Export
 
+    Array_ = "Array";
+
     URL = "https://api-seller.ozon.ru/v2/product/info/list";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
 
     Parameters = New Structure;
-    OPI_Tools.AddField("offer_id"  , Articles  , "Array" , Parameters);
-    OPI_Tools.AddField("product_id", ProductsID, "Array" , Parameters);
-    OPI_Tools.AddField("sku"       , SKU       , "Array" , Parameters);
+    OPI_Tools.AddField("offer_id"  , Articles  , Array_, Parameters);
+    OPI_Tools.AddField("product_id", ProductsID, Array_, Parameters);
+    OPI_Tools.AddField("sku"       , SKU       , Array_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -984,6 +996,8 @@ EndFunction
 // Structure of KeyAndValue - Structure of product fields with added video
 Function AddProductVideo(ItemStructure, Val URL, Val Name) Export
 
+    Complex_attributes_ = "complex_attributes";
+
     OPI_TypeConversion.GetCollection(ItemStructure);
     OPI_TypeConversion.GetLine(URL);
     OPI_TypeConversion.GetLine(Name);
@@ -995,11 +1009,11 @@ Function AddProductVideo(ItemStructure, Val URL, Val Name) Export
     CompleteComplexAttribute(VideoObject, 21841, 100001, URLStructure);
     CompleteComplexAttribute(VideoObject, 21837, 100001, NameStructure);
 
-    If Not OPI_Tools.CollectionFieldExist(ItemStructure, "complex_attributes") Then
-        ItemStructure.Insert("complex_attributes", New Array);
+    If Not OPI_Tools.CollectionFieldExist(ItemStructure, Complex_attributes_) Then
+        ItemStructure.Insert(Complex_attributes_, New Array);
     EndIf;
 
-    ItemStructure["complex_attributes"].Add(VideoObject);
+    ItemStructure[Complex_attributes_].Add(VideoObject);
 
     //@skip-check constructor-function-return-section
     Return ItemStructure;
@@ -1020,6 +1034,8 @@ EndFunction
 // Structure of KeyAndValue - Structure of product fields with added video
 Function AddProductVideoCover(ItemStructure, Val URL) Export
 
+    Complex_attributes_ = "complex_attributes";
+
     OPI_TypeConversion.GetCollection(ItemStructure);
     OPI_TypeConversion.GetLine(URL);
 
@@ -1028,11 +1044,11 @@ Function AddProductVideoCover(ItemStructure, Val URL) Export
 
     CompleteComplexAttribute(CoverObject, 21845, 100002, URLStructure);
 
-    If Not OPI_Tools.CollectionFieldExist(ItemStructure, "complex_attributes") Then
-        ItemStructure.Insert("complex_attributes", New Array);
+    If Not OPI_Tools.CollectionFieldExist(ItemStructure, Complex_attributes_) Then
+        ItemStructure.Insert(Complex_attributes_, New Array);
     EndIf;
 
-    ItemStructure["complex_attributes"].Add(CoverObject);
+    ItemStructure[Complex_attributes_].Add(CoverObject);
 
     //@skip-check constructor-function-return-section
     Return ItemStructure;
@@ -1055,16 +1071,18 @@ EndFunction
 // Structure - A collection enhanced with a new attribute
 Function CompleteComplexAttribute(Collection, Val AttributeID, Val ComplexID, Val Values) Export
 
+    Attributes_ = "attributes";
+
     OPI_TypeConversion.GetArray(Values);
     OPI_TypeConversion.GetCollection(Collection);
 
     AttributeStructure = New Structure("id,complex_id,values", AttributeID, ComplexID, Values);
 
-    If Not OPI_Tools.CollectionFieldExist(Collection, "attributes") Then
-        Collection.Insert("attributes", New Array);
+    If Not OPI_Tools.CollectionFieldExist(Collection, Attributes_) Then
+        Collection.Insert(Attributes_, New Array);
     EndIf;
 
-    Collection["attributes"].Add(AttributeStructure);
+    Collection[Attributes_].Add(AttributeStructure);
 
     //@skip-check constructor-function-return-section
     Return Collection;
@@ -1167,18 +1185,20 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON response from Ozon Seller API
 Function GetProductsStocks(Val ClientID, Val APIKey, Val Filter = "", Val LastID = 0) Export
 
+    Filter_ = "filter";
+
     URL = "https://api-seller.ozon.ru/v3/product/info/stocks";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 100;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("filter" , Filter , "Collection", Parameters);
+    OPI_Tools.AddField(Filter_  , Filter , "Collection", Parameters);
     OPI_Tools.AddField("limit"  , Limit  , "String"    , Parameters);
     OPI_Tools.AddField("last_id", LastID , "String"    , Parameters);
 
-    If Not Parameters.Property("filter") Then
-        Parameters.Insert("filter", New Structure);
+    If Not Parameters.Property(Filter_) Then
+        Parameters.Insert(Filter_, New Structure);
     EndIf;
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
@@ -1203,18 +1223,20 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON response from Ozon Seller API
 Function GetProductsPrices(Val ClientID, Val APIKey, Val Filter = "", Val LastID = 0) Export
 
+    Filter_ = "filter";
+
     URL = "https://api-seller.ozon.ru/v4/product/info/prices";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 300;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("filter" , Filter , "Collection", Parameters);
+    OPI_Tools.AddField(Filter_  , Filter , "Collection", Parameters);
     OPI_Tools.AddField("limit"  , Limit  , "String"    , Parameters);
     OPI_Tools.AddField("last_id", LastID , "String"    , Parameters);
 
-    If Not Parameters.Property("filter") Then
-        Parameters.Insert("filter", New Structure);
+    If Not Parameters.Property(Filter_) Then
+        Parameters.Insert(Filter_, New Structure);
     EndIf;
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
@@ -1399,7 +1421,6 @@ Function GetProductPriceStructure(Val Clear = False) Export
     ItemStructure.Insert("price_strategy_enabled", "<auto application of price strategies: ENABLED or DISABLED>");
     ItemStructure.Insert("product_id"            , "<Product ID>");
 
-
     If Clear Then
         For Each Field In ItemStructure Do
             ItemStructure.Insert(Field.Key, "");
@@ -1413,7 +1434,7 @@ EndFunction
 
 #EndRegion
 
-#Region PromotionsManagment
+#Region PromotionsManagement
 
 // Get promotions list
 // Gets a list of available promotions
@@ -1455,15 +1476,17 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON response from Ozon Seller API
 Function GetAvailablePromoProducts(Val ClientID, Val APIKey, Val PromoID, Val Indent = 0) Export
 
+    Number_ = "Number";
+
     URL = "https://api-seller.ozon.ru/v1/actions/candidates";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 100;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("action_id", PromoID, "Number", Parameters);
-    OPI_Tools.AddField("limit"    , Limit  , "Number", Parameters);
-    OPI_Tools.AddField("offset"   , Indent , "Number", Parameters);
+    OPI_Tools.AddField("action_id", PromoID, Number_, Parameters);
+    OPI_Tools.AddField("limit"    , Limit  , Number_, Parameters);
+    OPI_Tools.AddField("offset"   , Indent , Number_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -1487,15 +1510,17 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON response from Ozon Seller API
 Function GetCurrentPromoProducts(Val ClientID, Val APIKey, Val PromoID, Val Indent = 0) Export
 
+    Number_ = "Number";
+
     URL = "https://api-seller.ozon.ru/v1/actions/products";
 
     Headers = CreateRequestHeaders(ClientID, APIKey);
     Limit   = 100;
 
     Parameters = New Structure;
-    OPI_Tools.AddField("action_id", PromoID, "Number", Parameters);
-    OPI_Tools.AddField("limit"    , Limit  , "Number", Parameters);
-    OPI_Tools.AddField("offset"   , Indent , "Number", Parameters);
+    OPI_Tools.AddField("action_id", PromoID, Number_, Parameters);
+    OPI_Tools.AddField("limit"    , Limit  , Number_, Parameters);
+    OPI_Tools.AddField("offset"   , Indent , Number_, Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters, Headers);
 
@@ -1505,7 +1530,7 @@ EndFunction
 
 #EndRegion
 
-#Region WarehousesManagment
+#Region WarehousesManagement
 
 // Get warehouses list
 // Gets compnay warehouses list
@@ -1528,6 +1553,285 @@ Function GetWarehousesList(Val ClientID, Val APIKey) Export
     Response = OPI_Tools.Post(URL, , Headers);
 
     Return Response;
+
+EndFunction
+
+#EndRegion
+
+#Region FBOScheme
+
+// Get clusters list
+// Gets information about clusters and warehouses
+//
+// Note
+// Method at API documentation: [post /v1/cluster/list](@docs.ozon.ru/api/seller/#operation/SupplyDraftAPI_DraftClusterList)
+//
+// Parameters:
+// ClientID - String - Client identifier - clientid
+// APIKey - String - API key - apikey
+// ClusterType - String - Cluster type: CLUSTER_TYPE_OZON (Russia), CLUSTER_TYPE_CIS (CIS) - type
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+Function GetClustersList(Val ClientID, Val APIKey, Val ClusterType = "CLUSTER_TYPE_OZON") Export
+
+    URL = "https://api-seller.ozon.ru/v1/cluster/list";
+
+    Headers = CreateRequestHeaders(ClientID, APIKey);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("cluster_type", ClusterType, "String", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
+// Get shipping warehouses list
+// Gets a list of warehouses, sorting centers and delivery points
+//
+// Note
+// Method at API documentation: [post /v1/warehouse/fbo/list](@docs.ozon.ru/api/seller/#operation/SupplyDraftAPI_DraftGetWarehouseFboList)
+//
+// Parameters:
+// ClientID - String - Client identifier - clientid
+// APIKey - String - API key - apikey
+// Search - String - Search by name (4 chars. min). For delivery points enter the full name - search
+// SupplyType - String, Array of String - Supply types: CREATE_TYPE_CROSSDOCK, CREATE_TYPE_DIRECT - type
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+Function GetShippingWarehousesList(Val ClientID
+    , Val APIKey
+    , Val Search
+    , Val SupplyType = "CREATE_TYPE_DIRECT") Export
+
+    URL = "https://api-seller.ozon.ru/v1/warehouse/fbo/list";
+
+    Headers = CreateRequestHeaders(ClientID, APIKey);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("filter_by_supply_type", SupplyType, "Array" , Parameters);
+    OPI_Tools.AddField("search"               , Search    , "String", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
+// Get FBO shipments list
+// Gets a list of active shipments with or without filtering
+//
+// Note
+// Method at API documentation: [post /v2/posting/fbo/list](@docs.ozon.ru/api/seller/#operation/PostingAPI_GetFboPostingList)
+//
+// Parameters:
+// ClientID - String - Client identifier - clientid
+// APIKey - String - API key - apikey
+// Filter - Structure of KeyAndValue - Shipments filter. See GetShipmentsFilterStructure - filter
+// AddFields - Structure of KeyAndValue - Include additional fields in the response. See GetShipmentAdditionalFields - with
+// Indent - Number - Offset of the result items - offset
+// Traslit - Boolean - If Cyrillic to Latin address transliteration is enabled > True - trlt
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+Function GetFBOShipmentsList(Val ClientID
+    , Val APIKey
+    , Val Filter = Undefined
+    , Val AddFields = Undefined
+    , Val Indent = 0
+    , Val Traslit = False) Export
+
+    URL = "https://api-seller.ozon.ru/v2/posting/fbo/list";
+
+    Headers = CreateRequestHeaders(ClientID, APIKey);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("limit"   , 1000      , "Number"    , Parameters);
+    OPI_Tools.AddField("offset"  , Indent    , "Number"    , Parameters);
+    OPI_Tools.AddField("translit", Traslit   , "Boolean"   , Parameters);
+    OPI_Tools.AddField("filter"  , Filter    , "Collection", Parameters);
+    OPI_Tools.AddField("with"    , AddFields , "Collection", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
+// Create FBO draft
+// Creates a draft of FBO supply order
+//
+// Note
+// Method at API documentation: [post /v1/draft/create](@docs.ozon.ru/api/seller/#operation/SupplyDraftAPI_DraftCreate)
+//
+// Parameters:
+// ClientID - String - Client identifier - clientid
+// APIKey - String - API key - apikey
+// Clusters - String, Array of String - Clusters identifiers - clusters
+// Items - Map Of KeyAndValue - Items list: Key > SKU, Value > Amount - items
+// SupplyType - String - Supply type: CREATE_TYPE_CROSSDOCK, CREATE_TYPE_DIRECT - type
+// ShippingPoint - String - Shipping point identifier for CREATE_TYPE_CROSSDOCK - point
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+Function CreateFBODraft(Val ClientID
+    , Val APIKey
+    , Val Clusters
+    , Val Items
+    , Val SupplyType = "CREATE_TYPE_DIRECT"
+    , Val ShippingPoint = "") Export
+
+    Clusters_ = OPI_Tools.CopyCollection(Clusters);
+    Items_    = OPI_Tools.CopyCollection(Items);
+
+    URL = "https://api-seller.ozon.ru/v1/draft/create";
+
+    Headers = CreateRequestHeaders(ClientID, APIKey);
+
+    ProcessClustersList(Clusters_);
+    ProcessItemsList(Items_);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("cluster_ids"                , Clusters_    , "Array"  , Parameters);
+    OPI_Tools.AddField("drop_off_point_warehouse_id", ShippingPoint, "Number" , Parameters);
+    OPI_Tools.AddField("items"                      , Items_       , "Array"  , Parameters);
+    OPI_Tools.AddField("type"                       , SupplyType   , "String" , Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
+// Get FBO draft
+// Gets FBO draft by ID
+//
+// Note
+// Method at API documentation: [post /v1/draft/create/info](@docs.ozon.ru/api/seller/#operation/SupplyDraftAPI_DraftCreateInfo)
+//
+// Parameters:
+// ClientID - String - Client identifier - clientid
+// APIKey - String - API key - apikey
+// OperationID - String - Draft (operation) ID) - oper
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+Function GetFBODraft(Val ClientID, Val APIKey, Val OperationID) Export
+
+    URL = "https://api-seller.ozon.ru/v1/draft/create/info";
+
+    Headers = CreateRequestHeaders(ClientID, APIKey);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("operation_id", OperationID, "String", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
+// Get FBO timeslots
+// Get available timeslots at the final supply warehouses
+//
+// Note
+// Method at API documentation: [post /v1/draft/timeslot/info](@docs.ozon.ru/api/seller/#operation/SupplyDraftAPI_DraftTimeslotInfo)
+//
+// Parameters:
+// ClientID - String - Client identifier - clientid
+// APIKey - String - API key - apikey
+// DateFrom - Date - Start date of the required period of available timeslots - from
+// DateTo - Date - The end date of the desired period of available timeslots (28 days from current max.) - to
+// Draft - Number, String - Supply draft identifier - draft
+// Warehouses - Array Of Number - Warehouse or multiple warehouses to receive timeslots - whs
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+Function GetFBOTimeslots(Val ClientID, Val APIKey, Val DateFrom, Val DateTo, Val Draft, Val Warehouses) Export
+
+    OPI_TypeConversion.GetDate(DateFrom);
+    OPI_TypeConversion.GetDate(DateTo);
+    OPI_TypeConversion.GetArray(Warehouses);
+
+    For N = 0 To Warehouses.UBound() Do
+
+        CurrentValue = Warehouses[N];
+
+        OPI_TypeConversion.GetNumber(CurrentValue);
+
+        Warehouses[N] = CurrentValue;
+
+    EndDo;
+
+    URL = "https://api-seller.ozon.ru/v1/draft/timeslot/info";
+
+    Headers = CreateRequestHeaders(ClientID, APIKey);
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("date_from"    , XMLString(DateFrom) + "Z", "String"    , Parameters);
+    OPI_Tools.AddField("date_to"      , XMLString(DateTo) + "Z"  , "String"    , Parameters);
+    OPI_Tools.AddField("draft_id"     , Draft                    , "Number"    , Parameters);
+    OPI_Tools.AddField("warehouse_ids", Warehouses               , "Collection", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters, Headers);
+
+    Return Response;
+
+EndFunction
+
+// Get shipment additional fields
+// Returns the structure of inclusion of additional response fields for the GetFBOShipmentsList method
+//
+// Parameters:
+// Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
+//
+// Returns:
+// Structure of KeyAndValue - Fields structure
+Function GetShipmentAdditionalFields(Val Clear = False) Export
+
+    OPI_TypeConversion.GetBoolean(Clear);
+
+    FieldsStructure = New Structure;
+
+    FieldsStructure.Insert("analytics_data", "<pass True to add analytics data to the response>");
+    FieldsStructure.Insert("financial_data", "<pass True to add financial data to the response>");
+
+    If Clear Then
+        FieldsStructure = OPI_Tools.ClearCollectionRecursively(FieldsStructure);
+    EndIf;
+
+    //@skip-check constructor-function-return-section
+    Return FieldsStructure;
+
+EndFunction
+
+// Get shipments filter structure
+// Returns the filter structure for the GetFBOShipmentsList method
+//
+// Parameters:
+// Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
+//
+// Returns:
+// Structure of KeyAndValue - Filter structure
+Function GetShipmentsFilterStructure(Val Clear = False) Export
+
+    OPI_TypeConversion.GetBoolean(Clear);
+
+    FilterStructure = New Structure;
+
+    FilterStructure.Insert("since" , "Period start in ISO format");
+    FilterStructure.Insert("status", "Shipment status");
+    FilterStructure.Insert("to"    , "Period end in ISO format");
+
+    If Clear Then
+        FilterStructure = OPI_Tools.ClearCollectionRecursively(FilterStructure);
+    EndIf;
+
+    //@skip-check constructor-function-return-section
+    Return FilterStructure;
 
 EndFunction
 
@@ -1560,5 +1864,48 @@ Function SendObjectsDescription(Val ClientID, Val APIKey, Val ArrayOfObjects, Va
     Return Response;
 
 EndFunction
+
+Procedure ProcessClustersList(Clusters)
+
+    OPI_TypeConversion.GetArray(Clusters);
+
+    For N = 0 To Clusters.UBound() Do
+
+        CurrentValue = Clusters[N];
+
+        OPI_TypeConversion.GetNumber(CurrentValue);
+
+        Clusters[N] = CurrentValue;
+
+    EndDo;
+
+EndProcedure
+
+Procedure ProcessItemsList(Items)
+
+    ErrorText = "The list of items has an incorrect format";
+    OPI_TypeConversion.GetKeyValueCollection(Items, ErrorText);
+
+    ProcessedPositions = New Array;
+
+    For Each Item In Items Do
+
+        CurrentKey   = Item.Key;
+        CurrentValue = Item.Value;
+
+        OPI_TypeConversion.GetNumber(CurrentKey);
+        OPI_TypeConversion.GetNumber(CurrentValue);
+
+        If CurrentKey = 0 Or CurrentValue = 0 Then
+            Raise ("Error in position " + String(CurrentKey));
+        EndIf;
+
+        ProcessedPositions.Add(New Structure("quantity,sku", CurrentValue, CurrentKey));
+
+    EndDo;
+
+    Items = ProcessedPositions;
+
+EndProcedure
 
 #EndRegion

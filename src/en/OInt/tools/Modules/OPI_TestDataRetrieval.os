@@ -32,6 +32,7 @@
 // BSLLS:UsingServiceTag-off
 // BSLLS:ExecuteExternalCodeInCommonModule-off
 // BSLLS:DuplicateStringLiteral-off
+// BSLLS:MagicNumber-off
 
 //@skip-check use-non-recommended-method
 //@skip-check module-structure-top-region
@@ -66,6 +67,9 @@ Function GetTestingSectionMapping() Export
     Sections.Insert("Ozon"           , 5);
     Sections.Insert("Neocities"      , 5);
     Sections.Insert("CDEK"           , 5);
+    Sections.Insert("YandexMetrika"  , 5);
+    Sections.Insert("S3"             , 5);
+    Sections.Insert("TCP"            , 5);
 
     Return Sections;
 
@@ -95,6 +99,9 @@ Function GetTestingSectionMappingGA() Export
     Sections.Insert("Ozon"           , StandardDependencies);
     Sections.Insert("Neocities"      , StandardDependencies);
     Sections.Insert("CDEK"           , StandardDependencies);
+    Sections.Insert("YandexMetrika"  , StandardDependencies);
+    Sections.Insert("S3"             , StandardDependencies);
+    Sections.Insert("TCP"            , StandardDependencies);
 
     Return Sections;
 
@@ -120,6 +127,9 @@ Function GetTestTable() Export
     Ozon      = "Ozon";
     Neocities = "Neocities";
     Cdek      = "CDEK";
+    Metrika   = "YandexMetrika";
+    S3_       = "S3";
+    TCP       = "TCP";
 
     TestTable = New ValueTable;
     TestTable.Columns.Add("Method");
@@ -217,35 +227,42 @@ Function GetTestTable() Export
     NewTest(TestTable, "DropboxAPI_GetAccount"                , "Get account data"                , Dropbox);
     NewTest(TestTable, "DropboxAPI_AccessManagement"          , "Access management"               , Dropbox);
     NewTest(TestTable, "DropboxAPI_GetFolderFileList"         , "Get list of folder files"        , Dropbox);
-    NewTest(TestTable, "B24_TokenManagment"                   , "Token management"                , Bitrix);
+    NewTest(TestTable, "B24_TokenManagement"                  , "Token management"                , Bitrix);
     NewTest(TestTable, "B24_ServerTime"                       , "Server time"                     , Bitrix);
-    NewTest(TestTable, "B24_PostsManagment"                   , "Posts managment"                 , Bitrix);
-    NewTest(TestTable, "B24_TaskManagment"                    , "Tasks managment"                 , Bitrix);
-    NewTest(TestTable, "B24_CommentsManagment"                , "Comments managment"              , Bitrix);
+    NewTest(TestTable, "B24_PostsManagement"                  , "Posts management"                , Bitrix);
+    NewTest(TestTable, "B24_TaskManagement"                   , "Tasks management"                , Bitrix);
+    NewTest(TestTable, "B24_CommentsManagement"               , "Comments management"             , Bitrix);
     NewTest(TestTable, "B24_WorkingWithDrive"                 , "Working with drive"              , Bitrix);
     NewTest(TestTable, "B24_Kanban"                           , "Kanban"                          , Bitrix);
     NewTest(TestTable, "B24_Timekeeping"                      , "Timekeeping"                     , Bitrix);
-    NewTest(TestTable, "B24_ChatManagment"                    , "Chats works"                     , Bitrix);
-    NewTest(TestTable, "B24_NotificationsManagment"           , "Notifications managment"         , Bitrix);
-    NewTest(TestTable, "B24_TasksFieldsManagment"             , "Working with custom task fields" , Bitrix);
-    NewTest(TestTable, "B24_DepartmentsManagment"             , "Departments managment"           , Bitrix);
-    NewTest(TestTable, "B2_UsersManagment"                    , "Users managment"                 , Bitrix);
-    NewTest(TestTable, "B24_LeadsManagment"                   , "Leads managment"                 , Bitrix);
-    NewTest(TestTable, "B24_DealsManagment"                   , "Deals managment"                 , Bitrix);
+    NewTest(TestTable, "B24_ChatManagement"                   , "Chats works"                     , Bitrix);
+    NewTest(TestTable, "B24_NotificationsManagement"          , "Notifications management"        , Bitrix);
+    NewTest(TestTable, "B24_TasksFieldsManagement"            , "Working with custom task fields" , Bitrix);
+    NewTest(TestTable, "B24_DepartmentsManagement"            , "Departments management"          , Bitrix);
+    NewTest(TestTable, "B2_UsersManagement"                   , "Users management"                , Bitrix);
+    NewTest(TestTable, "B24_LeadsManagement"                  , "Leads management"                , Bitrix);
+    NewTest(TestTable, "B24_DealsManagement"                  , "Deals management"                , Bitrix);
     NewTest(TestTable, "VKT_MessagesSending"                  , "Messages sending"                , VKT);
     NewTest(TestTable, "VKT_CommonMethods"                    , "Common methods"                  , VKT);
-    NewTest(TestTable, "VKT_ChatManagment"                    , "Chat managment"                  , VKT);
+    NewTest(TestTable, "VKT_ChatManagement"                   , "Chat management"                 , VKT);
     NewTest(TestTable, "OzonAPI_AttributesAndFeatures"        , "Attributes and features"         , Ozon);
     NewTest(TestTable, "OzonAPI_UploadingAndUpdatingProducts" , "Uploading and updating products" , Ozon);
     NewTest(TestTable, "OzonAPI_Barcodes"                     , "Barcodes"                        , Ozon);
     NewTest(TestTable, "OzonAPI_PricesAndStocks"              , "Prices and stocks"               , Ozon);
-    NewTest(TestTable, "OzonAPI_PromotionsManagment"          , "Promotions managment"            , Ozon);
-    NewTest(TestTable, "OzonAPI_WarehousesManagment"          , "Warehouses managment"            , Ozon);
-    NewTest(TestTable, "NC_FilesManagment"                    , "Files managment"                 , Neocities);
+    NewTest(TestTable, "OzonAPI_PromotionsManagement"         , "Promotions management"           , Ozon);
+    NewTest(TestTable, "OzonAPI_WarehousesManagement"         , "Warehouses management"           , Ozon);
+    NewTest(TestTable, "OzonAPI_FBOScheme"                    , "FBO scheme"                      , Ozon);
+    NewTest(TestTable, "NC_FilesManagement"                   , "Files management"                , Neocities);
     NewTest(TestTable, "NC_DataRetrieving"                    , "Data retrieving"                 , Neocities);
     NewTest(TestTable, "CdekAPI_CommonMethods"                , "Common methods"                  , Cdek);
-    NewTest(TestTable, "CDEKAPI_OrdersManagment"              , "Orders managment"                , Cdek);
-    NewTest(TestTable, "CdekAPI_CourierInvitationsManagment"  , "Courier invitations managment"   , Cdek);
+    NewTest(TestTable, "CDEKAPI_OrdersManagement"             , "Orders management"               , Cdek);
+    NewTest(TestTable, "CdekAPI_CourierInvitationsManagement" , "Courier invitations management"  , Cdek);
+    NewTest(TestTable, "YaMetrika_TagsManagement"             , "Tags management"                 , Metrika);
+    NewTest(TestTable, "YaMetrika_CountersManagement"         , "Counters management"             , Metrika);
+    NewTest(TestTable, "AWS_CommonMethods"                    , "Common methods"                  , S3_);
+    NewTest(TestTable, "AWS_BucketsManagement"                , "Buckets management"              , S3_);
+    NewTest(TestTable, "AWS_ObjectsManagement"                , "Objects management"              , S3_);
+    NewTest(TestTable, "TC_Client"                            , "TCP Client"                      , TCP);
 
     Return TestTable;
 
@@ -382,25 +399,6 @@ Function GetFilePath(Val Path) Export
 
 EndFunction
 
-Function IsOneScript() Export
-
-    Try
-
-        Response = False;
-
-        //@skip-check module-unused-local-variable
-        Check = New OpenSSLSecureConnection();
-
-    Except
-
-        Response = True
-
-    EndTry;
-
-    Return Response;
-
-EndFunction
-
 Procedure ParameterToCollection(Parameter, Collection) Export
 
     Value = GetParameter(Parameter);
@@ -453,6 +451,40 @@ Procedure WriteLog(Val Result, Val Method, Val Library = "") Export
 
 EndProcedure
 
+Procedure WriteLogFile(Val Data, Val Method, Val Library, Val Forced = False) Export
+
+    Try
+
+        LogPath        = "./docs/en/results";
+        LibraryLogPath = LogPath + "/" + Library;
+
+        LogDirectory = New File(LogPath);
+
+        If Not LogDirectory.Exist() Then
+            CreateDirectory(LogPath);
+        EndIf;
+
+        LibraryLogCatalog = New File(LibraryLogPath);
+
+        If Not LibraryLogCatalog.Exist() Then
+            CreateDirectory(LibraryLogPath);
+        EndIf;
+
+        FilePath = LibraryLogPath + "/" + Method + ".log";
+        LogFile  = New File(FilePath);
+
+        If Not LogFile.Exist() Or Forced Then
+            LogDocument = New TextDocument;
+            LogDocument.SetText(Data);
+            LogDocument.Write(FilePath);
+        EndIf;
+
+    Except
+        Message("Failed to write log file!: " + ErrorDescription());
+    EndTry;
+
+EndProcedure
+
 Procedure WriteLogCLI(Val Result, Val Method, Val Library = "") Export
 
     WriteLog(Result, Method + " (CLI)");
@@ -461,14 +493,14 @@ EndProcedure
 
 Function ExecuteTestCLI(Val Library, Val Method, Val Options) Export
 
-    SystemInfo      = New SystemInfo;
-    OperatingSystem = String(SystemInfo.PlatformType);
+    If OPI_Tools.IsWindows() Then
 
-    If StrFind(Lower(OperatingSystem), "windows") > 0 Then
-        //Oint = """C:/Program Files/OneScript/bin/oint.bat""";
-        Oint   = """C:\Program Files (x86)\OInt\bin\oint.bat""";
+        Oint = """C:/Program Files/OneScript/bin/oint.bat""";
+
     Else
-        Oint   = "sudo oint";
+
+        Oint = "sudo oint";
+
     EndIf;
 
     ResultFile   = GetTempFileName();
@@ -529,8 +561,14 @@ Procedure Check_Empty(Val Result) Export
 
 EndProcedure
 
-Procedure Check_String(Val Result) Export
+Procedure Check_String(Val Result, Val ComparisonObject = "") Export
+
     ExpectsThat(Result).ИмеетТип("String");
+
+    If ValueIsFilled(ComparisonObject) Then
+        ExpectsThat(Result).Равно(ComparisonObject);
+    EndIf;
+
 EndProcedure
 
 Procedure Check_BinaryData(Val Result, Val Size = Undefined) Export
@@ -539,7 +577,7 @@ Procedure Check_BinaryData(Val Result, Val Size = Undefined) Export
 
     ExpectsThat(Result).ИмеетТип("BinaryData");
 
-    If Not Size = Undefined Then
+    If Not Size                    = Undefined Then
         ExpectsThat(Result.Size() >= Size).Равно(True);
     Else
         ExpectsThat(Result.Size() > MinimumSize).Равно(True);
@@ -572,6 +610,18 @@ EndProcedure
 Procedure Check_Structure(Val Result) Export
 
     ExpectsThat(Result).ИмеетТип("Structure").Заполнено();
+
+EndProcedure
+
+Procedure Check_Filled(Val Result) Export
+
+    ExpectsThat(ValueIsFilled(Result)).Равно(True);
+
+EndProcedure
+
+Procedure Check_True(Val Result) Export
+
+    ExpectsThat(Result).Равно(True);
 
 EndProcedure
 
@@ -980,7 +1030,6 @@ Procedure Check_YaDiskFilesList(Val Result, Val Count, Val Indent) Export
     ExpectsThat(Result["limit"]).Равно(Count);
     ExpectsThat(Result["offset"]).Равно(Indent);
     ExpectsThat(Result["items"]).ИмеетТип("Array");
-
 
 EndProcedure
 
@@ -1827,6 +1876,36 @@ Procedure Check_OzonSKU(Val Result) Export
 
 EndProcedure
 
+Procedure Check_OzonDraft(Val Result) Export
+
+     ExpectsThat(Result["operation_id"]).ИмеетТип("String").Заполнено();
+
+EndProcedure
+
+Procedure Check_OzonSearch(Val Result) Export
+
+    ExpectsThat(Result["search"]).ИмеетТип("Array");
+
+EndProcedure
+
+Procedure Check_OzonClusters(Val Result) Export
+
+    ExpectsThat(Result["clusters"]).ИмеетТип("Array");
+
+EndProcedure
+
+Procedure Check_OzonReadyDraft(Val Result) Export
+
+    ExpectsThat(Result["status"]).Равно("CALCULATION_STATUS_SUCCESS");
+
+EndProcedure
+
+Procedure Check_OzonTimeslots(Val Result) Export
+
+    ExpectsThat(Result["drop_off_warehouse_timeslots"]).ИмеетТип("Array");
+
+EndProcedure
+
 Procedure Check_NCSuccess(Val Result) Export
 
     ExpectsThat(Result["result"]).Равно("success");
@@ -1899,6 +1978,81 @@ Procedure Check_CdekCheck(Val Result) Export
 
 EndProcedure
 
+Procedure Check_YaMarketMarkets(Val Result) Export
+
+    ExpectsThat(Result["campaigns"]).ИмеетТип("Array");
+    ExpectsThat(Result["pager"]).ИмеетТип("Map").Заполнено();
+
+EndProcedure
+
+Procedure Check_YaMarketCampaign(Val Result) Export
+
+    ExpectsThat(Result["campaign"]).ИмеетТип("Map");
+    ExpectsThat(Result["campaign"]["id"]).Заполнено();
+
+EndProcedure
+
+Procedure Check_YaMarketBusiness(Val Result) Export
+
+    ExpectsThat(Result["result"]["settings"]).ИмеетТип("Map").Заполнено();
+
+EndProcedure
+
+Procedure Check_YaMarketOk(Val Result) Export
+
+    ExpectsThat(Result["status"]).Равно("OK");
+    ExpectsThat(Result["results"]).Равно(Undefined);
+
+EndProcedure
+
+Procedure Check_MetrikaTags(Val Result) Export
+    ExpectsThat(Result["labels"]).ИмеетТип("Array");
+EndProcedure
+
+Procedure Check_MetrikaTag(Val Result, Val Name = "") Export
+
+    ExpectsThat(Result["label"]).ИмеетТип("Map");
+    ExpectsThat(Result["label"]["id"]).Заполнено();
+
+    If ValueIsFilled(Name) Then
+        ExpectsThat(Result["label"]["name"]).Равно(Name);
+    EndIf;
+
+EndProcedure
+
+Procedure Check_MetrikaSuccess(Val Result) Export
+    ExpectsThat(Result["success"]).Равно(True);
+EndProcedure
+
+Procedure Check_MetrikaCounter(Val Result) Export
+    ExpectsThat(Result["counter"]).ИмеетТип("Map").Заполнено();
+EndProcedure
+
+Procedure Check_MetrikaCounters(Val Result) Export
+    ExpectsThat(Result["counters"]).ИмеетТип("Array").Заполнено();
+EndProcedure
+
+Procedure Check_S3Success(Val Result) Export
+
+    Success = Result["status"] >= 200 And Result["status"] < 300;
+    ExpectsThat(Success).Равно(True);
+
+EndProcedure
+
+Procedure Check_S3NotFound(Val Result) Export
+
+    NotFound = Result["status"] = 404;
+    ExpectsThat(NotFound).Равно(True);
+
+EndProcedure
+
+Procedure Check_S3NotImplemented(Val Result) Export
+
+    Success = Result["status"] = 501;
+    ExpectsThat(Success).Равно(True);
+
+EndProcedure
+
 #EndRegion
 
 #EndRegion
@@ -1941,6 +2095,8 @@ Function GetCommonModule(Val Name)
     Return Module;
 EndFunction
 
+// BSLLS:CognitiveComplexity-off
+
 Function GetCLIFormedValue(Val Value, Val Embedded = False)
 
     CurrentType = TypeOf(Value);
@@ -1965,13 +2121,33 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
         Or CurrentType = Type("Map")
         Or CurrentType = Type("Array") Then
 
-        JSONWriter     = New JSONWriter();
-        WriterSettings = New JSONWriterSettings(JSONLineBreak.None, , False);
-        JSONWriter.SetString(WriterSettings);
+        JSONWriter = New JSONWriter();
 
-        WriteJSON(JSONWriter, Value);
+        If OPI_Tools.IsOneScript() Or CurrentType = Type("Array") Then
 
-        Value = """" + JSONWriter.Close() + """";
+            WriterSettings = New JSONWriterSettings(JSONLineBreak.None, , False);
+            JSONWriter.SetString(WriterSettings);
+            WriteJSON(JSONWriter, Value);
+            Value          = """" + JSONWriter.Close() + """";
+
+        Else
+
+            // BSLLS:MissingTemporaryFileDeletion-off
+
+            //@skip-check missing-temporary-file-deletion
+            TFN = GetTempFileName("json");
+            // BSLLS:MissingTemporaryFileDeletion-on
+
+            Stream = New FileStream(TFN, FileOpenMode.Create);
+
+            JSONWriter.OpenStream(Stream);
+            WriteJSON(JSONWriter, Value);
+            JSONWriter.Close();
+            Stream.Close();
+
+            Value = TFN;
+
+        EndIf;
 
     ElsIf CurrentType = Type("Boolean") Then
 
@@ -1998,6 +2174,8 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
 
 EndFunction
 
+// BSLLS:CognitiveComplexity-on
+
 Function FormOption(Val Value, Val Name, Val Embedded = False)
 
     SecretsArray = New Array();
@@ -2009,35 +2187,30 @@ Function FormOption(Val Value, Val Name, Val Embedded = False)
     SecretsArray.Add("api");
     SecretsArray.Add("refresh");
 
+    ReplaceStructure = New Structure;
+
     If TypeOf(Value) = Type("Structure") Or TypeOf(Value) = Type("Map") Then
 
-        Value_ = ?(TypeOf(Value) = Type("Structure"), New Structure, New Map);
-
-        For Each Element In Value Do
-
-            Value_.Insert(Element.Key
-                , FormOption(Element.Value, Element.Key, True));
-
-        EndDo;
-
-        Value = Value_;
+        Value = FormOptionCollection(Value);
 
     ElsIf TypeOf(Value) = Type("Array") Then
 
-        Value_ = New Array;
-
-        For Each Element In Value Do
-            Value_.Add(FormOption(Element, Name, True));
-        EndDo;
-
-        Value = Value_;
+        Value = FormOptionArray(Value, Name);
 
     Else
 
         For Each SecretKey In SecretsArray Do
 
-            If StrFind(Name, SecretKey) <> 0 Then
+            If StrFind(Lower(Name), SecretKey) <> 0 Then
                 Value = "***";
+            EndIf;
+
+        EndDo;
+
+        For Each ReplacedKey In ReplaceStructure Do
+
+            If Lower(Name) = ReplacedKey.Key Then
+                Value      = ReplacedKey.Value;
             EndIf;
 
         EndDo;
@@ -2049,6 +2222,32 @@ Function FormOption(Val Value, Val Name, Val Embedded = False)
     EndIf;
 
     Return Value;
+
+EndFunction
+
+Function FormOptionCollection(Val Value)
+
+    Value_ = ?(TypeOf(Value) = Type("Structure"), New Structure, New Map);
+
+    For Each Element In Value Do
+
+        Value_.Insert(Element.Key, FormOption(Element.Value, Element.Key, True));
+
+    EndDo;
+
+    Return Value_;
+
+EndFunction
+
+Function FormOptionArray(Val Value, Val Name)
+
+    Value_ = New Array;
+
+    For Each Element In Value Do
+        Value_.Add(FormOption(Element, Name, True));
+    EndDo;
+
+    Return Value_;
 
 EndFunction
 
@@ -2074,43 +2273,9 @@ Procedure WriteParameterToFile(Val Parameter, Val Value, Val Path)
 
 EndProcedure
 
-Procedure WriteLogFile(Val Data, Val Method, Val Library)
-
-    Try
-
-        LogPath        = "./docs/en/results";
-        LibraryLogPath = LogPath + "/" + Library;
-
-        LogDirectory = New File(LogPath);
-
-        If Not LogDirectory.Exist() Then
-            CreateDirectory(LogPath);
-        EndIf;
-
-        LibraryLogCatalog = New File(LibraryLogPath);
-
-        If Not LibraryLogCatalog.Exist() Then
-            CreateDirectory(LibraryLogPath);
-        EndIf;
-
-        FilePath = LibraryLogPath + "/" + Method + ".log";
-        LogFile  = New File(FilePath);
-
-        If Not LogFile.Exist() Then
-            LogDocument = New TextDocument;
-            LogDocument.SetText(Data);
-            LogDocument.Write(FilePath);
-        EndIf;
-
-    Except
-        Message("Failed to write log file!: " + ErrorDescription());
-    EndTry;
-
-EndProcedure
-
 Procedure WriteCLICall(Val Library, Val Method, Val Options)
 
-    If Not IsOneScript() Then
+    If Not OPI_Tools.IsOneScript() Then
         Return;
     EndIf;
 

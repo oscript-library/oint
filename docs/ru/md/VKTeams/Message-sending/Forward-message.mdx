@@ -28,16 +28,17 @@ import TabItem from '@theme/TabItem';
 :::tip
 В IDЧатаИсточника можно передавать только chatId из событий (код из ссылки на чат не подходит)
 
- Метод в документации API: [GET /messages/sendText](https://teams.vk.com/botapi/#/messages/get_messages_sendText)
+Метод в документации API: [GET /messages/sendText](https://teams.vk.com/botapi/#/messages/get_messages_sendText)
 :::
 <br/>
+
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Токен           = "001.3501506236.091...";
     IDЧата          = "AoLI0egLWBSLR1Ngn2w";
     IDЧатаИсточника = "689203963@chat.agent";
-    IDСообщения     = "7428324441567793059";
+    IDСообщения     = "7452022456199421809";
 
     Результат = OPI_VKTeams.ПереслатьСообщение(Токен, IDСообщения, IDЧатаИсточника, IDЧата);
 
@@ -53,7 +54,7 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint vkteams ПереслатьСообщение \
               --token "***" \
-              --messageid "7431899937417204081" \
+              --messageid "7452076096045981635" \
               --fromid "689203963@chat.agent" \
               --chatid "AoLI0egLWBSLR1Ngn2w" \
               --text "Дополнительный текст"
@@ -64,7 +65,7 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint vkteams ПереслатьСообщение ^
               --token "***" ^
-              --messageid "7431899937417204081" ^
+              --messageid "7452076096045981635" ^
               --fromid "689203963@chat.agent" ^
               --chatid "AoLI0egLWBSLR1Ngn2w" ^
               --text "Дополнительный текст"

@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Send request without body
+ Sends a simple http request without a body
+
+
+
+`Function SendRequestWithoutBody(Val Method, Val BasicData, Val ExpectedBinary = False, Val Headers = Undefined) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Method | --method | String | &#x2714; | HTTP method |
+  | BasicData | --basic | Structure of KeyAndValue | &#x2714; | Basic request data (with full URL). See GetBasicDataStructure |
+  | ExpectedBinary | --binary | Boolean | &#x2716; | Disables an attempt to convert the response to JSON |
+  | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Structure of KeyAndValue - serialized JSON response from storage
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL       = "storage-155.s3hoster.by" + "/opi-newbucket2";
+    AccessKey = "BRN5RKJE67...";
+    SecretKey = "NNhv+i9PrytpT8Tu0C1N...";
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Method    = "GET";
+
+    Result = OPI_S3.SendRequestWithoutBody(Method, BasicData);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint s3 SendRequestWithoutBody \
+             --method "GET" \
+             --basic "{'URL':'storage-155.s3hoster.by/opi-newbucket2','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint s3 SendRequestWithoutBody ^
+             --method "GET" ^
+             --basic "{'URL':'storage-155.s3hoster.by/opi-newbucket2','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+

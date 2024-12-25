@@ -1,0 +1,99 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить значения ячеек
+ Получает значения ячеек таблицы
+
+
+
+`Функция ПолучитьЗначенияЯчеек(Знач Токен, Знач Книга, Знач МассивЯчеек = "", Знач Лист = "") Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Токен | --token | Строка | &#x2714; | Токен |
+  | Книга | --spreadsheet | Строка | &#x2714; | ID книги |
+  | МассивЯчеек | --cells | Массив из Строка | &#x2716; | Массив ячеек вида А1 для получения (весь лист, если не заполнено) |
+  | Лист | --sheetname | Строка | &#x2716; | Имя листа (первый лист по умолчанию) |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - сериализованный JSON ответа от Google
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    Токен = "ya29.a0ARW5m77a_UJFBB7n_sa8IAV8ycWLvz55tDaGZ7CsG1xiFYCSMm_kCJknxrGekLItp4p6eF054EBz7apAKFGnuUYhTJMy2lu6N7NTFAvHM...";
+    Книга = "1wi9P5LEVBp4UT9eT7npO0DN5uIfnpmCgilL9D6QBH10";
+    Лист  = "Лист2";
+
+    МассивЯчеек = Новый Массив;
+    МассивЯчеек.Добавить("B2");
+    МассивЯчеек.Добавить("A3");
+    МассивЯчеек.Добавить("B4");
+
+    Результат = OPI_GoogleSheets.ПолучитьЗначенияЯчеек(Токен, Книга, МассивЯчеек, Лист);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint gsheets ПолучитьЗначенияЯчеек \
+              --token "***" \
+              --spreadsheet "1EAbIJXdV6DPdr-htTQJrCeBVPKtul2wcHf5OvKeG_YM" \
+              --sheetname "Лист2"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint gsheets ПолучитьЗначенияЯчеек ^
+              --token "***" ^
+              --spreadsheet "1EAbIJXdV6DPdr-htTQJrCeBVPKtul2wcHf5OvKeG_YM" ^
+              --sheetname "Лист2"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "spreadsheetId": "1DOVr33ZTV_T3AroyEg7gHrpCYHIpV52K_TmXdgpDwgM",
+ "valueRanges": [
+  {
+   "range": "'Лист2'!B2",
+   "majorDimension": "ROWS",
+   "values": [
+    [
+     "Это B2"
+    ]
+   ]
+  },
+  {
+   "range": "'Лист2'!A3",
+   "majorDimension": "ROWS",
+   "values": [
+    [
+     "Это A3"
+    ]
+   ]
+  },
+  {
+   "range": "'Лист2'!B4",
+   "majorDimension": "ROWS",
+   "values": [
+    [
+     "Это B4"
+    ]
+   ]
+  }
+ ]
+}
+```

@@ -77,11 +77,11 @@ Function GetToken(Val AppKey, Val AppSecret, Val Code) Export
     OPI_Tools.AddField("grant_type", "authorization_code", "String", Parameters);
 
     URLStructure = OPI_Tools.SplitURL(URL);
-    Server       = URLStructure["Server"];
+    Host         = URLStructure["Host"];
     Address      = URLStructure["Address"];
 
     Request    = OPI_Tools.CreateRequest(Address, , DataType);
-    Connection = OPI_Tools.CreateConnection(Server, AppKey, AppSecret);
+    Connection = OPI_Tools.CreateConnection(Host, True, AppKey, AppSecret);
 
     ParameterString = OPI_Tools.RequestParametersToString(Parameters);
     Data            = Right(ParameterString, StrLen(ParameterString) - 1);
@@ -514,7 +514,7 @@ EndFunction
 
 #EndRegion
 
-#Region TagsManagment
+#Region TagsManagement
 
 // Get list of tags
 // Gets the list of tags of the selected files
@@ -842,7 +842,7 @@ Function UploadLargeFile(Val Token, Val File, Val Path, Val Mode)
     TotalSize       = File.Size();
     Session         = OpenSession(Token);
 
-    WHile BytesRead < TotalSize Do
+    While BytesRead < TotalSize Do
 
         Indent = CurrentPosition;
         Cursor = New Structure("offset,session_id", Indent, Session);
@@ -865,9 +865,9 @@ Function UploadLargeFile(Val Token, Val File, Val Path, Val Mode)
 
         CurrentPosition = NextPosition;
 
-        // !OInt KB = 1024;
-        // !OInt MB = KB * KB;
-        // !OInt Message(OPI_Tools.ProgressInfo(CurrentPosition, TotalSize, "MB", MB));
+        KBytes = 1024;
+        MByte  = KBytes * KBytes;
+        OPI_Tools.ProgressInformation(CurrentPosition, TotalSize, "MB", MByte);
 
         // !OInt RunGarbageCollection();
         // !OInt FreeObject(CurrentData);

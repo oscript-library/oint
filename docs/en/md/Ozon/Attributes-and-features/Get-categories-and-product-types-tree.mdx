@@ -26,16 +26,17 @@ import TabItem from '@theme/TabItem';
 :::tip
 Product creation is only available in the last level categories, compare exactly with the categories on your site. Categories are not created at the user's request
 
- Carefully choose the category for the product: different commission rates apply for different categories.
+Carefully choose the category for the product: different commission rates apply for different categories.
 
- Method at API documentation: [post /v1/description-category/tree](https://docs.ozon.ru/api/seller/#operation/DescriptionCategoryAPI_GetTree)
+Method at API documentation: [post /v1/description-category/tree](https://docs.ozon.ru/api/seller/#operation/DescriptionCategoryAPI_GetTree)
 :::
 <br/>
 
 
+
 ```bsl title="1C:Enterprise/OneScript code example"
-    ClientID = "2128753";
-    APIKey   = "7cc90d26-33e4-499b...";
+    ClientID = "2479669";
+    APIKey   = "09f65e9f-262d-4aca...";
 
     Result = OPI_Ozon.GetCategoriesAndProductTypesTree(ClientID, APIKey, "EN");
 

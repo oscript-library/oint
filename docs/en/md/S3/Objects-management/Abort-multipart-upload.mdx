@@ -1,0 +1,100 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Abort multipart upload
+ Aborts the multipart uploading of the object
+
+
+
+`Function AbortMultipartUpload(Val Name, Val Bucket, Val BasicData, Val UploadID, Val Headers = Undefined) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Name | --name | String | &#x2714; | Name of the object in the bucket |
+  | Bucket | --bucket | String | &#x2714; | Name of the bucket to put the object |
+  | BasicData | --basic | Structure of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
+  | UploadID | --upload | String | &#x2714; | Upload ID. See InitPartsUpload |
+  | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Structure of KeyAndValue - serialized JSON response from storage
+
+<br/>
+
+:::tip
+Method at AWS documentation: [AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)
+
+This is a service method. A `PutObject` method is intended for the common scenario of files uploading<br/>
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL       = "storage-155.s3hoster.by";
+    AccessKey = "BRN5RKJE67...";
+    SecretKey = "NNhv+i9PrytpT8Tu0C1N...";
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "fileChunked.mp3";
+    Bucket = "opi-gpbucket3";
+
+    Start    = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+    UploadID = Start["response"]["InitiateMultipartUploadResult"]["UploadId"];
+
+    Result = OPI_S3.AbortMultipartUpload(Name, Bucket, BasicData, UploadID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint s3 AbortMultipartUpload \
+             --name "fileChunked.mp3" \
+             --bucket "opi-gpbucket3" \
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+             --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjJmYTc0OGUzLTJjYTQtNDM2Yy1iM2RiLWMxMmE1YzBkMTMxYg"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint s3 AbortMultipartUpload ^
+             --name "fileChunked.mp3" ^
+             --bucket "opi-gpbucket3" ^
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+             --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjJmYTc0OGUzLTJjYTQtNDM2Yy1iM2RiLWMxMmE1YzBkMTMxYg"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "status": 204,
+ "response": {},
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Content-Type": "text/plain; charset=utf-8",
+  "Date": "Fri, 22 Nov 2024 10:12:23 GMT",
+  "Server": "MinIO",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "Vary": "Origin,Accept-Encoding",
+  "X-Amz-Id-2": "0757065d17b69556603743b9ea63f04bc7b9f349245bbff6b0ba901258e9c169",
+  "X-Amz-Request-Id": "180A42B32C876E1B",
+  "X-Content-Type-Options": "nosniff",
+  "X-Xss-Protection": "1; mode=block"
+ }
+}
+```

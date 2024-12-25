@@ -1,0 +1,64 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get warehouses list
+ Gets compnay warehouses list
+
+
+
+`Function GetWarehousesList(Val ClientID, Val APIKey) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | ClientID | --clientid | String | &#x2714; | Client identifier |
+  | APIKey | --apikey | String | &#x2714; | API key |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Ozon Seller API
+
+<br/>
+
+:::tip
+Method at API documentation: [post /v1/warehouse/list](https://docs.ozon.ru/api/seller/#operation/WarehouseAPI_WarehouseList)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    ClientID = "2479669";
+    APIKey   = "09f65e9f-262d-4aca...";
+
+    Result = OPI_Ozon.GetWarehousesList(ClientID, APIKey);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ozon GetWarehousesList \
+             --clientid "***" \
+             --apikey "***"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ozon GetWarehousesList ^
+             --clientid "***" ^
+             --apikey "***"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": []
+}
+```

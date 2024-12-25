@@ -17,4 +17,9 @@ fakedata.json
 /docs/docusaurus/build
 /docs/docusaurus/docs
 
+target/
+.idea/
+
 !oscript.exe
+addin.zip
+src/addins/tcp_server/OPI_TCPServer.zip

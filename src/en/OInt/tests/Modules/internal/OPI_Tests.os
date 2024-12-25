@@ -34,6 +34,10 @@
 // BSLLS:DuplicateStringLiteral-off
 // BSLLS:UsingHardcodePath-off
 // BSLLS:UnusedLocalVariable-off
+// BSLLS:DeprecatedMessage-off
+// BSLLS:LineLength-off
+// BSLLS:MagicNumber-off
+// BSLLS:CommentedCode-off
 
 //@skip-check undefined-variable
 //@skip-check wrong-string-literal-content
@@ -1001,7 +1005,6 @@ Procedure TwitterAPI_Tweets() Export
     OPI_TestDataRetrieval.ParameterToCollection("GIF"     , TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Video"   , TestParameters);
 
-
     Twitter_CreateTextTweet(TestParameters);
     Twitter_UploadAttachmentsArray(TestParameters);
     Twitter_CreateVideoTweet(TestParameters);
@@ -1085,7 +1088,6 @@ Procedure SlackGetData() Export
 EndProcedure
 
 Procedure Slack_SendDeleteMessage() Export
-
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Slack_Token"  , TestParameters);
@@ -1344,7 +1346,7 @@ EndProcedure
 
 #Region Bitrix24
 
-Procedure B24_TokenManagment() Export
+Procedure B24_TokenManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Domain"      , TestParameters);
@@ -1374,7 +1376,7 @@ Procedure B24_ServerTime() Export
 
 EndProcedure
 
-Procedure B24_PostsManagment() Export
+Procedure B24_PostsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1393,7 +1395,7 @@ Procedure B24_PostsManagment() Export
 
 EndProcedure
 
-Procedure B24_TaskManagment() Export
+Procedure B24_TaskManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1434,7 +1436,6 @@ Procedure B24_TaskManagment() Export
     Bitrix24_DeleteTasksChecklistElement(TestParameters);
     Bitrix24_GetDailyPlan(TestParameters);
     Bitrix24_GetTasksFilterStructure(TestParameters);
-
 
     Name          = "Topic picture.jpg";
     Image         = TestParameters["Picture"];
@@ -1495,7 +1496,7 @@ Procedure B24_WorkingWithDrive() Export
 
 EndProcedure
 
-Procedure B24_CommentsManagment() Export
+Procedure B24_CommentsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1616,7 +1617,7 @@ Procedure B24_Kanban() Export
 
 EndProcedure
 
-Procedure B24_ChatManagment() Export
+Procedure B24_ChatManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1678,7 +1679,7 @@ Procedure B24_ChatManagment() Export
 
 EndProcedure
 
-Procedure B24_NotificationsManagment() Export
+Procedure B24_NotificationsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1694,7 +1695,7 @@ Procedure B24_NotificationsManagment() Export
 
 EndProcedure
 
-Procedure B24_TasksFieldsManagment() Export
+Procedure B24_TasksFieldsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"            , TestParameters);
@@ -1711,7 +1712,7 @@ Procedure B24_TasksFieldsManagment() Export
 
 EndProcedure
 
-Procedure B24_DepartmentsManagment() Export
+Procedure B24_DepartmentsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1725,7 +1726,7 @@ Procedure B24_DepartmentsManagment() Export
 
 EndProcedure
 
-Procedure B2_UsersManagment() Export
+Procedure B2_UsersManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1743,7 +1744,7 @@ Procedure B2_UsersManagment() Export
 
 EndProcedure
 
-Procedure B24_LeadsManagment() Export
+Procedure B24_LeadsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1760,7 +1761,7 @@ Procedure B24_LeadsManagment() Export
 
 EndProcedure
 
-Procedure B24_DealsManagment() Export
+Procedure B24_DealsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
@@ -1820,7 +1821,7 @@ Procedure VKT_MessagesSending() Export
 
 EndProcedure
 
-Procedure VKT_ChatManagment() Export
+Procedure VKT_ChatManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("VkTeams_Token"   , TestParameters);
@@ -1870,9 +1871,6 @@ Procedure OzonAPI_UploadingAndUpdatingProducts() Export
     OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Picture"       , TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Picture2"      , TestParameters);
-
-    Message("Ozon product checkout is unavailable");
-    Return;
 
     Ozon_GetProductStructure(TestParameters);
     Ozon_CreateUpdateProducts(TestParameters);
@@ -1933,7 +1931,7 @@ Procedure OzonAPI_PricesAndStocks() Export
 
 EndProcedure
 
-Procedure OzonAPI_WarehousesManagment() Export
+Procedure OzonAPI_WarehousesManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
@@ -1943,7 +1941,7 @@ Procedure OzonAPI_WarehousesManagment() Export
 
 EndProcedure
 
-Procedure OzonAPI_PromotionsManagment() Export
+Procedure OzonAPI_PromotionsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
@@ -1955,11 +1953,28 @@ Procedure OzonAPI_PromotionsManagment() Export
 
 EndProcedure
 
+Procedure OzonAPI_FBOScheme() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
+
+    Ozon_GetClustersList(TestParameters);
+    Ozon_GetShippingWarehousesList(TestParameters);
+    Ozon_CreateFBODraft(TestParameters);
+    Ozon_GetFBODraft(TestParameters);
+    Ozon_GetShipmentAdditionalFields(TestParameters);
+    Ozon_GetShipmentsFilterStructure(TestParameters);
+    Ozon_GetFBOShipmentsList(TestParameters);
+    Ozon_GetFBOTimeslots(TestParameters);
+
+EndProcedure
+
 #EndRegion
 
 #Region Neocities
 
-Procedure NC_FilesManagment() Export
+Procedure NC_FilesManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("NC_Token" , TestParameters);
@@ -2003,10 +2018,11 @@ Procedure CdekAPI_CommonMethods() Export
     CDEK_GetDeliveryCashTransfers(TestParameters);
     CDEK_GetOfficeFilterDescription(TestParameters);
     CDEK_GetOfficeList(TestParameters);
+    CDEK_GetRegionsList(TestParameters);
 
 EndProcedure
 
-Procedure CDEKAPI_OrdersManagment() Export
+Procedure CDEKAPI_OrdersManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("CDEK_Token", TestParameters);
@@ -2036,7 +2052,7 @@ Procedure CDEKAPI_OrdersManagment() Export
 
 EndProcedure
 
-Procedure CdekAPI_CourierInvitationsManagment() Export
+Procedure CdekAPI_CourierInvitationsManagement() Export
 
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("CDEK_Token" , TestParameters);
@@ -2058,6 +2074,128 @@ Procedure CdekAPI_CourierInvitationsManagment() Export
 
     CDEK_GetDeliveryAppointment(TestParameters);
     CDEK_DeleteOrder(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region YandexMetrika
+
+Procedure YaMetrika_TagsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Metrika_Token", TestParameters);
+
+    YandexMetrika_CreateTag(TestParameters);
+    YandexMetrika_GetTagsList(TestParameters);
+    YandexMetrika_UpdateTag(TestParameters);
+    YandexMetrika_GetTag(TestParameters);
+    YandexMetrika_DeleteTag(TestParameters);
+
+EndProcedure
+
+Procedure YaMetrika_CountersManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Metrika_Token", TestParameters);
+
+    YandexMetrika_GetCounterStructure(TestParameters);
+    YandexMetrika_CreateCounter(TestParameters);
+    YandexMetrika_GetCounter(TestParameters);
+    YandexMetrika_UpdateCounter(TestParameters);
+    YandexMetrika_DeleteCounter(TestParameters);
+    YandexMetrika_RestoreCounter(TestParameters);
+    YandexMetrika_GetCountersList(TestParameters);
+    YandexMetrika_DeleteCounter(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region S3
+
+Procedure AWS_CommonMethods() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("S3_AccessKey", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("S3_SecretKey", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("S3_URL"      , TestParameters);
+
+    S3_GetBasicDataStructure(TestParameters);
+    S3_SendRequestWithoutBody(TestParameters);
+    S3_SendRequestWithBody(TestParameters);
+
+EndProcedure
+
+Procedure AWS_BucketsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("S3_AccessKey", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("S3_SecretKey", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("S3_URL"      , TestParameters);
+
+    S3_CreateBucket(TestParameters);
+    S3_ListBuckets(TestParameters);
+    S3_HeadBucket(TestParameters);
+    S3_PutBucketTagging(TestParameters);
+    S3_GetBucketTagging(TestParameters);
+    S3_DeleteBucketTagging(TestParameters);
+    S3_PutBucketEncryption(TestParameters);
+    S3_GetBucketEncryption(TestParameters);
+    S3_DeleteBucketEncryption(TestParameters);
+    S3_PutBucketVersioning(TestParameters);
+    S3_GetBucketVersioning(TestParameters);
+    S3_DeleteBucket(TestParameters);
+
+EndProcedure
+
+Procedure AWS_ObjectsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("S3_AccessKey", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("S3_SecretKey", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("S3_URL"      , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"     , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Audio"       , TestParameters);
+
+    S3_CreateBucket(TestParameters);
+    S3_PutObject(TestParameters);
+    S3_UploadFullObject(TestParameters);
+    S3_InitPartsUpload(TestParameters);
+    S3_UploadObjectPart(TestParameters);
+    S3_FinishPartsUpload(TestParameters);
+    S3_AbortMultipartUpload(TestParameters);
+    S3_HeadObject(TestParameters);
+    S3_CopyObject(TestParameters);
+    S3_PutObjectTagging(TestParameters);
+    S3_GetObjectTagging(TestParameters);
+    S3_DeleteObjectTagging(TestParameters);
+    S3_ListObjects(TestParameters);
+    S3_ListObjectVersions(TestParameters);
+    S3_GetObject(TestParameters);
+    S3_GetObjectDownloadLink(TestParameters);
+    S3_DeleteObject(TestParameters);
+    S3_DeleteBucket(TestParameters);
+    S3_GetObjectUploadLink(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region TCP
+
+Procedure TC_Client() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("TCP_Address", TestParameters);
+
+    TCP_CreateConnection(TestParameters);
+    TCP_CloseConnection(TestParameters);
+    TCP_ReadBinaryData(TestParameters);
+    TCP_SendBinaryData(TestParameters);
+    TCP_ReadLine(TestParameters);
+    TCP_SendLine(TestParameters);
+    TCP_ProcessRequest(TestParameters);
 
 EndProcedure
 
@@ -5599,7 +5737,6 @@ Procedure Slack_SendMessage(FunctionParameters)
     OPI_TestDataRetrieval.WriteParameter("Slack_MessageTS", Timestamp); // SKIP
     OPI_Tools.AddField("Slack_MessageTS", Timestamp, "String", FunctionParameters); // SKIP
 
-
     // With attachments (picture block in the example)
 
     Text       = "Message with picture";
@@ -7223,7 +7360,7 @@ Procedure Dropbox_GetUploadStatusByURL(FunctionParameters)
     WorkID = FunctionParameters["Dropbox_Job"];
     Status = "in_progress";
 
-    WHile Status = "in_progress" Do
+    While Status = "in_progress" Do
 
         Result = OPI_Dropbox.GetUploadStatusByURL(Token, WorkID);
         Status = Result[".tag"];
@@ -7585,7 +7722,7 @@ Procedure Dropbox_CancelFolderPublication(FunctionParameters)
     CurrentStatus = "in_progress";
     JobID         = Result["async_job_id"];
 
-    WHile CurrentStatus = "in_progress" Do
+    While CurrentStatus = "in_progress" Do
         Result          = OPI_Dropbox.GetAsynchronousChangeStatus(Token, JobID);
         CurrentStatus   = Result[".tag"];
         OPI_Tools.Pause(3);
@@ -10860,7 +10997,7 @@ Procedure Bitrix24_CreatePersonalNotification(FunctionParameters)
     Attachments.Add(OPI_Bitrix24.GetPictureBlock("Image1"  , Image));
     Attachments.Add(OPI_Bitrix24.GetFileBlock("File1.docx" , File));
 
-    Result = OPI_Bitrix24.CreatePersonalNotification(URL, UserID, Text, ,Attachments);
+    Result = OPI_Bitrix24.CreatePersonalNotification(URL, UserID, Text, , Attachments);
 
     OPI_TestDataRetrieval.WriteLog(Result, "CreatePersonalNotification)", "Bitrix24");
 
@@ -10902,7 +11039,7 @@ Procedure Bitrix24_CreateSystemNotification(FunctionParameters)
     Attachments.Add(OPI_Bitrix24.GetPictureBlock("Image1"  , Image));
     Attachments.Add(OPI_Bitrix24.GetFileBlock("File1.docx" , File));
 
-    Result = OPI_Bitrix24.CreateSystemNotification(URL, UserID, Text, ,Attachments);
+    Result = OPI_Bitrix24.CreateSystemNotification(URL, UserID, Text, , Attachments);
 
     OPI_TestDataRetrieval.WriteLog(Result, "CreateSystemNotification (wh)", "Bitrix24");
 
@@ -10974,7 +11111,6 @@ Procedure Bitrix24_AddCustomTaskField(FunctionParameters)
     Title      = "Text field";
     Signature  = New Structure("en,ru", "Some field", "Nekotoroe pole");
 
-
     Result = OPI_Bitrix24.AddCustomTaskField(URL, Type, Name, ExternalID, Title, Signature, Token);
 
     // END
@@ -11009,7 +11145,6 @@ Procedure Bitrix24_GetCustomTaskField(FunctionParameters)
     FieldID = FunctionParameters["Bitrix24_HookTaskFieldID"];
 
     Result = OPI_Bitrix24.GetCustomTaskField(URL, FieldID);
-
 
     URL     = FunctionParameters["Bitrix24_Domain"];
     Token   = FunctionParameters["Bitrix24_Token"];
@@ -12190,7 +12325,7 @@ Procedure VKTeams_SendVoice(FunctionParameters)
 
     OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
 
-    Result = OPI_VKTeams.SendVoice(Token, ChatID, FilePath, ,ReplyID);
+    Result = OPI_VKTeams.SendVoice(Token, ChatID, FilePath, , ReplyID);
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendVoice (Path)", "VkTeams");
 
@@ -12711,7 +12846,6 @@ Procedure Ozon_CreateUpdateProducts(FunctionParameters)
 
     CategoryAttribute5 = New Structure("value", "Protective film set for X3 NFC. Dark cotton");
 
-
     OPI_Ozon.CompleteComplexAttribute(ItemStructure, 5076 , 0, CategoryAttribute1);
     OPI_Ozon.CompleteComplexAttribute(ItemStructure, 85   , 0, CategoryAttribute2);
     OPI_Ozon.CompleteComplexAttribute(ItemStructure, 10096, 0, CategoryAttribute3);
@@ -12843,7 +12977,7 @@ Procedure Ozon_GetProductCreationStatus(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "GetProductCreationStatus", "Ozon");
 
-    WHile Result["result"]["items"][0]["status"] = "pending" Do
+    While Result["result"]["items"][0]["status"] = "pending" Do
 
         OPI_Tools.Pause(30);
         Result = OPI_Ozon.GetProductCreationStatus(ClientID, APIKey, TaskID);
@@ -12882,7 +13016,7 @@ Procedure Ozon_CreateProductByOzonID(FunctionParameters)
 
     Result = OPI_Ozon.GetProductCreationStatus(ClientID, APIKey, TaskID);
 
-    WHile Result["result"]["items"][0]["status"] = "pending" Do
+    While Result["result"]["items"][0]["status"] = "pending" Do
 
         OPI_Tools.Pause(30);
         Result = OPI_Ozon.GetProductCreationStatus(ClientID, APIKey, TaskID);
@@ -12948,7 +13082,7 @@ Procedure Ozon_UpdateProductsAttributes(FunctionParameters)
 
     Result = OPI_Ozon.GetProductCreationStatus(ClientID, APIKey, TaskID);
 
-    WHile Result["result"]["items"][0]["status"] = "pending" Do
+    While Result["result"]["items"][0]["status"] = "pending" Do
 
         OPI_Tools.Pause(30);
         Result = OPI_Ozon.GetProductCreationStatus(ClientID, APIKey, TaskID);
@@ -12980,6 +13114,7 @@ Procedure Ozon_GetProductList(FunctionParameters)
 
     IDArray = New Array;
     IDArray.Add("143210609");
+    IDArray.Add("1432106010");
 
     Filter = New Structure;
     Filter.Insert("visibility" , "ALL");
@@ -12996,6 +13131,10 @@ Procedure Ozon_GetProductList(FunctionParameters)
     ProductID = Result["result"]["items"][0]["product_id"];
     OPI_TestDataRetrieval.WriteParameter("Ozon_ProductID", ProductID);
     FunctionParameters.Insert("Ozon_ProductID", ProductID);
+
+    ProductID = Result["result"]["items"][1]["product_id"];
+    OPI_TestDataRetrieval.WriteParameter("Ozon_ProductID2", ProductID);
+    FunctionParameters.Insert("Ozon_ProductID2", ProductID);
 
 EndProcedure
 
@@ -13168,7 +13307,13 @@ Procedure Ozon_ArchiveProducts(FunctionParameters)
     // END
 
     OPI_TestDataRetrieval.WriteLog(Result, "ArchiveProducts", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonTrue(Result);
 
+    ProductID = FunctionParameters["Ozon_ProductID2"];
+
+    Result = OPI_Ozon.ArchiveProducts(ClientID, APIKey, ProductID);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ArchiveProducts (2)", "Ozon");
     OPI_TestDataRetrieval.Check_OzonTrue(Result);
 
 EndProcedure
@@ -13210,6 +13355,12 @@ Procedure Ozon_DeleteProductsWithoutSKU(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "DeleteProductsWithoutSKU", "Ozon");
 
+    Article = "1432106010";
+
+    Result = OPI_Ozon.DeleteProductsWithoutSKU(ClientID, APIKey, Article);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteProductsWithoutSKU (2)", "Ozon");
+
 EndProcedure
 
 Procedure Ozon_UploadProductActivationCodes(FunctionParameters)
@@ -13228,9 +13379,10 @@ Procedure Ozon_UploadProductActivationCodes(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "UploadProductActivationCodes", "Ozon");
 
-    //OPI_TestDataRetrieval.Check_OzonUploadTask(Result);
+    // OPI_TestDataRetrieval.Check_OzonUploadTask(Result);
 
-    //TaskID = Result["result"]["task_id"];
+    // TaskID = Result["result"]["task_id"];
+
     TaskID = 1;
     OPI_TestDataRetrieval.WriteParameter("Ozon_CodesTaskID", TaskID);
     FunctionParameters.Insert("Ozon_CodesTaskID", TaskID);
@@ -13252,7 +13404,7 @@ Procedure Ozon_GetCodesUploadStatus(FunctionParameters)
     OPI_TestDataRetrieval.WriteLog(Result, "GetCodesUploadStatus", "Ozon");
 
     If ValueIsFilled(Result["result"]) Then
-        WHile Result["result"]["status"] = "pending" Do
+        While Result["result"]["status"] = "pending" Do
 
             OPI_Tools.Pause(30);
             Result = OPI_Ozon.GetCodesUploadStatus(ClientID, APIKey, TaskID);
@@ -13522,6 +13674,156 @@ Procedure Ozon_GetProductPriceStructure(FunctionParameters)
     OPI_TestDataRetrieval.WriteLog(Result, "GetProductPriceStructure", "Ozon");
 
     OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure Ozon_GetClustersList(FunctionParameters)
+
+    ClientID = FunctionParameters["Ozon_ClientID"];
+    APIKey   = FunctionParameters["Ozon_ApiKey"];
+
+    Result = OPI_Ozon.GetClustersList(ClientID, APIKey);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetClustersList", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonClusters(Result);
+
+EndProcedure
+
+Procedure Ozon_GetShippingWarehousesList(FunctionParameters)
+
+    ClientID = FunctionParameters["Ozon_ClientID"];
+    APIKey   = FunctionParameters["Ozon_ApiKey"];
+    Search   = "Tver";
+
+    Result = OPI_Ozon.GetShippingWarehousesList(ClientID, APIKey, Search);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetShippingWarehousesList", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonSearch(Result);
+
+EndProcedure
+
+Procedure Ozon_CreateFBODraft(FunctionParameters)
+
+    ClientID = FunctionParameters["Ozon_ClientID"];
+    APIKey   = FunctionParameters["Ozon_ApiKey"];
+    Cluster  = 1;
+
+    Items = New Map;
+    Items.Insert("1783161863", 5);
+    Items.Insert("1784654052", 2);
+
+    Result = OPI_Ozon.CreateFBODraft(ClientID, APIKey, Cluster, Items);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateFBODraft", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonDraft(Result);
+
+    DraftID = Result["operation_id"];
+    OPI_TestDataRetrieval.WriteParameter("Ozon_FBOOperID", DraftID);
+    FunctionParameters.Insert("Ozon_FBOOperID", DraftID);
+
+EndProcedure
+
+Procedure Ozon_GetFBODraft(FunctionParameters)
+
+    ClientID    = FunctionParameters["Ozon_ClientID"];
+    APIKey      = FunctionParameters["Ozon_ApiKey"];
+    OperationID = FunctionParameters["Ozon_FBOOperID"];
+
+    Status = "CALCULATION_STATUS_IN_PROGRESS";
+
+    While Status = "CALCULATION_STATUS_IN_PROGRESS" Do
+
+        Result = OPI_Ozon.GetFBODraft(ClientID, APIKey, OperationID);
+        Status = Result["status"];
+
+        OPI_Tools.Pause(20);
+
+    EndDo;
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetFBODraft", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonReadyDraft(Result);
+
+    DraftID = Result["draft_id"];
+    OPI_TestDataRetrieval.WriteParameter("Ozon_Draft", DraftID);
+    FunctionParameters.Insert("Ozon_Draft", DraftID);
+
+    WarehouseID = Result["clusters"][0]["warehouses"][0]["supply_warehouse"]["warehouse_id"];
+    OPI_TestDataRetrieval.WriteParameter("Ozon_FBOWarehouse", WarehouseID);
+    FunctionParameters.Insert("Ozon_FBOWarehouse", WarehouseID);
+
+EndProcedure
+
+Procedure Ozon_GetShipmentAdditionalFields(FunctionParameters)
+
+    Result = OPI_Ozon.GetShipmentAdditionalFields();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetShipmentAdditionalFields", "Ozon");
+
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure Ozon_GetShipmentsFilterStructure(FunctionParameters)
+
+    Result = OPI_Ozon.GetShipmentsFilterStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetShipmentsFilterStructure", "Ozon");
+
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure Ozon_GetFBOShipmentsList(FunctionParameters)
+
+    ClientID = FunctionParameters["Ozon_ClientID"];
+    APIKey   = FunctionParameters["Ozon_ApiKey"];
+
+    AddFields = New Structure;
+    AddFields.Insert("analytics_data", True);
+    AddFields.Insert("financial_data", True);
+
+    Filter = New Structure;
+    Filter.Insert("since", XMLString('20230101') + "Z");
+    Filter.Insert("to"   , XMLString('20240101') + "Z");
+
+    Result = OPI_Ozon.GetFBOShipmentsList(ClientID, APIKey, Filter, AddFields);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetFBOShipmentsList", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonArray(Result);
+
+EndProcedure
+
+Procedure Ozon_GetFBOTimeslots(FunctionParameters)
+
+    ClientID = FunctionParameters["Ozon_ClientID"];
+    APIKey   = FunctionParameters["Ozon_ApiKey"];
+    Day      = 86400;
+
+    DateFrom  = OPI_Tools.GetCurrentDate();
+    DateTo    = DateFrom + Day;
+    Draft     = FunctionParameters["Ozon_Draft"];
+    Warehouse = FunctionParameters["Ozon_FBOWarehouse"];
+
+    Result = OPI_Ozon.GetFBOTimeslots(ClientID, APIKey, DateFrom, DateTo, Draft, Warehouse);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetFBOTimeslots", "Ozon");
+    OPI_TestDataRetrieval.Check_OzonTimeslots(Result);
 
 EndProcedure
 
@@ -14113,7 +14415,7 @@ Procedure CDEK_RegisterDeliveryAppointment(FunctionParameters)
     CurrentDate  = BegOfDay(OPI_Tools.GetCurrentDate());
     DeliveryDate = CurrentDate + Day * 14;
 
-    WHile DayOfWeek(DeliveryDate) > 5 Do
+    While DayOfWeek(DeliveryDate) > 5 Do
         DeliveryDate = DeliveryDate + Day;
     EndDo;
 
@@ -14164,7 +14466,7 @@ Procedure CDEK_GetDeliveryAppointment(FunctionParameters)
     // END
 
     OPI_TestDataRetrieval.WriteLog(Result, "GetDeliveryAppointment", "CDEK");
-    OPI_TestDataRetrieval.Check_CdekOrder(Result);
+    OPI_TestDataRetrieval.Check_Map(Result);
 
 EndProcedure
 
@@ -14174,7 +14476,6 @@ Procedure CDEK_CreatePrealert(FunctionParameters)
     UUID         = FunctionParameters["CDEK_OrderUUID"];
     Point        = "NSK27";
     TransferDate = OPI_Tools.GetCurrentDate() + 60 * 60 * 24;
-
 
     Result = OPI_CDEK.CreatePrealert(Token, UUID, TransferDate, Point, True);
 
@@ -14303,6 +14604,1423 @@ Procedure CDEK_GetOfficeList(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "GetOfficeList", "CDEK");
     OPI_TestDataRetrieval.Check_Array(Result);
+
+EndProcedure
+
+Procedure CDEK_GetRegionsList(FunctionParameters)
+
+    Token = FunctionParameters["CDEK_Token"];
+
+    Result = OPI_CDEK.GetRegionsList(Token, , , , True);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRegionsList", "CDEK");
+    OPI_TestDataRetrieval.Check_Array(Result);
+
+EndProcedure
+
+#EndRegion
+
+#Region YandexMetrika
+
+Procedure YandexMetrika_GetTagsList(FunctionParameters)
+
+    Token = FunctionParameters["Metrika_Token"];
+
+    Result = OPI_YandexMetrika.GetTagsList(Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTagsList", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaTags(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_CreateTag(FunctionParameters)
+
+    Token = FunctionParameters["Metrika_Token"];
+    Name  = "New tag";
+
+    Result = OPI_YandexMetrika.CreateTag(Token, Name);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateTag", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaTag(Result, Name);
+
+    TagID = Result["label"]["id"];
+    OPI_TestDataRetrieval.WriteParameter("Metrika_LabelID", TagID);
+    OPI_Tools.AddField("Metrika_LabelID", TagID, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure YandexMetrika_DeleteTag(FunctionParameters)
+
+    Token = FunctionParameters["Metrika_Token"];
+    TagID = FunctionParameters["Metrika_LabelID"];
+
+    Result = OPI_YandexMetrika.DeleteTag(Token, TagID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTag", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaSuccess(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_UpdateTag(FunctionParameters)
+
+    Token = FunctionParameters["Metrika_Token"];
+    TagID = FunctionParameters["Metrika_LabelID"];
+    Name  = "New tag title";
+
+    Result = OPI_YandexMetrika.UpdateTag(Token, TagID, Name);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateTag", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaTag(Result, Name);
+
+EndProcedure
+
+Procedure YandexMetrika_GetTag(FunctionParameters)
+
+    Token = FunctionParameters["Metrika_Token"];
+    TagID = FunctionParameters["Metrika_LabelID"];
+
+    Result = OPI_YandexMetrika.GetTag(Token, TagID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTag", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaTag(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_GetCounterStructure(FunctionParameters)
+
+    Result = OPI_YandexMetrika.GetCounterStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCounterStructure", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_CreateCounter(FunctionParameters)
+
+    Token = FunctionParameters["Metrika_Token"];
+
+    CounterStructure = New Structure;
+    CounterStructure.Insert("autogoals_enabled", True);
+
+        CodeSettingsStructure = New Structure;
+        CodeSettingsStructure.Insert("async"          , 0);
+        CodeSettingsStructure.Insert("clickmap"       , 1);
+        CodeSettingsStructure.Insert("ecommerce"      , 1);
+        CodeSettingsStructure.Insert("in_one_line"    , 0);
+        CodeSettingsStructure.Insert("track_hash"     , 1);
+        CodeSettingsStructure.Insert("visor"          , 1);
+        CodeSettingsStructure.Insert("xml_site"       , 0);
+        CodeSettingsStructure.Insert("ytm"            , 0);
+        CodeSettingsStructure.Insert("alternative_cdn", 1);
+
+            InformerStructure = New Structure;
+            InformerStructure.Insert("color_arrow", 1);
+            InformerStructure.Insert("color_end"  , "EFEFEFFE");
+            InformerStructure.Insert("color_start", "EEEEEEEE");
+            InformerStructure.Insert("color_text" , 0);
+            InformerStructure.Insert("enabled"    , 1);
+            InformerStructure.Insert("indicator"  , "uniques");
+            InformerStructure.Insert("size"       , 2);
+            InformerStructure.Insert("type"       , "ext");
+
+        CodeSettingsStructure.Insert("informer", InformerStructure);
+
+    CounterStructure.Insert("code_options", CodeSettingsStructure);
+
+        FlagsStructure = New Structure;
+        FlagsStructure.Insert("collect_first_party_data"             , True);
+        FlagsStructure.Insert("measurement_enabled"                  , True);
+        FlagsStructure.Insert("use_in_benchmarks"                    , True);
+        FlagsStructure.Insert("direct_allow_use_goals_without_access", True);
+
+    CounterStructure.Insert("counter_flags"          , FlagsStructure);
+    CounterStructure.Insert("favorite"               , 1);
+    CounterStructure.Insert("filter_robots"          , 2);
+    CounterStructure.Insert("gdpr_agreement_accepted", 1);
+
+        DomainStructure = New Structure("site", "openintegrations.dev");
+
+    CounterStructure.Insert("site2", DomainStructure);
+
+    Result = OPI_YandexMetrika.CreateCounter(Token, CounterStructure);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateCounter", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaCounter(Result);
+
+    CounterID = Result["counter"]["id"];
+    OPI_TestDataRetrieval.WriteParameter("Metrika_CounterID", CounterID);
+    OPI_Tools.AddField("Metrika_CounterID", CounterID, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure YandexMetrika_DeleteCounter(FunctionParameters)
+
+    Token     = FunctionParameters["Metrika_Token"];
+    CounterID = FunctionParameters["Metrika_CounterID"];
+
+    Result = OPI_YandexMetrika.DeleteCounter(Token, CounterID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteCounter", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaSuccess(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_UpdateCounter(FunctionParameters)
+
+    Token     = FunctionParameters["Metrika_Token"];
+    CounterID = FunctionParameters["Metrika_CounterID"];
+
+    CounterStructure = New Structure;
+    CounterStructure.Insert("autogoals_enabled", True);
+
+        FlagsStructure = New Structure;
+        FlagsStructure.Insert("collect_first_party_data"             , False);
+        FlagsStructure.Insert("measurement_enabled"                  , False);
+        FlagsStructure.Insert("use_in_benchmarks"                    , False);
+        FlagsStructure.Insert("direct_allow_use_goals_without_access", False);
+
+    CounterStructure.Insert("counter_flags" , FlagsStructure);
+    CounterStructure.Insert("favorite"      , 0);
+    CounterStructure.Insert("filter_robots" , 1);
+
+    Result = OPI_YandexMetrika.UpdateCounter(Token, CounterID, CounterStructure);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCounter", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaCounter(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_GetCounter(FunctionParameters)
+
+    Token     = FunctionParameters["Metrika_Token"];
+    CounterID = FunctionParameters["Metrika_CounterID"];
+
+    Result = OPI_YandexMetrika.GetCounter(Token, CounterID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCounter", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaCounter(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_RestoreCounter(FunctionParameters)
+
+    Token     = FunctionParameters["Metrika_Token"];
+    CounterID = FunctionParameters["Metrika_CounterID"];
+
+    Result = OPI_YandexMetrika.RestoreCounter(Token, CounterID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "RestoreCounter", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaSuccess(Result);
+
+EndProcedure
+
+Procedure YandexMetrika_GetCountersList(FunctionParameters)
+
+    Token     = FunctionParameters["Metrika_Token"];
+    CounterID = FunctionParameters["Metrika_CounterID"];
+
+    Result = OPI_YandexMetrika.GetCountersList(Token);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCountersList", "YandexMetrika"); // SKIP
+    OPI_TestDataRetrieval.Check_MetrikaCounters(Result); // SKIP
+
+    // filter by IDs list
+
+    Filter = New Structure;
+
+    CountersArray = New Array;
+    CountersArray.Add(CounterID);
+
+    Filter.Insert("counter_ids", CountersArray);
+
+    Result = OPI_YandexMetrika.GetCountersList(Token, Filter);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCountersList (filter))", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaCounters(Result);
+
+EndProcedure
+
+#EndRegion
+
+#Region S3
+
+Procedure S3_GetBasicDataStructure(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    Result = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    // END
+
+    Result["SecretKey"] = "***";
+    OPI_TestDataRetrieval.WriteLog(Result, "GetBasicDataStructure", "S3");
+
+EndProcedure
+
+Procedure S3_SendRequestWithoutBody(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"] + "/opi-newbucket2";
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Method    = "GET";
+
+    Result = OPI_S3.SendRequestWithoutBody(Method, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SendRequestWithoutBody");
+    OPI_TestDataRetrieval.WriteLogFile("", "SendRequestWithoutBody", "S3", True);
+
+EndProcedure
+
+Procedure S3_SendRequestWithBody(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Method = "PUT";
+    Body   = "C:\test_data\document.docx"; // URL, Path or Binary Data
+
+    Result = OPI_S3.SendRequestWithBody(Method, BasicData, Body);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SendRequestWithBody");
+    OPI_TestDataRetrieval.WriteLogFile("", "SendRequestWithBody", "S3", True);
+
+EndProcedure
+
+Procedure S3_CreateBucket(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.CreateBucket(Name, BasicData, True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateBucket (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.CreateBucket(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateBucket", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_DeleteBucket(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.DeleteBucket(Name, BasicData, True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteBucket (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.DeleteBucket(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteBucket", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_ListBuckets(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Result    = OPI_S3.ListBuckets(BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ListBuckets", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_HeadBucket(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Name      = "opi-dirbucket3";
+
+    Result = OPI_S3.HeadBucket(Name, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "HeadBucket", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    Result = OPI_S3.HeadBucket(Name, BasicData, , "1234");
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "HeadBucket (account)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_GetBucketEncryption(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Name      = "opi-newbucket2";
+
+    Result = OPI_S3.GetBucketEncryption(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetBucketEncryption", "S3");
+    OPI_TestDataRetrieval.WriteLogFile("", "GetBucketEncryption", "S3", True);
+
+EndProcedure
+
+Procedure S3_DeleteBucketEncryption(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Name      = "opi-newbucket2";
+
+    Result = OPI_S3.DeleteBucketEncryption(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteBucketEncryption", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_PutBucketEncryption(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Name      = "opi-newbucket2";
+    XmlConfig = "<ServerSideEncryptionConfiguration xmlns=""http://s3.amazonaws.com/doc/2006-03-01/"">
+    | <Rule>
+    | <ApplyServerSideEncryptionByDefault>
+    | <SSEAlgorithm>AES256</SSEAlgorithm>
+    | </ApplyServerSideEncryptionByDefault>
+    | </Rule>
+    |</ServerSideEncryptionConfiguration>";
+
+    Result = OPI_S3.PutBucketEncryption(Name, BasicData, XmlConfig);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutBucketEncryption", "S3");
+    OPI_TestDataRetrieval.Check_S3NotImplemented(Result);
+    OPI_TestDataRetrieval.WriteLogFile("", "PutBucketEncryption", "S3", True);
+
+EndProcedure
+
+Procedure S3_GetBucketTagging(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.GetBucketTagging(Name, BasicData, True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetBucketTagging (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.GetBucketTagging(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetBucketTagging", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_PutBucketTagging(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData    = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    TagStructure = New Structure;
+
+    TagStructure.Insert("MyTag1", "SomeValue");
+    TagStructure.Insert("MyTag2", "AnotherOne");
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.PutBucketTagging(Name, BasicData, TagStructure, True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutBucketTagging (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.PutBucketTagging(Name, BasicData, TagStructure);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutBucketTagging", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_DeleteBucketTagging(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.DeleteBucketTagging(Name, BasicData, True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteBucketTagging (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.DeleteBucketTagging(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteBucketTagging", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    Result = OPI_S3.GetBucketTagging(Name, BasicData, False);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteBucketTagging)", "S3");
+
+EndProcedure
+
+Procedure S3_GetBucketVersioning(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.GetBucketVersioning(Name, BasicData, True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetBucketVersioning (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.GetBucketVersioning(Name, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetBucketVersioning", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_PutBucketVersioning(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+    Status    = True;
+
+    // Directory bucket
+
+    Name   = "opi-dirbucket3";
+    Result = OPI_S3.PutBucketVersioning(Name, BasicData, Status, , True);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutBucketVersioning (DB)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    // General purpose bucket
+
+    Name   = "opi-gpbucket3";
+    Result = OPI_S3.PutBucketVersioning(Name, BasicData, Status);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutBucketVersioning", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_PutObject(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+    Entity = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutObject", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    Name   = "fileChunked.mp3";
+    Bucket = "opi-gpbucket3";
+    Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
+
+    BasicData.Insert("ChunkSize", 5242880);
+
+    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutObject (parts)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+    Bucket = "opi-dirbucket3";
+    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutObject (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+EndProcedure
+
+Procedure S3_UploadFullObject(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "pictureSmall.jpg";
+    Bucket = "opi-gpbucket3";
+    Entity = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    Result = OPI_S3.UploadFullObject(Name, Bucket, Entity, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UploadFullObject", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+EndProcedure
+
+Procedure S3_DeleteObject(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    Result = OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteObject", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_HeadObject(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    Result = OPI_S3.HeadObject(Name, Bucket, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "HeadObject", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_CopyObject(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    SourcePath        = "picture.jpg";
+    DestinationBucket = "opi-gpbucket3";
+
+    DestinationPath = "new_picture.jpg";
+    SourceBucket    = "opi-dirbucket3";
+
+    Result = OPI_S3.CopyObject(SourcePath, DestinationBucket, DestinationPath, SourceBucket, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CopyObject", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(DestinationPath, SourceBucket, BasicData);
+
+EndProcedure
+
+Procedure S3_PutObjectTagging(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    TagStructure = New Structure;
+
+    TagStructure.Insert("MyTag1", "SomeValue");
+    TagStructure.Insert("MyTag2", "AnotherOne");
+
+    Result = OPI_S3.PutObjectTagging(Name, Bucket, BasicData, TagStructure);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PutObjectTagging", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_GetObjectTagging(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    Result = OPI_S3.GetObjectTagging(Name, Bucket, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObjectTagging", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_DeleteObjectTagging(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    Result = OPI_S3.DeleteObjectTagging(Name, Bucket, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteObjectTagging", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_ListObjects(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Bucket = "opi-gpbucket3";
+    Result = OPI_S3.ListObjects(Bucket, BasicData);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ListObjects", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_ListObjectVersions(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Bucket = "opi-gpbucket3";
+    Prefix = "pic";
+    Result = OPI_S3.ListObjectVersions(Bucket, BasicData, Prefix);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ListObjectVersions", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_GetObject(FunctionParameters)
+
+    Image        = FunctionParameters["Picture"]; // SKIP
+    OPI_TypeConversion.GetBinaryData(Image); // SKIP
+    RequiredSize = Image.Size(); // SKIP
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    Result = OPI_S3.GetObject(Name, Bucket, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObject", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_BinaryData(Result, RequiredSize); // SKIP
+
+    TempFile = GetTempFileName();
+    BasicData.Insert("ChunkSize", 200000);
+
+    Result = OPI_S3.GetObject(Name, Bucket, BasicData, , , TempFile);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObject (file)", "S3");
+    ResultFile                                          = New File(Result);
+    OPI_TestDataRetrieval.ExpectsThat(ResultFile.Size() = RequiredSize);
+    DeleteFiles(TempFile);
+
+    Name   = "bigfile.exe";
+    Bucket = "newbucket2";
+
+    BigTempFile = GetTempFileName();
+    Result      = OPI_S3.GetObject(Name, Bucket, BasicData, , , BigTempFile);
+    ResultFile  = New File(Result);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObject (big, file)", "S3");
+    OPI_TestDataRetrieval.ExpectsThat(ResultFile.Size() = 34432400);
+    DeleteFiles(BigTempFile);
+
+    Result = OPI_S3.GetObject(Name, Bucket, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObject (big, BD)", "S3");
+    OPI_TestDataRetrieval.Check_BinaryData(Result, 34432400);
+
+EndProcedure
+
+Procedure S3_InitPartsUpload(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "fileChunked.mp3";
+    Bucket = "opi-gpbucket3";
+
+    Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
+    Entity = OPI_Tools.Get(Entity);
+
+    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    OPI_TestDataRetrieval.WriteLog(Result, "InitPartsUpload", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    UploadID   = Result["response"]["InitiateMultipartUploadResult"]["UploadId"];
+    TotalSize  = Entity.Size();
+    ChunkSize  = 5242880;
+    BytesRead  = 0;
+    PartNumber = 1;
+
+    DataReader   = New DataReader(Entity);
+    SourceStream = DataReader.SourceStream();
+    TagsArray    = New Array;
+
+    While BytesRead < TotalSize Do
+
+        CurrentReading = DataReader.Read(ChunkSize);
+        CurrentData    = CurrentReading.GetBinaryData();
+
+        If CurrentData.Size() = 0 Then
+            Break;
+        EndIf;
+
+        Result = OPI_S3.UploadObjectPart(Name
+            , Bucket
+            , BasicData
+            , UploadID
+            , PartNumber
+            , CurrentData);
+
+        OPI_TestDataRetrieval.WriteLog(Result, "UploadObjectPart (IPU)", "S3"); // SKIP
+        OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+        BytesRead = SourceStream.CurrentPosition();
+
+        ETag = Result["headers"]["Etag"];
+        ETag = ?(ETag = Undefined, Result["headers"]["ETag"], ETag);
+
+        TagsArray.Add(ETag);
+
+        PartNumber = PartNumber + 1;
+
+    EndDo;
+
+    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "FinishPartsUpload (IPU)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+EndProcedure
+
+Procedure S3_FinishPartsUpload(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "fileChunked.mp3";
+    Bucket = "opi-gpbucket3";
+
+    Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
+    Entity = OPI_Tools.Get(Entity);
+
+    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "InitPartsUpload (FPU)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    UploadID   = Result["response"]["InitiateMultipartUploadResult"]["UploadId"];
+    TotalSize  = Entity.Size();
+    ChunkSize  = 5242880;
+    BytesRead  = 0;
+    PartNumber = 1;
+
+    DataReader   = New DataReader(Entity);
+    SourceStream = DataReader.SourceStream();
+    TagsArray    = New Array;
+
+    While BytesRead < TotalSize Do
+
+        CurrentReading = DataReader.Read(ChunkSize);
+        CurrentData    = CurrentReading.GetBinaryData();
+
+        If CurrentData.Size() = 0 Then
+            Break;
+        EndIf;
+
+        Result = OPI_S3.UploadObjectPart(Name
+            , Bucket
+            , BasicData
+            , UploadID
+            , PartNumber
+            , CurrentData);
+
+        OPI_TestDataRetrieval.WriteLog(Result, "UploadObjectPart (FPU)", "S3"); // SKIP
+        OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+        BytesRead = SourceStream.CurrentPosition();
+
+        ETag = Result["headers"]["Etag"];
+        ETag = ?(ETag = Undefined, Result["headers"]["ETag"], ETag);
+
+        TagsArray.Add(ETag);
+
+        PartNumber = PartNumber + 1;
+
+    EndDo;
+
+    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "FinishPartsUpload", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+EndProcedure
+
+Procedure S3_UploadObjectPart(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "fileChunked.mp3";
+    Bucket = "opi-gpbucket3";
+
+    Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
+    Entity = OPI_Tools.Get(Entity);
+
+    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "InitPartsUpload (UOP)", "S3"); // SKIP
+    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+    UploadID   = Result["response"]["InitiateMultipartUploadResult"]["UploadId"];
+    TotalSize  = Entity.Size();
+    ChunkSize  = 5242880;
+    BytesRead  = 0;
+    PartNumber = 1;
+
+    DataReader   = New DataReader(Entity);
+    SourceStream = DataReader.SourceStream();
+    TagsArray    = New Array;
+
+    While BytesRead < TotalSize Do
+
+        CurrentReading = DataReader.Read(ChunkSize);
+        CurrentData    = CurrentReading.GetBinaryData();
+
+        If CurrentData.Size() = 0 Then
+            Break;
+        EndIf;
+
+        Result = OPI_S3.UploadObjectPart(Name
+            , Bucket
+            , BasicData
+            , UploadID
+            , PartNumber
+            , CurrentData);
+
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        OPI_TestDataRetrieval.WriteLog(Result, "UploadObjectPart", "S3"); // SKIP
+        OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+
+        BytesRead = SourceStream.CurrentPosition();
+
+        ETag = Result["headers"]["Etag"];
+        ETag = ?(ETag = Undefined, Result["headers"]["ETag"], ETag);
+
+        TagsArray.Add(ETag);
+
+        PartNumber = PartNumber + 1;
+
+    EndDo;
+
+    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "FinishPartsUpload (UOP)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+EndProcedure
+
+Procedure S3_AbortMultipartUpload(FunctionParameters)
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "fileChunked.mp3";
+    Bucket = "opi-gpbucket3";
+
+    Start    = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+    UploadID = Start["response"]["InitiateMultipartUploadResult"]["UploadId"];
+
+    Result = OPI_S3.AbortMultipartUpload(Name, Bucket, BasicData, UploadID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AbortMultipartUpload", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+
+EndProcedure
+
+Procedure S3_GetObjectDownloadLink(FunctionParameters)
+
+    Image        = FunctionParameters["Picture"]; // SKIP
+    OPI_TypeConversion.GetBinaryData(Image); // SKIP
+    RequiredSize = Image.Size(); // SKIP
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "picture.jpg";
+    Bucket = "opi-gpbucket3";
+
+    Result = OPI_S3.GetObjectDownloadLink(Name, Bucket, BasicData, 7200);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObjectDownloadLink", "S3");
+    OPI_TestDataRetrieval.Check_String(Result);
+
+    Result = OPI_Tools.Get(Result);
+
+    OPI_TestDataRetrieval.Check_BinaryData(Result, RequiredSize);
+
+EndProcedure
+
+Procedure S3_GetObjectUploadLink(FunctionParameters)
+
+    Image        = FunctionParameters["Picture"]; // SKIP
+    OPI_TypeConversion.GetBinaryData(Image); // SKIP
+    RequiredSize = Image.Size(); // SKIP
+
+    URL       = FunctionParameters["S3_URL"];
+    AccessKey = FunctionParameters["S3_AccessKey"];
+    SecretKey = FunctionParameters["S3_SecretKey"];
+    Region    = "BTC";
+
+    BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
+
+    Name   = "pictureU.jpg";
+    Bucket = "newbucket2";
+
+    Result = OPI_S3.GetObjectUploadLink(Name, Bucket, BasicData, 7200);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObjectUploadLink", "S3");
+    OPI_TestDataRetrieval.Check_String(Result);
+
+    Result = OPI_Tools.Put(Result, Image, , False);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetObjectUploadLink (PUT)", "S3");
+
+    Check = OPI_S3.HeadObject(Name, Bucket, BasicData);
+    OPI_TestDataRetrieval.WriteLog(Check, "HeadObject (Upload link)", "S3");
+
+    OPI_TestDataRetrieval.ExpectsThat(RequiredSize = Number(Check["headers"]["Content-Length"])).Равно(True);
+
+    OPI_S3.DeleteObject(Name, Bucket, BasicData);
+
+EndProcedure
+
+#EndRegion
+
+#Region TCP
+
+Procedure TCP_CreateConnection(FunctionParameters)
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+
+    Result = String(Connection); // SKIP
+
+    OPI_TCP.CloseConnection(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateConnection", "TCP");
+    OPI_TestDataRetrieval.Check_Filled(Result);
+
+EndProcedure
+
+Procedure TCP_CloseConnection(FunctionParameters)
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+
+    Result = OPI_TCP.CloseConnection(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CloseConnection", "TCP");
+    OPI_TestDataRetrieval.Check_True(Result);
+
+EndProcedure
+
+Procedure TCP_ReadBinaryData(FunctionParameters) Export
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+    Message    = "Hello server!" + Chars.LF;
+    Data       = ПолучитьДвоичныеДанныеИзСтроки(Message);
+
+    OPI_TCP.SendBinaryData(Connection, Data);
+
+    // End of message marker to avoid waiting for the end of timeout
+    Marker = Chars.LF;
+    Result = OPI_TCP.ReadBinaryData(Connection, , Marker);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    OPI_TCP.CloseConnection(Connection);
+
+    // END
+
+    Result = ПолучитьСтрокуИзДвоичныхДанных(Result);
+    OPI_TestDataRetrieval.WriteLog(Result, "ReadBinaryData", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Message);
+
+    Connection = OPI_TCP.CreateConnection(Address);
+
+    OPI_TCP.SendBinaryData(Connection, Data);
+    Result = OPI_TCP.ReadBinaryData(Connection, , , 50000);
+
+    OPI_TCP.CloseConnection(Connection);
+
+    Result = ПолучитьСтрокуИзДвоичныхДанных(Result);
+    OPI_TestDataRetrieval.WriteLog(Result, "ReadBinaryData (timeout)", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Message);
+
+EndProcedure
+
+Procedure TCP_SendBinaryData(FunctionParameters) Export
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+    Message    = "Hello server!" + Chars.LF;
+    Data       = ПолучитьДвоичныеДанныеИзСтроки(Message);
+
+    Result = OPI_TCP.SendBinaryData(Connection, Data);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    // End of message marker to avoid waiting for the end of timeout
+    Marker = Chars.LF;
+    Response = OPI_TCP.ReadBinaryData(Connection, , Marker);
+
+    OPI_TCP.CloseConnection(Connection);
+
+    // END
+
+    Response = ПолучитьСтрокуИзДвоичныхДанных(Response);
+    OPI_TestDataRetrieval.WriteLog(Result, "SendBinaryData", "TCP");
+    OPI_TestDataRetrieval.Check_String(Response, Message);
+
+    Connection = OPI_TCP.CreateConnection(Address);
+
+    OPI_TCP.SendBinaryData(Connection, Data);
+    Result = OPI_TCP.ReadBinaryData(Connection, , , 50000);
+
+    OPI_TCP.CloseConnection(Connection);
+
+    Result = ПолучитьСтрокуИзДвоичныхДанных(Result);
+    OPI_TestDataRetrieval.WriteLog(Result, "SendBinaryData (timeout)", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Message);
+
+EndProcedure
+
+Procedure TCP_ProcessRequest(FunctionParameters) Export
+
+    Address = FunctionParameters["TCP_Address"];
+    Data    = "Echo this!" + Chars.LF;
+
+    Result = OPI_TCP.ProcessRequest(Address, Data);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ProcessRequest", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Data);
+
+EndProcedure
+
+Procedure TCP_ReadLine(FunctionParameters) Export
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+    Data       = "Hello server!" + Chars.LF;
+
+    OPI_TCP.SendLine(Connection, Data);
+
+    // End of message marker to avoid waiting for the end of timeout
+    Marker = Chars.LF;
+    Result = OPI_TCP.ReadLine(Connection, , Marker);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    OPI_TCP.CloseConnection(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ReadLine", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Data);
+
+    Connection = OPI_TCP.CreateConnection(Address);
+
+    OPI_TCP.SendLine(Connection, Data);
+    Result = OPI_TCP.ReadLine(Connection, , , 50000);
+
+    OPI_TCP.CloseConnection(Connection);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ReadLine (timeout)", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Data);
+
+EndProcedure
+
+Procedure TCP_SendLine(FunctionParameters) Export
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+    Data       = "Hello server!" + Chars.LF;
+
+    Result = OPI_TCP.SendLine(Connection, Data);
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    // End of message marker to avoid waiting for the end of timeout
+    Marker = Chars.LF;
+    Response = OPI_TCP.ReadLine(Connection, , Marker);
+
+    OPI_TCP.CloseConnection(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SendLine", "TCP");
+    OPI_TestDataRetrieval.Check_String(Response, Data);
+
+    Connection = OPI_TCP.CreateConnection(Address);
+
+    OPI_TCP.SendLine(Connection, Data);
+    Result = OPI_TCP.ReadLine(Connection, , , 50000);
+
+    OPI_TCP.CloseConnection(Connection);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SendLine (timeout)", "TCP");
+    OPI_TestDataRetrieval.Check_String(Result, Data);
 
 EndProcedure
 

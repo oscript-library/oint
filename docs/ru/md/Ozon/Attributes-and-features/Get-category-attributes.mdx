@@ -28,16 +28,17 @@ import TabItem from '@theme/TabItem';
 :::tip
 Если у dictionary_id значение 0, у атрибута нет вложенных справочников. Если значение другое, то справочники есть. Получить их можно методом ПолучитьЗначенияХарактеристик()
 
- Метод в документации API: [post /v1/description-category/attribute](https://docs.ozon.ru/api/seller/#operation/DescriptionCategoryAPI_GetAttributes)
+Метод в документации API: [post /v1/description-category/attribute](https://docs.ozon.ru/api/seller/#operation/DescriptionCategoryAPI_GetAttributes)
 :::
 <br/>
 
 
+
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    IDКлиента      = "2128753";
-    КлючAPI        = "7cc90d26-33e4-499b...";
-    IDКатегории    = 17029016;
-    IDТипа         = 970778135;
+    IDКлиента   = "2479669";
+    КлючAPI     = "09f65e9f-262d-4aca...";
+    IDКатегории = 17029016;
+    IDТипа      = 970778135;
 
     Результат = OPI_Ozon.ПолучитьХарактеристикиКатегории(IDКлиента, КлючAPI, IDКатегории, IDТипа);
 ```

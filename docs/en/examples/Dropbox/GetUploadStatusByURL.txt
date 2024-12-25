@@ -1,8 +1,8 @@
-﻿    Token  = "sl.B_msgdiPWezavqeIij7xO0CoH6lFDkcxzp9wOv6yyW7dixfCrQAW21oFDnvVjkfZa4UegdzdP0...";
-    WorkID = "TccHTo9aSaAAAAAAAAAAAQ";
+﻿    Token  = "sl.CDM2TsVftn5aH3_nUX4tbw3JdByXhgO0FyL2ev0gBXGOhHv5k_uHgwYs0N_qMH4TQLm-nWvPGq...";
+    WorkID = "YWsOra9WhqYAAAAAAAAAAQ";
     Status = "in_progress";
 
-    WHile Status = "in_progress" Do
+    While Status = "in_progress" Do
 
         Result = OPI_Dropbox.GetUploadStatusByURL(Token, WorkID);
         Status = Result[".tag"];
