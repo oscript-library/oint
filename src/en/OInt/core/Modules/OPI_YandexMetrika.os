@@ -184,7 +184,7 @@ EndFunction
 //
 // Parameters:
 // Token - String - Auth token - token
-// CounterStructure - Structure of KeyAndValue - Counter structure. See GetCounterStructure - fields
+// CounterStructure - Structure Of KeyAndValue - Counter structure. See GetCounterStructure - fields
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON response from Yandex
@@ -211,7 +211,7 @@ EndFunction
 // Parameters:
 // Token - String - Auth token - token
 // CounterID - String, Number - Counter ID to change - counter
-// CounterStructure - Structure of KeyAndValue - Structure of fields to be changed. See GetCounterStructure - fields
+// CounterStructure - Structure Of KeyAndValue - Structure of fields to be changed. See GetCounterStructure - fields
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON response from Yandex
@@ -315,7 +315,7 @@ EndFunction
 //
 // Parameters:
 // Token - String - Auth token - token
-// Filter - Structure of KeyAndValue - List filter. See GetCounterFilterStructure - filter
+// Filter - Structure Of KeyAndValue - List filter. See GetCounterFilterStructure - filter
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON response from Yandex
@@ -348,7 +348,7 @@ EndFunction
 // Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
 //
 // Returns:
-// Structure of KeyAndValue - Counter field structure
+// Structure Of KeyAndValue - Counter field structure
 Function GetCounterStructure(Val Clear = False) Export
 
     OPI_TypeConversion.GetBoolean(Clear);
@@ -525,7 +525,7 @@ EndFunction
 // Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
 //
 // Returns:
-// Structure of KeyAndValue - Counter field structure
+// Structure Of KeyAndValue - Counter field structure
 Function GetCounterFilterStructure(Val Clear = False) Export
 
     OPI_TypeConversion.GetBoolean(Clear);
@@ -551,6 +551,36 @@ Function GetCounterFilterStructure(Val Clear = False) Export
 
     //@skip-check constructor-function-return-section
     Return FilterStructure;
+
+EndFunction
+
+#EndRegion
+
+#Region ActionsManagement
+
+// Get actions list
+// Gets the list of actions of the selected counter
+//
+// Note
+// Method at API documentation: [List of actions](@yandex.ru/dev/metrika/en/management/openapi/operation/operations)
+//
+// Parameters:
+// Token - String - Auth token - token
+// CounterID - String, Number - Counter ID - counter
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Yandex
+Function GetActionsList(Val Token, Val CounterID) Export
+
+    OPI_TypeConversion.GetLine(CounterID);
+
+    Headers = OPI_YandexID.GetAuthorizationHeader(Token);
+    URL     = "https://api-metrika.yandex.net/management/v1/counter/%1/operations";
+    URL     = StrTemplate(URL, CounterID);
+
+    Response = OPI_Tools.Get(URL, , Headers);
+
+    Return Response;
 
 EndFunction
 

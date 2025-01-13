@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Clear table
+ Clears the database table
+
+
+
+`Function ClearTable(Val Table, Val Connection = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Table | --table | String | &#x2714; | Table name |
+  | Connection | --db | String, Arbitrary | &#x2716; | Existing connection or database path |
+
+  
+  Returns:  Structure Of KeyAndValue, String - Result of query execution
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Base  = "C:\Users\Administrator\AppData\Local\Temp\v8_E607_1d.sqlite";
+    Table = "test";
+
+    Result = OPI_SQLite.ClearTable(Table, Base);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint sqlite ClearTable \
+             --table "test" \
+             --db "C:\Users\Administrator\AppData\Local\Temp\3pbdgv5r4nm.sqlite"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint sqlite ClearTable ^
+             --table "test" ^
+             --db "C:\Users\Administrator\AppData\Local\Temp\3pbdgv5r4nm.sqlite"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": true
+}
+```

@@ -3,8 +3,8 @@ pipeline {
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.17.0.ospx; del oint-1.17.0.ospx'
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/cli; opm build; opm install oint-cli-1.17.0.ospx; del oint-cli-1.17.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.18.0.ospx; del oint-1.18.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/cli; opm build; opm install oint-cli-1.18.0.ospx; del oint-cli-1.18.0.ospx'
             withCredentials([string(credentialsId: 'gpgkey', variable: 'GPGKEY')]) {
                bat encoding: 'UTF-8', script:'"C:/Program Files (x86)/GnuPG/bin/gpg.exe" --quiet --batch --yes --decrypt --passphrase="%GPGKEY%" --output ./data.json ./data.json.gpg'
             }
@@ -234,6 +234,21 @@ pipeline {
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_Вайбер_ОтправкаСообщений"'
+               }
+
+			}
+		}
+
+        stage('Testing-SQLite') {
+			steps {
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_SQLL_ОсновныеМетоды"'
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_SQLL_ORM"'
                }
 
 			}
@@ -636,6 +651,10 @@ pipeline {
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_ЯМетрика_УправлениеСчетчиками"'
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_ТестыCLI.os" "CLI_ЯМетрика_УправлениеОперациями"'
                }
 
 			}

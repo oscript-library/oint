@@ -1,0 +1,60 @@
+﻿    TFN = GetTempFileName("sqlite");
+
+    Image = "https://api.athenaeum.digital/test_data/picture.jpg";
+    OPI_TypeConversion.GetBinaryData(Image); // Image - Type: BinaryData
+
+    Connection = OPI_SQLite.CreateConnection(TFN);
+
+    // CREATE
+
+    QueryText = "
+    |CREATE TABLE test_table (
+    |id INTEGER PRIMARY KEY,
+    |name TEXT,
+    |age INTEGER,
+    |salary REAL,
+    |is_active BOOLEAN,
+    |created_at DATETIME,
+    |data BLOB
+    |);";
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
+
+    // INSERT with parameters
+
+    QueryText = "
+    |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
+    |VALUES (?1, ?2, ?3, ?4, ?5, ?6);";
+
+    ParameterArray = New Array;
+    ParameterArray.Add("Vitaly"); // TEXT
+    ParameterArray.Add(25); // INTEGER
+    ParameterArray.Add(1000.12); // REAL
+    ParameterArray.Add(True); // BOOL
+    ParameterArray.Add(OPI_Tools.GetCurrentDate()); // DATETIME
+    ParameterArray.Add(Image); // BLOB
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, ParameterArray, , Connection);
+
+    // SELECT (The result of this query is shown in the Result block)
+
+    QueryText = "SELECT id, name, age, salary, is_active, created_at, data FROM test_table;";
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
+
+    // Transaction
+
+    QueryText = "BEGIN TRANSACTION;
+    | CREATE TABLE IF NOT EXISTS users (
+    | id INTEGER PRIMARY KEY AUTOINCREMENT,
+    | name TEXT NOT NULL,
+    | age INTEGER NOT NULL
+    | );
+    | INSERT INTO users (name, age) VALUES ('Alice', 30);
+    | INSERT INTO users (name, age) VALUES ('Bob', 25);
+    | INSERT INTO users (name, age) VALUES ('Charlie', 35);
+    | COMMIT;";
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
+
+    Closing = OPI_SQLite.CloseConnection(Connection);

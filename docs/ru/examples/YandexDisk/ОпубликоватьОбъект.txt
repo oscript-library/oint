@@ -1,4 +1,4 @@
 ﻿    Токен = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
-    Путь  = "/acb4b279-d885-47a6-b5c8-ef4f0c6709c4.png";
+    Путь  = "/db72777d-ade3-487f-8d49-ff64457a436e.png";
 
     Результат = OPI_YandexDisk.ОпубликоватьОбъект(Токен, Путь);

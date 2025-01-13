@@ -53,6 +53,7 @@ Function GetTestingSectionMapping() Export
     Sections.Insert("VK"             , 5);
     Sections.Insert("Viber"          , 5);
     Sections.Insert("Twitter"        , 4);
+    Sections.Insert("SQLite"         , 5);
     Sections.Insert("YandexDisk"     , 5);
     Sections.Insert("GoogleWorkspace", 2);
     Sections.Insert("GoogleCalendar" , 5);
@@ -85,6 +86,7 @@ Function GetTestingSectionMappingGA() Export
     Sections.Insert("VK"             , StandardDependencies);
     Sections.Insert("Viber"          , StandardDependencies);
     Sections.Insert("Twitter"        , StandardDependencies);
+    Sections.Insert("SQLite"         , StandardDependencies);
     Sections.Insert("YandexDisk"     , StandardDependencies);
     Sections.Insert("GoogleWorkspace", StandardDependencies);
     Sections.Insert("GoogleCalendar" , GoogleDependencies);
@@ -130,6 +132,7 @@ Function GetTestTable() Export
     Metrika   = "YandexMetrika";
     S3_       = "S3";
     TCP       = "TCP";
+    SQLite    = "SQLite";
 
     TestTable = New ValueTable;
     TestTable.Columns.Add("Method");
@@ -259,10 +262,13 @@ Function GetTestTable() Export
     NewTest(TestTable, "CdekAPI_CourierInvitationsManagement" , "Courier invitations management"  , Cdek);
     NewTest(TestTable, "YaMetrika_TagsManagement"             , "Tags management"                 , Metrika);
     NewTest(TestTable, "YaMetrika_CountersManagement"         , "Counters management"             , Metrika);
+    NewTest(TestTable, "YaMetrika_ActionsManagement"          , "Actions management"              , Metrika);
     NewTest(TestTable, "AWS_CommonMethods"                    , "Common methods"                  , S3_);
     NewTest(TestTable, "AWS_BucketsManagement"                , "Buckets management"              , S3_);
     NewTest(TestTable, "AWS_ObjectsManagement"                , "Objects management"              , S3_);
     NewTest(TestTable, "TC_Client"                            , "TCP Client"                      , TCP);
+    NewTest(TestTable, "SQLL_CommonMethods"                   , "Common methods"                  , SQLite);
+    NewTest(TestTable, "SQLL_ORM"                             , "ORM"                             , SQLite);
 
     Return TestTable;
 
@@ -491,7 +497,7 @@ Procedure WriteLogCLI(Val Result, Val Method, Val Library = "") Export
 
 EndProcedure
 
-Function ExecuteTestCLI(Val Library, Val Method, Val Options) Export
+Function ExecuteTestCLI(Val Library, Val Method, Val Options, Val Record = True) Export
 
     If OPI_Tools.IsWindows() Then
 
@@ -503,7 +509,8 @@ Function ExecuteTestCLI(Val Library, Val Method, Val Options) Export
 
     EndIf;
 
-    ResultFile   = GetTempFileName();
+    ResultFile = GetTempFileName();
+
     LaunchString = Oint + " " + Library + " " + Method;
 
     For Each Option In Options Do
@@ -518,7 +525,25 @@ Function ExecuteTestCLI(Val Library, Val Method, Val Options) Export
 
     EndDo;
 
-    RunApp(LaunchString + " --out """ + ResultFile + """", , True);
+    RunApp(LaunchString + " --out """ + ResultFile + """ --debug" , , True);
+
+    Result = ReadCLIResponse(ResultFile);
+
+    If Record Then
+        WriteCLICall(Library, Method, Options);
+    EndIf;
+
+    Try
+        DeleteFiles(ResultFile);
+    Except
+        Message("Failed to delete the temporary file after the test!");
+    EndTry;
+
+    Return Result;
+
+EndFunction
+
+Function ReadCLIResponse(Val ResultFile)
 
     Try
 
@@ -537,17 +562,9 @@ Function ExecuteTestCLI(Val Library, Val Method, Val Options) Export
             Result = null;
         EndTry;
 
-    EndTry;
+     EndTry;
 
-    WriteCLICall(Library, Method, Options);
-
-    Try
-        DeleteFiles(ResultFile);
-    Except
-        Message("Failed to delete the temporary file after the test!");
-    EndTry;
-
-    Return Result;
+     Return Result;
 
 EndFunction
 
@@ -2032,6 +2049,10 @@ Procedure Check_MetrikaCounters(Val Result) Export
     ExpectsThat(Result["counters"]).ИмеетТип("Array").Заполнено();
 EndProcedure
 
+Procedure Check_MetrikaActions(Val Result) Export
+    ExpectsThat(Result["operations"]).ИмеетТип("Array");
+EndProcedure
+
 Procedure Check_S3Success(Val Result) Export
 
     Success = Result["status"] >= 200 And Result["status"] < 300;
@@ -2051,6 +2072,38 @@ Procedure Check_S3NotImplemented(Val Result) Export
     Success = Result["status"] = 501;
     ExpectsThat(Success).Равно(True);
 
+EndProcedure
+
+Procedure Check_AddIn(Val Result, Val TypeName) Export
+    ExpectsThat(String(TypeOf(Result))).Равно(TypeName);
+EndProcedure
+
+Procedure Check_Equality(Val Value1, Val Value2) Export
+    ExpectsThat(Value1).Равно(Value2);
+EndProcedure
+
+Procedure Check_SQLiteSuccess(Val Result) Export
+    ExpectsThat(Result["result"]).Равно(True);
+EndProcedure
+
+Procedure Check_SQLiteError(Val Result) Export
+    ExpectsThat(Result["result"]).Равно(False);
+EndProcedure
+
+Procedure Check_SQLiteRows(Val Result, Val Count) Export
+    ExpectsThat(Result["rows"]).Равно(Count);
+EndProcedure
+
+Procedure Check_SQLiteFieldsValues(Val Result, Val ValueStructure) Export
+
+    For Each Value In ValueStructure Do
+        Result[Value.Key] = Value.Value;
+    EndDo;
+
+EndProcedure
+
+Procedure Check_SQLiteNoRows(Val Result) Export
+    ExpectsThat(Result["data"].Count()).Равно(0);
 EndProcedure
 
 #EndRegion

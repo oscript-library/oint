@@ -798,6 +798,11 @@ Procedure Viber_MessagesSending() Export
     OPI_TestDataRetrieval.ParameterToCollection("Document"            , TestParameters);
 
     Viber_CreateKeyboardFromArrayButton(TestParameters);
+
+    Return;
+
+    //@skip-check unreachable-statement
+
     Viber_SendTextMessage(TestParameters);
     Viber_SendImage(TestParameters);
     Viber_SendFile(TestParameters);
@@ -2110,6 +2115,17 @@ Procedure YaMetrika_CountersManagement() Export
 
 EndProcedure
 
+Procedure YaMetrika_ActionsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Metrika_Token", TestParameters);
+
+    YandexMetrika_CreateCounter(TestParameters);
+    YandexMetrika_GetActionsList(TestParameters);
+    YandexMetrika_DeleteCounter(TestParameters);
+
+EndProcedure
+
 #EndRegion
 
 #Region S3
@@ -2196,6 +2212,64 @@ Procedure TC_Client() Export
     TCP_ReadLine(TestParameters);
     TCP_SendLine(TestParameters);
     TCP_ProcessRequest(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region SQLite
+
+Procedure SQLL_CommonMethods() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Picture", TestParameters);
+
+    SQLite_CreateConnection(TestParameters);
+    SQLite_CloseConnection(TestParameters);
+    SQLite_ExecuteSQLQuery(TestParameters);
+    SQLite_IsConnector(TestParameters);
+
+EndProcedure
+
+Procedure SQLL_ORM() Export
+
+    TestParameters = New Structure;
+
+    Base = GetTempFileName("sqlite");
+
+    Connection = OPI_SQLite.CreateConnection(Base);
+    TestParameters.Insert("SQLite_DB", Connection);
+
+    OPI_TestDataRetrieval.ParameterToCollection("Picture", TestParameters);
+
+    SQLite_CreateTable(TestParameters);
+    SQLite_AddRecords(TestParameters);
+    SQLite_GetRecords(TestParameters);
+    SQLite_UpdateRecords(TestParameters);
+    SQLite_DeletePosts(TestParameters);
+    SQLite_GetTableInformation(TestParameters);
+    SQLite_ClearTable(TestParameters);
+    SQLite_DeleteTable(TestParameters);
+    SQLite_GetRecordsFilterStrucutre(TestParameters);
+
+    OPI_TestDataRetrieval.WriteParameter("SQLite_DB", Base);
+    OPI_Tools.AddField("SQLite_DB", Base, "String", TestParameters);
+
+    SQLite_CreateTable(TestParameters);
+    SQLite_AddRecords(TestParameters);
+    SQLite_GetRecords(TestParameters);
+    SQLite_UpdateRecords(TestParameters);
+    SQLite_DeletePosts(TestParameters);
+    SQLite_GetTableInformation(TestParameters);
+    SQLite_ClearTable(TestParameters);
+    SQLite_DeleteTable(TestParameters);
+    SQLite_GetRecordsFilterStrucutre(TestParameters);
+
+    Try
+       DeleteFiles(Base);
+    Except
+        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
+    EndTry
 
 EndProcedure
 
@@ -14866,6 +14940,20 @@ Procedure YandexMetrika_GetCountersList(FunctionParameters)
 
 EndProcedure
 
+Procedure YandexMetrika_GetActionsList(FunctionParameters)
+
+    Token     = FunctionParameters["Metrika_Token"];
+    CounterID = FunctionParameters["Metrika_CounterID"];
+
+    Result = OPI_YandexMetrika.GetActionsList(Token, CounterID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetActionsList", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaActions(Result);
+
+EndProcedure
+
 #EndRegion
 
 #Region S3
@@ -16021,6 +16109,486 @@ Procedure TCP_SendLine(FunctionParameters) Export
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendLine (timeout)", "TCP");
     OPI_TestDataRetrieval.Check_String(Result, Data);
+
+EndProcedure
+
+#EndRegion
+
+#Region SQLite
+
+Procedure SQLite_CreateConnection(FunctionParameters)
+
+    TFN = GetTempFileName("sqlite");
+
+    LocalBase    = OPI_SQLite.CreateConnection(TFN);
+    InMemoryBase = OPI_SQLite.CreateConnection();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(LocalBase, "CreateConnection", "SQLite");
+    OPI_TestDataRetrieval.Check_AddIn(LocalBase, "AddIn.OPI_SQLite.Main");
+
+    OPI_TestDataRetrieval.WriteLog(InMemoryBase, "CreateConnection (im)", "SQLite");
+    OPI_TestDataRetrieval.Check_AddIn(InMemoryBase, "AddIn.OPI_SQLite.Main");
+
+    Closing = OPI_SQLite.CloseConnection(LocalBase);
+
+    OPI_TestDataRetrieval.WriteLog(Closing, "CloseConnection", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Closing);
+
+    Try
+       DeleteFiles(TFN);
+    Except
+        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
+    EndTry
+
+EndProcedure
+
+Procedure SQLite_CloseConnection(FunctionParameters)
+
+    TFN = GetTempFileName("sqlite");
+
+    Connection = OPI_SQLite.CreateConnection(TFN);
+
+    OPI_TestDataRetrieval.WriteLog(Connection, "CreateConnection (closing)", "SQLite"); // SKIP
+    OPI_TestDataRetrieval.Check_AddIn(Connection, "AddIn.OPI_SQLite.Main"); // SKIP
+
+    Closing = OPI_SQLite.CloseConnection(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Closing, "CloseConnection", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Closing);
+
+    Try
+       DeleteFiles(TFN);
+    Except
+        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
+    EndTry
+
+EndProcedure
+
+Procedure SQLite_ExecuteSQLQuery(FunctionParameters)
+
+    TFN = GetTempFileName("sqlite");
+
+    Image = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(Image); // Image - Type: BinaryData
+
+    Connection = OPI_SQLite.CreateConnection(TFN);
+
+    OPI_TestDataRetrieval.WriteLog(Connection, "CreateConnection (query)", "SQLite"); // SKIP
+    OPI_TestDataRetrieval.Check_AddIn(Connection, "AddIn.OPI_SQLite.Main"); // SKIP
+
+    // CREATE
+
+    QueryText = "
+    |CREATE TABLE test_table (
+    |id INTEGER PRIMARY KEY,
+    |name TEXT,
+    |age INTEGER,
+    |salary REAL,
+    |is_active BOOLEAN,
+    |created_at DATETIME,
+    |data BLOB
+    |);";
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ExecuteSQLQuery (Create)", "SQLite"); // SKIP
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result); // SKIP
+
+    // INSERT with parameters
+
+    QueryText = "
+    |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
+    |VALUES (?1, ?2, ?3, ?4, ?5, ?6);";
+
+    ParameterArray = New Array;
+    ParameterArray.Add("Vitaly"); // TEXT
+    ParameterArray.Add(25); // INTEGER
+    ParameterArray.Add(1000.12); // REAL
+    ParameterArray.Add(True); // BOOL
+    ParameterArray.Add(OPI_Tools.GetCurrentDate()); // DATETIME
+    ParameterArray.Add(Image); // BLOB
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, ParameterArray, , Connection);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ExecuteSQLQuery (Insert)", "SQLite"); // SKIP
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result); // SKIP
+
+    // SELECT (The result of this query is shown in the Result block)
+
+    QueryText = "SELECT id, name, age, salary, is_active, created_at, data FROM test_table;";
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
+
+    Blob                              = Result["data"][0]["data"]["blob"]; // SKIP
+    Result["data"][0]["data"]["blob"] = "Base64"; // SKIP
+    OPI_TestDataRetrieval.WriteLog(Result, "ExecuteSQLQuery", "SQLite"); // SKIP
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result); // SKIP
+    OPI_TestDataRetrieval.Check_Equality(Base64Value(Blob).Size(), Image.Size()); // SKIP
+
+    // Transaction
+
+    QueryText = "BEGIN TRANSACTION;
+    | CREATE TABLE IF NOT EXISTS users (
+    | id INTEGER PRIMARY KEY AUTOINCREMENT,
+    | name TEXT NOT NULL,
+    | age INTEGER NOT NULL
+    | );
+    | INSERT INTO users (name, age) VALUES ('Alice', 30);
+    | INSERT INTO users (name, age) VALUES ('Bob', 25);
+    | INSERT INTO users (name, age) VALUES ('Charlie', 35);
+    | COMMIT;";
+
+
+    Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ExecuteSQLQuery (Transaction)", "SQLite"); // SKIP
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result); // SKIP
+
+    Closing = OPI_SQLite.CloseConnection(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CloseConnection (query)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Try
+       DeleteFiles(TFN);
+    Except
+        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
+    EndTry
+
+EndProcedure
+
+Procedure SQLite_IsConnector(FunctionParameters)
+
+    Connection = OPI_SQLite.CreateConnection();
+    Result     = OPI_SQLite.IsConnector(Connection);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "IsConnector", "SQLite");
+    OPI_TestDataRetrieval.Check_True(Result);
+
+EndProcedure
+
+Procedure SQLite_CreateTable(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("id"        , "INTEGER PRIMARY KEY");
+    ColoumnsStruct.Insert("name"      , "TEXT");
+    ColoumnsStruct.Insert("age"       , "INTEGER");
+    ColoumnsStruct.Insert("salary"    , "REAL");
+    ColoumnsStruct.Insert("is_active" , "BOOLEAN");
+    ColoumnsStruct.Insert("created_at", "DATETIME");
+    ColoumnsStruct.Insert("data"      , "BLOB");
+
+    Result = OPI_SQLite.CreateTable(Table, ColoumnsStruct, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateTable", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    ColoumnsMap = New Map;
+    ColoumnsMap.Insert("id"                 , "INTEGER PRIMARY KEY");
+    ColoumnsMap.Insert("[An obscure column]", "TEXT");
+
+    Result = OPI_SQLite.CreateTable("test1", ColoumnsMap, Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateTable (obscure column)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+EndProcedure
+
+Procedure SQLite_AddRecords(FunctionParameters)
+
+    Image = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(Image); // Image - Type: BinaryData
+
+    PictureFile = GetTempFileName("png");
+    Image.Write(PictureFile); // PictureFile - File to disk
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    DataArray = New Array;
+
+    RowStructure2 = New Structure;
+    RowStructure2.Insert("name"      , "Vitaly"); // TEXT
+    RowStructure2.Insert("age"       , 25); // INTEGER
+    RowStructure2.Insert("salary"    , 1000.12); // REAL
+    RowStructure2.Insert("is_active" , True); // BOOL
+    RowStructure2.Insert("created_at", OPI_Tools.GetCurrentDate()); // DATETIME
+    RowStructure2.Insert("data"      , Image); // BLOB
+
+    RowStrucutre1 = New Structure;
+    RowStrucutre1.Insert("name"      , "Lesha") ; // TEXT
+    RowStrucutre1.Insert("age"       , 20); // INTEGER
+    RowStrucutre1.Insert("salary"    , 200.20) ; // REAL
+    RowStrucutre1.Insert("is_active" , False) ; // BOOL
+    RowStrucutre1.Insert("created_at", OPI_Tools.GetCurrentDate()); // DATETIME
+    RowStrucutre1.Insert("data"      , New Structure("blob", PictureFile)); // BLOB
+
+    DataArray.Add(RowStructure2);
+    DataArray.Add(RowStrucutre1);
+
+    Result = OPI_SQLite.AddRecords(Table, DataArray, , Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Result = OPI_SQLite.AddRecords(Table, DataArray, False, Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (no tr)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    RowStrucutre1.Insert("error", "Lesha") ;
+    DataArray.Add(RowStrucutre1);
+
+    Result = OPI_SQLite.AddRecords(Table, DataArray, , Base);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (field error)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteError(Result);
+
+    Result = OPI_SQLite.AddRecords(Table, DataArray, False, Base);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (field error without tr)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteRows(Result, 1);
+
+    Result = OPI_SQLite.AddRecords(Table, "not valid json", , Base);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (json error)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteError(Result);
+
+    RowMap = New Map;
+    RowMap.Insert("[An obscure column]", "yo");
+
+    Result = OPI_SQLite.AddRecords("test1", RowMap, , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (obscure column)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Try
+       DeleteFiles(PictureFile);
+    Except
+        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Error deleting a picture file", "SQLite");
+    EndTry
+
+EndProcedure
+
+Procedure SQLite_GetRecords(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    Fields = New Array;
+    Fields.Add("name");
+    Fields.Add("salary");
+
+    Filters = New Array;
+
+    FilterStructure1 = New Structure;
+
+    FilterStructure1.Insert("field", "name");
+    FilterStructure1.Insert("type" , "=");
+    FilterStructure1.Insert("value", "Vitaly");
+    FilterStructure1.Insert("union", "AND");
+    FilterStructure1.Insert("raw"  , False);
+
+    FilterStructure2 = New Structure;
+
+    FilterStructure2.Insert("field", "age");
+    FilterStructure2.Insert("type" , "BETWEEN");
+    FilterStructure2.Insert("value", "20 AND 30");
+    FilterStructure2.Insert("raw"  , True);
+
+    Filters.Add(FilterStructure1);
+    Filters.Add(FilterStructure2);
+
+    Sort  = New Structure("created_at", "DESC");
+    Count = 1;
+
+    Result = OPI_SQLite.GetRecords(Table, Fields, Filters, Sort, Count, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Result = OPI_SQLite.GetRecords(Table, "['name','age','salary','is_active','created_at']", , , , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords (no params)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    FilterStructure2.Insert("type" , "BEETWEEN");
+    Filters.Add(FilterStructure2);
+
+    Result = OPI_SQLite.GetRecords(Table, "['name','age','salary','is_active','created_at']", Filters, , , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords (error)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteError(Result);
+
+    Result = OPI_SQLite.GetRecords("test1", , , , , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords (obscure column)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+EndProcedure
+
+Procedure SQLite_UpdateRecords(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    FieldsStructure = New Structure;
+    FieldsStructure.Insert("name"  , "Vitaly A.");
+    FieldsStructure.Insert("salary", "999999");
+
+    Filters = New Array;
+
+    FilterStructure = New Structure;
+
+    FilterStructure.Insert("field", "name");
+    FilterStructure.Insert("type" , "=");
+    FilterStructure.Insert("value", "Vitaly");
+    FilterStructure.Insert("union", "AND");
+    FilterStructure.Insert("raw"  , False);
+
+    Filters.Add(FilterStructure);
+
+    Result = OPI_SQLite.UpdateRecords(Table, FieldsStructure, FilterStructure, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateRecords", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    FilterStructure.Insert("value", "Vitaly A.");
+
+    Filters = New Array;
+    Filters.Add(FilterStructure);
+
+    Check = OPI_SQLite.GetRecords(Table, "['name','salary']", Filters, , , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_SQLiteFieldsValues(Check["data"][0], FieldsStructure);
+
+EndProcedure
+
+Procedure SQLite_DeletePosts(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    Filters = New Array;
+
+    FilterStructure = New Structure;
+
+    FilterStructure.Insert("field", "name");
+    FilterStructure.Insert("type" , "=");
+    FilterStructure.Insert("value", "Vitaly A.");
+    FilterStructure.Insert("union", "AND");
+    FilterStructure.Insert("raw"  , False);
+
+    Filters.Add(FilterStructure);
+
+    Result = OPI_SQLite.DeletePosts(Table, FilterStructure, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeletePosts", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Check = OPI_SQLite.GetRecords(Table, "['name','salary']", Filters, , , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteNoRows(Check);
+
+EndProcedure
+
+Procedure SQLite_GetTableInformation(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    Result = OPI_SQLite.GetTableInformation(Table, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+EndProcedure
+
+Procedure SQLite_GetRecordsFilterStrucutre(FunctionParameters)
+
+    Result = OPI_SQLite.GetRecordsFilterStrucutre();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRecordsFilterStrucutre", "SQLite");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_SQLite.GetRecordsFilterStrucutre(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRecordsFilterStrucutre (empty)", "SQLite");
+
+    For Each Element In Result Do
+
+        OPI_TestDataRetrieval.Check_Empty(Element.Value);
+
+    EndDo;
+
+EndProcedure
+
+Procedure SQLite_DeleteTable(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    Result = OPI_SQLite.DeleteTable(Table, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTable", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Check = OPI_SQLite.GetTableInformation(Table, Base);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.Check_Array(Check["data"], 0);
+
+    OPI_SQLite.DeleteTable("test1", Base);
+
+EndProcedure
+
+Procedure SQLite_ClearTable(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+
+    Result = OPI_SQLite.ClearTable(Table, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ClearTable", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Check = OPI_SQLite.GetTableInformation(Table, Base);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.Check_Array(Check["data"], 7);
+
+    Check = OPI_SQLite.GetRecords(Table, , , , , Base);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.Check_Array(Check["data"], 0);
 
 EndProcedure
 

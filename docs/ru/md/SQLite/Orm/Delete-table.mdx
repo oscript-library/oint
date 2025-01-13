@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Удалить таблицу
+ Удаляет таблицу из базы
+
+
+
+`Функция УдалитьТаблицу(Знач Таблица, Знач Соединение = "") Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | Таблица | --table | Строка | &#x2714; | Имя таблицы |
+  | Соединение | --db | Строка, Произвольный | &#x2716; | Существующее соединение или путь к базе |
+
+  
+  Возвращаемое значение:   Структура Из КлючИЗначение, Строка - Результат выполнения запроса
+
+<br/>
+
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    База    = "C:\Users\Administrator\AppData\Local\Temp\v8_E607_1d.sqlite";
+    Таблица = "test";
+
+    Результат = OPI_SQLite.УдалитьТаблицу(Таблица, База);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint sqlite УдалитьТаблицу \
+              --table "test" \
+              --db "C:\Users\Administrator\AppData\Local\Temp\w4h2hnalcdc.sqlite"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint sqlite УдалитьТаблицу ^
+              --table "test" ^
+              --db "C:\Users\Administrator\AppData\Local\Temp\w4h2hnalcdc.sqlite"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "result": true
+}
+```

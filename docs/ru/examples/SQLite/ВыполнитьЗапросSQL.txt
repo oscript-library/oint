@@ -1,0 +1,60 @@
+﻿    ИВФ = ПолучитьИмяВременногоФайла("sqlite");
+
+    Картинка = "https://api.athenaeum.digital/test_data/picture.jpg";
+    OPI_ПреобразованиеТипов.ПолучитьДвоичныеДанные(Картинка); // Картинка - Тип: ДвоичныеДанные
+
+    Соединение = OPI_SQLite.ОткрытьСоединение(ИВФ);
+
+    // CREATE
+
+    ТекстЗапроса = "
+    |CREATE TABLE test_table (
+    |id INTEGER PRIMARY KEY,
+    |name TEXT,
+    |age INTEGER,
+    |salary REAL,
+    |is_active BOOLEAN,
+    |created_at DATETIME,
+    |data BLOB
+    |);";
+
+    Результат = OPI_SQLite.ВыполнитьЗапросSQL(ТекстЗапроса, , , Соединение);
+
+    // INSERT с параметрами
+
+    ТекстЗапроса = "
+    |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
+    |VALUES (?1, ?2, ?3, ?4, ?5, ?6);";
+
+    МассивПараметров = Новый Массив;
+    МассивПараметров.Добавить("Vitaly");                              // TEXT
+    МассивПараметров.Добавить(25);                                    // INTEGER
+    МассивПараметров.Добавить(1000.12);                               // REAL
+    МассивПараметров.Добавить(Истина);                                // BOOL
+    МассивПараметров.Добавить(OPI_Инструменты.ПолучитьТекущуюДату()); // DATETIME
+    МассивПараметров.Добавить(Картинка);                              // BLOB
+
+    Результат = OPI_SQLite.ВыполнитьЗапросSQL(ТекстЗапроса, МассивПараметров, , Соединение);
+
+    // SELECT (Результат этого запроса приведен в следующем блоке)
+
+    ТекстЗапроса = "SELECT id, name, age, salary, is_active, created_at, data FROM test_table;";
+
+    Результат = OPI_SQLite.ВыполнитьЗапросSQL(ТекстЗапроса, , , Соединение);
+
+    // Транзакция
+
+    ТекстЗапроса = "BEGIN TRANSACTION;
+    |    CREATE TABLE IF NOT EXISTS users (
+    |        id INTEGER PRIMARY KEY AUTOINCREMENT,
+    |        name TEXT NOT NULL,
+    |        age INTEGER NOT NULL
+    |    );
+    |    INSERT INTO users (name, age) VALUES ('Alice', 30);
+    |    INSERT INTO users (name, age) VALUES ('Bob', 25);
+    |    INSERT INTO users (name, age) VALUES ('Charlie', 35);
+    |    COMMIT;";
+
+    Результат = OPI_SQLite.ВыполнитьЗапросSQL(ТекстЗапроса, , , Соединение);
+
+    Закрытие = OPI_SQLite.ЗакрытьСоединение(Соединение);

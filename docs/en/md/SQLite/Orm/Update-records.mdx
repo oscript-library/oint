@@ -1,0 +1,86 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Update records
+ Updates the value of records by selected criteria
+
+
+
+`Function UpdateRecords(Val Table, Val ValueStructure, Val Filters = "", Val Connection = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Table | --table | String | &#x2714; | Table name |
+  | ValueStructure | --values | Structure Of KeyAndValue | &#x2714; | Values structure: Key > field, Value > field value |
+  | Filters | --filter | Array of Structure | &#x2716; | Filters array. See GetRecordsFilterStrucutre |
+  | Connection | --db | String, Arbitrary | &#x2716; | Existing connection or database path |
+
+  
+  Returns:  Structure Of KeyAndValue, String - Result of query execution
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Base  = "C:\Users\Administrator\AppData\Local\Temp\v8_E607_1d.sqlite";
+    Table = "test";
+
+    FieldsStructure = New Structure;
+    FieldsStructure.Insert("name"  , "Vitaly A.");
+    FieldsStructure.Insert("salary", "999999");
+
+    Filters = New Array;
+
+    FilterStructure = New Structure;
+
+    FilterStructure.Insert("field", "name");
+    FilterStructure.Insert("type" , "=");
+    FilterStructure.Insert("value", "Vitaly");
+    FilterStructure.Insert("union", "AND");
+    FilterStructure.Insert("raw"  , False);
+
+    Filters.Add(FilterStructure);
+
+    Result = OPI_SQLite.UpdateRecords(Table, FieldsStructure, FilterStructure, Base);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint sqlite UpdateRecords \
+             --table "test" \
+             --values "{'name':'Vitaly A.','salary':'999999'}" \
+             --filter "[{'field':'name','type':'=','value':'Vitaly','union':'AND','raw':false}]" \
+             --db "C:\Users\Administrator\AppData\Local\Temp\3pbdgv5r4nm.sqlite"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint sqlite UpdateRecords ^
+             --table "test" ^
+             --values "{'name':'Vitaly A.','salary':'999999'}" ^
+             --filter "[{'field':'name','type':'=','value':'Vitaly','union':'AND','raw':false}]" ^
+             --db "C:\Users\Administrator\AppData\Local\Temp\3pbdgv5r4nm.sqlite"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": true
+}
+```

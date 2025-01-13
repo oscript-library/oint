@@ -25,7 +25,7 @@
   <usePurposes>PersonalComputer</usePurposes>
   <scriptVariant>English</scriptVariant>
   <vendor>Bayselonarrend</vendor>
-  <version>1.17.0</version>
+  <version>1.18.0</version>
   <detailedInformation>
     <key>en</key>
     <value>The Open Integration Package is a set of libraries for integrating with some popular APIs for 1C:Enterprise. It consists of common modules, each responsible for its own API, as well as several shared tool modules..</value>
@@ -40,9 +40,7 @@
   </configurationInformationAddress>
   <subsystems>Subsystem.OPI_Integrations</subsystems>
   <commonTemplates>CommonTemplate.OPI_TCPClient</commonTemplates>
-  <commonModules>CommonModule.OPI_Tools</commonModules>
-  <commonModules>CommonModule.OPI_Cryptography</commonModules>
-  <commonModules>CommonModule.OPI_TypeConversion</commonModules>
+  <commonTemplates>CommonTemplate.OPI_SQLite</commonTemplates>
   <commonModules>CommonModule.OPI_Airtable</commonModules>
   <commonModules>CommonModule.OPI_Bitrix24</commonModules>
   <commonModules>CommonModule.OPI_CDEK</commonModules>
@@ -55,6 +53,7 @@
   <commonModules>CommonModule.OPI_Ozon</commonModules>
   <commonModules>CommonModule.OPI_Notion</commonModules>
   <commonModules>CommonModule.OPI_Slack</commonModules>
+  <commonModules>CommonModule.OPI_SQLite</commonModules>
   <commonModules>CommonModule.OPI_S3</commonModules>
   <commonModules>CommonModule.OPI_TCP</commonModules>
   <commonModules>CommonModule.OPI_Telegram</commonModules>
@@ -66,6 +65,10 @@
   <commonModules>CommonModule.OPI_YandexID</commonModules>
   <commonModules>CommonModule.OPI_YandexMarket</commonModules>
   <commonModules>CommonModule.OPI_YandexMetrika</commonModules>
+  <commonModules>CommonModule.OPI_Tools</commonModules>
+  <commonModules>CommonModule.OPI_SQLQueries</commonModules>
+  <commonModules>CommonModule.OPI_Cryptography</commonModules>
+  <commonModules>CommonModule.OPI_TypeConversion</commonModules>
   <commonModules>CommonModule.OPI_Tests</commonModules>
   <commonModules>CommonModule.OPI_TestsCLI</commonModules>
   <commonModules>CommonModule.OPI_TestDataRetrieval</commonModules>

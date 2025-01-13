@@ -4,7 +4,7 @@ pipeline {
    	stages {
           stage('Prepare'){
              steps{
-                powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.17.0.ospx; del oint-1.17.0.ospx'
+                powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.18.0.ospx; del oint-1.18.0.ospx'
                 powershell encoding: 'UTF-8', script:'oscript -make ./src/ru/cli/core/Classes/app.os oint.exe'          
              }
           }
@@ -84,6 +84,11 @@ pipeline {
           stage('slack'){
              steps{
                 test_slack()
+             }
+          }
+          stage('sqlite'){
+             steps{
+                test_sqlite()
              }
           }
           stage('tcp'){
@@ -1952,6 +1957,52 @@ def test_slack(){
 }
 
 
+def test_sqlite(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ВыполнитьЗапросSQL --sql "test" --params "test" --force "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ПолучитьИнформациюОТаблице --table "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite СоздатьТаблицу --table "test" --cols "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ДобавитьЗаписи --table "test" --rows "test" --trn "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ПолучитьЗаписи --table "test" --fields "test" --filter "test" --order "test" --limit "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ОбновитьЗаписи --table "test" --values "test" --filter "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite УдалитьЗаписи --table "test" --filter "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite УдалитьТаблицу --table "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ОчиститьТаблицу --table "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite ПолучитьСтруктуруФильтраЗаписей --empty "test" --debug --test '
+               }
+
+}
+
+
 def test_tcp(){
 					
 
@@ -2717,13 +2768,17 @@ def test_metrika(){
 					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСтруктуруФильтраСчетчиков --empty "test" --debug --test '
                }
 
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe metrika ПолучитьСписокОпераций --token "test" --counter "test" --debug --test '
+               }
+
 }
 pipeline {
    agent any
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.17.0.ospx; del oint-1.17.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.18.0.ospx; del oint-1.18.0.ospx'
             powershell encoding: 'UTF-8', script:'oscript -make ./src/ru/cli/core/Classes/app.os oint.exe'          
          }
       }
@@ -2744,6 +2799,7 @@ test_notion()
 test_ozon()
 test_s3()
 test_slack()
+test_sqlite()
 test_tcp()
 test_telegram()
 test_twitter()
