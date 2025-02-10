@@ -4,7 +4,7 @@ pipeline {
    	stages {
           stage('Prepare'){
              steps{
-                powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.18.0.ospx; del oint-1.18.0.ospx'
+                powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.18.1.ospx; del oint-1.18.1.ospx'
                 powershell encoding: 'UTF-8', script:'oscript -make ./src/en/cli/core/Classes/app.os oint.exe'          
              }
           }
@@ -900,6 +900,82 @@ def test_bitrix24(){
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetDealsFilterStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarList --url "test" --owner "test" --type "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 CreateCalendar --url "test" --fields "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 UpdateCalendar --url "test" --calendar "test" --fields "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 DeleteCalendar --url "test" --calendar "test" --owner "test" --type "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetUserBusy --url "test" --users "test" --from "test" --to "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCustomCalendarSettings --url "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 SetCustomCalendarSettings --url "test" --settings "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarSettingsStructure --url "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalednarCustomSettingsStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 CreateCalendarEvent --url "test" --fields "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 UpdateCalendarEvent --url "test" --event "test" --fields "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarEvent --url "test" --event "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarEvents --url "test" --owner "test" --type "test" --filter "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 DeleteCalendarEvent --url "test" --event "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetUserParticipationStatus --url "test" --event "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 SetUserParticipationStatus --url "test" --event "test" --status "test" --token "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarEventsStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe bitrix24 GetCalendarEventsFilterStructure --empty "test" --debug --test '
                }
 
 }
@@ -2081,6 +2157,22 @@ def test_telegram(){
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram DeleteMessage --token "test" --chat "test" --message "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageKeyboard --token "test" --chat "test" --message "test" --keyboard "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageText --token "test" --chat "test" --message "test" --text "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageCaption --token "test" --chat "test" --message "test" --caption "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe telegram FormKeyboardFromButtonArray --buttons "test" --under "test" --column "test" --debug --test '
                }
 
@@ -2106,10 +2198,6 @@ def test_telegram(){
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe telegram GetParticipantCount --token "test" --chat "test" --debug --test '
-               }
-
-               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
-					powershell encoding: 'UTF-8', script:'./oint.exe telegram DeleteMessage --token "test" --chat "test" --message "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
@@ -2778,7 +2866,7 @@ pipeline {
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.18.0.ospx; del oint-1.18.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.18.1.ospx; del oint-1.18.1.ospx'
             powershell encoding: 'UTF-8', script:'oscript -make ./src/en/cli/core/Classes/app.os oint.exe'          
          }
       }

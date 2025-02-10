@@ -1,3 +1,0 @@
-oint gcalendar GetListCalendar ^
- --token "***" ^
- --calendar "05837367b6d1eabfcf736e7f08f976e631c77566ad0ea01911aa72007bdd9d3c@group.calendar.google.com"

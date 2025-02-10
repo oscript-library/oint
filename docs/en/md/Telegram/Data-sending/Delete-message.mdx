@@ -1,0 +1,69 @@
+﻿---
+sidebar_position: 12
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete message
+ Delete message from chat or channel
+
+
+
+`Function DeleteMessage(Val Token, Val ChatID, Val MessageID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID |
+  | MessageID | --message | String, Number | &#x2714; | ID of message to delete |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [deleteMessage](https://core.telegram.org/bots/api#deletemessage)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChatID    = "@testsichee";
+    MessageID = "14453";
+
+    Result = OPI_Telegram.DeleteMessage(Token, ChatID, MessageID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint telegram DeleteMessage \
+             --token "***" \
+             --chat "@testsichee" \
+             --message "13406"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint telegram DeleteMessage ^
+             --token "***" ^
+             --chat "@testsichee" ^
+             --message "13406"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": true
+}
+```

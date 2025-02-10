@@ -245,6 +245,7 @@ Function GetTestTable() Export
     NewTest(TestTable, "B2_UsersManagement"                   , "Users management"                , Bitrix);
     NewTest(TestTable, "B24_LeadsManagement"                  , "Leads management"                , Bitrix);
     NewTest(TestTable, "B24_DealsManagement"                  , "Deals management"                , Bitrix);
+    NewTest(TestTable, "B24_CalendarsManagement"              , "Calendars management"            , Bitrix);
     NewTest(TestTable, "VKT_MessagesSending"                  , "Messages sending"                , VKT);
     NewTest(TestTable, "VKT_CommonMethods"                    , "Common methods"                  , VKT);
     NewTest(TestTable, "VKT_ChatManagement"                   , "Chat management"                 , VKT);
@@ -493,7 +494,8 @@ EndProcedure
 
 Procedure WriteLogCLI(Val Result, Val Method, Val Library = "") Export
 
-    WriteLog(Result, Method + " (CLI)");
+    Template = "%1 (CLI, %2)";
+    WriteLog(Result, StrTemplate(Template, Method, Library));
 
 EndProcedure
 
@@ -540,31 +542,6 @@ Function ExecuteTestCLI(Val Library, Val Method, Val Options, Val Record = True)
     EndTry;
 
     Return Result;
-
-EndFunction
-
-Function ReadCLIResponse(Val ResultFile)
-
-    Try
-
-        JSONReader = New JSONReader();
-        JSONReader.OpenFile(ResultFile);
-        Result     = ReadJSON(JSONReader, True);
-        JSONReader.Close();
-
-    Except
-
-        Message(DetailErrorDescription(ErrorInfo()));
-
-        Try
-            Result = New BinaryData(ResultFile);
-        Except
-            Result = null;
-        EndTry;
-
-     EndTry;
-
-     Return Result;
 
 EndFunction
 
@@ -821,6 +798,19 @@ Procedure Check_TelegramCreateTopic(Val Result, Val Name, Icon) Export
     ExpectsThat(Result["ok"]).Равно(True);
     ExpectsThat(Result["result"]["name"]).Равно(Name);
     ExpectsThat(Result["result"]["icon_custom_emoji_id"]).Равно(Icon);
+
+EndProcedure
+
+Procedure Check_TelegramMessageKeyboard(Val Result, Val Keyboard) Export
+
+    MessageKeyboard = Result["result"]["reply_markup"];
+
+    Keyboard_ = OPI_Tools.JsonToStructure(Keyboard);
+    Keyboard_.Delete("rows");
+    Keyboard_ = OPI_Tools.JSONString(Keyboard_);
+
+    ExpectsThat(Result["ok"]).Равно(True);
+    ExpectsThat(StrLen(OPI_Tools.JSONString(MessageKeyboard))).Равно(StrLen(Keyboard_));
 
 EndProcedure
 
@@ -1550,8 +1540,14 @@ Procedure Check_BitrixBool(Val Result) Export
    ExpectsThat(Result["result"]).ИмеетТип("Boolean");
 EndProcedure
 
-Procedure Check_BitrixString(Val Result) Export
-   ExpectsThat(Result["result"]).ИмеетТип("String").Заполнено();
+Procedure Check_BitrixString(Val Result, Val Value = "") Export
+
+    ExpectsThat(Result["result"]).ИмеетТип("String").Заполнено();
+
+    If ValueIsFilled(Value) Then
+        ExpectsThat(Result["result"]).Равно(Value);
+    EndIf;
+
 EndProcedure
 
 Procedure Check_BitrixArray(Val Result) Export
@@ -2106,6 +2102,12 @@ Procedure Check_SQLiteNoRows(Val Result) Export
     ExpectsThat(Result["data"].Count()).Равно(0);
 EndProcedure
 
+Procedure Check_ResultTrue(Val Result) Export
+
+    ExpectsThat(Result["result"]).Равно(True);
+
+EndProcedure
+
 #EndRegion
 
 #EndRegion
@@ -2304,6 +2306,31 @@ Function FormOptionArray(Val Value, Val Name)
 
 EndFunction
 
+Function ReadCLIResponse(Val ResultFile)
+
+    Try
+
+        JSONReader = New JSONReader();
+        JSONReader.OpenFile(ResultFile);
+        Result     = ReadJSON(JSONReader, True);
+        JSONReader.Close();
+
+    Except
+
+        Message(DetailErrorDescription(ErrorInfo()));
+
+        Try
+            Result = New BinaryData(ResultFile);
+        Except
+            Result = null;
+        EndTry;
+
+     EndTry;
+
+     Return Result;
+
+EndFunction
+
 Procedure NewTest(ValueTable, Val Method, Val Synonym, Val Section)
 
     NewTest         = ValueTable.Add();
@@ -2332,7 +2359,7 @@ Procedure WriteCLICall(Val Library, Val Method, Val Options)
         Return;
     EndIf;
 
-    CatalogExample = "./docs/en/cli/NEW_CLI/" + Library;
+    CatalogExample = "./docs/ru/cli/" + Library;
     FileExample    = New File(CatalogExample);
 
     If Not FileExample.Exists() Then
@@ -2359,6 +2386,16 @@ Procedure WriteCLICall(Val Library, Val Method, Val Options)
         EndIf;
 
         CurrentOption = FormOption(Option.Value, Option.Key);
+
+        If Library         = "bitrix24"
+            And Option.Key = "url" Then
+
+            CurrentOption = ?(StrFind(CurrentOption, "rest") > 0
+                , "https://b24-ar17wx.bitrix24.by/rest/1/***"
+                , CurrentOption);
+
+        EndIf;
+
         OptionsArray.Add(CurrentOption);
 
     EndDo;

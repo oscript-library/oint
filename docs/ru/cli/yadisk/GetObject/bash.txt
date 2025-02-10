@@ -1,0 +1,3 @@
+oint yadisk GetObject \
+ --token "***" \
+ --path "/78892d54-ee04-4ab8-a8bd-7a11ca242fac.png"

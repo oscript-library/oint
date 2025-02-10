@@ -1,0 +1,66 @@
+﻿---
+sidebar_position: 9
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get calednar custom settings structure
+ Gets an empty structure for setting custom calendar settings
+
+
+
+`Function GetCalednarCustomSettingsStructure(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+
+  
+  Returns:  Structure Of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Bitrix24.GetCalednarCustomSettingsStructure();
+```
+ 
+
+
+
+```json title="Result"
+{
+ "view": "<standard presentation: day, week, month, list>",
+ "meetSection": "<invitation calendar>",
+ "crmSection": "<calendar for CRM>",
+ "showDeclined": "<show rejected events>",
+ "denyBusyInvitation": "<disallow invitations to an event if the time is full>",
+ "collapseOffHours": "<hide off hours: Y,N>",
+ "showWeekNumbers": "<show week number: Y,N>",
+ "showTasks": "<display tasks: Y,N>",
+ "syncTasks": "<synchronise the task calendar: Y,N>",
+ "showCompletedTasks": "<display completed tasks: Y,N>",
+ "lastUsedSection": "<default event calendar>",
+ "sendFromEmail": "<E-mail for sending invitations>",
+ "defaultSections": "<preset calendar settings>",
+ "syncPeriodPast": "<number of months to synchronise in the past period>",
+ "syncPeriodFuture": "<number of months to synchronise in the future period>",
+ "defaultReminders": {
+  "fullDay": [
+   {
+    "type": "<reminder time type: min, hour, day>",
+    "count": "<numeric value of the time interval>"
+   }
+  ],
+  "withTime": [
+   {
+    "type": "<reminder time type: min, hour, day>",
+    "count": "<numeric value of the time interval>"
+   }
+  ]
+ }
+}
+```

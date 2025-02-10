@@ -317,7 +317,7 @@ EndFunction
 //
 // Note
 // The use of the `raw` feature is necessary for compound constructions like `BEETWEEN`.^^
-// For example: with `raw:false` the filter `type:BETWEEN` `value:10 AND 20` will be interpolated as `BETWEEN ?1 `^^.
+// For example: with `raw:false` the filter `type:BETWEEN` `value:10 AND 20` will be interpolated as `BETWEEN ?1 `^^
 // where `?1 = "10 AND 20,"' which would cause an error.
 // In such a case, you must use `raw:true` to set the condition directly in the query text
 //
@@ -363,51 +363,59 @@ EndFunction
 
 Function ProcessParameters(Val Parameters)
 
-    If ValueIsFilled(Parameters) Then
+    If Not ValueIsFilled(Parameters) Then
+        Return "[]";
+    EndIf;
 
-        OPI_TypeConversion.GetArray(Parameters);
+    OPI_TypeConversion.GetArray(Parameters);
 
-        For N = 0 To Parameters.UBound() Do
+    For N = 0 To Parameters.UBound() Do
 
-            CurrentParameter = Parameters[N];
+        CurrentParameter = Parameters[N];
 
-            If TypeOf(CurrentParameter) = Type("BinaryData") Then
+        If TypeOf(CurrentParameter) = Type("BinaryData") Then
 
-                CurrentParameter = New Structure("blob", Base64String(CurrentParameter));
+            CurrentParameter = New Structure("blob", Base64String(CurrentParameter));
 
-            ElsIf OPI_Tools.CollectionFieldExists(CurrentParameter, "blob") Then
+        ElsIf OPI_Tools.CollectionFieldExists(CurrentParameter, "blob") Then
 
-                DataValue = CurrentParameter["blob"];
-                DataFile  = New File(String(DataValue));
+            CurrentParameter = ProcessBlobStructure(CurrentParameter);
 
-                If DataFile.Exists() Then
-                    CurrentData      = New BinaryData(String(DataValue));
-                    CurrentParameter = New Structure("blob", Base64String(CurrentData));
-                EndIf;
+        ElsIf TypeOf(CurrentParameter) = Type("Date") Then
 
-            ElsIf TypeOf(CurrentParameter) = Type("Date") Then
+            CurrentParameter = Format(CurrentParameter, "DF='yyyy-MM-dd HH:MM:ss");
 
-                CurrentParameter = Format(CurrentParameter, "DF='yyyy-MM-dd HH:MM:ss");
+        Else
 
-            ElsIf Not OPI_Tools.IsPrimitiveType(CurrentParameter) Then
-
+            If Not OPI_Tools.IsPrimitiveType(CurrentParameter) Then
                 OPI_TypeConversion.GetLine(CurrentParameter);
-
             EndIf;
 
-            Parameters[N] = CurrentParameter;
+        EndIf;
 
-        EndDo;
+        Parameters[N] = CurrentParameter;
 
-        Parameters_ = OPI_Tools.JSONString(Parameters, , False);
+    EndDo;
 
-    Else
+    Parameters_ = OPI_Tools.JSONString(Parameters, , False);
 
-        Parameters_ = "[]";
+    Return Parameters_;
+
+EndFunction
+
+Function ProcessBlobStructure(Val Value)
+
+    DataValue = Value["blob"];
+    DataFile  = New File(String(DataValue));
+
+    If DataFile.Exists() Then
+
+        CurrentData = New BinaryData(String(DataValue));
+        Value       = New Structure("blob", Base64String(CurrentData));
 
     EndIf;
 
-    Return Parameters_;
+    Return Value;
 
 EndFunction
 

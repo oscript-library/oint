@@ -1,5 +1,0 @@
-oint telegram SendGif ^
- --token "***" ^
- --chat "@testsichee" ^
- --text "Строковое значение" ^
- --gif "C:\Users\Administrator\AppData\Local\Temp\ovofnsbhy00.gif"

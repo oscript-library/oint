@@ -404,7 +404,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.get", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.get", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -502,7 +502,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeleteTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.delete", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.delete", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -548,7 +548,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function ApproveTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.approve", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.approve", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -568,7 +568,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DisapproveTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.disapprove", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.disapprove", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -588,7 +588,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function CompleteTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.complete", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.complete", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -608,7 +608,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function RenewTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.renew", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.renew", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -628,7 +628,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeferTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.defer", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.defer", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -648,7 +648,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function PauseTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.pause", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.pause", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -668,7 +668,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function StartTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.start", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.start", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -688,7 +688,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function StartWatchingTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.startwatch", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.startwatch", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -708,7 +708,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function StopWatchingTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.stopwatch", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.stopwatch", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -754,7 +754,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function AddTaskToFavorites(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.favorite.add", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.favorite.add", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -774,7 +774,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function RemoveTaskFromFavorites(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.favorite.remove", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.favorite.remove", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -794,7 +794,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetTaskHistory(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.history.list", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.history.list", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -840,7 +840,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function MuteTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.mute", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.mute", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -860,7 +860,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function UnmuteTask(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.unmute", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.unmute", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -1403,7 +1403,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetTaskCommentsList(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "task.commentitem.getlist", Token);
+    Response = PrimaryControlAction(URL, TaskID, "task.commentitem.getlist", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -1540,7 +1540,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetResultsList(Val URL, Val TaskID, Val Token = "") Export
 
-    Response = ManageTask(URL, TaskID, "tasks.task.result.list", Token);
+    Response = PrimaryControlAction(URL, TaskID, "tasks.task.result.list", Token, "taskId");
     Return Response;
 
 EndFunction
@@ -2200,7 +2200,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetStorage(Val URL, Val StorageID, Val Token = "") Export
 
-    Response = FileManagement(URL, StorageID, "disk.storage.get", Token);
+    Response = PrimaryControlAction(URL, StorageID, "disk.storage.get", Token);
     Return Response;
 
 EndFunction
@@ -2247,7 +2247,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetStorageObjects(Val URL, Val StorageID, Val Token = "") Export
 
-    Response = FileManagement(URL, StorageID, "disk.storage.getchildren", Token);
+    Response = PrimaryControlAction(URL, StorageID, "disk.storage.getchildren", Token);
     Return Response;
 
 EndFunction
@@ -2302,7 +2302,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetFolderInformation(Val URL, Val FolderID, Val Token = "") Export
 
-    Response = FileManagement(URL, FolderID, "disk.folder.get", Token);
+    Response = PrimaryControlAction(URL, FolderID, "disk.folder.get", Token);
     Return Response;
 
 EndFunction
@@ -2407,7 +2407,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeleteFolder(Val URL, Val FolderID, Val Token = "") Export
 
-    Response = FileManagement(URL, FolderID, "disk.folder.deletetree", Token);
+    Response = PrimaryControlAction(URL, FolderID, "disk.folder.deletetree", Token);
     Return Response;
 
 EndFunction
@@ -2427,7 +2427,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetFolderExternalLink(Val URL, Val FolderID, Val Token = "") Export
 
-    Response = FileManagement(URL, FolderID, "disk.folder.getExternalLink", Token);
+    Response = PrimaryControlAction(URL, FolderID, "disk.folder.getExternalLink", Token);
     Return Response;
 
 EndFunction
@@ -2473,7 +2473,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function MarkFolderAsDeleted(Val URL, Val FolderID, Val Token = "") Export
 
-    Response = FileManagement(URL, FolderID, "disk.folder.markdeleted", Token);
+    Response = PrimaryControlAction(URL, FolderID, "disk.folder.markdeleted", Token);
     Return Response;
 
 EndFunction
@@ -2493,7 +2493,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function RestoreFolder(Val URL, Val FolderID, Val Token = "") Export
 
-    Response = FileManagement(URL, FolderID, "disk.folder.restore", Token);
+    Response = PrimaryControlAction(URL, FolderID, "disk.folder.restore", Token);
     Return Response;
 
 EndFunction
@@ -2682,7 +2682,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetFileInformation(Val URL, Val FileID, Val Token = "") Export
 
-    Response = FileManagement(URL, FileID, "disk.file.get", Token);
+    Response = PrimaryControlAction(URL, FileID, "disk.file.get", Token);
     Return Response;
 
 EndFunction
@@ -2702,7 +2702,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeleteFile(Val URL, Val FileID, Val Token = "") Export
 
-    Response = FileManagement(URL, FileID, "disk.file.delete", Token);
+    Response = PrimaryControlAction(URL, FileID, "disk.file.delete", Token);
     Return Response;
 
 EndFunction
@@ -2723,7 +2723,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetFileExternalLink(Val URL, Val FileID, Val Token = "") Export
 
-    Response = FileManagement(URL, FileID, "disk.file.getExternalLink", Token);
+    Response = PrimaryControlAction(URL, FileID, "disk.file.getExternalLink", Token);
     Return Response;
 
 EndFunction
@@ -2743,7 +2743,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function MarkFileAsDeleted(Val URL, Val FileID, Val Token = "") Export
 
-    Response = FileManagement(URL, FileID, "disk.file.markdeleted", Token);
+    Response = PrimaryControlAction(URL, FileID, "disk.file.markdeleted", Token);
     Return Response;
 
 EndFunction
@@ -2763,7 +2763,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function RestoreFile(Val URL, Val FileID, Val Token = "") Export
 
-    Response = FileManagement(URL, FileID, "disk.file.restore", Token);
+    Response = PrimaryControlAction(URL, FileID, "disk.file.restore", Token);
     Return Response;
 
 EndFunction
@@ -2897,7 +2897,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetChatUsers(Val URL, Val ChatID, Val Token = "") Export
 
-    Response = ChatManagement(URL, ChatID, "im.chat.user.list", Token);
+    Response = PrimaryControlAction(URL, ChatID, "im.chat.user.list", Token, "CHAT_ID");
     Return Response;
 
 EndFunction
@@ -2917,7 +2917,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function LeaveChat(Val URL, Val ChatID, Val Token = "") Export
 
-    Response = ChatManagement(URL, ChatID, "im.chat.leave", Token);
+    Response = PrimaryControlAction(URL, ChatID, "im.chat.leave", Token, "CHAT_ID");
     Return Response;
 
 EndFunction
@@ -3041,7 +3041,7 @@ EndFunction
 //
 // Note
 // Method at API documentation: [im.chat.updateTitle](@dev.1c-bitrix.ru/learning/course/?COURSE_ID=93&LESSON_ID=12105)
-// Available colors: RED, GREEN, MINT, LIGHT_BLUE, DARK_BLUE, PURPLE, AQUA, PINK, LIME, BROWN, AZURE, KHAKI, SAND, MARENGO, GRAY, GRAPHITE
+// Available colours: RED, GREEN, MINT, LIGHT_BLUE, DARK_BLUE, PURPLE, AQUA, PINK, LIME, BROWN, AZURE, KHAKI, SAND, MARENGO, GRAY, GRAPHITE
 //
 // Parameters:
 // URL - String - URL of webhook or a Bitrix24 domain, when token used - url
@@ -3357,7 +3357,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetChatFilesFolder(Val URL, Val ChatID, Val Token = "") Export
 
-    Response = ChatManagement(URL, ChatID, "im.disk.folder.get", Token);
+    Response = PrimaryControlAction(URL, ChatID, "im.disk.folder.get", Token, "CHAT_ID");
     Return Response;
 
 EndFunction
@@ -4145,7 +4145,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeleteLead(Val URL, Val LeadID, Val Token = "") Export
 
-    Response = ManageLead(URL, LeadID, "crm.lead.delete", Token);
+    Response = PrimaryControlAction(URL, LeadID, "crm.lead.delete", Token);
     Return Response;
 
 EndFunction
@@ -4165,7 +4165,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetLead(Val URL, Val LeadID, Val Token = "") Export
 
-    Response = ManageLead(URL, LeadID, "crm.lead.get", Token);
+    Response = PrimaryControlAction(URL, LeadID, "crm.lead.get", Token);
     Return Response;
 
 EndFunction
@@ -4338,7 +4338,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function DeleteDeal(Val URL, Val DealID, Val Token = "") Export
 
-    Response = ManageDeal(URL, DealID, "crm.deal.delete", Token);
+    Response = PrimaryControlAction(URL, DealID, "crm.deal.delete", Token);
     Return Response;
 
 EndFunction
@@ -4358,7 +4358,7 @@ EndFunction
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
 Function GetDeal(Val URL, Val DealID, Val Token = "") Export
 
-    Response = ManageDeal(URL, DealID, "crm.deal.get", Token);
+    Response = PrimaryControlAction(URL, DealID, "crm.deal.get", Token);
     Return Response;
 
 EndFunction
@@ -4493,6 +4493,620 @@ EndFunction
 
 #EndRegion
 
+#Region CalendarsManagement
+
+// Get list of calendars
+// Gets a list of calendars of the specified owner
+//
+// Note
+// Method at API documentation: [calendar.section.get](@apidocs.bitrix24.ru/api-reference/calendar/calendar-section-get.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// OwnerID - String, Number - Calendar owner ID - owner
+// Type - String - Calendar type: user, group, company_calendar, location, etc. - type
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetCalendarList(Val URL, Val OwnerID, Val Type, Val Token = "") Export
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.section.get");
+
+    OPI_Tools.AddField("type"   , Type   , "String", Parameters);
+    OPI_Tools.AddField("ownerId", OwnerID, "String", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Create calendar
+// Creates a new calendar
+//
+// Note
+// Method at API documentation: [calendar.section.add](@apidocs.bitrix24.ru/api-reference/calendar/calendar-section-add.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// FieldsStructure - Structure Of KeyAndValue - Calendar fields structure (see GetCalendarStructure) - fields
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function CreateCalendar(Val URL, Val FieldsStructure, Val Token = "") Export
+
+    OPI_TypeConversion.GetKeyValueCollection(FieldsStructure);
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.section.add");
+
+    For Each Field In FieldsStructure Do
+        Parameters.Insert(Field.Key, Field.Value);
+    EndDo;
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Edit calendar
+// Changes the calendar settings
+//
+// Note
+// Method at API documentation: [calendar.section.update](@apidocs.bitrix24.ru/api-reference/calendar/calendar-section-update.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// CalendarID - String, Number - Calendar ID - calendar
+// FieldsStructure - Structure Of KeyAndValue - Deal fields structure (see. GetDealStructure) - fields
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function UpdateCalendar(Val URL, Val CalendarID, Val FieldsStructure, Val Token = "") Export
+
+    OPI_TypeConversion.GetKeyValueCollection(FieldsStructure);
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.section.update");
+
+    OPI_Tools.AddField("id", CalendarID, "String", Parameters);
+
+    For Each Field In FieldsStructure Do
+        Parameters.Insert(Field.Key, Field.Value);
+    EndDo;
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Delete calendar
+// Deletes an existing calendar
+//
+// Note
+// Method at API documentation: [calendar.section.delete](@apidocs.bitrix24.ru/api-reference/calendar/calendar-section-delete.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// CalendarID - String, Number - Calendar ID - calendar
+// OwnerID - String, Number - Calendar owner ID - owner
+// Type - String - Calendar type: user, group - type
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function DeleteCalendar(Val URL, Val CalendarID, Val OwnerID, Val Type, Val Token = "") Export
+
+    String_ = "String";
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.section.delete");
+
+    OPI_Tools.AddField("type"   , Type      , String_, Parameters);
+    OPI_Tools.AddField("ownerId", OwnerID   , String_, Parameters);
+    OPI_Tools.AddField("id"     , CalendarID, String_, Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Get user busy
+// Gets an array of user events in the specified interval
+//
+// Note
+// Method at API documentation: [calendar.accessibility.get](@apidocs.bitrix24.ru/api-reference/calendar/calendar-accessibility-get.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// Users - Number, Array Of Number - IDs of users or a single user - users
+// StartDate - Date - Start date of the period - from
+// EndDate - Date - End date of the period - to
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetUserBusy(Val URL, Val Users, Val StartDate, Val EndDate, Val Token = "") Export
+
+    String_ = "String";
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.accessibility.get");
+
+    OPI_Tools.AddField("users", Users, "Array", Parameters);
+
+    OPI_Tools.AddField("from" , Format(StartDate , "DF=yyyy-MM-dd"), String_ , Parameters);
+    OPI_Tools.AddField("to"   , Format(EndDate   , "DF=yyyy-MM-dd"), String_ , Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Get custom calendar settings
+// Gets the current users custom calendar settings
+//
+// Note
+// Method at API documentation: [calendar.user.settings.get](@apidocs.bitrix24.ru/api-reference/calendar/calendar-user-settings-get.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetCustomCalendarSettings(Val URL, Val Token = "") Export
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.user.settings.get");
+    Response   = OPI_Tools.Get(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Set custom calendar settings
+// Sets new custom calendar settings
+//
+// Note
+// Method at API documentation: [calendar.user.settings.set](@apidocs.bitrix24.ru/api-reference/calendar/calendar-user-settings-set.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// SettingsStructure - Structure Of KeyAndValue - Settings structure (see GetCalednarCustomSettingsStructure) - settings
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function SetCustomCalendarSettings(Val URL, Val SettingsStructure, Val Token = "") Export
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.user.settings.set");
+
+    OPI_Tools.AddField("settings", SettingsStructure, "Collection", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Get calendar settings structure
+// Gets the structure of the default calendar settings
+//
+// Note
+// Method at API documentation: [calendar.settings.get](@apidocs.bitrix24.ru/api-reference/calendar/calendar-settings-get.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetCalendarSettingsStructure(Val URL, Val Token = "") Export
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.settings.get");
+    Response   = OPI_Tools.Get(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Get calednar custom settings structure
+// Gets an empty structure for setting custom calendar settings
+//
+// Parameters:
+// Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetCalednarCustomSettingsStructure(Val Clear = False) Export
+
+    SettingsStructure = New Structure;
+
+    SettingsStructure.Insert("view"              , "<standard presentation: day, week, month, list>");
+    SettingsStructure.Insert("meetSection"       , "<invitation calendar>");
+    SettingsStructure.Insert("crmSection"        , "<calendar for CRM>");
+    SettingsStructure.Insert("showDeclined"      , "<show rejected events>");
+    SettingsStructure.Insert("denyBusyInvitation", "<disallow invitations to an event if the time is full>");
+    SettingsStructure.Insert("collapseOffHours"  , "<hide off hours: Y,N>");
+    SettingsStructure.Insert("showWeekNumbers"   , "<show week number: Y,N>");
+    SettingsStructure.Insert("showTasks"         , "<display tasks: Y,N>");
+    SettingsStructure.Insert("syncTasks"         , "<synchronise the task calendar: Y,N>");
+    SettingsStructure.Insert("showCompletedTasks", "<display completed tasks: Y,N>");
+    SettingsStructure.Insert("lastUsedSection"   , "<default event calendar>");
+    SettingsStructure.Insert("sendFromEmail"     , "<E-mail for sending invitations>");
+    SettingsStructure.Insert("defaultSections"   , "<preset calendar settings>");
+    SettingsStructure.Insert("syncPeriodPast"    , "<number of months to synchronise in the past period>");
+    SettingsStructure.Insert("syncPeriodFuture"  , "<number of months to synchronise in the future period>");
+
+        RemindersStructure = New Structure;
+
+            ReminderSettingsArray = New Array;
+                ReminderSetting   = New Structure;
+                ReminderSetting.Insert("type" , "<reminder time type: min, hour, day>");
+                ReminderSetting.Insert("count", "<numeric value of the time interval>");
+            ReminderSettingsArray.Add(ReminderSetting);
+
+        RemindersStructure.Insert("fullDay" , ReminderSettingsArray);
+        RemindersStructure.Insert("withTime", ReminderSettingsArray);
+
+    SettingsStructure.Insert("defaultReminders", RemindersStructure);
+
+    If Clear Then
+        SettingsStructure = OPI_Tools.ClearCollectionRecursively(SettingsStructure);
+    EndIf;
+
+    //@skip-check constructor-function-return-section
+    Return SettingsStructure;
+
+EndFunction
+
+// Get calendar structure
+// Returns the structure of the calendar description fields
+//
+// Parameters:
+// Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetCalendarStructure(Val Clear = False) Export
+
+    CalendarsStructure = New Structure;
+
+    CalendarsStructure.Insert("type"       , "<calendar type: user, group)>");
+    CalendarsStructure.Insert("ownerId"    , "<owner identifier>");
+    CalendarsStructure.Insert("name"       , "<calendars name>");
+    CalendarsStructure.Insert("description", "<calendar description>");
+    CalendarsStructure.Insert("color"      , "<calendar color>");
+    CalendarsStructure.Insert("text_color" , "<calendar text color>");
+
+        ExportStructure = New Structure;
+        ExportStructure.Insert("ALLOW", "<calendar export permission (bool)>");
+        ExportStructure.Insert("SET"  , "<export period: all, 3_9 (example: 3 months before and 9 after)>");
+
+    CalendarsStructure.Insert("export", ExportStructure);
+
+    If Clear Then
+        CalendarsStructure = OPI_Tools.ClearCollectionRecursively(CalendarsStructure);
+    EndIf;
+
+    //@skip-check constructor-function-return-section
+    Return CalendarsStructure;
+
+EndFunction
+
+#EndRegion
+
+#Region CalendarEventsManagement
+
+// Create calendar event
+// Creates a new calendar event
+//
+// Note
+// Method at API documentation: [calendar.event.add](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-event-add.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// EventDescription - Structure Of KeyAndValue - Event description. See GetCalendarEventsStructure - fields
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function CreateCalendarEvent(Val URL, Val EventDescription, Val Token = "") Export
+
+    OPI_TypeConversion.GetKeyValueCollection(EventDescription);
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.event.add");
+
+    For Each Field In EventDescription Do
+        Parameters.Insert(Field.Key, Field.Value);
+    EndDo;
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Update calendar event
+// Modifies calendar event data
+//
+// Note
+// Method at API documentation: [calendar.event.update](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-event-update.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// EventID - Number - Calednar event ID - event
+// EventDescription - Structure Of KeyAndValue - Event description. See GetCalendarEventsStructure - fields
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function UpdateCalendarEvent(Val URL, Val EventID, Val EventDescription, Val Token = "") Export
+
+    OPI_TypeConversion.GetKeyValueCollection(EventDescription);
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.event.update");
+    OPI_Tools.AddField("id", EventID, "String", Parameters);
+
+    For Each Field In EventDescription Do
+        Parameters.Insert(Field.Key, Field.Value);
+    EndDo;
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Get calendar event
+// Gets a calendar event by ID
+//
+// Note
+// Method at API documentation: [calendar.event.getbyid](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-event-get-by-id.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// EventID - Number - Event ID to retrieve - event
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetCalendarEvent(Val URL, Val EventID, Val Token = "") Export
+
+    Response = PrimaryControlAction(URL, EventID, "calendar.event.getbyid", Token);
+    Return Response;
+
+EndFunction
+
+// Get calendar events
+// Gets events of calendars with or without filters
+//
+// Note
+// Method at API documentation: [calendar.event.get](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-event-get.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// OwnerID - String, Number - Calendar owner ID - owner
+// Type - String - Calendar type: user, group, company_calendar - type
+// Filter - Structure Of KeyAndValue - Events filter. See GetCalendarEventsFilterStructure - filter
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetCalendarEvents(Val URL, Val OwnerID, Val Type, Val Filter = "", Val Token = "") Export
+
+    String_ = "String";
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.event.get");
+
+    OPI_Tools.AddField("type"   , Type   , String_, Parameters);
+    OPI_Tools.AddField("ownerId", OwnerID, String_, Parameters);
+
+    If ValueIsFilled(Filter) Then
+
+        OPI_TypeConversion.GetKeyValueCollection(Filter);
+
+        For Each Element In Filter Do
+
+            CurrentKey   = String(Element.Key);
+            CurrentValue = Element.Value;
+
+            If CurrentKey = "section" Then
+
+                OPI_TypeConversion.GetArray(CurrentValue);
+
+            ElsIf CurrentKey = "from" Or CurrentKey = "to" Then
+
+                OPI_TypeConversion.GetDate(CurrentValue);
+                CurrentValue = Format(CurrentValue, "DF=yyyy-MM-dd");
+
+            Else
+                Continue;
+            EndIf;
+
+            Parameters.Insert(CurrentKey, CurrentValue);
+
+        EndDo;
+
+    EndIf;
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Delete calendar event
+// Deletes an event from the calendar
+//
+// Note
+// Method at API documentation: [calendar.event.delete](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-event-delete.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// EventID - Number - ID of the event to be deleted - event
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function DeleteCalendarEvent(Val URL, Val EventID, Val Token = "") Export
+
+    Response = PrimaryControlAction(URL, EventID, "calendar.event.delete", Token);
+    Return Response;
+
+EndFunction
+
+// Get user participation status
+// Gets the event participation status of the current user
+//
+// Note
+// Method at API documentation: [calendar.meeting.status.get](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-meeting-status-get.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// EventID - Number - Calednar event ID - event
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function GetUserParticipationStatus(Val URL, Val EventID, Val Token = "") Export
+
+    Response = PrimaryControlAction(URL, EventID, "calendar.meeting.status.get", Token, "eventId");
+    Return Response;
+
+EndFunction
+
+// Set user participation status
+// Sets the event participation status for the current user
+//
+// Note
+// Method at API documentation: [calendar.meeting.status.set](@apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-meeting-status-set.html)
+//
+// Parameters:
+// URL - String - URL of webhook or a Bitrix24 domain, when token used - url
+// EventID - Number - Calednar event ID - event
+// Status - String - Participation status: Y (agreed), N (refused), Q (did not answer) - status
+// Token - String - Access token, when app auth method used - token
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+Function SetUserParticipationStatus(Val URL, Val EventID, Val Status, Val Token = "") Export
+
+    Parameters = NormalizeAuth(URL, Token, "calendar.meeting.status.set");
+
+    OPI_Tools.AddField("eventId", EventID, "String", Parameters);
+    OPI_Tools.AddField("status" , Status , "String", Parameters);
+
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Get calendar events structure
+// Returns the structure of the calendar event fields
+//
+// Parameters:
+// Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetCalendarEventsStructure(Val Clear = False) Export
+
+    EventStucture = New Structure;
+
+    EventStucture.Insert("type"         , "<calendar type: user, group, company_calendar>");
+    EventStucture.Insert("ownerId"      , "<calendar owner identifier>");
+    EventStucture.Insert("from"         , "<event start date and time (as string)>");
+    EventStucture.Insert("to"           , "<event end date (as string)>");
+    EventStucture.Insert("from_ts"      , "<date and time in timestamp format (instead of from)>");
+    EventStucture.Insert("to_ts"        , "<date and time in timestamp format (instead of to)>");
+    EventStucture.Insert("section"      , "<calendar identifier>");
+    EventStucture.Insert("name"         , "<event name>");
+    EventStucture.Insert("skip_time"    , "<pass date value without time in from and to parameters: Y,N>");
+    EventStucture.Insert("timezone_from", "<start time zone (default - t.z. of the user)>");
+    EventStucture.Insert("timezone_to"  , "<end time zone (default - t.z. of the user)>");
+    EventStucture.Insert("description"  , "<event description>");
+    EventStucture.Insert("color"        , "<event background colour. Symbol # - in unicode format as %23>");
+    EventStucture.Insert("text_color"   , "<the colour of the event text. Symbol # - in unicode format as %23>");
+    EventStucture.Insert("accessibility", "<availability at the time of the event: busy, absent, quest, free>");
+    EventStucture.Insert("importance"   , "<importance: high, normal, low>");
+    EventStucture.Insert("private_event", "<private event: Y,N>");
+
+        RepeatabilityStructure = New Structure;
+        RepeatabilityStructure.Insert("FREQ"    , "<repetition rate: DAILY, WEEKLY, MONTHLY, YEARLY>");
+        RepeatabilityStructure.Insert("COUNT"   , "<number of repetitions>");
+        RepeatabilityStructure.Insert("INTERVAL", "<repetition interval>");
+
+            DaysArray = New Array;
+            DaysArray.Add("<days of the week: SU, MO, TU, WE, TH, FR, SA>");
+
+        RepeatabilityStructure.Insert("BYDAY" , DaysArray);
+        RepeatabilityStructure.Insert("UNTIL" , "<repetition end date>");
+
+    EventStucture.Insert("rrule"     , RepeatabilityStructure);
+    EventStucture.Insert("is_meeting", "<flag of meeting with participants: Y,N>");
+    EventStucture.Insert("location"  , "<venue>");
+
+        RemindersArray = New Array;
+
+            ReminderStructure = New Structure;
+            ReminderStructure.Insert("type" , "<time type: min, hour, day>");
+            ReminderStructure.Insert("count", "<numeric value of the time interval>");
+
+        RemindersArray.Add(ReminderStructure);
+
+    EventStucture.Insert("remind"   , RemindersArray);
+    EventStucture.Insert("attendees", "<array of event participant IDs. If is_meeting = Y>");
+    EventStucture.Insert("host"     , "<The identifier of the event organiser. If is_meeting = Y>");
+
+        MeetingStructure = New Structure;
+        MeetingStructure.Insert("notify"      , "<flag for notification of confirmation or cancellation of participants>");
+        MeetingStructure.Insert("reinvite"    , "<flag for requesting re-confirmation of participation when editing an event>");
+        MeetingStructure.Insert("allow_invite", "<flag to allow participants to invite others to the event>");
+        MeetingStructure.Insert("hide_guests" , "<flag to hide the list of participants>");
+
+    EventStucture.Insert("meeting", MeetingStructure);
+
+    If Clear Then
+        EventStucture = OPI_Tools.ClearCollectionRecursively(EventStucture);
+    EndIf;
+
+    //@skip-check constructor-function-return-section
+    Return EventStucture;
+
+EndFunction
+
+// Get calendar events filter structure
+// Gets the filter structure for the function GetCalendarEvents
+//
+// Parameters:
+// Clear - Boolean - True > structure with empty valuse, False > field descriptions at values - empty
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetCalendarEventsFilterStructure(Val Clear = False) Export
+
+    FilterStructure = New Structure;
+
+    FilterStructure.Insert("from"   , "<selection start date. 3 months before the current default>");
+    FilterStructure.Insert("to"     , "<selection end date. 3 months after the current default>");
+    FilterStructure.Insert("section", "<array of calendar identifiers>");
+
+    If Clear Then
+        FilterStructure = OPI_Tools.ClearCollectionRecursively(FilterStructure);
+    EndIf;
+
+    //@skip-check constructor-function-return-section
+    Return FilterStructure;
+
+EndFunction
+
+#EndRegion
+
 #EndRegion
 
 #Region Private
@@ -4573,21 +5187,10 @@ Function NormalizeFiles(Val Files)
 
 EndFunction
 
-Function ManageTask(Val URL, Val TaskID, Val Method, Val Token = "")
+Function PrimaryControlAction(Val URL, Val ObjectID, Val Method, Val Token = "", Val FieldID = "id")
 
     Parameters = NormalizeAuth(URL, Token, Method);
-    OPI_Tools.AddField("taskId", TaskID, "String", Parameters);
-
-    Response = OPI_Tools.Post(URL, Parameters);
-
-    Return Response;
-
-EndFunction
-
-Function FileManagement(Val URL, Val FileID, Val Method, Val Token = "")
-
-    Parameters = NormalizeAuth(URL, Token, Method);
-    OPI_Tools.AddField("id", FileID, "String", Parameters);
+    OPI_Tools.AddField(FieldID, ObjectID, "String", Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
 
@@ -4608,17 +5211,6 @@ Function ChecklistElementManagement(Val URL, Val TaskID, Val ElementID, Val Meth
 
 EndFunction
 
-Function ChatManagement(Val URL, Val ChatID, Val Method, Val Token = "")
-
-    Parameters = NormalizeAuth(URL, Token, Method);
-    OPI_Tools.AddField("CHAT_ID", ChatID, "String", Parameters);
-
-    Response = OPI_Tools.Post(URL, Parameters);
-
-    Return Response;
-
-EndFunction
-
 Function ChatNotificationsSwitch(Val URL, Val ChatID, Val Off, Val Token = "")
 
     MakeBoolean(Off);
@@ -4627,28 +5219,6 @@ Function ChatNotificationsSwitch(Val URL, Val ChatID, Val Off, Val Token = "")
 
     OPI_Tools.AddField("CHAT_ID", ChatID , "String", Parameters);
     OPI_Tools.AddField("MUTE"   , Off    , "String", Parameters);
-
-    Response = OPI_Tools.Post(URL, Parameters);
-
-    Return Response;
-
-EndFunction
-
-Function ManageLead(Val URL, Val LeadID, Val Method, Val Token = "")
-
-    Parameters = NormalizeAuth(URL, Token, Method);
-    OPI_Tools.AddField("id", LeadID, "String", Parameters);
-
-    Response = OPI_Tools.Post(URL, Parameters);
-
-    Return Response;
-
-EndFunction
-
-Function ManageDeal(Val URL, Val DealID, Val Method, Val Token = "")
-
-    Parameters = NormalizeAuth(URL, Token, Method);
-    OPI_Tools.AddField("id", DealID, "String", Parameters);
 
     Response = OPI_Tools.Post(URL, Parameters);
 

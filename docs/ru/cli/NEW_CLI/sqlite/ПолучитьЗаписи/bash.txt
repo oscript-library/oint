@@ -1,3 +1,0 @@
-oint sqlite ПолучитьЗаписи \
-  --table "test" \
-  --db "C:\Users\Administrator\AppData\Local\Temp\w4h2hnalcdc.sqlite"

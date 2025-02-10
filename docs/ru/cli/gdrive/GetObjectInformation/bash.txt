@@ -1,0 +1,3 @@
+oint gdrive GetObjectInformation \
+ --token "***" \
+ --object "11Mo30odYPEtBBU_0OndFx5dz1kP7tu-Y"

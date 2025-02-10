@@ -1,3 +1,0 @@
-oint dropbox GetUploadStatusByURL ^
- --token "***" ^
- --job "7J7l_VO4lz0AAAAAAAAAAQ"

@@ -1,0 +1,63 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete calendar event
+ Deletes an event from the calendar
+
+
+
+`Function DeleteCalendarEvent(Val URL, Val EventID, Val Token = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | URL of webhook or a Bitrix24 domain, when token used |
+  | EventID | --event | Number | &#x2714; | ID of the event to be deleted |
+  | Token | --token | String | &#x2716; | Access token, when app auth method used |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+
+<br/>
+
+:::tip
+Method at API documentation: [calendar.event.delete](https://apidocs.bitrix24.ru/api-reference/calendar/calendar-event/calendar-event-delete.html)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL     = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
+    EventID = "318";
+
+    Result = OPI_Bitrix24.DeleteCalendarEvent(URL, EventID);
+
+    URL     = "b24-ar17wx.bitrix24.by";
+    Token   = "afd0a867006e9f06006b12e400000001000...";
+    EventID = "322";
+
+    Result = OPI_Bitrix24.DeleteCalendarEvent(URL, EventID, Token);
+```
+ 
+
+
+
+```json title="Result"
+{
+ "result": true,
+ "time": {
+  "start": 1739051129.6434,
+  "finish": 1739051129.80793,
+  "duration": 0.164533853530884,
+  "processing": 0.137242794036865,
+  "date_start": "2025-02-09T00:45:29+03:00",
+  "date_finish": "2025-02-09T00:45:29+03:00",
+  "operating_reset_at": 1739051729,
+  "operating": 0.137225866317749
+ }
+}
+```

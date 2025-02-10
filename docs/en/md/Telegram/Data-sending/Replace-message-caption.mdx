@@ -1,0 +1,106 @@
+﻿---
+sidebar_position: 15
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Replace message caption
+ Replaces text in a message with media attachments
+
+
+
+`Function ReplaceMessageCaption(Val Token, Val ChatID, Val MessageID, Val Description) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Token | --token | String | &#x2714; | Token |
+  | ChatID | --chat | String, Number | &#x2714; | Target chat ID |
+  | MessageID | --message | String, Number | &#x2714; | ID of message to delete |
+  | Description | --caption | String | &#x2714; | New message description |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from Telegram
+
+<br/>
+
+:::tip
+Method at API documentation: [editMessageCaption](https://core.telegram.org/bots/api#editmessagecaption)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Token     = "6129457865:AAFyzNYOAFbu...";
+    ChatID    = "461699897";
+    MessageID = "11853";
+
+    Description = "New picture description";
+    Result      = OPI_Telegram.ReplaceMessageCaption(Token, ChatID, MessageID, Description);
+```
+ 
+
+
+
+```json title="Result"
+{
+ "ok": true,
+ "result": {
+  "message_id": 11823,
+  "from": {
+   "id": 6129457865,
+   "is_bot": true,
+   "first_name": "Бот Виталий",
+   "username": "sicheebot"
+  },
+  "chat": {
+   "id": 461699897,
+   "first_name": "Anton",
+   "last_name": "Titowets",
+   "username": "JKIee",
+   "type": "private"
+  },
+  "date": 1739049506,
+  "edit_date": 1739049517,
+  "photo": [
+   {
+    "file_id": "AgACAgIAAxkDAAItiWeeLNPf9XjRSFgnw5iBb4GuLuwDAAKg7zEbvXzxSOXkQ0kQGEmtAQADAgADcwADNgQ",
+    "file_unique_id": "AQADoO8xG7188Uh4",
+    "file_size": 1568,
+    "width": 90,
+    "height": 67
+   },
+   {
+    "file_id": "AgACAgIAAxkDAAItiWeeLNPf9XjRSFgnw5iBb4GuLuwDAAKg7zEbvXzxSOXkQ0kQGEmtAQADAgADbQADNgQ",
+    "file_unique_id": "AQADoO8xG7188Uhy",
+    "file_size": 21633,
+    "width": 320,
+    "height": 240
+   },
+   {
+    "file_id": "AgACAgIAAxkDAAItiWeeLNPf9XjRSFgnw5iBb4GuLuwDAAKg7zEbvXzxSOXkQ0kQGEmtAQADAgADeAADNgQ",
+    "file_unique_id": "AQADoO8xG7188Uh9",
+    "file_size": 99260,
+    "width": 800,
+    "height": 600
+   },
+   {
+    "file_id": "AgACAgIAAxkDAAItiWeeLNPf9XjRSFgnw5iBb4GuLuwDAAKg7zEbvXzxSOXkQ0kQGEmtAQADAgADeQADNgQ",
+    "file_unique_id": "AQADoO8xG7188Uh-",
+    "file_size": 218651,
+    "width": 1280,
+    "height": 960
+   },
+   {
+    "file_id": "AgACAgIAAxkDAAItiWeeLNPf9XjRSFgnw5iBb4GuLuwDAAKg7zEbvXzxSOXkQ0kQGEmtAQADAgADdwADNgQ",
+    "file_unique_id": "AQADoO8xG7188Uh8",
+    "file_size": 650214,
+    "width": 2560,
+    "height": 1920
+   }
+  ],
+  "caption": "New picture description"
+ }
+}
+```

@@ -1,3 +1,0 @@
-oint dropbox ПолучитьСтатусЗагрузкиПоURL \
-  --token "***" \
-  --job "XR6VlWAFU_EAAAAAAAAAAQ"

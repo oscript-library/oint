@@ -1,3 +1,0 @@
-oint airtable ПолучитьТаблицыБазы ^
-  --token "***" ^
-  --base "app3ablPcuemdQRhJ"

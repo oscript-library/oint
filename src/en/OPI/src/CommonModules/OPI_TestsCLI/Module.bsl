@@ -38,6 +38,7 @@
 // BSLLS:LineLength-off
 // BSLLS:MagicNumber-off
 // BSLLS:CommentedCode-off
+// BSLLS:AssignAliasFieldsInQuery-off
 
 //@skip-check undefined-variable
 //@skip-check wrong-string-literal-content
@@ -111,6 +112,8 @@ Procedure CLI_TelegramAPI_SendTextMessage() Export
     OPI_TestDataRetrieval.ParameterToCollection("String"            , TestParameters);
 
     CLI_Telegram_SendTextMessage(TestParameters);
+    CLI_Telegram_ReplaceMessageText(TestParameters);
+    CLI_Telegram_ReplaceMessageKeyboard(TestParameters);
     CLI_Telegram_FormKeyboardFromButtonArray(TestParameters);
 
 EndProcedure
@@ -125,6 +128,7 @@ Procedure CLI_TelegramAPI_SendImage() Export
      OPI_TestDataRetrieval.ParameterToCollection("Picture"           , TestParameters);
 
     CLI_Telegram_SendPicture(TestParameters);
+    CLI_Telegram_ReplaceMessageCaption(TestParameters);
     CLI_Telegram_DownloadFile(TestParameters);
 
 EndProcedure
@@ -800,6 +804,7 @@ Procedure CLI_Viber_MessagesSending() Export
     Return;
 
     //@skip-check unreachable-statement
+    // BSLLS:UnreachableCode-off
 
     CLI_Viber_SendTextMessage(TestParameters);
     CLI_Viber_SendImage(TestParameters);
@@ -807,6 +812,8 @@ Procedure CLI_Viber_MessagesSending() Export
     CLI_Viber_SendContact(TestParameters);
     CLI_Viber_SendLocation(TestParameters);
     CLI_Viber_SendLink(TestParameters);
+
+    // BSLLS:UnreachableCode-on
 
 EndProcedure
 
@@ -2011,6 +2018,35 @@ Procedure CLI_B24_DealsManagement() Export
 
 EndProcedure
 
+Procedure CLI_B24_CalendarsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Domain" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Token"  , TestParameters);
+
+    CLI_Bitrix24_CreateCalendar(TestParameters);
+    CLI_Bitrix24_UpdateCalendar(TestParameters);
+    CLI_Bitrix24_GetCalendarList(TestParameters);
+    CLI_Bitrix24_CreateCalendarEvent(TestParameters);
+    CLI_Bitrix24_SetUserParticipationStatus(TestParameters);
+    CLI_Bitrix24_GetUserParticipationStatus(TestParameters);
+    CLI_Bitrix24_GetCalendarEvent(TestParameters);
+    CLI_Bitrix24_GetCalendarEvents(TestParameters);
+    CLI_Bitrix24_UpdateCalendarEvent(TestParameters);
+    CLI_Bitrix24_GetUserBusy(TestParameters);
+    CLI_Bitrix24_DeleteCalendarEvent(TestParameters);
+    CLI_Bitrix24_DeleteCalendar(TestParameters);
+    CLI_Bitrix24_GetCustomCalendarSettings(TestParameters);
+    CLI_Bitrix24_SetCustomCalendarSettings(TestParameters);
+    CLI_Bitrix24_GetCalendarStructure(TestParameters);
+    CLI_Bitrix24_GetCalendarSettingsStructure(TestParameters);
+    CLI_Bitrix24_GetCalednarCustomSettingsStructure(TestParameters);
+    CLI_Bitrix24_GetCalendarEventsStructure(TestParameters);
+    CLI_Bitrix24_GetCalendarEventsFilterStructure(TestParameters);
+
+EndProcedure
+
 #EndRegion
 
 #Region CDEK
@@ -2247,8 +2283,7 @@ Procedure CLI_SQLL_ORM() Export
        DeleteFiles(Base);
     Except
         OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Database file deletion error", "SQLite");
-    EndTry
-
+    EndTry;
 
 EndProcedure
 
@@ -2304,8 +2339,6 @@ Procedure CLI_Telegram_GetBotInformation(FunctionParameters)
     Options = New Structure("token", FunctionParameters["Telegram_Token"]);
     Result  = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "GetBotInformation", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBotInformation", "Telegram");
 
     OPI_TestDataRetrieval.Check_TelegramBotInformation(Result);
@@ -2318,8 +2351,6 @@ Procedure CLI_Telegram_GetUpdates(FunctionParameters)
 
     Options = New Structure("token", FunctionParameters["Telegram_Token"]);
     Result  = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "GetUpdates", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUpdates", "Telegram");
 
@@ -2337,8 +2368,6 @@ Procedure CLI_Telegram_SetWebhook(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SetWebhook", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SetWebhook", "Telegram");
 
     OPI_TestDataRetrieval.Check_TelegramWebhookSetup(Result);
@@ -2351,8 +2380,6 @@ Procedure CLI_Telegram_DeleteWebhook(FunctionParameters)
 
     Options = New Structure("token", FunctionParameters["Telegram_Token"]);
     Result  = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "DeleteWebhook", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteWebhook", "Telegram");
 
@@ -2374,21 +2401,22 @@ Procedure CLI_Telegram_SendTextMessage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendTextMessage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendTextMessage", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text);
 
-    OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text); // SKIP
+    MessageID = OPI_Tools.NumberToString(Result["result"]["message_id"]);
+    OPI_TestDataRetrieval.WriteParameter("Telegram_MessageID", MessageID);
+    OPI_Tools.AddField("Telegram_MessageID", MessageID, "String", FunctionParameters);
 
     Options.Insert("chat", FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendTextMessage", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendTextMessage (channel)");
-
     OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text);
 
     MessageID = OPI_Tools.NumberToString(Result["result"]["message_id"]);
     OPI_TestDataRetrieval.WriteParameter("Telegram_ChannelMessageID", MessageID);
+    OPI_Tools.AddField("Telegram_ChannelMessageID", MessageID, "String", FunctionParameters);
 
     // Additional test 1
     Options.Insert("text" , "<b>Text html %%F0%%9F%%93%%9E 10%%</b>");
@@ -2455,17 +2483,19 @@ Procedure CLI_Telegram_SendPicture(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendImage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendImage", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramImage(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramImage(Result, Text);
+
+    MessageID = OPI_Tools.NumberToString(Result["result"]["message_id"]);
+    OPI_TestDataRetrieval.WriteParameter("Telegram_PicMessageID", MessageID);
+    OPI_Tools.AddField("Telegram_PicMessageID", MessageID, "String", FunctionParameters);
 
     Options.Insert("picture" , ImagePath);
     Options.Insert("chat"    , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendImage", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendPicture (Path)");
-    OPI_TestDataRetrieval.Check_TelegramImage(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramImage(Result, Text);
 
     DeleteFiles(ImagePath);
 
@@ -2495,17 +2525,15 @@ Procedure CLI_Telegram_SendVideo(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendVideo", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendVideo", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramVideo(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramVideo(Result, Text);
 
     Options.Insert("video" , VideoPath);
     Options.Insert("chat"  , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendVideo", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendVideo (Path)");
-    OPI_TestDataRetrieval.Check_TelegramVideo(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramVideo(Result, Text);
 
     DeleteFiles(VideoPath);
 
@@ -2535,17 +2563,15 @@ Procedure CLI_Telegram_SendAudio(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendAudio", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendAudio", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramAudio(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramAudio(Result, Text);
 
     Options.Insert("audio" , AudioPath);
     Options.Insert("chat"  , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendAudio", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendAudio (Path)");
-    OPI_TestDataRetrieval.Check_TelegramAudio(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramAudio(Result, Text);
 
     DeleteFiles(AudioPath);
 
@@ -2575,7 +2601,7 @@ Procedure CLI_Telegram_SendDocument(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendDocument", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendDocument", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramDocument(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramDocument(Result, Text);
 
     Options.Insert("doc" , DocumentPath);
     Options.Insert("chat", FunctionParameters["Telegram_ChannelID"]);
@@ -2583,16 +2609,14 @@ Procedure CLI_Telegram_SendDocument(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendDocument", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendDocument (Path)");
-    OPI_TestDataRetrieval.Check_TelegramDocument(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramDocument(Result, Text);
 
     Options.Insert("filename", "custom.docx");
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendDocument", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendDocument (name)");
-    OPI_TestDataRetrieval.Check_TelegramDocument(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramDocument(Result, Text);
 
     DeleteFiles(DocumentPath);
 
@@ -2617,17 +2641,15 @@ Procedure CLI_Telegram_SendGif(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendGif", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendGif", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramGif(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramGif(Result, Text);
 
     Options.Insert("gif" , GifPath);
     Options.Insert("chat", FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendGif", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendGif (Path)");
-    OPI_TestDataRetrieval.Check_TelegramGif(Result, Text); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramGif(Result, Text);
 
     DeleteFiles(GifPath);
 
@@ -2654,8 +2676,6 @@ Procedure CLI_Telegram_SendMediaGroup(FunctionParameters)
     Options.Insert("media" , MediaGroup);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendMediaGroup", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendMediaGroup", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramMediaGroup(Result);
@@ -2695,12 +2715,10 @@ Procedure CLI_Telegram_SendLocation(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendLocation", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendLocation", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramLocation(Result); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramLocation(Result);
 
     Options.Insert("chat", FunctionParameters["Telegram_ChannelID"]);
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendLocation", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendLocation (channel)");
     OPI_TestDataRetrieval.Check_TelegramLocation(Result);
@@ -2723,12 +2741,10 @@ Procedure CLI_Telegram_SendContact(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendContact", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendContact", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramContact(Result, Name); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramContact(Result, Name);
 
     Options.Insert("chat", FunctionParameters["Telegram_ChannelID"]);
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendContact", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendContact (channel)");
     OPI_TestDataRetrieval.Check_TelegramContact(Result, Name);
@@ -2756,13 +2772,13 @@ Procedure CLI_Telegram_SendPoll(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendPoll", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendPoll", "Telegram");
-    OPI_TestDataRetrieval.Check_TelegramPoll(Result, Question); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramPoll(Result, Question);
 
     Options.Insert("chat", FunctionParameters["Telegram_ChannelID"]);
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendPoll", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendPoll (channel)");
-    OPI_TestDataRetrieval.Check_TelegramPoll(Result, Question); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramPoll(Result, Question);
 
     OPI_Tools.Pause(5);
 
@@ -2775,8 +2791,6 @@ Procedure CLI_Telegram_DownloadFile(FunctionParameters)
     Options.Insert("fileid" , FunctionParameters["Telegram_FileID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "DownloadFile", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DownloadFile", "Telegram");
     OPI_TestDataRetrieval.ExpectsThat(Result).ИмеетТип("BinaryData");
@@ -2795,8 +2809,6 @@ Procedure CLI_Telegram_ForwardMessage(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ForwardMessage", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ForwardMessage", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramForward(Result, MessageID);
 
@@ -2813,8 +2825,6 @@ Procedure CLI_Telegram_Ban(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "Ban", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "Ban", "Telegram");
 
     OPI_TestDataRetrieval.Check_TelegramBan(Result);
@@ -2830,8 +2840,6 @@ Procedure CLI_Telegram_Unban(FunctionParameters)
     Options.Insert("user" , FunctionParameters["Telegram_ChatID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "Unban", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "Unban", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramBan(Result);
@@ -2858,8 +2866,6 @@ Procedure CLI_Telegram_CreateInviteLink(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "CreateInvitationLink", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateInvitationLink", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramInvitation(Result, Title, UnixExpiration);
 
@@ -2875,8 +2881,6 @@ Procedure CLI_Telegram_PinMessage(FunctionParameters)
     Options.Insert("message", FunctionParameters["Telegram_ChannelMessageID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "PinMessage", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "PinMessage", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
@@ -2894,8 +2898,6 @@ Procedure CLI_Telegram_UnpinMessage(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "UnpinMessage", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UnpinMessage", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
@@ -2911,8 +2913,6 @@ Procedure CLI_Telegram_GetParticipantCount(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "GetParticipantCount", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetParticipantCount", "Telegram");
 
     OPI_TestDataRetrieval.Check_TelegramNumber(Result);
@@ -2927,8 +2927,6 @@ Procedure CLI_Telegram_GetAvatarIconList(FunctionParameters)
     Options.Insert("token" , FunctionParameters["Telegram_Token"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "GetAvatarIconList", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetAvatarIconList", "Telegram");
 
@@ -2952,8 +2950,6 @@ Procedure CLI_Telegram_CreateForumTopic(FunctionParameters)
     Options.Insert("title" , Name);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "CreateForumThread", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateForumThread", "Telegram");
 
@@ -2984,8 +2980,6 @@ Procedure CLI_Telegram_EditForumTopic(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "EditForumTopic", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "EditForumTopic", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
@@ -3002,18 +2996,16 @@ Procedure CLI_Telegram_CloseForumTopic(FunctionParameters)
     Options.Insert("token" , Token);
     Options.Insert("forum" , Chat);
 
-    OPI_Telegram.OpenForumThread(Token, Chat); // SKIP
+    OPI_Telegram.OpenForumThread(Token, Chat);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "CloseForumThread", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CloseForumTopic (main)");
-    OPI_TestDataRetrieval.Check_TelegramTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
     Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "CloseForumThread", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CloseForumThread", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
@@ -3069,7 +3061,7 @@ Procedure CLI_Telegram_ClearPinnedMessagesList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ClearThreadPinnedMessagesList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ClearPinnedMessagesList (main)");
-    OPI_TestDataRetrieval.Check_TelegramTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
     Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
 
@@ -3144,6 +3136,80 @@ Procedure CLI_Telegram_DeleteMessage(FunctionParameters)
 
 EndProcedure
 
+Procedure CLI_Telegram_ReplaceMessageText(FunctionParameters)
+
+    Token     = FunctionParameters["Telegram_Token"];
+    ChatID    = FunctionParameters["Telegram_ChannelID"];
+    MessageID = FunctionParameters["Telegram_ChannelMessageID"];
+    Text      = "New message text";
+
+    Options = New Structure;
+    Options.Insert("token"  , Token);
+    Options.Insert("chat"   , ChatID);
+    Options.Insert("message", MessageID);
+    Options.Insert("text"   , Text);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ReplaceMessageText", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ReplaceMessageText", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text);
+
+EndProcedure
+
+Procedure CLI_Telegram_ReplaceMessageKeyboard(FunctionParameters)
+
+    Token     = FunctionParameters["Telegram_Token"];
+    ChatID    = FunctionParameters["Telegram_ChatID"];
+    MessageID = FunctionParameters["Telegram_MessageID"];
+
+    ButtonArray = New Array;
+    ButtonArray.Add("1");
+    ButtonArray.Add("2");
+    ButtonArray.Add("3");
+
+    Options = New Structure;
+    Options.Insert("buttons", ButtonArray);
+    Options.Insert("under"  , True);
+    Options.Insert("column" , False);
+
+    Keyboard = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "FormKeyboardFromButtonArray", Options);
+
+    Options = New Structure;
+    Options.Insert("token"   , Token);
+    Options.Insert("chat"    , ChatID);
+    Options.Insert("message" , MessageID);
+    Options.Insert("keyboard", Keyboard);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ReplaceMessageKeyboard", Options);
+
+    Keyboard = OPI_Tools.JSONString(Keyboard);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ReplaceMessageKeyboard", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramMessageKeyboard(Result, Keyboard);
+
+EndProcedure
+
+Procedure CLI_Telegram_ReplaceMessageCaption(FunctionParameters)
+
+    Token     = FunctionParameters["Telegram_Token"];
+    ChatID    = FunctionParameters["Telegram_ChatID"];
+    MessageID = FunctionParameters["Telegram_PicMessageID"];
+
+    Description = "New picture description";
+
+    Options = New Structure;
+    Options.Insert("token"   , Token);
+    Options.Insert("chat"    , ChatID);
+    Options.Insert("message" , MessageID);
+    Options.Insert("caption" , Description);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ReplaceMessageCaption", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ReplaceMessageCaption", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramImage(Result, Description);
+
+EndProcedure
+
 #EndRegion
 
 #Region VK
@@ -3201,8 +3267,6 @@ Procedure CLI_VK_CreatePost(FunctionParameters)
     Options.Insert("auth"    , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "CreatePost", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreatePost (one picture)");
     OPI_TestDataRetrieval.Check_VKPost(Result);
@@ -3417,8 +3481,6 @@ Procedure CLI_VK_UploadPhotoToServer(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "UploadPhotoToServer", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadVideoToServer", "VK");
     OPI_TestDataRetrieval.Check_VKAlbumPicture(Result, "");
 
@@ -3513,8 +3575,6 @@ Procedure CLI_VK_OpenDiscussion(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "OpenDiscussion", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "OpenDiscussion", "VK");
 
     OPI_TestDataRetrieval.Check_VKTrue(Result);
@@ -3535,8 +3595,6 @@ Procedure CLI_VK_PostToDiscussion(FunctionParameters)
     Options.Insert("auth"  , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "WriteInDiscussion", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "WriteInDiscussion", "VK");
 
@@ -4072,7 +4130,7 @@ EndProcedure
 
 Procedure CLI_VK_AddProductPropertyVariant(FunctionParameters)
 
-    Counter    = 1; // SKIP
+    Counter    = 1;
     Parameters = GetVKParameters();
 
     Property    = FunctionParameters["VK_PropID"];
@@ -4494,9 +4552,9 @@ Procedure CLI_YandexDisk_UploadFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("yadisk", "UploadFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFile (URL)", "YandexDisk");
-    OPI_TestDataRetrieval.Check_Empty(Result); // SKIP
+    OPI_TestDataRetrieval.Check_Empty(Result);
 
-    OPI_Tools.Pause(5); // SKIP
+    OPI_Tools.Pause(5);
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -4505,8 +4563,6 @@ Procedure CLI_YandexDisk_UploadFile(FunctionParameters)
     Options.Insert("rewrite", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("yadisk", "UploadFile", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFile", "YandexDisk");
 
@@ -4865,7 +4921,7 @@ Procedure CLI_Viber_SendTextMessage(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("viber", "SendTextMessage", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendTextMessage", "Viber"); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendTextMessage", "Viber");
     OPI_TestDataRetrieval.Check_ViberMessage(Result);
 
     UserID           = FunctionParameters["Viber_ChannelAdminID"];
@@ -4906,7 +4962,7 @@ Procedure CLI_Viber_SendImage(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("viber", "SendImage", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendImage", "Viber"); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendImage", "Viber");
     OPI_TestDataRetrieval.Check_ViberMessage(Result);
 
     UserID           = FunctionParameters["Viber_ChannelAdminID"];
@@ -5501,8 +5557,6 @@ Procedure CLI_GoogleCalendar_GetEventDescription(FunctionParameters)
     Options.Insert("empty" , False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "GetEventDescription", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetEventDescription", "GoogleCalendar");
     OPI_TestDataRetrieval.Check_Map(Result);
@@ -6188,9 +6242,9 @@ Procedure CLI_Twitter_CreateImageTweet(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "CreateImageTweet", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateImageTweet", "Twitter"); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateImageTweet", "Twitter");
     OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
-    OPI_Tools.Pause(15); // SKIP
+    OPI_Tools.Pause(15);
 
     Text = "TestTweet" + String(New UUID);
 
@@ -6243,9 +6297,9 @@ Procedure CLI_Twitter_CreateVideoTweet(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "CreateVideoTweet", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateVideoTweet", "Twitter"); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateVideoTweet", "Twitter");
     OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
-    OPI_Tools.Pause(15); // SKIP
+    OPI_Tools.Pause(15);
 
     Text = "TestTweet" + String(New UUID);
 
@@ -6298,9 +6352,9 @@ Procedure CLI_Twitter_CreateGifTweet(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "CreateGifTweet", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateGifTweet", "Twitter"); // SKIP
-    OPI_TestDataRetrieval.Check_TwitterText(Result, Text); // SKIP
-    OPI_Tools.Pause(15); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateGifTweet", "Twitter");
+    OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
+    OPI_Tools.Pause(15);
 
     Text = "TestTweet" + String(New UUID);
 
@@ -6310,8 +6364,6 @@ Procedure CLI_Twitter_CreateGifTweet(FunctionParameters)
     Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "CreateGifTweet", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateGifTweet (single)");
     OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
@@ -6772,12 +6824,12 @@ Procedure CLI_Slack_SendMessage(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "SendMessage", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendMessage", "Slack"); // SKIP
-    OPI_TestDataRetrieval.Check_SlackMessage(Result, Text, Channel); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendMessage", "Slack");
+    OPI_TestDataRetrieval.Check_SlackMessage(Result, Text, Channel);
 
-    Timestamp = Result["ts"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Slack_MessageTS", Timestamp); // SKIP
-    OPI_Tools.AddField("Slack_MessageTS", Timestamp, "String", FunctionParameters); // SKIP
+    Timestamp = Result["ts"];
+    OPI_TestDataRetrieval.WriteParameter("Slack_MessageTS", Timestamp);
+    OPI_Tools.AddField("Slack_MessageTS", Timestamp, "String", FunctionParameters);
 
     // With attachments (picture block in the example)
 
@@ -6801,8 +6853,8 @@ Procedure CLI_Slack_SendMessage(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "SendMessage", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendMessage (picture)"); // SKIP
-    OPI_TestDataRetrieval.Check_SlackMessage(Result, Text, Channel); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SendMessage (picture)");
+    OPI_TestDataRetrieval.Check_SlackMessage(Result, Text, Channel);
 
     // Sheduled
 
@@ -7272,14 +7324,14 @@ Procedure CLI_Slack_UploadFile(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "UploadFile", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFile"     , "Slack"); // SKIP
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "MakeFilePublic" , "Slack"); // SKIP
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "MakeFilePrivate", "Slack"); // SKIP
-    OPI_TestDataRetrieval.Check_SlackFile(Result, FileName); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFile"     , "Slack");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "MakeFilePublic" , "Slack");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "MakeFilePrivate", "Slack");
+    OPI_TestDataRetrieval.Check_SlackFile(Result, FileName);
 
-    UploadedFile = Result["files"][0]["id"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Slack_FileID", UploadedFile); // SKIP
-    OPI_Tools.AddField("Slack_FileID", UploadedFile, "String", FunctionParameters); // SKIP
+    UploadedFile = Result["files"][0]["id"];
+    OPI_TestDataRetrieval.WriteParameter("Slack_FileID", UploadedFile);
+    OPI_Tools.AddField("Slack_FileID", UploadedFile, "String", FunctionParameters);
 
     Options = New Structure;
     Options.Insert("token"   , Token);
@@ -8116,8 +8168,6 @@ Procedure CLI_Dropbox_GetUploadStatusByURL(FunctionParameters)
 
     EndDo;
 
-    // END
-
     OPI_TestDataRetrieval.Check_DropboxStatus(Result);
 
     Path = "/New/url_doc.docx";
@@ -8644,7 +8694,7 @@ Procedure CLI_VKTeams_GetEvents(FunctionParameters)
         Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetEvents", Options);
 
         OPI_TestDataRetrieval.WriteLogCLI(Result, "GetEvents", "VkTeams");
-        OPI_TestDataRetrieval.Check_VKTEvents(Result); // SKIP
+        OPI_TestDataRetrieval.Check_VKTEvents(Result);
 
         Events = Result["events"];
 
@@ -8657,8 +8707,6 @@ Procedure CLI_VKTeams_GetEvents(FunctionParameters)
         EndIf;
 
     EndDo;
-
-    // END
 
     OPI_Tools.Pause(3);
 
@@ -8678,7 +8726,7 @@ Procedure CLI_VKTeams_SendTextMessage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendTextMessage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendTextMessage (simple)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     ChatID  = FunctionParameters["VkTeams_ChatID2"];
     ReplyID = FunctionParameters["VkTeams_MessageID"];
@@ -8743,7 +8791,7 @@ Procedure CLI_VKTeams_ForwardMessage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ForwardMessage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ForwardMessage (simple)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     Text = "Additional text";
 
@@ -8782,7 +8830,7 @@ Procedure CLI_VKTeams_SendFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendFile (URL)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -8793,7 +8841,7 @@ Procedure CLI_VKTeams_SendFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendFile (Path)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     Options = New Structure;
     Options.Insert("token"    , Token);
@@ -8869,7 +8917,7 @@ Procedure CLI_VKTeams_EditMessageText(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "EditMessageText", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "EditMessageText (simple)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTTrue(Result);
 
     Text   = "<b>New bold message text</b>";
     Markup = "HTML";
@@ -8931,7 +8979,7 @@ Procedure CLI_VKTeams_SendVoice(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendVoice", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendVoice (URL)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     Options = New Structure;
     Options.Insert("token" , Token);
@@ -8942,7 +8990,7 @@ Procedure CLI_VKTeams_SendVoice(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendVoice", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendVoice (Path)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     DeleteFiles(FilePath);
 
@@ -9008,7 +9056,7 @@ Procedure CLI_VKTeams_ChangeChatPicture(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ChangeChatPicture", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeChatPicture (URL)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTTrue(Result);
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -9018,7 +9066,7 @@ Procedure CLI_VKTeams_ChangeChatPicture(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ChangeChatPicture", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeChatPicture (Path)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTTrue(Result);
 
     DeleteFiles(FilePath);
 
@@ -9191,7 +9239,7 @@ Procedure CLI_VKTeams_ApprovePending(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ApprovePending", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ApprovePending (single)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTPending(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTPending(Result);
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -9218,7 +9266,7 @@ Procedure CLI_VKTeams_DisapprovePending(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "DisapprovePending", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DisapprovePending (single)", "VkTeams");
-    OPI_TestDataRetrieval.Check_VKTPending(Result); // SKIP
+    OPI_TestDataRetrieval.Check_VKTPending(Result);
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -9315,7 +9363,7 @@ Procedure CLI_Ozon_GetCategoriesAndProductTypesTree(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetCategoriesAndProductTypesTree", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCategoriesAndProductTypesTree (EN)", "Ozon");
-    OPI_TestDataRetrieval.Check_OzonCategoryList(Result); // SKIP
+    OPI_TestDataRetrieval.Check_OzonCategoryList(Result);
 
     Options = New Structure;
     Options.Insert("clientid", ClientID);
@@ -9980,8 +10028,8 @@ Procedure CLI_Ozon_DeleteProductsWithoutSKU(FunctionParameters)
 
     Result = OPI_Ozon.ArchiveProducts(ClientID, APIKey, ProductID);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "ArchiveProducts (for deleting)", "Ozon"); // SKIP
-    OPI_Tools.Pause(15); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ArchiveProducts (for deleting)", "Ozon");
+    OPI_Tools.Pause(15);
 
     Article = "143210609";
 
@@ -10427,10 +10475,16 @@ Procedure CLI_Ozon_GetFBODraft(FunctionParameters)
 
     EndDo;
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFBODraft", "Ozon");
     OPI_TestDataRetrieval.Check_OzonReadyDraft(Result);
+
+    DraftID = Result["draft_id"];
+    OPI_TestDataRetrieval.WriteParameter("Ozon_Draft", DraftID);
+    FunctionParameters.Insert("Ozon_Draft", DraftID);
+
+    WarehouseID = Result["clusters"][0]["warehouses"][0]["supply_warehouse"]["warehouse_id"];
+    OPI_TestDataRetrieval.WriteParameter("Ozon_FBOWarehouse", WarehouseID);
+    FunctionParameters.Insert("Ozon_FBOWarehouse", WarehouseID);
 
 EndProcedure
 
@@ -10605,8 +10659,8 @@ Procedure CLI_Neocities_GetFilesList(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("neocities", "GetFilesList", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFilesList", "Neocities"); // SKIP
-    OPI_TestDataRetrieval.Check_NCFolderFiles(Result, 2); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFilesList", "Neocities");
+    OPI_TestDataRetrieval.Check_NCFolderFiles(Result, 2);
 
 EndProcedure
 
@@ -10620,8 +10674,8 @@ Procedure CLI_Neocities_GetSiteData(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("neocities", "GetSiteData", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetSiteData", "Neocities"); // SKIP
-    OPI_TestDataRetrieval.Check_NCSuccess(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetSiteData", "Neocities");
+    OPI_TestDataRetrieval.Check_NCSuccess(Result);
 
     Options = New Structure;
     Options.Insert("token"   , Token);
@@ -10749,7 +10803,7 @@ Procedure CLI_Bitrix24_ServerTime(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ServerTime", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ServerTime (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTime(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTime(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -10788,11 +10842,11 @@ Procedure CLI_Bitrix24_CreatePost(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreatePost", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreatePost (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    PostID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookPostID", PostID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookPostID", PostID); // SKIP
+    PostID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookPostID", PostID);
+    FunctionParameters.Insert("Bitrix24_HookPostID", PostID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -10838,7 +10892,7 @@ Procedure CLI_Bitrix24_UpdatePost(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdatePost", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdatePost (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -10871,7 +10925,7 @@ Procedure CLI_Bitrix24_DeletePost(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeletePost", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeletePost (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     PostID = FunctionParameters["Bitrix24_PostID"];
     URL    = FunctionParameters["Bitrix24_Domain"];
@@ -10901,7 +10955,7 @@ Procedure CLI_Bitrix24_GetImportantPostViewers(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetImportantPostViewers", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetImportantPostViewers (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -10930,7 +10984,7 @@ Procedure CLI_Bitrix24_GetPosts(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetPosts", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetPosts (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObjectsArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObjectsArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -10961,7 +11015,7 @@ Procedure CLI_Bitrix24_AddPostComment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddPostComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddPostComment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
     Text  = "Another comment";
     URL   = FunctionParameters["Bitrix24_Domain"];
@@ -10994,7 +11048,7 @@ Procedure CLI_Bitrix24_AddPostRecipients(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddPostRecipients", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddPostRecipients (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -11022,7 +11076,7 @@ Procedure CLI_Bitrix24_GetTaskFieldsStructure(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskFieldsStructure", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTaskFieldsStructure (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixFields(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixFields(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -11065,10 +11119,10 @@ Procedure CLI_Bitrix24_CreateTask(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTask (wh)", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
-    TaskID = Result["result"]["task"]["id"]; // SKIP
+    TaskID = Result["result"]["task"]["id"];
 
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookTaskID", TaskID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookTaskID", TaskID); // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookTaskID", TaskID);
+    FunctionParameters.Insert("Bitrix24_HookTaskID", TaskID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -11112,7 +11166,7 @@ Procedure CLI_Bitrix24_UpdateTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11143,7 +11197,7 @@ Procedure CLI_Bitrix24_GetTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11173,7 +11227,7 @@ Procedure CLI_Bitrix24_ApproveTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ApproveTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ApproveTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11202,7 +11256,7 @@ Procedure CLI_Bitrix24_DisapproveTask(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DisapproveTask", Options);
 
-    OPI_TestDataRetrieval.Check_Map(Result); // SKIP
+    OPI_TestDataRetrieval.Check_Map(Result);
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DisapproveTask (wh)", "Bitrix24");
 
     URL    = FunctionParameters["Bitrix24_Domain"];
@@ -11233,7 +11287,7 @@ Procedure CLI_Bitrix24_CompleteTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CompleteTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CompleteTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11263,7 +11317,7 @@ Procedure CLI_Bitrix24_RenewTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenewTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RenewTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11293,7 +11347,7 @@ Procedure CLI_Bitrix24_DeferTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeferTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeferTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11323,7 +11377,7 @@ Procedure CLI_Bitrix24_StartTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "StartTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11353,7 +11407,7 @@ Procedure CLI_Bitrix24_StartWatchingTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartWatchingTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "StartWatchingTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11383,7 +11437,7 @@ Procedure CLI_Bitrix24_StopWatchingTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StopWatchingTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "StopWatchingTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11413,7 +11467,7 @@ Procedure CLI_Bitrix24_PauseTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "PauseTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "PauseTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11443,7 +11497,7 @@ Procedure CLI_Bitrix24_DeleteTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11475,7 +11529,7 @@ Procedure CLI_Bitrix24_DelegateTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DelegateTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DelegateTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11506,7 +11560,7 @@ Procedure CLI_Bitrix24_AddTaskToFavorites(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTaskToFavorites", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "StopWatchingTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11536,7 +11590,7 @@ Procedure CLI_Bitrix24_RemoveTaskFromFavorites(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RemoveTaskFromFavorites", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RemoveTaskFromFavorites (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11566,7 +11620,7 @@ Procedure CLI_Bitrix24_GetTaskHistory(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskHistory", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTaskHistory (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixList(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixList(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11601,7 +11655,7 @@ Procedure CLI_Bitrix24_GetTasksList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTasksList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTasksList(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTasksList(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -11634,12 +11688,12 @@ Procedure CLI_Bitrix24_AddTasksChecklistElement(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTasksChecklistElement", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTasksChecklistElement (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    ElementID = Result["result"]; // SKIP
+    ElementID = Result["result"];
 
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCheckElementID", ElementID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookCheckElementID", ElementID); // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCheckElementID", ElementID);
+    FunctionParameters.Insert("Bitrix24_HookCheckElementID", ElementID);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11680,7 +11734,7 @@ Procedure CLI_Bitrix24_UpdateTasksChecklistElement(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTasksChecklistElement", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateTasksChecklistElement (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixUndefined(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixUndefined(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -11715,7 +11769,7 @@ Procedure CLI_Bitrix24_DeleteTasksChecklistElement(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTasksChecklistElement", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTasksChecklistElement (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     TaskID    = FunctionParameters["Bitrix24_TaskID"];
     ElementID = FunctionParameters["Bitrix24_CheckElementID"];
@@ -11748,7 +11802,7 @@ Procedure CLI_Bitrix24_GetTasksChecklist(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksChecklist", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTasksChecklist (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11780,7 +11834,7 @@ Procedure CLI_Bitrix24_GetTasksChecklistElement(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksChecklistElement", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTasksChecklistElement (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     TaskID    = FunctionParameters["Bitrix24_TaskID"];
     ElementID = FunctionParameters["Bitrix24_CheckElementID"];
@@ -11815,7 +11869,7 @@ Procedure CLI_Bitrix24_CompleteTasksChecklistElement(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CompleteTasksChecklistElement", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CompleteTasksChecklistElement (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     TaskID    = FunctionParameters["Bitrix24_TaskID"];
     ElementID = FunctionParameters["Bitrix24_CheckElementID"];
@@ -11850,7 +11904,7 @@ Procedure CLI_Bitrix24_RenewTasksChecklistElement(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenewTasksChecklistElement", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RenewTasksChecklistElement (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     TaskID    = FunctionParameters["Bitrix24_TaskID"];
     ElementID = FunctionParameters["Bitrix24_CheckElementID"];
@@ -11885,7 +11939,7 @@ Procedure CLI_Bitrix24_AttachFileToTopic(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AttachFileToTopic", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AttachFileToTopic (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixAttachment(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixAttachment(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11921,7 +11975,7 @@ Procedure CLI_Bitrix24_CheckTaskAccesses(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CheckTaskAccesses", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CheckTaskAccesses (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixAvailableActions(Result, ArrayOfUsers.Count()); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixAvailableActions(Result, ArrayOfUsers.Count());
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11952,7 +12006,7 @@ Procedure CLI_Bitrix24_MuteTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MuteTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MuteTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -11982,7 +12036,7 @@ Procedure CLI_Bitrix24_UnmuteTask(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UnmuteTask", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UnmuteTask (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTask(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTask(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -12016,10 +12070,10 @@ Procedure CLI_Bitrix24_CreateTasksDependencies(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateTasksDependencies", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTasksDependencies (wh)", "Bitrix24"); // SKIP
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTasksDependencies (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
-    Result = OPI_Bitrix24.DeleteTasksDependencies(URL, FromID, DestinationID, LinkType); // SKIP
+    Result = OPI_Bitrix24.DeleteTasksDependencies(URL, FromID, DestinationID, LinkType);
 
     FromID        = FunctionParameters["Bitrix24_TaskID"];
     DestinationID = FunctionParameters["Bitrix24_HookTaskID"];
@@ -12052,7 +12106,7 @@ Procedure CLI_Bitrix24_DeleteTasksDependencies(FunctionParameters)
 
     URL = FunctionParameters["Bitrix24_URL"];
 
-    Result = OPI_Bitrix24.CreateTasksDependencies(URL, FromID, DestinationID, LinkType); // SKIP
+    Result = OPI_Bitrix24.CreateTasksDependencies(URL, FromID, DestinationID, LinkType);
 
     Options = New Structure;
     Options.Insert("url"      , URL);
@@ -12062,8 +12116,8 @@ Procedure CLI_Bitrix24_DeleteTasksDependencies(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTasksDependencies", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTasksDependencies (wh)", "Bitrix24"); // SKIP
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTasksDependencies (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     FromID        = FunctionParameters["Bitrix24_TaskID"];
     DestinationID = FunctionParameters["Bitrix24_HookTaskID"];
@@ -12072,7 +12126,7 @@ Procedure CLI_Bitrix24_DeleteTasksDependencies(FunctionParameters)
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
 
-    Result = OPI_Bitrix24.CreateTasksDependencies(URL, FromID, DestinationID, LinkType, Token); // SKIP
+    Result = OPI_Bitrix24.CreateTasksDependencies(URL, FromID, DestinationID, LinkType, Token);
 
     Options = New Structure;
     Options.Insert("url"      , URL);
@@ -12098,7 +12152,7 @@ Procedure CLI_Bitrix24_GetDailyPlan(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDailyPlan", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDailyPlan (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12141,11 +12195,11 @@ Procedure CLI_Bitrix24_AddTaskComment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTaskComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTaskComment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    CommentID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCommentID", CommentID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookCommentID", CommentID); // SKIP
+    CommentID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCommentID", CommentID);
+    FunctionParameters.Insert("Bitrix24_HookCommentID", CommentID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12163,9 +12217,9 @@ Procedure CLI_Bitrix24_AddTaskComment(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTaskComment", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    CommentID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CommentID", CommentID); // SKIP
-    FunctionParameters.Insert("Bitrix24_CommentID", CommentID); // SKIP
+    CommentID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CommentID", CommentID);
+    FunctionParameters.Insert("Bitrix24_CommentID", CommentID);
 
 EndProcedure
 
@@ -12183,7 +12237,7 @@ Procedure CLI_Bitrix24_DeleteTaskComment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTaskComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTaskComment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -12214,7 +12268,7 @@ Procedure CLI_Bitrix24_CreateResultFromComment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateResultFromComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateResultFromComment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixResult(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixResult(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -12244,7 +12298,7 @@ Procedure CLI_Bitrix24_DeleteResultFromComment(FunctionParameters) Export
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteResultFromComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "Delete result from comment)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixUndefined(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixUndefined(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -12274,7 +12328,7 @@ Procedure CLI_Bitrix24_GetResultsList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetResultsList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetResultsList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixResultsList(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixResultsList(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12303,7 +12357,7 @@ Procedure CLI_Bitrix24_GetTaskCommentsList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskCommentsList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTaskCommentsList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixCommentsList(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixCommentsList(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12334,7 +12388,7 @@ Procedure CLI_Bitrix24_GetTaskComment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTaskComment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixComment(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixComment(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -12370,7 +12424,7 @@ Procedure CLI_Bitrix24_UpdateTaskComment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTaskComment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateTaskComment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -12414,7 +12468,7 @@ Procedure CLI_Bitrix24_GetStoragesList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStoragesList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetStoragesList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixStorage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixStorage(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12444,9 +12498,9 @@ Procedure CLI_Bitrix24_GetAppStorage(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetAppSotrage", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    StorageID = Result["result"]["ID"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_StorageID", StorageID); // SKIP
-    FunctionParameters.Insert("Bitrix24_StorageID", StorageID); // SKIP
+    StorageID = Result["result"]["ID"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_StorageID", StorageID);
+    FunctionParameters.Insert("Bitrix24_StorageID", StorageID);
 
 EndProcedure
 
@@ -12471,11 +12525,11 @@ Procedure CLI_Bitrix24_UploadFileToStorage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UploadFileToStorage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFileToStorage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    FileID = Result["result"]["ID"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookFileID", FileID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookFileID", FileID); // SKIP
+    FileID = Result["result"]["ID"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookFileID", FileID);
+    FunctionParameters.Insert("Bitrix24_HookFileID", FileID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12510,7 +12564,7 @@ Procedure CLI_Bitrix24_DeleteFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteFile (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -12546,9 +12600,9 @@ Procedure CLI_Bitrix24_CreateStorageFolder(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateStorageFolder (wh)", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    FolderID = Result["result"]["ID"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookFolderID", FolderID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookFolderID", FolderID); // SKIP
+    FolderID = Result["result"]["ID"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookFolderID", FolderID);
+    FunctionParameters.Insert("Bitrix24_HookFolderID", FolderID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12564,9 +12618,9 @@ Procedure CLI_Bitrix24_CreateStorageFolder(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateStorageFolder", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    FolderID = Result["result"]["ID"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_FolderID", FolderID); // SKIP
-    FunctionParameters.Insert("Bitrix24_FolderID", FolderID); // SKIP
+    FolderID = Result["result"]["ID"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_FolderID", FolderID);
+    FunctionParameters.Insert("Bitrix24_FolderID", FolderID);
 
 EndProcedure
 
@@ -12582,7 +12636,7 @@ Procedure CLI_Bitrix24_DeleteFolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteFolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteFolder (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL      = FunctionParameters["Bitrix24_Domain"];
     Token    = FunctionParameters["Bitrix24_Token"];
@@ -12612,7 +12666,7 @@ Procedure CLI_Bitrix24_GetStorage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStorage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetStorage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12641,7 +12695,7 @@ Procedure CLI_Bitrix24_GetStorageObjects(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStorageObjects", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetStorageObjects (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12690,7 +12744,7 @@ Procedure CLI_Bitrix24_GetFolderInformation(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderInformation", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFolderInformation (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12723,11 +12777,11 @@ Procedure CLI_Bitrix24_CreateSubfolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateSubfolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateSubfolder (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    SubfolderID = Result["result"]["ID"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookSubfolderID", SubfolderID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookSubfolderID", SubfolderID); // SKIP
+    SubfolderID = Result["result"]["ID"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookSubfolderID", SubfolderID);
+    FunctionParameters.Insert("Bitrix24_HookSubfolderID", SubfolderID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12743,9 +12797,9 @@ Procedure CLI_Bitrix24_CreateSubfolder(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateSubfolder", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    SubfolderID = Result["result"]["ID"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_SubfolderID", SubfolderID); // SKIP
-    FunctionParameters.Insert("Bitrix24_SubfolderID", SubfolderID); // SKIP
+    SubfolderID = Result["result"]["ID"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_SubfolderID", SubfolderID);
+    FunctionParameters.Insert("Bitrix24_SubfolderID", SubfolderID);
 
 EndProcedure
 
@@ -12764,7 +12818,7 @@ Procedure CLI_Bitrix24_MakeFolderCopy(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MakeFolderCopy", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MakeFolderCopy (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     DestinationID = FunctionParameters["Bitrix24_SubfolderID"];
     FolderID      = FunctionParameters["Bitrix24_HookSubfolderID"];
@@ -12797,7 +12851,7 @@ Procedure CLI_Bitrix24_GetFolderExternalLink(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderExternalLink", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFolderExternalLink (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixString(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixString(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12824,7 +12878,7 @@ Procedure CLI_Bitrix24_GetFolderFilterStructure(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderFilterStructure", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFolderFilterStructure (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_Map(Result); // SKIP
+    OPI_TestDataRetrieval.Check_Map(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12852,7 +12906,7 @@ Procedure CLI_Bitrix24_GetFolderItems(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderItems", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFolderItems (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12880,7 +12934,7 @@ Procedure CLI_Bitrix24_MarkFolderAsDeleted(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkFolderAsDeleted", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MarkFolderAsDeleted (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12909,7 +12963,7 @@ Procedure CLI_Bitrix24_RestoreFolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RestoreFolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RestoreFolder (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -12941,7 +12995,7 @@ Procedure CLI_Bitrix24_MoveFolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveFolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MoveFolder (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     FolderID = FunctionParameters["Bitrix24_HookSubfolderID"];
 
@@ -12977,7 +13031,7 @@ Procedure CLI_Bitrix24_RenameFolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameFolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RenameFolder (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     FolderID = FunctionParameters["Bitrix24_FolderID"];
     URL      = FunctionParameters["Bitrix24_Domain"];
@@ -13019,8 +13073,8 @@ Procedure CLI_Bitrix24_UploadFileToFolder(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFileToFolder (wh)", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
-    FileID = Result["result"]["ID"]; // SKIP
-    OPI_Bitrix24.DeleteFile(URL, FileID); // SKIP
+    FileID = Result["result"]["ID"];
+    OPI_Bitrix24.DeleteFile(URL, FileID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13057,7 +13111,7 @@ Procedure CLI_Bitrix24_MakeFileCopy(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MakeFileCopy", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MakeFileCopy (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
@@ -13089,7 +13143,7 @@ Procedure CLI_Bitrix24_GetFileInformation(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFileInformation", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFileInformation (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13108,7 +13162,7 @@ EndProcedure
 
 Procedure CLI_Bitrix24_GetFileExternalLink(FunctionParameters)
 
-    OPI_Tools.Pause(20); // SKIP
+    OPI_Tools.Pause(20);
 
     URL    = FunctionParameters["Bitrix24_URL"];
     FileID = FunctionParameters["Bitrix24_FileID"];
@@ -13121,7 +13175,7 @@ Procedure CLI_Bitrix24_GetFileExternalLink(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFileExternalLink (wh)", "Bitrix24");
 
-    // OPI_TestDataRetrieval.Check_BitrixString(Result); // SKIP
+    // OPI_TestDataRetrieval.Check_BitrixString(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13151,7 +13205,7 @@ Procedure CLI_Bitrix24_MarkFileAsDeleted(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkFileAsDeleted", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MarkFileAsDeleted (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13180,7 +13234,7 @@ Procedure CLI_Bitrix24_RestoreFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RestoreFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RestoreFile (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13213,7 +13267,7 @@ Procedure CLI_Bitrix24_RenameFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "RenameFile (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     FileID = FunctionParameters["Bitrix24_FileID"];
     URL    = FunctionParameters["Bitrix24_Domain"];
@@ -13247,7 +13301,7 @@ Procedure CLI_Bitrix24_MoveFileToFolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveFileToFolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MoveFileToFolder (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     FolderID = FunctionParameters["Bitrix24_SubFolderID"];
 
@@ -13284,9 +13338,9 @@ Procedure CLI_Bitrix24_AddTaskTimeAccounting(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTaskTimeAccounting (wh)", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    SpendingID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookTimeID", SpendingID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookTimeID", SpendingID); // SKIP
+    SpendingID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookTimeID", SpendingID);
+    FunctionParameters.Insert("Bitrix24_HookTimeID", SpendingID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13335,7 +13389,7 @@ Procedure CLI_Bitrix24_UpdateTaskTimeAccounting(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTaskTimeAccounting", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateTaskTimeAccounting (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixUndefined(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixUndefined(Result);
 
     URL      = FunctionParameters["Bitrix24_Domain"];
     Token    = FunctionParameters["Bitrix24_Token"];
@@ -13375,7 +13429,7 @@ Procedure CLI_Bitrix24_DeleteTaskTimeAccounting(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTaskTimeAccounting", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTaskTimeAccounting (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixUndefined(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixUndefined(Result);
 
     URL      = FunctionParameters["Bitrix24_Domain"];
     Token    = FunctionParameters["Bitrix24_Token"];
@@ -13408,7 +13462,7 @@ Procedure CLI_Bitrix24_GetTaskTimeAccounting(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskTimeAccounting", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTaskTimeAccounting (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL      = FunctionParameters["Bitrix24_Domain"];
     Token    = FunctionParameters["Bitrix24_Token"];
@@ -13439,7 +13493,7 @@ Procedure CLI_Bitrix24_GetTaskTimeAccountingList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskTimeAccountingList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTaskTimeAccountingList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObjectsArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObjectsArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13481,8 +13535,6 @@ Procedure CLI_Bitrix24_StartTimekeeping(FunctionParameters)
     Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartTimekeeping", Options);
-
-    // END
 
 EndProcedure
 
@@ -13594,12 +13646,12 @@ Procedure CLI_Bitrix24_AddKanbanStage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddKanbanStage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddKanbanStage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
     PrevStageID = Result["result"];
 
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookStageID", PrevStageID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookStageID", PrevStageID); // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookStageID", PrevStageID);
+    FunctionParameters.Insert("Bitrix24_HookStageID", PrevStageID);
 
     Name  = "New stage 2";
     Color = "0026FF";
@@ -13639,7 +13691,7 @@ Procedure CLI_Bitrix24_DeleteKanbanStage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteKanbanStage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteKanbanStage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     StageID = FunctionParameters["Bitrix24_StageID"];
 
@@ -13669,7 +13721,7 @@ Procedure CLI_Bitrix24_GetKanbanStages(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetKanbanStages", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetKanbanStages (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -13700,7 +13752,7 @@ Procedure CLI_Bitrix24_MoveTaskToKanbanStage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveTaskToKanbanStage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MoveTaskToKanbanStage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     StageID = FunctionParameters["Bitrix24_StageID"];
 
@@ -13739,7 +13791,7 @@ Procedure CLI_Bitrix24_UpdateKanbansStage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateKanbansStage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateKanbansStage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     Name    = "New stage name 2";
     Color   = "000000";
@@ -13786,11 +13838,11 @@ Procedure CLI_Bitrix24_CreatePersonalNotification(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreatePersonalNotification", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreatePersonalNotification)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    MessageID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_PersoalHookNotifyID", MessageID); // SKIP
-    FunctionParameters.Insert("Bitrix24_PersoalHookNotifyID", MessageID); // SKIP
+    MessageID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_PersoalHookNotifyID", MessageID);
+    FunctionParameters.Insert("Bitrix24_PersoalHookNotifyID", MessageID);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -13837,11 +13889,11 @@ Procedure CLI_Bitrix24_CreateSystemNotification(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateSystemNotification", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateSystemNotification (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    MessageID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_SystemHookNotifyID", MessageID); // SKIP
-    FunctionParameters.Insert("Bitrix24_SystemHookNotifyID", MessageID); // SKIP
+    MessageID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_SystemHookNotifyID", MessageID);
+    FunctionParameters.Insert("Bitrix24_SystemHookNotifyID", MessageID);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -13878,7 +13930,7 @@ Procedure CLI_Bitrix24_DeleteNotification(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteNotification", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteNotification", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL            = FunctionParameters["Bitrix24_Domain"];
     Token          = FunctionParameters["Bitrix24_Token"];
@@ -14047,11 +14099,11 @@ Procedure CLI_Bitrix24_CreateDepartment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateDepartment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateDepartment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    DepartmentID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookDepID", DepartmentID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookDepID", DepartmentID); // SKIP
+    DepartmentID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookDepID", DepartmentID);
+    FunctionParameters.Insert("Bitrix24_HookDepID", DepartmentID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -14093,7 +14145,7 @@ Procedure CLI_Bitrix24_UpdateDepartment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateDepartment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateDepartment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -14130,7 +14182,7 @@ Procedure CLI_Bitrix24_DeleteDepartment(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteDepartment", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteDepartment (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL          = FunctionParameters["Bitrix24_Domain"];
     Token        = FunctionParameters["Bitrix24_Token"];
@@ -14161,7 +14213,7 @@ Procedure CLI_Bitrix24_GetDepartments(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDepartments (wh)", "Bitrix24");
 
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14208,11 +14260,11 @@ Procedure CLI_Bitrix24_CreateChat(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateChat", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateChat (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    ChatID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookChatID", ChatID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookChatID", ChatID); // SKIP
+    ChatID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookChatID", ChatID);
+    FunctionParameters.Insert("Bitrix24_HookChatID", ChatID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -14232,9 +14284,9 @@ Procedure CLI_Bitrix24_CreateChat(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateChat", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    ChatID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_ChatID", ChatID); // SKIP
-    FunctionParameters.Insert("Bitrix24_ChatID", ChatID); // SKIP
+    ChatID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_ChatID", ChatID);
+    FunctionParameters.Insert("Bitrix24_ChatID", ChatID);
 
 EndProcedure
 
@@ -14250,7 +14302,7 @@ Procedure CLI_Bitrix24_GetChatUsers(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatUsers", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetChatUsers (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14280,7 +14332,7 @@ Procedure CLI_Bitrix24_LeaveChat(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "LeaveChat", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "LeaveChat (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14313,7 +14365,7 @@ Procedure CLI_Bitrix24_DeleteUserFromChat(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteUserFromChat", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteUserFromChat (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14350,7 +14402,7 @@ Procedure CLI_Bitrix24_AddUsersToChat(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddUsersToChat", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddUsersToChat (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14385,7 +14437,7 @@ Procedure CLI_Bitrix24_ChangeChatTitle(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatTitle", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeChatTitle (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14421,9 +14473,9 @@ Procedure CLI_Bitrix24_ChangeChatColor(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatColor", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeChatColor (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
-    OPI_Tools.Pause(10); // SKIP
+    OPI_Tools.Pause(10);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -14458,7 +14510,7 @@ Procedure CLI_Bitrix24_ChangeChatPicture(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatPicture", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeChatPicture (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14489,7 +14541,7 @@ Procedure CLI_Bitrix24_DisableChatNotifications(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DisableChatNotifications", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DisableChatNotifications (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14519,7 +14571,7 @@ Procedure CLI_Bitrix24_EnableChatNotifications(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "EnableChatNotifications", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "EnableChatNotifications (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14552,7 +14604,7 @@ Procedure CLI_Bitrix24_ChangeChatOwner(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatOwner", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeChatOwner (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14583,11 +14635,11 @@ Procedure CLI_Bitrix24_GetChatMessagesList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatMessagesList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetChatMessagesList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixMessages(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMessages(Result);
 
-    MessageID = Result["result"]["messages"][0]["id"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_ChatMessageID", MessageID); // SKIP
-    FunctionParameters.Insert("Bitrix24_ChatMessageID", MessageID); // SKIP
+    MessageID = Result["result"]["messages"][0]["id"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_ChatMessageID", MessageID);
+    FunctionParameters.Insert("Bitrix24_ChatMessageID", MessageID);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14624,7 +14676,7 @@ Procedure CLI_Bitrix24_MarkMessageAsReaded(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkMessageAsReaded", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MarkMessageAsReaded (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixDialog(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixDialog(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -14658,7 +14710,7 @@ Procedure CLI_Bitrix24_MarkMessageAsUnreaded(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkMessageAsUnreaded", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "MarkMessageAsUnreaded)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -14690,7 +14742,7 @@ Procedure CLI_Bitrix24_GetDialog(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDialog", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDialog (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMessage(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14720,7 +14772,7 @@ Procedure CLI_Bitrix24_GetChatMembersList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatMembersList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetChatMembersList)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14750,7 +14802,7 @@ Procedure CLI_Bitrix24_SendWritingNotification(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendWritingNotification", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendWritingNotification (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14778,7 +14830,7 @@ Procedure CLI_Bitrix24_ReadAll(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ReadAll", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ReadAll (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -14827,11 +14879,11 @@ Procedure CLI_Bitrix24_SendMessage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendMessage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendMessage)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    MessageID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_ChatMessageID", MessageID); // SKIP
-    FunctionParameters.Insert("Bitrix24_ChatMessageID", MessageID); // SKIP
+    MessageID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_ChatMessageID", MessageID);
+    FunctionParameters.Insert("Bitrix24_ChatMessageID", MessageID);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -14870,7 +14922,7 @@ Procedure CLI_Bitrix24_EditMessage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "EditMessage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "EditMessage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -14909,7 +14961,7 @@ Procedure CLI_Bitrix24_DeleteMessage(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteMessage", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteMessage (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -14939,7 +14991,7 @@ Procedure CLI_Bitrix24_SetMessageReaction(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetMessageReaction", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SetMessageReaction (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL       = FunctionParameters["Bitrix24_Domain"];
     Token     = FunctionParameters["Bitrix24_Token"];
@@ -14969,7 +15021,7 @@ Procedure CLI_Bitrix24_GetChatFilesFolder(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatFilesFolder", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetChatFilesFolder)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15019,7 +15071,7 @@ Procedure CLI_Bitrix24_SendFile(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendFile", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendFile)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixFileMessage(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixFileMessage(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15062,7 +15114,7 @@ Procedure CLI_Bitrix24_GetUsers(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUsers", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUsers (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15089,7 +15141,7 @@ Procedure CLI_Bitrix24_GetUserStatus(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserStatus", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUserStatus (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixString(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixString(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15117,7 +15169,7 @@ Procedure CLI_Bitrix24_SetUserStatus(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetUserStatus", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SetUserStatus (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15189,7 +15241,7 @@ Procedure CLI_Bitrix24_GetCurrentUser(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCurrentUser", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCurrentUser (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15215,7 +15267,7 @@ Procedure CLI_Bitrix24_GetUserFieldsStructure(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserFieldsStructure", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUserFieldsStructure (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixObject(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixObject(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15248,11 +15300,11 @@ Procedure CLI_Bitrix24_CreateUser(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateUser", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateUser (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    UserID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookUserID", UserID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookUserID", UserID); // SKIP
+    UserID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookUserID", UserID);
+    FunctionParameters.Insert("Bitrix24_HookUserID", UserID);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15301,7 +15353,7 @@ Procedure CLI_Bitrix24_UpdateUser(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateUser", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateUser (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15340,7 +15392,7 @@ Procedure CLI_Bitrix24_ChangeUserStatus(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeUserStatus", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ChangeUserStatus (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15371,7 +15423,7 @@ Procedure CLI_Bitrix24_GetUser(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUser", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUser (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15407,7 +15459,7 @@ Procedure CLI_Bitrix24_FindUsers(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "FindUsers", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "FindUsers (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15461,7 +15513,7 @@ Procedure CLI_Bitrix24_GetLeadStructure(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLeadStructure", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetLeadStructure (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixLead(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixLead(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15504,11 +15556,11 @@ Procedure CLI_Bitrix24_CreateLead(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateLead", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateLead (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    LeadID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookLeadID", LeadID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookLeadID", LeadID); // SKIP
+    LeadID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookLeadID", LeadID);
+    FunctionParameters.Insert("Bitrix24_HookLeadID", LeadID);
 
     FieldsStructure.Insert("NAME"      , "Ivan");
     FieldsStructure.Insert("LAST_NAME" , "Ivanov");
@@ -15550,7 +15602,7 @@ Procedure CLI_Bitrix24_UpdateLead(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateLead", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateLead (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     FieldsStructure.Insert("NAME"      , "Evgeniy");
     FieldsStructure.Insert("LAST_NAME" , "Evgeniev");
@@ -15584,7 +15636,7 @@ Procedure CLI_Bitrix24_DeleteLead(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteLead", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteLead (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15614,7 +15666,7 @@ Procedure CLI_Bitrix24_GetLead(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLead", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetLead (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixLead(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixLead(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15642,7 +15694,7 @@ Procedure CLI_Bitrix24_GetLeadsList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLeadsList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetLeadsList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15684,7 +15736,7 @@ Procedure CLI_Bitrix24_GetDealStructure(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDealStructure", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDealStructure (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixDeal(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixDeal(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15726,11 +15778,11 @@ Procedure CLI_Bitrix24_CreateDeal(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateDeal", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateDeal (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
 
-    LeadID = Result["result"]; // SKIP
-    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookDealID", LeadID); // SKIP
-    FunctionParameters.Insert("Bitrix24_HookDealID", LeadID); // SKIP
+    LeadID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookDealID", LeadID);
+    FunctionParameters.Insert("Bitrix24_HookDealID", LeadID);
 
     FieldsStructure.Insert("TITLE"    , "Another deal");
     FieldsStructure.Insert("CLOSEDATE", "2031-01-01");
@@ -15772,7 +15824,7 @@ Procedure CLI_Bitrix24_UpdateDeal(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateDeal", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateDeal (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     FieldsStructure.Insert("TITLE"    , "Future deal in RUB");
     FieldsStructure.Insert("BEGINDATE", "2025-01-01");
@@ -15806,7 +15858,7 @@ Procedure CLI_Bitrix24_GetDeal(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDeal", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDeal (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixDeal(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixDeal(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15836,7 +15888,7 @@ Procedure CLI_Bitrix24_DeleteDeal(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteDeal", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteDeal (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15864,7 +15916,7 @@ Procedure CLI_Bitrix24_GetDealsList(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDealsList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDealsList (wh)", "Bitrix24");
-    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15881,6 +15933,720 @@ Procedure CLI_Bitrix24_GetDealsList(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDealsList", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixArray(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_CreateCalendar(FunctionParameters)
+
+    UserID = 1;
+
+    CalendarsStructure = New Structure;
+    CalendarsStructure.Insert("type"       , "user");
+    CalendarsStructure.Insert("ownerId"    , UserID);
+    CalendarsStructure.Insert("name"       , "new calendar");
+    CalendarsStructure.Insert("description", "My new calendar");
+    CalendarsStructure.Insert("color"      , "#FFFFFF");
+    CalendarsStructure.Insert("text_color" , "#000000");
+
+        ExportStructure = New Structure;
+        ExportStructure.Insert("ALLOW", "True");
+        ExportStructure.Insert("SET"  , "all");
+
+    CalendarsStructure.Insert("export", ExportStructure);
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("fields", CalendarsStructure);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateCalendar", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateCalendar (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    CalendarID = Result["result"]; // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCalendarID", CalendarID); // SKIP
+    FunctionParameters.Insert("Bitrix24_HookCalendarID", CalendarID); // SKIP
+
+    CalendarsStructure.Insert("name"       , "Another calendar");
+    CalendarsStructure.Insert("description", "My other new calendar");
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("fields", CalendarsStructure);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateCalendar", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateCalendar", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    CalendarID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CalendarID", CalendarID);
+    FunctionParameters.Insert("Bitrix24_CalendarID", CalendarID);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_UpdateCalendar(FunctionParameters)
+
+    UserID = 1;
+
+    CalendarsStructure = New Structure;
+    CalendarsStructure.Insert("type"       , "user");
+    CalendarsStructure.Insert("ownerId"    , UserID);
+    CalendarsStructure.Insert("name"       , "New calendar name");
+    CalendarsStructure.Insert("description", "This calendar has been changed");
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+
+    Options = New Structure;
+    Options.Insert("url"     , URL);
+    Options.Insert("calendar", CalendarID);
+    Options.Insert("fields"  , CalendarsStructure);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateCalendar", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateCalendar (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Options = New Structure;
+    Options.Insert("url"     , URL);
+    Options.Insert("calendar", CalendarID);
+    Options.Insert("fields"  , CalendarsStructure);
+    Options.Insert("token"   , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateCalendar", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateCalendar", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_DeleteCalendar(FunctionParameters)
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+    OwnerID    = 1;
+    Type       = "user";
+
+    Options = New Structure;
+    Options.Insert("url"     , URL);
+    Options.Insert("calendar", CalendarID);
+    Options.Insert("owner"   , OwnerID);
+    Options.Insert("type"    , Type);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteCalendar", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteDeal (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Options = New Structure;
+    Options.Insert("url"     , URL);
+    Options.Insert("calendar", CalendarID);
+    Options.Insert("owner"   , OwnerID);
+    Options.Insert("type"    , Type);
+    Options.Insert("token"   , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteCalendar", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteCalendar", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarStructure(FunctionParameters)
+
+    Options = New Structure;
+    Options.Insert("empty" , False);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Map(Result);
+
+    Options.Insert("empty" , True);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarStructure", Options);
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarStructure (empty)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarList(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    OwnerID = 1;
+    Type    = "user";
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("owner" , OwnerID);
+    Options.Insert("type"  , Type);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarList", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarList (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("owner" , OwnerID);
+    Options.Insert("type"  , Type);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarList", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarList", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarSettingsStructure(FunctionParameters)
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Options = New Structure;
+    Options.Insert("url" , URL);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarSettingsStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarSettingsStructure (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarSettingsStructure", Options);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarSettingsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalednarCustomSettingsStructure(FunctionParameters)
+
+    Options = New Structure;
+    Options.Insert("empty" , False);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalednarCustomSettingsStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalednarCustomSettingsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Map(Result);
+
+    Options.Insert("empty" , True);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalednarCustomSettingsStructure", Options);
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalednarCustomSettingsStructure)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCustomCalendarSettings(FunctionParameters)
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Options = New Structure;
+    Options.Insert("url", URL);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomCalendarSettings", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCustomCalendarSettings (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomCalendarSettings", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCustomCalendarSettings", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_SetCustomCalendarSettings(FunctionParameters)
+
+    CalendarsStructure = New Structure;
+    CalendarsStructure.Insert("view"              , "month");
+    CalendarsStructure.Insert("showDeclined"      , "Y");
+    CalendarsStructure.Insert("collapseOffHours"  , "N");
+    CalendarsStructure.Insert("showCompletedTasks", "N");
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Options = New Structure;
+    Options.Insert("url"     , URL);
+    Options.Insert("settings", CalendarsStructure);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetCustomCalendarSettings", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SetCustomCalendarSettings (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"     , URL);
+    Options.Insert("settings", CalendarsStructure);
+    Options.Insert("token"   , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetCustomCalendarSettings", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SetCustomCalendarSettings", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetUserBusy(FunctionParameters)
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+
+    User = 1;
+
+    Week        = 604800;
+    CurrentDate = OPI_Tools.GetCurrentDate();
+
+    StartDate = CurrentDate;
+    EndDate   = CurrentDate + Week;
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("users", User);
+    Options.Insert("from" , StartDate);
+    Options.Insert("to"   , EndDate);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserBusy", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUserBusy (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("users", User);
+    Options.Insert("from" , StartDate);
+    Options.Insert("to"   , EndDate);
+    Options.Insert("token", Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserBusy", Options);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetUserBusy", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_CreateCalendarEvent(FunctionParameters)
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+
+    Tomorrow = OPI_Tools.GetCurrentDate() + 86400;
+    Hour     = 3600;
+
+    EventStucture = New Structure;
+
+    EventStucture.Insert("type"         , "user");
+    EventStucture.Insert("ownerId"      , 1);
+    EventStucture.Insert("from"         , XMLString(Tomorrow));
+    EventStucture.Insert("to"           , XMLString(Tomorrow + Hour));
+    EventStucture.Insert("section"      , CalendarID);
+    EventStucture.Insert("name"         , "New event");
+    EventStucture.Insert("skip_time"    , "N");
+    EventStucture.Insert("timezone_from", "Europe/Minsk");
+    EventStucture.Insert("timezone_to"  , "Europe/Minsk");
+    EventStucture.Insert("description"  , "Event description");
+    EventStucture.Insert("color"        , "%23000000>");
+    EventStucture.Insert("text_color"   , "%23FFFFFF");
+    EventStucture.Insert("accessibility", "busy");
+    EventStucture.Insert("importance"   , "high");
+    EventStucture.Insert("private_event", "N");
+
+        RepeatabilityStructure = New Structure;
+        RepeatabilityStructure.Insert("FREQ"    , "DAILY");
+        RepeatabilityStructure.Insert("COUNT"   , 3);
+        RepeatabilityStructure.Insert("INTERVAL", 10);
+
+            DaysArray = New Array;
+            DaysArray.Add("SA");
+            DaysArray.Add("MO");
+
+        RepeatabilityStructure.Insert("BYDAY" , DaysArray);
+        RepeatabilityStructure.Insert("UNTIL" , XMLString(Tomorrow + Hour * 24 * 10));
+
+    EventStucture.Insert("rrule"     , RepeatabilityStructure);
+    EventStucture.Insert("is_meeting", "Y");
+    EventStucture.Insert("location"  , "Office");
+
+        RemindersArray = New Array;
+
+            ReminderStructure = New Structure;
+            ReminderStructure.Insert("type" , "day");
+            ReminderStructure.Insert("count", 1);
+
+        RemindersArray.Add(ReminderStructure);
+
+    EventStucture.Insert("remind"   , RemindersArray);
+    EventStucture.Insert("attendees", StrSplit("1,10", ","));
+    EventStucture.Insert("host"     , 1);
+
+        MeetingStructure = New Structure;
+        MeetingStructure.Insert("notify"      , "Y");
+        MeetingStructure.Insert("reinvite"    , "Y");
+        MeetingStructure.Insert("allow_invite", "N");
+        MeetingStructure.Insert("hide_guests" , "N");
+
+    EventStucture.Insert("meeting", MeetingStructure);
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("fields", EventStucture);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    EventID = Result["result"]; // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCEventID", EventID); // SKIP
+    FunctionParameters.Insert("Bitrix24_HookCEventID", EventID); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    EventStucture.Insert("section", CalendarID);
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("fields", EventStucture);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    EventID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CEventID", EventID);
+    FunctionParameters.Insert("Bitrix24_CEventID", EventID);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_DeleteCalendarEvent(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarEvent(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarEvents(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    OwnerID = 1;
+    Type    = "user";
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("owner" , OwnerID);
+    Options.Insert("type"  , Type);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvents", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEvents (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
+
+    URL         = FunctionParameters["Bitrix24_Domain"];
+    Token       = FunctionParameters["Bitrix24_Token"];
+    EventID     = FunctionParameters["Bitrix24_CEventID"];
+    CalendarID1 = FunctionParameters["Bitrix24_HookCalendarID"];
+    CalendarID2 = FunctionParameters["Bitrix24_CalendarID"];
+
+    Tomorrow = OPI_Tools.GetCurrentDate() + 86400;
+    NextDay  = Tomorrow + 86400;
+
+    ArrayOfCalendars = New Array;
+    ArrayOfCalendars.Add(CalendarID1);
+    ArrayOfCalendars.Add(CalendarID2);
+
+    Filter = New Structure;
+    Filter.Insert("from"   , Tomorrow);
+    Filter.Insert("to"     , NextDay);
+    Filter.Insert("section", ArrayOfCalendars);
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("owner" , OwnerID);
+    Options.Insert("type"  , Type);
+    Options.Insert("filter", Filter);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvents", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEvents", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_UpdateCalendarEvent(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    EventStucture = New Structure;
+
+    EventStucture.Insert("ownerId"      , 1);
+    EventStucture.Insert("type"         , "user");
+    EventStucture.Insert("name"         , "Modified event");
+    EventStucture.Insert("description"  , "New event description");
+    EventStucture.Insert("importance"   , "low");
+    EventStucture.Insert("private_event", "Y");
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("fields", EventStucture);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    EventID = Result["result"]; // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCEventID", EventID); // SKIP
+    FunctionParameters.Insert("Bitrix24_HookCEventID", EventID); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    EventID    = FunctionParameters["Bitrix24_CEventID"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("fields", EventStucture);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateCalendarEvent", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    EventID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CEventID", EventID);
+    FunctionParameters.Insert("Bitrix24_CEventID", EventID);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_SetUserParticipationStatus(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+    Status  = "Y";
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("status", Status);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetUserParticipationStatus", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserParticipationStatus (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("status", Status);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetUserParticipationStatus", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetUserParticipationStatus", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetUserParticipationStatus(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserParticipationStatus", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserParticipationStatus (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixString(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("event" , EventID);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserParticipationStatus", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserParticipationStatus", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixString(Result);
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarEventsStructure(FunctionParameters)
+
+    Options = New Structure;
+    Options.Insert("empty" , False);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Map(Result);
+
+    Options = New Structure;
+    Options.Insert("empty" , True);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsStructure (empty)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
+
+EndProcedure
+
+Procedure CLI_Bitrix24_GetCalendarEventsFilterStructure(FunctionParameters)
+
+    Options = New Structure;
+    Options.Insert("empty" , False);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsFilterStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsFilterStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Map(Result);
+
+    Options = New Structure;
+    Options.Insert("empty" , True);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsFilterStructure", Options);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsFilterStructure (empty)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
 
 EndProcedure
 
@@ -16273,8 +17039,8 @@ Procedure CLI_CDEK_GetReceipt(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetReceipt", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetReceipt", "CDEK"); // SKIP
-    OPI_TestDataRetrieval.Check_CdekReceipt(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetReceipt", "CDEK");
+    OPI_TestDataRetrieval.Check_CdekReceipt(Result);
 
     TFN = GetTempFileName("pdf");
 
@@ -16286,8 +17052,6 @@ Procedure CLI_CDEK_GetReceipt(FunctionParameters)
     Options.Insert("out"    , TFN);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetReceipt", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetReceipt (file)");
     OPI_TestDataRetrieval.Check_BinaryData(Result, 50000);
@@ -16332,8 +17096,8 @@ Procedure CLI_CDEK_GetBarcode(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetBarcode", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBarcode", "CDEK"); // SKIP
-    OPI_TestDataRetrieval.Check_CdekReceipt(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBarcode", "CDEK");
+    OPI_TestDataRetrieval.Check_CdekReceipt(Result);
 
     TFN = GetTempFileName("pdf");
 
@@ -16345,8 +17109,6 @@ Procedure CLI_CDEK_GetBarcode(FunctionParameters)
     Options.Insert("out"    , TFN);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetBarcode", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBarcode (file)");
     OPI_TestDataRetrieval.Check_BinaryData(Result, 0);
@@ -16377,8 +17139,6 @@ Procedure CLI_CDEK_GetAppointmentDescription(FunctionParameters)
     Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetAppointmentDescription", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetAppointmentDescription", "CDEK");
     OPI_TestDataRetrieval.Check_Map(Result);
@@ -16458,8 +17218,6 @@ Procedure CLI_CDEK_GetDeliveryAppointment(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetDeliveryAppointment", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetDeliveryAppointment", "CDEK");
     OPI_TestDataRetrieval.Check_Map(Result);
 
@@ -16535,8 +17293,6 @@ Procedure CLI_CDEK_GetCashboxCheck(FunctionParameters)
     Options.Insert("testapi" , True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetCashboxCheck", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCashboxCheck", "CDEK");
     OPI_TestDataRetrieval.Check_Empty(Result);
@@ -16899,8 +17655,8 @@ Procedure CLI_YandexMetrika_GetCountersList(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("metrika", "GetCountersList", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCountersList", "YandexMetrika"); // SKIP
-    OPI_TestDataRetrieval.Check_MetrikaCounters(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCountersList", "YandexMetrika");
+    OPI_TestDataRetrieval.Check_MetrikaCounters(Result);
 
     // filter by IDs list
 
@@ -16984,8 +17740,6 @@ Procedure CLI_S3_SendRequestWithoutBody(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "SendRequestWithoutBody", Options);
 
-    // END
-
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendRequestWithoutBody");
 
 EndProcedure
@@ -17044,9 +17798,9 @@ Procedure CLI_S3_CreateBucket(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "CreateBucket", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateBucket (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateBucket (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17089,9 +17843,9 @@ Procedure CLI_S3_DeleteBucket(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "DeleteBucket", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteBucket (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteBucket (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17157,8 +17911,8 @@ Procedure CLI_S3_HeadBucket(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "HeadBucket", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "HeadBucket", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "HeadBucket", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
 
     Options = New Structure;
     Options.Insert("name"   , Name);
@@ -17298,9 +18052,9 @@ Procedure CLI_S3_GetBucketTagging(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "GetBucketTagging", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBucketTagging (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBucketTagging (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17312,8 +18066,6 @@ Procedure CLI_S3_GetBucketTagging(FunctionParameters)
     Options.Insert("dir"  , False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "GetBucketTagging", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBucketTagging", "S3");
     OPI_TestDataRetrieval.Check_S3Success(Result);
@@ -17351,9 +18103,9 @@ Procedure CLI_S3_PutBucketTagging(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "PutBucketTagging", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "PutBucketTagging (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "PutBucketTagging (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17397,9 +18149,9 @@ Procedure CLI_S3_DeleteBucketTagging(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "DeleteBucketTagging", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteBucketTagging (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteBucketTagging (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17445,9 +18197,9 @@ Procedure CLI_S3_GetBucketVersioning(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "GetBucketVersioning", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBucketVersioning (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetBucketVersioning (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17492,9 +18244,9 @@ Procedure CLI_S3_PutBucketVersioning(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "PutBucketVersioning", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "PutBucketVersioning (DB)", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_S3Success(Result); // SKIP
-    BasicData.Insert("URL", FunctionParameters["S3_URL"]); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "PutBucketVersioning (DB)", "S3");
+    OPI_TestDataRetrieval.Check_S3Success(Result);
+    BasicData.Insert("URL", FunctionParameters["S3_URL"]);
 
     // General purpose bucket
 
@@ -17590,8 +18342,6 @@ Procedure CLI_S3_UploadFullObject(FunctionParameters)
     Options.Insert("basic" , BasicData);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "PutObject", Options);
-
-    // END
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFullObject", "S3");
     OPI_TestDataRetrieval.Check_S3Success(Result);
@@ -17849,9 +18599,9 @@ EndProcedure
 
 Procedure CLI_S3_GetObject(FunctionParameters)
 
-    Image        = FunctionParameters["Picture"]; // SKIP
-    OPI_TypeConversion.GetBinaryData(Image); // SKIP
-    RequiredSize = Image.Size(); // SKIP
+    Image        = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(Image);
+    RequiredSize = Image.Size();
 
     URL       = FunctionParameters["S3_URL"];
     AccessKey = FunctionParameters["S3_AccessKey"];
@@ -17876,8 +18626,8 @@ Procedure CLI_S3_GetObject(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("s3", "GetObject", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetObject", "S3"); // SKIP
-    OPI_TestDataRetrieval.Check_BinaryData(Result, RequiredSize); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetObject", "S3");
+    OPI_TestDataRetrieval.Check_BinaryData(Result, RequiredSize);
 
     TempFile = GetTempFileName();
     BasicData.Insert("ChunkSize", 200000);
@@ -18055,9 +18805,9 @@ EndProcedure
 
 Procedure CLI_S3_GetObjectDownloadLink(FunctionParameters)
 
-    Image        = FunctionParameters["Picture"]; // SKIP
-    OPI_TypeConversion.GetBinaryData(Image); // SKIP
-    RequiredSize = Image.Size(); // SKIP
+    Image        = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(Image);
+    RequiredSize = Image.Size();
 
     URL       = FunctionParameters["S3_URL"];
     AccessKey = FunctionParameters["S3_AccessKey"];
@@ -18095,9 +18845,9 @@ EndProcedure
 
 Procedure CLI_S3_GetObjectUploadLink(FunctionParameters)
 
-    Image        = FunctionParameters["Picture"]; // SKIP
-    OPI_TypeConversion.GetBinaryData(Image); // SKIP
-    RequiredSize = Image.Size(); // SKIP
+    Image        = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(Image);
+    RequiredSize = Image.Size();
 
     URL       = FunctionParameters["S3_URL"];
     AccessKey = FunctionParameters["S3_AccessKey"];
@@ -18194,8 +18944,8 @@ Procedure CLI_SQLite_ExecuteSQLQuery(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "ExecuteSQLQuery", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "ExecuteSQLQuery (Create)", "SQLite"); // SKIP
-    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ExecuteSQLQuery (Create)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     // INSERT with parameters
 
@@ -18218,8 +18968,8 @@ Procedure CLI_SQLite_ExecuteSQLQuery(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "ExecuteSQLQuery", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "ExecuteSQLQuery (Insert)", "SQLite"); // SKIP
-    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result); // SKIP
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ExecuteSQLQuery (Insert)", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     // SELECT (The result of this query is shown in the Result block)
 
@@ -18235,14 +18985,14 @@ Procedure CLI_SQLite_ExecuteSQLQuery(FunctionParameters)
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Image = New BinaryData(PictureFile);
-    OPI_TestDataRetrieval.Check_Equality(Base64Value(Result["data"][0]["data"]["blob"]).Size(), Image.Size()); // SKIP
+    OPI_TestDataRetrieval.Check_Equality(Base64Value(Result["data"][0]["data"]["blob"]).Size(), Image.Size());
 
     Try
        DeleteFiles(TFN);
        DeleteFiles(PictureFile);
     Except
         OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Database file deletion error", "SQLite");
-    EndTry
+    EndTry;
 
 EndProcedure
 
@@ -18257,9 +19007,7 @@ Procedure CLI_SQLite_GetTableInformation(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
 
-    // END
-
-    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTableInformation", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
 EndProcedure
@@ -18299,7 +19047,7 @@ Procedure CLI_SQLite_CreateTable(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "CreateTable", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "CreateTable (obscure column)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTable (obscure column)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
 EndProcedure
@@ -18343,9 +19091,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddRecords", Options);
 
-    // END
-
-    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Options = New Structure;
@@ -18356,7 +19102,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (no tr)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords (no tr)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     RowStrucutre1.Insert("error", "Lesha") ;
@@ -18369,7 +19115,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (field error)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords (field error)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteError(Result);
 
     Options = New Structure;
@@ -18380,7 +19126,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (field error without tr)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords (field error without tr)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteRows(Result, 1);
 
     Options = New Structure;
@@ -18390,7 +19136,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (json error)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords (json error)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteError(Result);
 
     RowMap = New Map;
@@ -18403,14 +19149,14 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "AddRecords (obscure column)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords (obscure column)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Try
        DeleteFiles(PictureFile);
     Except
-        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Error deleting a picture file", "SQLite");
-    EndTry
+        OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Error deleting a picture file", "SQLite");
+    EndTry;
 
 EndProcedure
 
@@ -18456,7 +19202,7 @@ Procedure CLI_SQLite_GetRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecords", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Options = New Structure;
@@ -18466,7 +19212,7 @@ Procedure CLI_SQLite_GetRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords (no params)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecords (no params)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     FilterStructure2.Insert("type" , "BEETWEEN");
@@ -18480,7 +19226,7 @@ Procedure CLI_SQLite_GetRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords (error)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecords (error)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteError(Result);
 
     Options = New Structure;
@@ -18489,7 +19235,7 @@ Procedure CLI_SQLite_GetRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options, False);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetRecords (obscure column)", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecords (obscure column)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
 EndProcedure
@@ -18523,7 +19269,7 @@ Procedure CLI_SQLite_UpdateRecords(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "UpdateRecords", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "UpdateRecords", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateRecords", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     FilterStructure.Insert("value", "Vitaly A.");
@@ -18539,7 +19285,7 @@ Procedure CLI_SQLite_UpdateRecords(FunctionParameters)
 
     Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "Check", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
     OPI_TestDataRetrieval.Check_SQLiteFieldsValues(Check["data"][0], FieldsStructure);
 
@@ -18569,7 +19315,7 @@ Procedure CLI_SQLite_DeletePosts(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "DeletePosts", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "DeletePosts", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeletePosts", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Options = New Structure;
@@ -18580,7 +19326,7 @@ Procedure CLI_SQLite_DeletePosts(FunctionParameters)
 
     Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "Check", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteNoRows(Check);
 
 EndProcedure
@@ -18592,13 +19338,12 @@ Procedure CLI_SQLite_GetRecordsFilterStrucutre(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecordsFilterStrucutre", Options);
 
-    // END
-
-    OPI_TestDataRetrieval.WriteLog(Result, "GetRecordsFilterStrucutre", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecordsFilterStrucutre", "SQLite");
     OPI_TestDataRetrieval.Check_Map(Result);
 
-    Result = OPI_SQLite.GetRecordsFilterStrucutre(True);
-    OPI_TestDataRetrieval.WriteLog(Result, "GetRecordsFilterStrucutre (empty)", "SQLite");
+    Options.Insert("empty" , True);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecordsFilterStrucutre", Options);
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecordsFilterStrucutre (empty)", "SQLite");
 
     For Each Element In Result Do
 
@@ -18619,14 +19364,12 @@ Procedure CLI_SQLite_DeleteTable(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "DeleteTable", Options);
 
-    // END
-
-    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTable", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTable", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "Check", "SQLite");
     OPI_TestDataRetrieval.Check_Array(Check["data"], 0);
 
 EndProcedure
@@ -18642,19 +19385,17 @@ Procedure CLI_SQLite_ClearTable(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "ClearTable", Options);
 
-    // END
-
-    OPI_TestDataRetrieval.WriteLog(Result, "ClearTable", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "ClearTable", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "Check", "SQLite");
     OPI_TestDataRetrieval.Check_Array(Check["data"], 7);
 
     Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options);
 
-    OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "Check", "SQLite");
     OPI_TestDataRetrieval.Check_Array(Check["data"], 0);
 
 EndProcedure

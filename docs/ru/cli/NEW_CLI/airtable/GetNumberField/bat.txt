@@ -1,2 +1,0 @@
-oint airtable GetNumberField ^
- --title "f913643c-3231-46a6-8917-97c09471932f"

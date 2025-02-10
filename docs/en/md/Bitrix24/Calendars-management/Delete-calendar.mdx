@@ -1,0 +1,67 @@
+﻿---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete calendar
+ Deletes an existing calendar
+
+
+
+`Function DeleteCalendar(Val URL, Val CalendarID, Val OwnerID, Val Type, Val Token = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | URL of webhook or a Bitrix24 domain, when token used |
+  | CalendarID | --calendar | String, Number | &#x2714; | Calendar ID |
+  | OwnerID | --owner | String, Number | &#x2714; | Calendar owner ID |
+  | Type | --type | String | &#x2714; | Calendar type: user, group |
+  | Token | --token | String | &#x2716; | Access token, when app auth method used |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
+
+<br/>
+
+:::tip
+Method at API documentation: [calendar.section.delete](https://apidocs.bitrix24.ru/api-reference/calendar/calendar-section-delete.html)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL        = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
+    CalendarID = "290";
+    OwnerID    = 1;
+    Type       = "user";
+
+    Result = OPI_Bitrix24.DeleteCalendar(URL, CalendarID, OwnerID, Type);
+
+    URL        = "b24-ar17wx.bitrix24.by";
+    Token      = "afd0a867006e9f06006b12e400000001000...";
+    CalendarID = "292";
+
+    Result = OPI_Bitrix24.DeleteCalendar(URL, CalendarID, OwnerID, Type, Token);
+```
+ 
+
+
+
+```json title="Result"
+{
+ "result": true,
+ "time": {
+  "start": 1739051129.95565,
+  "finish": 1739051130.00332,
+  "duration": 0.0476679801940918,
+  "processing": 0.0173280239105225,
+  "date_start": "2025-02-09T00:45:29+03:00",
+  "date_finish": "2025-02-09T00:45:30+03:00",
+  "operating_reset_at": 1739051729,
+  "operating": 0
+ }
+}
+```

@@ -1,3 +1,0 @@
-oint yadisk ОтменитьПубликациюОбъекта ^
-  --token "***" ^
-  --path "/93e2651f-7cbb-48fb-99ca-a5a2430b437a.png"

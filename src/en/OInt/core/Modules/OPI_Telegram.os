@@ -297,7 +297,7 @@ EndFunction
 // Token - String - Bot token - token
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 // RepliedID - String, Number - Reply to message ID - reply
 //
@@ -319,10 +319,10 @@ Function SendTextMessage(Val Token
     Text = DecodeString(Text, StringEncodingMethod.URLInURLEncoding);
 
     Parameters = New Structure;
-    OPI_Tools.AddField("parse_mode"         , Markup   , String_     , Parameters);
-    OPI_Tools.AddField("text"               , Text     , String_     , Parameters);
-    OPI_Tools.AddField("reply_markup"       , Keyboard , "FileString", Parameters);
-    OPI_Tools.AddField("reply_to_message_id", RepliedID, String_     , Parameters);
+    OPI_Tools.AddField("parse_mode"         , Markup   , String_      , Parameters);
+    OPI_Tools.AddField("text"               , Text     , String_      , Parameters);
+    OPI_Tools.AddField("reply_markup"       , Keyboard , "Collection" , Parameters);
+    OPI_Tools.AddField("reply_to_message_id", RepliedID, String_      , Parameters);
 
     AddChatIdentifier(ChatID, Parameters);
 
@@ -344,7 +344,7 @@ EndFunction
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
 // Image - BinaryData, String - Image file - picture
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 //
 // Returns:
@@ -371,7 +371,7 @@ EndFunction
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
 // Video - BinaryData, String - Video file - video
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 //
 // Returns:
@@ -398,7 +398,7 @@ EndFunction
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
 // Audio - BinaryData, String - Audio file - audio
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 //
 // Returns:
@@ -425,7 +425,7 @@ EndFunction
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
 // Document - BinaryData, String - Document file - doc
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 // FileName - String - Custom displayed file name with extension, if necessary - filename
 //
@@ -454,7 +454,7 @@ EndFunction
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Text - String - Message text - text
 // GIF - BinaryData, String - GIF file - gif
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 // Markup - String - Text processing type (HTML, Markdown, MarkdownV2) - parsemode
 //
 // Returns:
@@ -513,10 +513,10 @@ Function SendMediaGroup(Val Token
     AddChatIdentifier(ChatID, Parameters);
     ConvertFilesToMedia(FileMapping, Text, Media);
 
-    OPI_Tools.AddField("parse_mode"  , Markup  , String_     , Parameters);
-    OPI_Tools.AddField("caption"     , Text    , String_     , Parameters);
-    OPI_Tools.AddField("media"       , Media   , String_     , Parameters);
-    OPI_Tools.AddField("reply_markup", Keyboard, "FileString", Parameters);
+    OPI_Tools.AddField("parse_mode"  , Markup  , String_      , Parameters);
+    OPI_Tools.AddField("caption"     , Text    , String_      , Parameters);
+    OPI_Tools.AddField("media"       , Media   , String_      , Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard, "Collection" , Parameters);
 
     Response = OPI_Tools.PostMultipart(URL, Parameters, FileMapping, "mixed");
 
@@ -535,7 +535,7 @@ EndFunction
 // ChatID - String, Number - Target chat ID or ChatID*TopicID - chat
 // Latitude - String, Number - Geographic latitude - lat
 // Longitude - String, Number - Geographic longitude - long
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON response from Telegram
@@ -551,7 +551,7 @@ Function SendLocation(Val Token, Val ChatID, Val Latitude, Val Longitude, Val Ke
     OPI_Tools.AddField("parse_mode"  , "Markdown" , String_     , Parameters);
     OPI_Tools.AddField("latitude"    , Latitude   , String_     , Parameters);
     OPI_Tools.AddField("longitude"   , Longitude  , String_     , Parameters);
-    OPI_Tools.AddField("reply_markup", Keyboard   , "FileString", Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard   , "Collection", Parameters);
 
     AddChatIdentifier(ChatID, Parameters);
 
@@ -573,7 +573,7 @@ EndFunction
 // Name - String - Contact name - name
 // LastName - String - Contact last name - surname
 // Phone - String - Contact phone number - phone
-// Keyboard - String - Keyboard. See FormKeyboardFromButtonArray - keyboard
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON response from Telegram
@@ -590,7 +590,7 @@ Function SendContact(Val Token, Val ChatID, Val Name, Val LastName, Val Phone, V
     OPI_Tools.AddField("first_name"  , Name      , String_     , Parameters);
     OPI_Tools.AddField("last_name"   , LastName  , String_     , Parameters);
     OPI_Tools.AddField("phone_number", Phone     , String_     , Parameters);
-    OPI_Tools.AddField("reply_markup", Keyboard  , "FileString", Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard  , "Collection", Parameters);
 
     AddChatIdentifier(ChatID, Parameters);
 
@@ -628,12 +628,12 @@ Function SendPoll(Val Token, Val ChatID, Val Question, Val AnswersArray, Val Ano
     Parameters = New Structure;
     OPI_Tools.AddField("parse_mode", "Markdown"  , "String"    , Parameters);
     OPI_Tools.AddField("question"  , Question    , "String"    , Parameters);
-    OPI_Tools.AddField("options"   , AnswersArray, "FileString", Parameters);
+    OPI_Tools.AddField("options"   , AnswersArray, "Collection", Parameters);
 
     Parameters.Insert("is_anonymous", ?(Anonymous, 1, 0));
     AddChatIdentifier(ChatID, Parameters);
 
-    Response = OPI_Tools.Get(URL, Parameters);
+    Response = OPI_Tools.Post(URL, Parameters);
 
     Return Response;
 
@@ -674,6 +674,133 @@ Function ForwardMessage(Val Token, Val OriginalID, Val FromID, Val ToID) Export
 
 EndFunction
 
+// Delete message
+// Delete message from chat or channel
+//
+// Note
+// Method at API documentation: [deleteMessage](@core.telegram.org/bots/api#deletemessage)
+//
+// Parameters:
+// Token - String - Token - token
+// ChatID - String, Number - Target chat ID - chat
+// MessageID - String, Number - ID of message to delete - message
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Telegram
+Function DeleteMessage(Val Token, Val ChatID, Val MessageID) Export
+
+    OPI_TypeConversion.GetLine(Token);
+
+    URL = "api.telegram.org/bot" + Token + "/deleteMessage";
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("message_id", MessageID, "String", Parameters);
+    OPI_Tools.AddField("chat_id"   , ChatID   , "String", Parameters);
+
+    Response = OPI_Tools.Get(URL, Parameters);
+    Return Response;
+
+EndFunction
+
+// Replace message keyboard
+// Replaces the message keyboard with a new one
+//
+// Note
+// Method at API documentation: [editMessageReplyMarkup](@core.telegram.org/bots/api#editmessagereplymarkup)
+//
+// Parameters:
+// Token - String - Token - token
+// ChatID - String, Number - Target chat ID - chat
+// MessageID - String, Number - ID of message to delete - message
+// Keyboard - String, Structure Of KeyAndValue - Keyboard. See FormKeyboardFromButtonArray - keyboard
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Telegram
+Function ReplaceMessageKeyboard(Val Token, Val ChatID, Val MessageID, Val Keyboard) Export
+
+    OPI_TypeConversion.GetLine(Token);
+
+    String_ = "String";
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("message_id"  , MessageID, String_     , Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard , "Collection", Parameters);
+
+    AddChatIdentifier(ChatID, Parameters);
+
+    URL      = "api.telegram.org/bot" + Token + "/editMessageReplyMarkup";
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Replace message text
+// Replaces the message text with a new one
+//
+// Note
+// Method at API documentation: [editMessageText](@core.telegram.org/bots/api#editmessagetext)
+//
+// Parameters:
+// Token - String - Token - token
+// ChatID - String, Number - Target chat ID - chat
+// MessageID - String, Number - ID of message to delete - message
+// Text - String - New message text - text
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Telegram
+Function ReplaceMessageText(Val Token, Val ChatID, Val MessageID, Val Text) Export
+
+    OPI_TypeConversion.GetLine(Token);
+
+    String_ = "String";
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("message_id", MessageID, String_, Parameters);
+    OPI_Tools.AddField("text"      , Text     , String_, Parameters);
+
+    AddChatIdentifier(ChatID, Parameters);
+
+    URL      = "api.telegram.org/bot" + Token + "/editMessageText";
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
+// Replace message caption
+// Replaces text in a message with media attachments
+//
+// Note
+// Method at API documentation: [editMessageCaption](@core.telegram.org/bots/api#editmessagecaption)
+//
+// Parameters:
+// Token - String - Token - token
+// ChatID - String, Number - Target chat ID - chat
+// MessageID - String, Number - ID of message to delete - message
+// Description - String - New message description - caption
+//
+// Returns:
+// Map Of KeyAndValue - serialized JSON response from Telegram
+Function ReplaceMessageCaption(Val Token, Val ChatID, Val MessageID, Val Description) Export
+
+    OPI_TypeConversion.GetLine(Token);
+
+    String_ = "String";
+
+    Parameters = New Structure;
+    OPI_Tools.AddField("message_id", MessageID   , String_, Parameters);
+    OPI_Tools.AddField("caption"   , Description , String_, Parameters);
+
+    AddChatIdentifier(ChatID, Parameters);
+
+    URL      = "api.telegram.org/bot" + Token + "/editMessageCaption";
+    Response = OPI_Tools.Post(URL, Parameters);
+
+    Return Response;
+
+EndFunction
+
 // Generate keyboard from array of buttons
 // Generates a simple JSON keyboard from an array of buttons for a message or bottom panel
 //
@@ -707,9 +834,9 @@ Function FormKeyboardFromButtonArray(Val ButtonArray
         ParameterStructure = New Structure("keyboard,resize_keyboard", Strings, True);
     EndIf;
 
-    Keyboard = OPI_Tools.JSONString(ParameterStructure);
+    ParameterStructure = OPI_Tools.JSONString(ParameterStructure, , False, False);
 
-    Return Keyboard;
+    Return ParameterStructure;
 
 EndFunction
 
@@ -906,34 +1033,6 @@ Function GetParticipantCount(Val Token, Val ChatID) Export
 
     Response = OPI_Tools.Get(URL, Parameters);
 
-    Return Response;
-
-EndFunction
-
-// Delete message
-// Delete message from chat or channel
-//
-// Note
-// Method at API documentation: [deleteMessage](@core.telegram.org/bots/api#deletemessage)
-//
-// Parameters:
-// Token - String - Token - token
-// ChatID - String, Number - Target chat ID - chat
-// MessageID - String, Number - ID of message to delete - message
-//
-// Returns:
-// Map Of KeyAndValue - serialized JSON response from Telegram
-Function DeleteMessage(Val Token, Val ChatID, Val MessageID) Export
-
-    OPI_TypeConversion.GetLine(Token);
-
-    URL = "api.telegram.org/bot" + Token + "/deleteMessage";
-
-    Parameters = New Structure;
-    OPI_Tools.AddField("message_id", MessageID, "String", Parameters);
-    OPI_Tools.AddField("chat_id"   , ChatID   , "String", Parameters);
-
-    Response = OPI_Tools.Get(URL, Parameters);
     Return Response;
 
 EndFunction
@@ -1211,7 +1310,7 @@ Function SendFile(Val Token
     Parameters = New Structure;
     OPI_Tools.AddField("parse_mode"  , Markup  , "String"    , Parameters);
     OPI_Tools.AddField("caption"     , Text    , "String"    , Parameters);
-    OPI_Tools.AddField("reply_markup", Keyboard, "FileString", Parameters);
+    OPI_Tools.AddField("reply_markup", Keyboard, "Collection", Parameters);
 
     AddChatIdentifier(ChatID, Parameters);
 

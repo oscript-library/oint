@@ -38,6 +38,7 @@
 // BSLLS:LineLength-off
 // BSLLS:MagicNumber-off
 // BSLLS:CommentedCode-off
+// BSLLS:AssignAliasFieldsInQuery-off
 
 //@skip-check undefined-variable
 //@skip-check wrong-string-literal-content
@@ -113,6 +114,8 @@ Procedure TelegramAPI_SendTextMessage() Export
     OPI_TestDataRetrieval.ParameterToCollection("String"            , TestParameters);
 
     Telegram_SendTextMessage(TestParameters);
+    Telegram_ReplaceMessageText(TestParameters);
+    Telegram_ReplaceMessageKeyboard(TestParameters);
     Telegram_FormKeyboardFromButtonArray(TestParameters);
 
 EndProcedure
@@ -127,6 +130,7 @@ Procedure TelegramAPI_SendImage() Export
      OPI_TestDataRetrieval.ParameterToCollection("Picture"           , TestParameters);
 
     Telegram_SendPicture(TestParameters);
+    Telegram_ReplaceMessageCaption(TestParameters);
     Telegram_DownloadFile(TestParameters);
 
 EndProcedure
@@ -802,6 +806,7 @@ Procedure Viber_MessagesSending() Export
     Return;
 
     //@skip-check unreachable-statement
+    // BSLLS:UnreachableCode-off
 
     Viber_SendTextMessage(TestParameters);
     Viber_SendImage(TestParameters);
@@ -809,6 +814,8 @@ Procedure Viber_MessagesSending() Export
     Viber_SendContact(TestParameters);
     Viber_SendLocation(TestParameters);
     Viber_SendLink(TestParameters);
+
+    // BSLLS:UnreachableCode-on
 
 EndProcedure
 
@@ -1783,6 +1790,35 @@ Procedure B24_DealsManagement() Export
 
 EndProcedure
 
+Procedure B24_CalendarsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Domain" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Token"  , TestParameters);
+
+    Bitrix24_CreateCalendar(TestParameters);
+    Bitrix24_UpdateCalendar(TestParameters);
+    Bitrix24_GetCalendarList(TestParameters);
+    Bitrix24_CreateCalendarEvent(TestParameters);
+    Bitrix24_SetUserParticipationStatus(TestParameters);
+    Bitrix24_GetUserParticipationStatus(TestParameters);
+    Bitrix24_GetCalendarEvent(TestParameters);
+    Bitrix24_GetCalendarEvents(TestParameters);
+    Bitrix24_UpdateCalendarEvent(TestParameters);
+    Bitrix24_GetUserBusy(TestParameters);
+    Bitrix24_DeleteCalendarEvent(TestParameters);
+    Bitrix24_DeleteCalendar(TestParameters);
+    Bitrix24_GetCustomCalendarSettings(TestParameters);
+    Bitrix24_SetCustomCalendarSettings(TestParameters);
+    Bitrix24_GetCalendarStructure(TestParameters);
+    Bitrix24_GetCalendarSettingsStructure(TestParameters);
+    Bitrix24_GetCalednarCustomSettingsStructure(TestParameters);
+    Bitrix24_GetCalendarEventsStructure(TestParameters);
+    Bitrix24_GetCalendarEventsFilterStructure(TestParameters);
+
+EndProcedure
+
 #EndRegion
 
 #Region VkTeams
@@ -2269,7 +2305,7 @@ Procedure SQLL_ORM() Export
        DeleteFiles(Base);
     Except
         OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
-    EndTry
+    EndTry;
 
 EndProcedure
 
@@ -2389,29 +2425,36 @@ Procedure Telegram_SendTextMessage(FunctionParameters)
     ChannelID = FunctionParameters["Telegram_ChannelID"];
     Text      = FunctionParameters["String"];
 
-    Result = OPI_Telegram.SendTextMessage(Token, ChatID, Text);
+    KeyboardButtonsArray = New Array;
+    KeyboardButtonsArray.Add("Button1");
+    KeyboardButtonsArray.Add("Button2");
 
-    OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage", "Telegram");
+    Keyboard = OPI_Telegram.FormKeyboardFromButtonArray(KeyboardButtonsArray, True);
+    Result   = OPI_Telegram.SendTextMessage(Token, ChatID, Text, Keyboard);
 
+    OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage", "Telegram"); // SKIP
     OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text); // SKIP
+
+    MessageID = OPI_Tools.NumberToString(Result["result"]["message_id"]); // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Telegram_MessageID", MessageID); // SKIP
+    OPI_Tools.AddField("Telegram_MessageID", MessageID, "String", FunctionParameters); // SKIP
 
     Result = OPI_Telegram.SendTextMessage(Token, ChannelID, Text);
 
     // END
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage (channel)");
-
     OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text);
 
     MessageID = OPI_Tools.NumberToString(Result["result"]["message_id"]);
     OPI_TestDataRetrieval.WriteParameter("Telegram_ChannelMessageID", MessageID);
+    OPI_Tools.AddField("Telegram_ChannelMessageID", MessageID, "String", FunctionParameters);
 
     Text = "<b>Text html %F0%9F%93%9E 10%</b>";
 
     Result = OPI_Telegram.SendTextMessage(Token, ChannelID, Text, , "HTML");
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage (HTML)");
-
     OPI_TestDataRetrieval.Check_TelegramOk(Result);
 
     Text = "%F0%9F%A4%BC";
@@ -2419,7 +2462,6 @@ Procedure Telegram_SendTextMessage(FunctionParameters)
     Result = OPI_Telegram.SendTextMessage(Token, ChatID, Text);
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage (emoji)");
-
     OPI_TestDataRetrieval.Check_TelegramOk(Result);
 
     Text = "Text %F0%9F%A5%9D and emoji \(10%\)";
@@ -2427,7 +2469,12 @@ Procedure Telegram_SendTextMessage(FunctionParameters)
     Result = OPI_Telegram.SendTextMessage(Token, ChannelID, Text, , "MarkdownV2");
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage (text and emoji)");
+    OPI_TestDataRetrieval.Check_TelegramOk(Result);
 
+    Keyboard = OPI_Tools.JsonToStructure(Keyboard, False);
+    Result   = OPI_Telegram.SendTextMessage(Token, ChatID, Text, Keyboard);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SendTextMessage (keyboard structure)", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramOk(Result);
 
     OPI_Tools.Pause(5);
@@ -2465,9 +2512,12 @@ Procedure Telegram_SendPicture(FunctionParameters)
 
     Result = OPI_Telegram.SendImage(Token, ChatID, Text, Image);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "SendImage", "Telegram");
-
+    OPI_TestDataRetrieval.WriteLog(Result, "SendImage", "Telegram"); // SKIP
     OPI_TestDataRetrieval.Check_TelegramImage(Result, Text); // SKIP
+
+    MessageID = OPI_Tools.NumberToString(Result["result"]["message_id"]); // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Telegram_PicMessageID", MessageID); // SKIP
+    OPI_Tools.AddField("Telegram_PicMessageID", MessageID, "String", FunctionParameters); // SKIP
 
     Result = OPI_Telegram.SendImage(Token, ChannelID, Text, ImagePath);
 
@@ -3180,6 +3230,60 @@ Procedure Telegram_DeleteMessage(FunctionParameters)
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
     OPI_Tools.Pause(5);
+
+EndProcedure
+
+Procedure Telegram_ReplaceMessageText(FunctionParameters)
+
+    Token     = FunctionParameters["Telegram_Token"];
+    ChatID    = FunctionParameters["Telegram_ChannelID"];
+    MessageID = FunctionParameters["Telegram_ChannelMessageID"];
+    Text      = "New message text";
+
+    Result = OPI_Telegram.ReplaceMessageText(Token, ChatID, MessageID, Text);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ReplaceMessageText", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramMessage(Result, Text);
+
+EndProcedure
+
+Procedure Telegram_ReplaceMessageKeyboard(FunctionParameters)
+
+    Token     = FunctionParameters["Telegram_Token"];
+    ChatID    = FunctionParameters["Telegram_ChatID"];
+    MessageID = FunctionParameters["Telegram_MessageID"];
+
+    ButtonArray = New Array;
+    ButtonArray.Add("New button 3");
+    ButtonArray.Add("New button 2");
+    ButtonArray.Add("New button 1");
+
+    Keyboard = OPI_Telegram.FormKeyboardFromButtonArray(ButtonArray, True, False);
+
+    Result = OPI_Telegram.ReplaceMessageKeyboard(Token, ChatID, MessageID, Keyboard);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ReplaceMessageKeyboard", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramMessageKeyboard(Result, Keyboard);
+
+EndProcedure
+
+Procedure Telegram_ReplaceMessageCaption(FunctionParameters)
+
+    Token     = FunctionParameters["Telegram_Token"];
+    ChatID    = FunctionParameters["Telegram_ChatID"];
+    MessageID = FunctionParameters["Telegram_PicMessageID"];
+
+    Description = "New picture description";
+    Result      = OPI_Telegram.ReplaceMessageCaption(Token, ChatID, MessageID, Description);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ReplaceMessageCaption", "Telegram");
+    OPI_TestDataRetrieval.Check_TelegramImage(Result, Description);
 
 EndProcedure
 
@@ -12131,7 +12235,7 @@ Procedure Bitrix24_GetFileBlock(FunctionParameters)
 
 EndProcedure
 
-Procedure Bitrix24_GetUserFilterStructure(TestParameters)
+Procedure Bitrix24_GetUserFilterStructure(FunctionParameters)
 
     Result = OPI_Bitrix24.GetUserFilterStructure();
 
@@ -12139,6 +12243,583 @@ Procedure Bitrix24_GetUserFilterStructure(TestParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "GetUserFilterStructure", "Bitrix24");
     OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure Bitrix24_CreateCalendar(FunctionParameters)
+
+    UserID = 1;
+
+    CalendarsStructure = New Structure;
+    CalendarsStructure.Insert("type"       , "user");
+    CalendarsStructure.Insert("ownerId"    , UserID);
+    CalendarsStructure.Insert("name"       , "new calendar");
+    CalendarsStructure.Insert("description", "My new calendar");
+    CalendarsStructure.Insert("color"      , "#FFFFFF");
+    CalendarsStructure.Insert("text_color" , "#000000");
+
+        ExportStructure = New Structure;
+        ExportStructure.Insert("ALLOW", "True");
+        ExportStructure.Insert("SET"  , "all");
+
+    CalendarsStructure.Insert("export", ExportStructure);
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Result = OPI_Bitrix24.CreateCalendar(URL, CalendarsStructure);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateCalendar (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    CalendarID = Result["result"]; // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCalendarID", CalendarID); // SKIP
+    FunctionParameters.Insert("Bitrix24_HookCalendarID", CalendarID); // SKIP
+
+    CalendarsStructure.Insert("name"       , "Another calendar");
+    CalendarsStructure.Insert("description", "My other new calendar");
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Result = OPI_Bitrix24.CreateCalendar(URL, CalendarsStructure, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateCalendar", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    CalendarID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CalendarID", CalendarID);
+    FunctionParameters.Insert("Bitrix24_CalendarID", CalendarID);
+
+EndProcedure
+
+Procedure Bitrix24_UpdateCalendar(FunctionParameters)
+
+    UserID = 1;
+
+    CalendarsStructure = New Structure;
+    CalendarsStructure.Insert("type"       , "user");
+    CalendarsStructure.Insert("ownerId"    , UserID);
+    CalendarsStructure.Insert("name"       , "New calendar name");
+    CalendarsStructure.Insert("description", "This calendar has been changed");
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+
+    Result = OPI_Bitrix24.UpdateCalendar(URL, CalendarID, CalendarsStructure);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCalendar (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Result = OPI_Bitrix24.UpdateCalendar(URL, CalendarID, CalendarsStructure, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCalendar", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+EndProcedure
+
+Procedure Bitrix24_DeleteCalendar(FunctionParameters)
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+    OwnerID    = 1;
+    Type       = "user";
+
+    Result = OPI_Bitrix24.DeleteCalendar(URL, CalendarID, OwnerID, Type);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteDeal (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Result = OPI_Bitrix24.DeleteCalendar(URL, CalendarID, OwnerID, Type, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteCalendar", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarStructure(FunctionParameters)
+
+    Result = OPI_Bitrix24.GetCalendarStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Bitrix24.GetCalendarStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarStructure (empty)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarList(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    OwnerID = 1;
+    Type    = "user";
+
+    Result = OPI_Bitrix24.GetCalendarList(URL, OwnerID, Type);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarList (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Result = OPI_Bitrix24.GetCalendarList(URL, OwnerID, Type, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarList", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarSettingsStructure(FunctionParameters)
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Result = OPI_Bitrix24.GetCalendarSettingsStructure(URL);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarSettingsStructure (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Result = OPI_Bitrix24.GetCalendarSettingsStructure(URL, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarSettingsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetCalednarCustomSettingsStructure(FunctionParameters)
+
+    Result = OPI_Bitrix24.GetCalednarCustomSettingsStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalednarCustomSettingsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Bitrix24.GetCalednarCustomSettingsStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalednarCustomSettingsStructure)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
+
+EndProcedure
+
+Procedure Bitrix24_GetCustomCalendarSettings(FunctionParameters)
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Result = OPI_Bitrix24.GetCustomCalendarSettings(URL);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCustomCalendarSettings (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Result = OPI_Bitrix24.GetCustomCalendarSettings(URL, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCustomCalendarSettings", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure Bitrix24_SetCustomCalendarSettings(FunctionParameters)
+
+    CalendarsStructure = New Structure;
+    CalendarsStructure.Insert("view"              , "month");
+    CalendarsStructure.Insert("showDeclined"      , "Y");
+    CalendarsStructure.Insert("collapseOffHours"  , "N");
+    CalendarsStructure.Insert("showCompletedTasks", "N");
+
+    URL = FunctionParameters["Bitrix24_URL"];
+
+    Result = OPI_Bitrix24.SetCustomCalendarSettings(URL, CalendarsStructure);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetCustomCalendarSettings (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL   = FunctionParameters["Bitrix24_Domain"];
+    Token = FunctionParameters["Bitrix24_Token"];
+
+    Result = OPI_Bitrix24.SetCustomCalendarSettings(URL, CalendarsStructure, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetCustomCalendarSettings", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetUserBusy(FunctionParameters)
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+
+    User = 1;
+
+    Week        = 604800;
+    CurrentDate = OPI_Tools.GetCurrentDate();
+
+    StartDate = CurrentDate;
+    EndDate   = CurrentDate + Week;
+
+    Result = OPI_Bitrix24.GetUserBusy(URL, User, StartDate, EndDate);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserBusy (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Result = OPI_Bitrix24.GetUserBusy(URL, User, StartDate, EndDate, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserBusy", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure Bitrix24_CreateCalendarEvent(FunctionParameters)
+
+    URL        = FunctionParameters["Bitrix24_URL"];
+    CalendarID = FunctionParameters["Bitrix24_HookCalendarID"];
+
+    Tomorrow = OPI_Tools.GetCurrentDate() + 86400;
+    Hour     = 3600;
+
+    EventStucture = New Structure;
+
+    EventStucture.Insert("type"         , "user");
+    EventStucture.Insert("ownerId"      , 1);
+    EventStucture.Insert("from"         , XMLString(Tomorrow));
+    EventStucture.Insert("to"           , XMLString(Tomorrow + Hour));
+    EventStucture.Insert("section"      , CalendarID);
+    EventStucture.Insert("name"         , "New event");
+    EventStucture.Insert("skip_time"    , "N");
+    EventStucture.Insert("timezone_from", "Europe/Minsk");
+    EventStucture.Insert("timezone_to"  , "Europe/Minsk");
+    EventStucture.Insert("description"  , "Event description");
+    EventStucture.Insert("color"        , "%23000000>");
+    EventStucture.Insert("text_color"   , "%23FFFFFF");
+    EventStucture.Insert("accessibility", "quest");
+    EventStucture.Insert("importance"   , "normal");
+    EventStucture.Insert("private_event", "Y");
+
+        RepeatabilityStructure = New Structure;
+        RepeatabilityStructure.Insert("FREQ"    , "DAILY");
+        RepeatabilityStructure.Insert("COUNT"   , 3);
+        RepeatabilityStructure.Insert("INTERVAL", 10);
+
+            DaysArray = New Array;
+            DaysArray.Add("SA");
+            DaysArray.Add("MO");
+
+        RepeatabilityStructure.Insert("BYDAY" , DaysArray);
+        RepeatabilityStructure.Insert("UNTIL" , XMLString(Tomorrow + Hour * 24 * 10));
+
+    EventStucture.Insert("rrule"     , RepeatabilityStructure);
+    EventStucture.Insert("is_meeting", "Y");
+    EventStucture.Insert("location"  , "Office");
+
+        RemindersArray = New Array;
+
+            ReminderStructure = New Structure;
+            ReminderStructure.Insert("type" , "day");
+            ReminderStructure.Insert("count", 1);
+
+        RemindersArray.Add(ReminderStructure);
+
+    EventStucture.Insert("remind"   , RemindersArray);
+    EventStucture.Insert("attendees", StrSplit("1,10", ","));
+    EventStucture.Insert("host"     , 1);
+
+        MeetingStructure = New Structure;
+        MeetingStructure.Insert("notify"      , "Y");
+        MeetingStructure.Insert("reinvite"    , "Y");
+        MeetingStructure.Insert("allow_invite", "N");
+        MeetingStructure.Insert("hide_guests" , "N");
+
+    EventStucture.Insert("meeting", MeetingStructure);
+
+    Result = OPI_Bitrix24.CreateCalendarEvent(URL, EventStucture);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    EventID = Result["result"]; // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCEventID", EventID); // SKIP
+    FunctionParameters.Insert("Bitrix24_HookCEventID", EventID); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    EventStucture.Insert("section", CalendarID);
+
+    Result = OPI_Bitrix24.CreateCalendarEvent(URL, EventStucture, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    EventID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CEventID", EventID);
+    FunctionParameters.Insert("Bitrix24_CEventID", EventID);
+
+EndProcedure
+
+Procedure Bitrix24_UpdateCalendarEvent(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    EventStucture = New Structure;
+
+    EventStucture.Insert("ownerId"      , 1);
+    EventStucture.Insert("type"         , "user");
+    EventStucture.Insert("name"         , "Modified event");
+    EventStucture.Insert("description"  , "New event description");
+    EventStucture.Insert("importance"   , "low");
+    EventStucture.Insert("private_event", "Y");
+
+    Result = OPI_Bitrix24.UpdateCalendarEvent(URL, EventID, EventStucture);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result); // SKIP
+
+    EventID = Result["result"]; // SKIP
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookCEventID", EventID); // SKIP
+    FunctionParameters.Insert("Bitrix24_HookCEventID", EventID); // SKIP
+
+    URL        = FunctionParameters["Bitrix24_Domain"];
+    Token      = FunctionParameters["Bitrix24_Token"];
+    EventID    = FunctionParameters["Bitrix24_CEventID"];
+    CalendarID = FunctionParameters["Bitrix24_CalendarID"];
+
+    Result = OPI_Bitrix24.UpdateCalendarEvent(URL, EventID, EventStucture, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UpdateCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixNumber(Result);
+
+    EventID = Result["result"];
+    OPI_TestDataRetrieval.WriteParameter("Bitrix24_CEventID", EventID);
+    FunctionParameters.Insert("Bitrix24_CEventID", EventID);
+
+EndProcedure
+
+Procedure Bitrix24_DeleteCalendarEvent(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    Result = OPI_Bitrix24.DeleteCalendarEvent(URL, EventID);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Result = OPI_Bitrix24.DeleteCalendarEvent(URL, EventID, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarEvent(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    Result = OPI_Bitrix24.GetCalendarEvent(URL, EventID);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEvent (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixMap(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Result = OPI_Bitrix24.GetCalendarEvent(URL, EventID, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEvent", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixMap(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarEvents(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    OwnerID = 1;
+    Type    = "user";
+
+    Result = OPI_Bitrix24.GetCalendarEvents(URL, OwnerID, Type);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEvents (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixArray(Result); // SKIP
+
+    URL         = FunctionParameters["Bitrix24_Domain"];
+    Token       = FunctionParameters["Bitrix24_Token"];
+    EventID     = FunctionParameters["Bitrix24_CEventID"];
+    CalendarID1 = FunctionParameters["Bitrix24_HookCalendarID"];
+    CalendarID2 = FunctionParameters["Bitrix24_CalendarID"];
+
+    Tomorrow = OPI_Tools.GetCurrentDate() + 86400;
+    NextDay  = Tomorrow + 86400;
+
+    ArrayOfCalendars = New Array;
+    ArrayOfCalendars.Add(CalendarID1);
+    ArrayOfCalendars.Add(CalendarID2);
+
+    Filter = New Structure;
+    Filter.Insert("from"   , Tomorrow);
+    Filter.Insert("to"     , NextDay);
+    Filter.Insert("section", ArrayOfCalendars);
+
+    Result = OPI_Bitrix24.GetCalendarEvents(URL, OwnerID, Type, Filter, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEvents", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixArray(Result);
+
+EndProcedure
+
+Procedure Bitrix24_SetUserParticipationStatus(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+    Status  = "Y";
+
+    Result = OPI_Bitrix24.SetUserParticipationStatus(URL, EventID, Status);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserParticipationStatus (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Result = OPI_Bitrix24.SetUserParticipationStatus(URL, EventID, Status, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetUserParticipationStatus", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixTrue(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetUserParticipationStatus(FunctionParameters)
+
+    URL     = FunctionParameters["Bitrix24_URL"];
+    EventID = FunctionParameters["Bitrix24_HookCEventID"];
+
+    Result = OPI_Bitrix24.GetUserParticipationStatus(URL, EventID);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserParticipationStatus (wh)", "Bitrix24"); // SKIP
+    OPI_TestDataRetrieval.Check_BitrixString(Result); // SKIP
+
+    URL     = FunctionParameters["Bitrix24_Domain"];
+    Token   = FunctionParameters["Bitrix24_Token"];
+    EventID = FunctionParameters["Bitrix24_CEventID"];
+
+    Result = OPI_Bitrix24.GetUserParticipationStatus(URL, EventID, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetUserParticipationStatus", "Bitrix24");
+    OPI_TestDataRetrieval.Check_BitrixString(Result);
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarEventsStructure(FunctionParameters)
+
+    Result = OPI_Bitrix24.GetCalendarEventsStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Bitrix24.GetCalendarEventsStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsStructure (empty)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
+
+EndProcedure
+
+Procedure Bitrix24_GetCalendarEventsFilterStructure(FunctionParameters)
+
+    Result = OPI_Bitrix24.GetCalendarEventsFilterStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsFilterStructure", "Bitrix24");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Bitrix24.GetCalendarEventsFilterStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetCalendarEventsFilterStructure (empty)", "Bitrix24");
+
+    For Each Element In Result Do
+
+        If OPI_Tools.IsPrimitiveType(Element.Value) Then
+            OPI_TestDataRetrieval.Check_Empty(Element.Value);
+        EndIf;
+
+    EndDo;
 
 EndProcedure
 
@@ -16140,7 +16821,7 @@ Procedure SQLite_CreateConnection(FunctionParameters)
        DeleteFiles(TFN);
     Except
         OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
-    EndTry
+    EndTry;
 
 EndProcedure
 
@@ -16164,7 +16845,7 @@ Procedure SQLite_CloseConnection(FunctionParameters)
        DeleteFiles(TFN);
     Except
         OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
-    EndTry
+    EndTry;
 
 EndProcedure
 
@@ -16242,7 +16923,6 @@ Procedure SQLite_ExecuteSQLQuery(FunctionParameters)
     | INSERT INTO users (name, age) VALUES ('Charlie', 35);
     | COMMIT;";
 
-
     Result = OPI_SQLite.ExecuteSQLQuery(QueryText, , , Connection);
 
     OPI_TestDataRetrieval.WriteLog(Result, "ExecuteSQLQuery (Transaction)", "SQLite"); // SKIP
@@ -16259,7 +16939,7 @@ Procedure SQLite_ExecuteSQLQuery(FunctionParameters)
        DeleteFiles(TFN);
     Except
         OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Database file deletion error", "SQLite");
-    EndTry
+    EndTry;
 
 EndProcedure
 
@@ -16378,7 +17058,7 @@ Procedure SQLite_AddRecords(FunctionParameters)
        DeleteFiles(PictureFile);
     Except
         OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Error deleting a picture file", "SQLite");
-    EndTry
+    EndTry;
 
 EndProcedure
 

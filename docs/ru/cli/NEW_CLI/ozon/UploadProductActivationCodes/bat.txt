@@ -1,5 +1,0 @@
-oint ozon UploadProductActivationCodes ^
- --clientid "***" ^
- --apikey "***" ^
- --productid 1232577507 ^
- --codes "['11111111','22222222']"

@@ -1,5 +1,0 @@
-oint telegram SendAudio ^
- --token "***" ^
- --chat "@testsichee" ^
- --text "Строковое значение" ^
- --audio "C:\Users\Administrator\AppData\Local\Temp\xdd4rddmnrr.mp3"

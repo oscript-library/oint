@@ -1,3 +1,0 @@
-oint slack GetChannel ^
- --token "***" ^
- --channel "C07SLE53V53"
