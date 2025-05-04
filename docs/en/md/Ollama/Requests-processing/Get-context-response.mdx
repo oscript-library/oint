@@ -1,0 +1,110 @@
+﻿---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get context response
+ Receives the next response from the model according to the message history
+
+
+
+`Function GetContextResponse(Val URL, Val Model, Val Messages, Val AdditionalParameters = "", Val AdditionalHeaders = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | Ollama server URL |
+  | Model | --model | String | &#x2714; | Models name |
+  | Messages | --msgs | Array of Structure | &#x2714; | Messages log. See GetContextMessageStructure |
+  | AdditionalParameters | --options | Structure Of KeyAndValue | &#x2716; | Additional parameters. See GetRequestParametersStructure |
+  | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+Method at API documentation: [Generate a chat completion](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL   = "https://api.athenaeum.digital/ollama";
+    Token = "10KO-82..."; // Authorization - not part API Ollama
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Model = "tinyllama";
+
+    MessagesArray = New Array;
+
+    Question1 = OPI_Ollama.GetContextMessageStructure("user", "What is 1C:Enterprise?");
+    Question2 = OPI_Ollama.GetContextMessageStructure("user", "When the first version was released?"); // Question without specifics
+
+    // Adding the first question to the context
+    MessagesArray.Add(Question1);
+
+    Response1 = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, , AdditionalHeaders);
+
+    MessagesArray.Add(Response1["message"]); // Add response to first question in context
+    MessagesArray.Add(Question2); // Add second question in context
+
+    Response2 = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, , AdditionalHeaders);
+
+    MessagesArray.Add(Response2["message"]);
+
+    // ...
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint ollama GetContextResponse \
+             --url "https://api.athenaeum.digital/ollama" \
+             --model "tinyllama" \
+             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is an Enterprise Resource Planning (ERP) software system developed by Cognizant. It is designed to help businesses manage their finances, operations, and customer relationships in a unified platform. The main features of 1C:Enterprise include:\n\n1. Financial Management: Provides real-time financial insights to enable decision-making based on historical trends and forecasts.\n\n2. Operations Management: Automates business processes and optimizes operational efficiency with a comprehensive suite of tools.\n\n3. Customer Relationship Management (CRM): Enables customers to interact with the company seamlessly by providing personalized information, support, and service.\n\n4. Human Resource Management (HRM): Helps businesses manage employee data, onboarding, training, performance management, and HR policies efficiently.\n\n5. Supply Chain Management: Simplifies procurement processes with automated workflows, real-time reporting, and supplier selection tools.\n\n6. Business Intelligence (BI): Provides insights into business data to make informed decisions, and streamlines BI reporting through a centralized dashboard.\n\n7. Integration: Integrates 1C:Enterprise with other systems such as ERPs, CRMs, and HRMS, to facilitate data exchange and collaboration among different departments.\n\n8. Cloud-based: Provides access via the cloud, making it easy to use from anywhere with an internet connection.'},{'role':'user','content':'When the first version was released?'}]" \
+             --headers "{'Authorization':'Bearer ***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint ollama GetContextResponse ^
+             --url "https://api.athenaeum.digital/ollama" ^
+             --model "tinyllama" ^
+             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is an Enterprise Resource Planning (ERP) software system developed by Cognizant. It is designed to help businesses manage their finances, operations, and customer relationships in a unified platform. The main features of 1C:Enterprise include:\n\n1. Financial Management: Provides real-time financial insights to enable decision-making based on historical trends and forecasts.\n\n2. Operations Management: Automates business processes and optimizes operational efficiency with a comprehensive suite of tools.\n\n3. Customer Relationship Management (CRM): Enables customers to interact with the company seamlessly by providing personalized information, support, and service.\n\n4. Human Resource Management (HRM): Helps businesses manage employee data, onboarding, training, performance management, and HR policies efficiently.\n\n5. Supply Chain Management: Simplifies procurement processes with automated workflows, real-time reporting, and supplier selection tools.\n\n6. Business Intelligence (BI): Provides insights into business data to make informed decisions, and streamlines BI reporting through a centralized dashboard.\n\n7. Integration: Integrates 1C:Enterprise with other systems such as ERPs, CRMs, and HRMS, to facilitate data exchange and collaboration among different departments.\n\n8. Cloud-based: Provides access via the cloud, making it easy to use from anywhere with an internet connection.'},{'role':'user','content':'When the first version was released?'}]" ^
+             --headers "{'Authorization':'Bearer ***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "model": "tinyllama",
+ "created_at": "2025-05-01T06:46:43.0816524Z",
+ "message": {
+  "role": "assistant",
+  "content": "1C:Enterprise has been around since 2004. The first release, which is called Version 3, was released in 2005, and it brought some significant changes to the system that have remained constant through the years. The latest version, 6, was released in 2019 and is still in active development. Some of the most notable features in recent versions include:\n\n- Improved interface for users, with a more modern design and streamlined navigation\n- Enhanced reporting functionality to provide more detailed insights into business performance and key areas for improvement\n- Integration with popular accounting software such as Xero and Sage\n- Support for multilingual environments, with options for French, German, Spanish, Italian, Japanese, and Korean.\n\nOverall, 1C:Enterprise has remained a reliable and stable ERP solution for businesses for many years, and new updates and features are released regularly to keep the system up to date and relevant in today's market."
+ },
+ "done_reason": "stop",
+ "done": true,
+ "total_duration": 48411004700,
+ "load_duration": 14000500,
+ "prompt_eval_count": 194,
+ "prompt_eval_duration": 13206002400,
+ "eval_count": 216,
+ "eval_duration": 35186999300
+}
+```

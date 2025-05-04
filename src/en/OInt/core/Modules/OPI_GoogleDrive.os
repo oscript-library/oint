@@ -62,7 +62,7 @@ Function GetObjectInformation(Val Token, Val Identifier) Export
     Parameters = New Structure;
     Parameters.Insert("fields", "*");
 
-    Response = OPI_Tools.Get(URL, Parameters, Headers);
+    Response = OPI_HTTPRequests.Get(URL, Parameters, Headers);
 
     Return Response;
 
@@ -146,7 +146,7 @@ EndFunction
 // Parameters:
 // Token - String - Token - token
 // File - BinaryData,String - File to be uploaded - file
-// Description - Map Of KeyAndValue - See GetFileDescription - props - JSON description or path to .json
+// Description - Map Of KeyAndValue - See GetFileDescription - props
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON response from Google
@@ -203,7 +203,7 @@ Function DownloadFile(Val Token, Val Identifier, Val SavePath = "") Export
     Parameters = New Map;
     Parameters.Insert("alt", "media");
 
-    Response = OPI_Tools.Get(URL, Parameters , Headers, SavePath);
+    Response = OPI_HTTPRequests.Get(URL, Parameters , Headers, SavePath);
 
     Return Response;
 
@@ -244,7 +244,7 @@ Function CopyObject(Val Token, Val Identifier, Val NewName = "", Val NewParent =
 
     EndIf;
 
-    Response = OPI_Tools.Post(URL, Parameters , Headers, True);
+    Response = OPI_HTTPRequests.PostWithBody(URL, Parameters , Headers, True);
 
     Return Response;
 
@@ -295,7 +295,7 @@ Function DeleteObject(Val Token, Val Identifier) Export
 
     Headers  = OPI_GoogleWorkspace.GetAuthorizationHeader(Token);
     URL      = "https://www.googleapis.com/drive/v3/files/" + Identifier;
-    Response = OPI_Tools.Delete(URL, , Headers);
+    Response = OPI_HTTPRequests.Delete(URL, , Headers);
 
     Return Response;
 
@@ -359,7 +359,7 @@ Function CreateComment(Val Token, Val Identifier, Val Comment) Export
     Parameters = New Structure;
     Parameters.Insert("content", Comment);
 
-    Response = OPI_Tools.POST(URL, Parameters, Headers);
+    Response = OPI_HTTPRequests.PostWithBody(URL, Parameters, Headers);
 
     Return Response;
 
@@ -387,7 +387,7 @@ Function GetComment(Val Token, Val ObjectID, Val CommentID) Export
     Parameters = New Structure;
     Parameters.Insert("fields", "*");
 
-    Response = OPI_Tools.Get(URL, Parameters, Headers);
+    Response = OPI_HTTPRequests.Get(URL, Parameters, Headers);
 
     Return Response;
 
@@ -413,7 +413,7 @@ Function GetCommentList(Val Token, Val ObjectID) Export
     Parameters = New Structure;
     Parameters.Insert("fields", "*");
 
-    Response = OPI_Tools.Get(URL, Parameters, Headers);
+    Response = OPI_HTTPRequests.Get(URL, Parameters, Headers);
 
     Return Response;
 
@@ -438,7 +438,7 @@ Function DeleteComment(Val Token, Val ObjectID, Val CommentID) Export
     Headers = OPI_GoogleWorkspace.GetAuthorizationHeader(Token);
     URL     = "https://www.googleapis.com/drive/v3/files/" + ObjectID + "/comments/" + CommentID;
 
-    Response = OPI_Tools.Delete(URL, , Headers);
+    Response = OPI_HTTPRequests.Delete(URL, , Headers);
 
     Return Response;
 
@@ -468,7 +468,7 @@ Procedure GetObjectsListRecursively(Val Headers, ArrayOfObjects, Detailed = Fals
         Parameters.Insert("q", FilterString);
     EndIf;
 
-    Result = OPI_Tools.Get(URL, Parameters, Headers);
+    Result = OPI_HTTPRequests.Get(URL, Parameters, Headers);
 
     Objects = Result[Files];
     Page    = Result[NPT];
@@ -587,13 +587,25 @@ EndFunction
 Function UploadSmallFile(Val Description, Val FileMapping, Val Headers, Val Identifier = "")
 
     URL = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart";
+    URL = StrReplace(URL, "/files", "/files/" + Identifier);
 
     If ValueIsFilled(Identifier) Then
-        URL      = StrReplace(URL, "/files", "/files/" + Identifier);
-        Response = OPI_Tools.PatchMultipartRelated(URL, Description, FileMapping, Headers);
+        Method = "PATCH";
     Else
-        Response = OPI_Tools.PostMultipartRelated(URL, Description, FileMapping, Headers);
+        Method = "POST";
     EndIf;
+
+    HTTPClient = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetHeaders(Headers)
+        .StartMultipartBody(True, "related")
+        .AddDataAsRelated(Description, "application/json; charset=UTF-8");
+
+    For Each File In FileMapping Do
+        HTTPClient.AddDataAsRelated(File.Key, File.Value);
+    EndDo;
+
+    Response = HTTPClient.ProcessRequest(Method).ReturnResponseAsJSONObject(True, True);
 
     Return Response;
 
@@ -609,30 +621,40 @@ Function UploadLargeFile(Val Description, Val FileMapping, Val Headers, Val Iden
     URL = "https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable";
 
     If ValueIsFilled(Identifier) Then
-        URL      = StrReplace(URL, "/files", "/files/" + Identifier);
-        Response = OPI_Tools.Patch(URL, Description, Headers, True, True);
+        URL    = StrReplace(URL, "/files", "/files/" + Identifier);
+        Method = "PATCH";
     Else
-        Response = OPI_Tools.Post(URL, Description, Headers, True, True);
+        Method = "POST";
     EndIf;
+
+    HttpClient = OPI_HTTPRequests.NewRequest().Initialize(URL);
+
+    Response = HttpClient.SetHeaders(Headers)
+        .SetJsonBody(Description)
+        .ProcessRequest(Method)
+        .ReturnResponse(False, True);
 
     UploadURL = Response.Headers["Location"];
 
     If Not ValueIsFilled(UploadURL) Then
-        OPI_Tools.ProcessResponse(Response);
-        Return Response;
+        Return HttpClient.ReturnResponseAsJSONObject(True, True);
     EndIf;
 
-    UploadResponse = UploadFileInParts(Binary, UploadURL);
-    Response       = ?(ValueIsFilled(UploadResponse), UploadResponse, Response);
+    HttpUploadClient = UploadFileInParts(Binary, UploadURL);
 
-    OPI_Tools.ProcessResponse(Response);
+    If HttpUploadClient <> Undefined Then
+        Response = HttpUploadClient.ReturnResponseAsJSONObject(True, True);
+    Else
+        Response = HttpClient.ReturnResponseAsJSONObject(True, True);
+    EndIf;
+
     Return Response;
 
 EndFunction
 
 Function UploadFileInParts(Val Binary, Val UploadURL)
 
-    Response        = "";
+    HttpClient      = Undefined;
     ChunkSize       = 268435456;
     BytesRead       = 0;
     CurrentPosition = 0;
@@ -640,6 +662,9 @@ Function UploadFileInParts(Val Binary, Val UploadURL)
     StrTotalSize    = OPI_Tools.NumberToString(TotalSize);
     DataReader      = New DataReader(Binary);
     SourceStream    = DataReader.SourceStream();
+
+    KBytes = 1024;
+    MByte  = KBytes * KBytes;
 
     While BytesRead < TotalSize Do
 
@@ -665,16 +690,23 @@ Function UploadFileInParts(Val Binary, Val UploadURL)
         AdditionalHeaders.Insert("Content-Range" , StreamHeader);
         AdditionalHeaders.Insert("Content-Type"  , "application/octet-stream");
 
-        Response = OPI_Tools.Put(UploadURL, CurrentData, AdditionalHeaders, False, True);
+        HttpClient = OPI_HTTPRequests
+            .NewRequest()
+            .Initialize(UploadURL)
+            .SetHeaders(AdditionalHeaders)
+            .SetBinaryBody(CurrentData)
+            .ProcessRequest("PUT");
 
-        CheckResult = CheckPartUpload(Response, StrTotalSize, AdditionalHeaders, UploadURL, CurrentPosition);
+        CheckResult = CheckPartUpload(HttpClient
+            , StrTotalSize
+            , AdditionalHeaders
+            , UploadURL
+            , CurrentPosition);
 
-        If ValueIsFilled(CheckResult) Then
+        If CheckResult <> Undefined Then
             Return CheckResult;
         EndIf;
 
-        KBytes = 1024;
-        MByte  = KBytes * KBytes;
         OPI_Tools.ProgressInformation(CurrentPosition, TotalSize, "MB", MByte);
 
         RunGarbageCollection();
@@ -682,11 +714,13 @@ Function UploadFileInParts(Val Binary, Val UploadURL)
 
     EndDo;
 
-    Return Response;
+    OPI_Tools.ProgressInformation(TotalSize, TotalSize, "MB", MByte);
+
+    Return HttpClient;
 
 EndFunction
 
-Function CheckPartUpload(Response, StrTotalSize, AdditionalHeaders, UploadURL, CurrentPosition)
+Function CheckPartUpload(HttpClient, StrTotalSize, AdditionalHeaders, UploadURL, CurrentPosition)
 
     StartOfErrorCodes   = 400;
     EndOfFailureCodes   = 600;
@@ -694,17 +728,21 @@ Function CheckPartUpload(Response, StrTotalSize, AdditionalHeaders, UploadURL, C
     EndOfSuccessCodes   = 300;
     Redirection         = 308;
 
+    Response = HttpClient.ReturnResponse(False, True);
+
     If Response.StatusCode >= StartOfErrorCodes And Response.StatusCode < EndOfFailureCodes Then
 
         StreamHeader = "bytes */" + StrTotalSize;
         AdditionalHeaders.Insert("Content-Range" , StreamHeader);
 
-        CheckResponse = OPI_Tools.Put(UploadURL, "", AdditionalHeaders, False, True);
+        HttpCheckClient = OPI_HTTPRequests.NewRequest().Initialize(UploadURL);
+        CheckResponse   = HttpCheckClient.SetHeaders(AdditionalHeaders)
+            .ProcessRequest("PUT")
+            .ReturnResponse(False, True);
 
         If CheckResponse.StatusCode >= StartOfSuccessCodes And CheckResponse.StatusCode < EndOfSuccessCodes Then
 
-            OPI_Tools.ProcessResponse(CheckResponse);
-            Return CheckResponse;
+            Return HttpCheckClient;
 
         ElsIf CheckResponse.StatusCode = Redirection Then
 
@@ -712,8 +750,7 @@ Function CheckPartUpload(Response, StrTotalSize, AdditionalHeaders, UploadURL, C
 
         Else
 
-            OPI_Tools.ProcessResponse(Response);
-            Return Response;
+            Return HttpClient;
 
         EndIf;
 
@@ -722,8 +759,7 @@ Function CheckPartUpload(Response, StrTotalSize, AdditionalHeaders, UploadURL, C
     EndIf;
 
     If Not ValueIsFilled(UploadedData) Then
-        OPI_Tools.ProcessResponse(Response);
-        Return Response;
+        Return HttpClient;
     EndIf;
 
     UploadedData = StrReplace(UploadedData, "bytes=", "");
@@ -731,13 +767,12 @@ Function CheckPartUpload(Response, StrTotalSize, AdditionalHeaders, UploadURL, C
     PartsRequired      = 2;
 
     If Not ArrayOfInformation.Count() = PartsRequired Then
-        OPI_Tools.ProcessResponse(Response);
-        Return Response;
+        Return HttpClient;
     EndIf;
 
     CurrentPosition = Number(ArrayOfInformation[1]) + 1;
 
-    Return "";
+    Return Undefined;
 
 EndFunction
 

@@ -25,7 +25,7 @@
   <usePurposes>PersonalComputer</usePurposes>
   <scriptVariant>English</scriptVariant>
   <vendor>Bayselonarrend</vendor>
-  <version>1.21.0</version>
+  <version>1.22.0</version>
   <detailedInformation>
     <key>en</key>
     <value>The Open Integration Package is a set of libraries for integrating with some popular APIs for 1C:Enterprise. It consists of common modules, each responsible for its own API, as well as several shared tool modules..</value>
@@ -56,6 +56,7 @@
   <commonModules>CommonModule.OPI_MySQL</commonModules>
   <commonModules>CommonModule.OPI_Neocities</commonModules>
   <commonModules>CommonModule.OPI_Notion</commonModules>
+  <commonModules>CommonModule.OPI_Ollama</commonModules>
   <commonModules>CommonModule.OPI_Ozon</commonModules>
   <commonModules>CommonModule.OPI_PostgreSQL</commonModules>
   <commonModules>CommonModule.OPI_RCON</commonModules>
@@ -73,6 +74,7 @@
   <commonModules>CommonModule.OPI_YandexMarket</commonModules>
   <commonModules>CommonModule.OPI_YandexMetrika</commonModules>
   <commonModules>CommonModule.OPI_Tools</commonModules>
+  <commonModules>CommonModule.OPI_HTTPRequests</commonModules>
   <commonModules>CommonModule.OPI_SQLQueries</commonModules>
   <commonModules>CommonModule.OPI_AddIns</commonModules>
   <commonModules>CommonModule.OPI_Cryptography</commonModules>
@@ -80,4 +82,5 @@
   <commonModules>CommonModule.OPI_TypeConversion</commonModules>
   <commonModules>CommonModule.OPI_Tests</commonModules>
   <commonModules>CommonModule.OPI_TestsCLI</commonModules>
+  <dataProcessors>DataProcessor.OPI_HTTPClient</dataProcessors>
 </mdclass:Configuration>

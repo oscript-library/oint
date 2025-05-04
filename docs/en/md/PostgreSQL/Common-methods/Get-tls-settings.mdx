@@ -32,10 +32,15 @@ Passing Tls settings together with passing an already created connection to the 
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-
+    Result = OPI_PostgreSQL.GetTlsSettings(False);
 ```
  
 
 
 
-
+```json title="Result"
+{
+ "use_tls": true,
+ "accept_invalid_certs": false
+}
+```

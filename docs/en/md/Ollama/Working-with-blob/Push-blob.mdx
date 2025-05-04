@@ -1,0 +1,79 @@
+﻿---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Push BLOB
+ Sends binary data to the Ollama server
+
+
+
+`Function PushBlob(Val URL, Val Data, Val AdditionalHeaders = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | Ollama server URL |
+  | Data | --data | String, BinaryData | &#x2714; | File data or filepath |
+  | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+Method at API documentation: [Push a Blob](https://github.com/ollama/ollama/blob/main/docs/api.md#push-a-blob)
+
+Parameters with Binary data type can also accept file paths on disk and URLs
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL   = "https://api.athenaeum.digital/ollama";
+    Token = "10KO-82..."; // Authorization - not part API Ollama
+
+    Image = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Path or Binary Data
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.PushBlob(URL, Image, AdditionalHeaders);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint ollama PushBlob \
+             --url "https://api.athenaeum.digital/ollama" \
+             --data "C:\Users\Administrator\AppData\Local\Temp\4p03xhfr0z4.tmp" \
+             --headers "{'Authorization':'Bearer ***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint ollama PushBlob ^
+             --url "https://api.athenaeum.digital/ollama" ^
+             --data "C:\Users\Administrator\AppData\Local\Temp\4p03xhfr0z4.tmp" ^
+             --headers "{'Authorization':'Bearer ***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "status_code": 201,
+ "digest": "d25644c7d7370a012a3f84a4bfc8960f8de660c55fa032d69415214b37086477"
+}
+```

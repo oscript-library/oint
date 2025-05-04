@@ -76,6 +76,8 @@ Function GetTestingSectionMapping() Export
     Sections.Insert("S3"             , 5);
     Sections.Insert("TCP"            , 5);
     Sections.Insert("GreenAPI"       , 5);
+    Sections.Insert("Ollama"         , 5);
+    Sections.Insert("HTTPClient"     , 5);
 
     Return Sections;
 
@@ -113,6 +115,8 @@ Function GetTestingSectionMappingGA() Export
     Sections.Insert("S3"             , StandardDependencies);
     Sections.Insert("TCP"            , StandardDependencies);
     Sections.Insert("GreenAPI"       , StandardDependencies);
+    Sections.Insert("Ollama"         , StandardDependencies);
+    Sections.Insert("HTTPClient"     , StandardDependencies);
 
     Return Sections;
 
@@ -146,6 +150,8 @@ Function GetTestTable() Export
     GreenAPI  = "GreenAPI";
     RCON      = "RCON";
     MySQL     = "MySQL";
+    Ollama    = "Ollama";
+    Http      = "HTTPClient";
 
     TestTable = New ValueTable;
     TestTable.Columns.Add("Method");
@@ -294,6 +300,11 @@ Function GetTestTable() Export
     NewTest(TestTable, "GAPI_MessageLogs"                     , "Message logs"                    , GreenAPI);
     NewTest(TestTable, "GAPI_Account"                         , "Account"                         , GreenAPI);
     NewTest(TestTable, "RC_CommandsExecution"                 , "Commands execution"              , RCON);
+    NewTest(TestTable, "OLLM_RequestsProcessing"              , "Requests processing"             , Ollama);
+    NewTest(TestTable, "OLLM_ModelsManagement"                , "Models management"               , Ollama);
+    NewTest(TestTable, "OLLM_WorkingWithBlob"                 , "Working with Blob"               , Ollama);
+    NewTest(TestTable, "HTTP_Initialization"                  , "Initialization"                  , Http);
+    NewTest(TestTable, "HTTP_BodySet"                         , "Body set"                        , Http);
 
     Return TestTable;
 
@@ -359,8 +370,13 @@ Function FormYAXTestsCLI() Export
     For Each Section In Sections Do
 
         CurrentSection = Section.Key;
-        Filter         = New Structure("Section", CurrentSection);
-        SectionTests   = TestTable.FindRows(Filter);
+
+        If CurrentSection = "HTTP" Then
+            Continue;
+        EndIf;
+
+        Filter       = New Structure("Section", CurrentSection);
+        SectionTests = TestTable.FindRows(Filter);
 
         Set = Module.ДобавитьТестовыйНабор("CLI_" + CurrentSection);
 
@@ -376,11 +392,26 @@ EndFunction
 
 Function FormAssertsTestsCLI() Export
 
-    TestTable    = GetTestTable();
     ArrayOfTests = New Array;
 
-    For Each Test In TestTable Do
-        ArrayOfTests.Add("CLI_" + Test.Method);
+    Sections  = GetTestingSectionMapping();
+    TestTable = GetTestTable();
+
+    For Each Section In Sections Do
+
+        CurrentSection = Section.Key;
+
+        If CurrentSection = "HTTP" Then
+            Continue;
+        EndIf;
+
+        Filter       = New Structure("Section", CurrentSection);
+        SectionTests = TestTable.FindRows(Filter);
+
+        For Each Test In SectionTests Do
+            ArrayOfTests.Add("CLI_" + Test.Method);
+        EndDo;
+
     EndDo;
 
     Return ArrayOfTests;
@@ -1794,7 +1825,7 @@ EndProcedure
 Procedure Check_OzonAttributesList(Val Result) Export
 
     ExpectsThat(Result["result"]).ИмеетТип("Array");
-    ExpectsThat(Result["result"][0]["description"]).Заполнено();
+    ExpectsThat(Result["result"][0]["name"]).Заполнено();
     ExpectsThat(Result["result"][0]["id"]).Заполнено();
 
 EndProcedure
@@ -2124,6 +2155,12 @@ Procedure Check_Equality(Val Value1, Val Value2) Export
 
 EndProcedure
 
+Procedure Check_Inequality(Val Value1, Val Value2) Export
+
+    ExpectsThat(Value1 = Value2).Равно(False);
+
+EndProcedure
+
 Procedure Check_SQLiteSuccess(Val Result) Export
 
     ExpectsThat(Result["result"]).Равно(True);
@@ -2315,6 +2352,78 @@ EndProcedure
 Procedure Check_GreenQueueClearing(Val Result) Export
 
     ExpectsThat(Result["isCleared"]).Равно(True);
+
+EndProcedure
+
+Procedure Check_OllamaResponse(Val Result, Val Completed = True) Export
+
+   ExpectsThat(Result["model"]).Заполнено();
+   ExpectsThat(Result["response"]).Заполнено();
+   ExpectsThat(Result["done"]).Равно(Completed);
+
+EndProcedure
+
+Procedure Check_OllamaEmbeddings(Val Result) Export
+
+    ExpectsThat(Result["embeddings"]).Заполнено();
+
+EndProcedure
+
+Procedure Check_OllamaLoadUnload(Val Result, Val Unload) Export
+
+   ExpectsThat(Result["model"]).Заполнено();
+   ExpectsThat(Result["done"]).Равно(True);
+
+   If Unload Then
+       ExpectsThat(Result["done_reason"]).Равно("unload");
+   Else
+       ExpectsThat(Result["done_reason"]).Равно("load");
+   EndIf;
+
+EndProcedure
+
+Procedure Check_OllamaMessage(Val Result, Val Completed = True) Export
+
+   ExpectsThat(Result["model"]).Заполнено();
+   ExpectsThat(Result["message"]).Заполнено();
+   ExpectsThat(Result["done"]).Равно(Completed);
+
+EndProcedure
+
+Procedure Check_OllamaSuccess(Val Result) Export
+
+   ExpectsThat(Result["status"]).Равно("success");
+
+EndProcedure
+
+Procedure Check_OllamaModels(Val Result) Export
+
+    ExpectsThat(Result["models"]).ИмеетТип("Array");
+
+EndProcedure
+
+Procedure Check_OllamaModelInfo(Val Result) Export
+
+   ExpectsThat(Result["parameters"]).Заполнено();
+   ExpectsThat(Result["model_info"]).Заполнено();
+
+EndProcedure
+
+Procedure Check_OllamaVersion(Val Result) Export
+
+   ExpectsThat(Result["version"]).Заполнено();
+
+EndProcedure
+
+Procedure Check_OllamaCode(Val Result) Export
+
+    ExpectsThat(Result["status_code"] < 300).Равно(True);
+
+EndProcedure
+
+Procedure Check_OllamaError(Val Result) Export
+
+    ExpectsThat(Result["status_code"] >= 400).Равно(True);
 
 EndProcedure
 
@@ -2644,6 +2753,10 @@ Procedure ProcessSpecialOptionsSecrets(Val Library, Val Option, Value)
 
         ProcessSecretsMySQL(Option, Value);
 
+    ElsIf Library = "ollama" Then
+
+        ProcessSecretsMySQLOllama(Option, Value);
+
     Else
         Return;
     EndIf;
@@ -2687,6 +2800,18 @@ Procedure ProcessSecretsMySQL(Val Option, Value)
     ElsIf Option = "addr" Then
 
         Value = "127.0.0.1";
+
+    Else
+        Return;
+    EndIf;
+
+EndProcedure
+
+Procedure ProcessSecretsMySQLOllama(Val Option, Value)
+
+    If Option = "headers" Then
+
+        Value = New Structure("Authorization", "***");
 
     Else
         Return;

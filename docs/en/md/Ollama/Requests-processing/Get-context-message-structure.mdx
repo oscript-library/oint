@@ -1,0 +1,60 @@
+﻿---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get context message structure
+ Gets the message structure for a list of request messages in context
+
+
+
+`Function GetContextMessageStructure(Val Role, Val Text, Val Pictures = "", Val Tools = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Role | --role | String | &#x2714; | Message source: system, user, assistant, tool |
+  | Text | --text | String | &#x2714; | Message text |
+  | Pictures | --images | Array Of String | &#x2716; | List of pictures in Base64 format (for multimodal models like llava) |
+  | Tools | --tools | Array Of String | &#x2716; | List of tools in JSON format that the model should use |
+
+  
+  Returns:  Structure Of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Ollama.GetContextMessageStructure("user", "Hello!");
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ollama GetContextMessageStructure \
+             --role "user" \
+             --text "Hello!"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ollama GetContextMessageStructure ^
+             --role "user" ^
+             --text "Hello!"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "role": "user",
+ "content": "Hello!"
+}
+```

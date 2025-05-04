@@ -4,7 +4,7 @@ pipeline {
    	stages {
           stage('Prepare'){
              steps{
-                powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.21.0.ospx; del oint-1.21.0.ospx'
+                powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.22.0.ospx; del oint-1.22.0.ospx'
                 powershell encoding: 'UTF-8', script:'oscript -make ./src/en/cli/core/Classes/app.os oint.exe'          
              }
           }
@@ -74,6 +74,11 @@ pipeline {
           stage('notion'){
              steps{
                 test_notion()
+             }
+          }
+          stage('ollama'){
+             steps{
+                test_ollama()
              }
           }
           stage('ozon'){
@@ -1768,6 +1773,96 @@ def test_notion(){
 }
 
 
+def test_ollama(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetVersion --url "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetResponse --url "test" --model "test" --prompt "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetContextResponse --url "test" --model "test" --msgs "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetEmbeddings --url "test" --model "test" --input "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetRequestParameterStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetEmbeddingsParameterStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetContextParameterStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetContextMessageStructure --role "test" --text "test" --images "test" --tools "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetModelList --url "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ListRunningModels --url "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetModelInformation --url "test" --model "test" --verbose "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama CreateModel --url "test" --model "test" --settings "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama CopyModel --url "test" --model "test" --name "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama DeleteModel --url "test" --model "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama LoadModelToMemory --url "test" --model "test" --keep "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama UnloadModelFromMemory --url "test" --model "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama PushModel --url "test" --model "test" --insecure "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama PullModel --url "test" --model "test" --insecure "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama GetModelSettingsStructure --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama PushBlob --url "test" --data "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama CheckBlob --url "test" --digest "test" --headers "test" --debug --test '
+               }
+
+}
+
+
 def test_ozon(){
 					
 
@@ -2490,11 +2585,11 @@ def test_telegram(){
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
-					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageText --token "test" --chat "test" --message "test" --text "test" --debug --test '
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageText --token "test" --chat "test" --message "test" --text "test" --parsemode "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
-					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageCaption --token "test" --chat "test" --message "test" --caption "test" --debug --test '
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ReplaceMessageCaption --token "test" --chat "test" --message "test" --caption "test" --parsemode "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
@@ -3191,7 +3286,7 @@ pipeline {
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.21.0.ospx; del oint-1.21.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.22.0.ospx; del oint-1.22.0.ospx'
             powershell encoding: 'UTF-8', script:'oscript -make ./src/en/cli/core/Classes/app.os oint.exe'          
          }
       }
@@ -3210,6 +3305,7 @@ test_greenapi()
 test_mysql()
 test_neocities()
 test_notion()
+test_ollama()
 test_ozon()
 test_postgres()
 test_rcon()

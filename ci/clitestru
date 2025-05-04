@@ -4,7 +4,7 @@ pipeline {
    	stages {
           stage('Prepare'){
              steps{
-                powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.21.0.ospx; del oint-1.21.0.ospx'
+                powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.22.0.ospx; del oint-1.22.0.ospx'
                 powershell encoding: 'UTF-8', script:'oscript -make ./src/ru/cli/core/Classes/app.os oint.exe'          
              }
           }
@@ -74,6 +74,11 @@ pipeline {
           stage('notion'){
              steps{
                 test_notion()
+             }
+          }
+          stage('ollama'){
+             steps{
+                test_ollama()
              }
           }
           stage('ozon'){
@@ -1768,6 +1773,96 @@ def test_notion(){
 }
 
 
+def test_ollama(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьВерсию --url "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьОтвет --url "test" --model "test" --prompt "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьОтветВКонтексте --url "test" --model "test" --msgs "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьПредставления --url "test" --model "test" --input "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСтруктуруПараметровЗапроса --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСтруктуруПараметровПредставлений --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСтруктуруПараметровВКонтексте --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСтруктуруСообщенияКонтекста --role "test" --text "test" --images "test" --tools "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСписокМоделей --url "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСписокЗапущенныхМоделей --url "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьИнформациюОМодели --url "test" --model "test" --verbose "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama СоздатьМодель --url "test" --model "test" --settings "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama КопироватьМодель --url "test" --model "test" --name "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama УдалитьМодель --url "test" --model "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ЗагрузитьМодельВПамять --url "test" --model "test" --keep "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ВыгрузитьМодельИзПамяти --url "test" --model "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ОтправитьМодель --url "test" --model "test" --insecure "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama СкачатьМодель --url "test" --model "test" --insecure "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПолучитьСтруктуруНастроекМодели --empty "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ОтправитьBlob --url "test" --data "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe ollama ПроверитьBlob --url "test" --digest "test" --headers "test" --debug --test '
+               }
+
+}
+
+
 def test_ozon(){
 					
 
@@ -2490,11 +2585,11 @@ def test_telegram(){
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
-					powershell encoding: 'UTF-8', script:'./oint.exe telegram ЗаменитьТекстСообщения --token "test" --chat "test" --message "test" --text "test" --debug --test '
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ЗаменитьТекстСообщения --token "test" --chat "test" --message "test" --text "test" --parsemode "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
-					powershell encoding: 'UTF-8', script:'./oint.exe telegram ЗаменитьОписаниеСообщения --token "test" --chat "test" --message "test" --caption "test" --debug --test '
+					powershell encoding: 'UTF-8', script:'./oint.exe telegram ЗаменитьОписаниеСообщения --token "test" --chat "test" --message "test" --caption "test" --parsemode "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
@@ -3191,7 +3286,7 @@ pipeline {
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.21.0.ospx; del oint-1.21.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.22.0.ospx; del oint-1.22.0.ospx'
             powershell encoding: 'UTF-8', script:'oscript -make ./src/ru/cli/core/Classes/app.os oint.exe'          
          }
       }
@@ -3210,6 +3305,7 @@ test_greenapi()
 test_mysql()
 test_neocities()
 test_notion()
+test_ollama()
 test_ozon()
 test_postgres()
 test_rcon()

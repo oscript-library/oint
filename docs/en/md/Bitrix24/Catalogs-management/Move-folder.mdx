@@ -32,17 +32,17 @@ Method at API documentation: [disk.folder.moveto](https://dev.1c-bitrix.ru/rest_
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    DestinationID = "30988";
-    FolderID      = "30994";
+    DestinationID = "32302";
+    FolderID      = "32308";
 
     URL = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
 
     Result = OPI_Bitrix24.MoveFolder(URL, FolderID, DestinationID);
 
-    FolderID = "30992";
+    FolderID = "32306";
 
     URL   = "b24-ar17wx.bitrix24.by";
-    Token = "f85df267006e9f06006b12e400000001000...";
+    Token = "139a1268006e9f06006b12e400000001000...";
 
     Result = OPI_Bitrix24.MoveFolder(URL, FolderID, DestinationID, Token);
 
@@ -56,8 +56,8 @@ Method at API documentation: [disk.folder.moveto](https://dev.1c-bitrix.ru/rest_
         ```bash
             oint bitrix24 MoveFolder \
              --url "b24-ar17wx.bitrix24.by" \
-             --folderid 31164 \
-             --tagetid 31160 \
+             --folderid 32598 \
+             --tagetid 32594 \
              --token "***"
         ```
     </TabItem>
@@ -66,8 +66,8 @@ Method at API documentation: [disk.folder.moveto](https://dev.1c-bitrix.ru/rest_
         ```batch
             oint bitrix24 MoveFolder ^
              --url "b24-ar17wx.bitrix24.by" ^
-             --folderid 31164 ^
-             --tagetid 31160 ^
+             --folderid 32598 ^
+             --tagetid 32594 ^
              --token "***"
         ```
     </TabItem>

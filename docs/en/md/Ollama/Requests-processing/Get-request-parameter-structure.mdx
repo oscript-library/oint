@@ -1,0 +1,61 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get request parameter structure
+ Gets the structure of additional parameters for request processing
+
+
+
+`Function GetRequestParameterStructure(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+
+  
+  Returns:  Structure Of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Ollama.GetRequestParameterStructure();
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ollama GetRequestParameterStructure \
+             --empty true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ollama GetRequestParameterStructure ^
+             --empty true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "format": "<the format in which the response is returned: json or JSON schema>",
+ "options": "<additional model parameters listed in the Modelfile documentation>",
+ "system": "<system message (overrides what is defined in Modelfile)>",
+ "template": "<prompt template (overrides what is defined in Modelfile)>",
+ "raw": "<true > disable formatting prompt>",
+ "keep_alive": "<how long the model will remain loaded in memory after a request>",
+ "suffix": "<text after the model's response>",
+ "images": "<list of images in Base64 format (for multimodal models like llava)>"
+}
+```

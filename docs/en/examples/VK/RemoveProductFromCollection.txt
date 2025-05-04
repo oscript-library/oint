@@ -1,6 +1,6 @@
 ﻿    Parameters = GetVKParameters();
 
-    Product   = "10935420";
+    Product   = "11052374";
     Selection = "137";
 
     Result = OPI_VK.RemoveProductFromSelection(Product, Selection, Parameters);

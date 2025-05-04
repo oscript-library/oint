@@ -1,0 +1,46 @@
+﻿---
+sidebar_position: 11
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get model settings structure
+ Gets the settings structure for creating a new model
+
+
+
+`Function GetModelSettingsStructure(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+
+  
+  Returns:  Structure Of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Ollama.GetModelSettingsStructure();
+```
+ 
+
+
+
+```json title="Result"
+{
+ "from": "<the name of the existing model from which the new model will be created>",
+ "files": "<list of file names or SHA256 blobs from which the model will be created>",
+ "adapters": "<list of file names or SHA256 blobs for LORA adapters>",
+ "template": "<new model prompt template>",
+ "license": "<a string or list of strings of license text for the model>",
+ "system": "<system prompt for the model>",
+ "parameters": "<model parameter list>",
+ "messages": "<list of context message objects>",
+ "quantize": "<quantize non-quantized (e.g. float16) model>"
+}
+```

@@ -30,10 +30,15 @@ Tls settings can only be set when a connection is created: explicitly, by using 
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-
+    Result = OPI_TCP.GetTlsSettings(False);
 ```
  
 
 
 
-
+```json title="Result"
+{
+ "use_tls": true,
+ "accept_invalid_certs": false
+}
+```

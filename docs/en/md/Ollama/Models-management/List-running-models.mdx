@@ -1,0 +1,68 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# List running models
+ Gets a list of running models
+
+
+
+`Function ListRunningModels(Val URL, Val AdditionalHeaders = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | Ollama server URL |
+  | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+Method at API documentation: [List Running Models](https://github.com/ollama/ollama/blob/main/docs/api.md#list-running-models)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL   = "https://api.athenaeum.digital/ollama";
+    Token = "10KO-82..."; // Authorization - not part API Ollama
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.ListRunningModels(URL, AdditionalHeaders);
+```
+ 
+
+
+
+```json title="Result"
+{
+ "models": [
+  {
+   "name": "mario:latest",
+   "model": "mario:latest",
+   "size": 1387280384,
+   "digest": "83472d32997e219d78e3e480763e7b72beca170aaa02f3f2e2dbf613c248dee4",
+   "details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "llama",
+    "families": [
+     "llama"
+    ],
+    "parameter_size": "1.1B",
+    "quantization_level": "Q4_0"
+   },
+   "expires_at": "2025-05-01T09:54:22.4557169+03:00",
+   "size_vram": 0
+  }
+ ]
+}
+```

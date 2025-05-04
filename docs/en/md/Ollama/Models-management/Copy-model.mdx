@@ -1,0 +1,54 @@
+﻿---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Copy model
+ Copies an existing model
+
+
+
+`Function CopyModel(Val URL, Val Model, Val Name, Val AdditionalHeaders = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | Ollama server URL |
+  | Model | --model | String | &#x2714; | Name of existing model |
+  | Name | --name | String | &#x2714; | The name of the new model |
+  | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+Method at API documentation: [Copy a Model](https://github.com/ollama/ollama/blob/main/docs/api.md#copy-a-model)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL   = "https://api.athenaeum.digital/ollama";
+    Token = "10KO-82..."; // Authorization - not part API Ollama
+
+    Model = "mario";
+    Name  = "mario2";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.CopyModel(URL, Model, Name, AdditionalHeaders);
+```
+ 
+
+
+
+```json title="Result"
+{
+ "status_code": 200
+}
+```

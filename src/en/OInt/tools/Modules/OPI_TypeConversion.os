@@ -46,15 +46,23 @@ Procedure GetBinaryData(Value, Val Force = False, Val TryB64 = True) Export
     Try
 
         If TypeOf(Value) = Type("BinaryData") Then
+
             Return;
+
+        ElsIf ThisIsCollection(Value) Then
+
+            Value = OPI_Tools.JSONString(Value);
+            Value = ПолучитьДвоичныеДанныеИзСтроки(Value);
+
         Else
+            GetLine(Value);
             ConvertSourceToValue(Value, TryB64);
         EndIf;
 
     Except
 
         If Force Then
-            Value = OPI_Tools.NumberToString(Value);
+            GetLine(Value);
             Value = ПолучитьДвоичныеДанныеИзСтроки(Value);
         Else
             Raise "Error getting binary data from parameter: " + ErrorDescription();
@@ -234,7 +242,7 @@ Procedure GetLine(Value, Val FromSource = False) Export
             ElsIf StrStartsWith(TrimL(ValueES), "http://")
                 Or StrStartsWith(TrimL(ValueES), "https://") Then
 
-                Value = OPI_Tools.Get(ValueES);
+                Value = OPI_HTTPRequests.Get(ValueES);
                 GetLine(Value);
 
             Else
@@ -329,7 +337,9 @@ Procedure GetNumber(Value) Export
 
                 EndIf;
 
+                // BSLLS:TryNumber-off
                 Value = Number(Value_);
+                // BSLLS:TryNumber-on
 
             Except
                 Return;
@@ -355,10 +365,15 @@ Procedure GetFileOnDisk(Value, Val Extension = "tmp") Export
 
     Else
 
-        OPI_TypeConversion.GetBinaryData(Value, True);
+        GetBinaryData(Value, True);
+
+        // BSLLS:MissingTemporaryFileDeletion-off
 
         //@skip-check missing-temporary-file-deletion
         Path = GetTempFileName(Extension);
+
+        // BSLLS:MissingTemporaryFileDeletion-on
+
         Value.Write(Path);
 
         ReturnStructure.Insert("Path"     , Path);
@@ -404,7 +419,7 @@ Procedure ConvertSourceToValue(Value, TryB64)
     ElsIf StrStartsWith(TrimL(ValueES), "http://")
         Or StrStartsWith(TrimL(ValueES), "https://") Then
 
-        Value = OPI_Tools.Get(ValueES);
+        Value = OPI_HTTPRequests.Get(ValueES);
 
     Else
 

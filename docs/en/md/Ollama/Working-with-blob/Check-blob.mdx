@@ -1,0 +1,75 @@
+﻿---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Check BLOB
+ Checks the existence of a BLOB by its SHA256 digest
+
+
+
+`Function CheckBlob(Val URL, Val SHA256, Val AdditionalHeaders = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | Ollama server URL |
+  | SHA256 | --digest | String | &#x2714; | SHA256 BLOB digest |
+  | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+Method at API documentation: [Check if a Blob Exist](https://github.com/ollama/ollama/blob/main/docs/api.md#check-if-a-blob-exists)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL    = "https://api.athenaeum.digital/ollama";
+    Token  = "10KO-82..."; // Authorization - not part API Ollama
+    SHA256 = "1bcf78c1dbf255ab0917f4d7763890d6b7189bb4af446e0e77f29e0f9b4d48fa";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.CheckBlob(URL, SHA256, AdditionalHeaders);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint ollama CheckBlob \
+             --url "https://api.athenaeum.digital/ollama" \
+             --digest "yoyoyo" \
+             --headers "{'Authorization':'Bearer ***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint ollama CheckBlob ^
+             --url "https://api.athenaeum.digital/ollama" ^
+             --digest "yoyoyo" ^
+             --headers "{'Authorization':'Bearer ***'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "status_code": 200
+}
+```

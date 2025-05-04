@@ -1,0 +1,56 @@
+﻿---
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get embeddings parameter structure
+ Gets the structure of additional parameters for processing embeddings requests
+
+
+
+`Function GetEmbeddingsParameterStructure(Val Clear = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Clear | --empty | Boolean | &#x2716; | True > structure with empty valuse, False > field descriptions at values |
+
+  
+  Returns:  Structure Of KeyAndValue - Fields structure
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Result = OPI_Ollama.GetEmbeddingsParameterStructure();
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ollama GetEmbeddingsParameterStructure \
+             --empty true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ollama GetEmbeddingsParameterStructure ^
+             --empty true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "options": "<additional model parameters listed in the Modelfile documentation>",
+ "keep_alive": "<how long the model will remain loaded in memory after a request>",
+ "truncate": "<trims the end of each response to fit within the context length. Returns an error if false and the length is exceeded>"
+}
+```

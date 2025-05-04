@@ -40,6 +40,9 @@
 // BSLLS:CommentedCode-off
 // BSLLS:AssignAliasFieldsInQuery-off
 // BSLLS:UsingHardcodeNetworkAddress-off
+// BSLLS:UnreachableCode-off
+// BSLLS:UnusedLocalMethod-off
+// BSLLS:NestedFunctionInParameters-off
 
 //@skip-check undefined-variable
 //@skip-check wrong-string-literal-content
@@ -921,6 +924,7 @@ Procedure GD_UploadDeleteFile() Export
     OPI_TestDataRetrieval.ParameterToCollection("GD_Catalog"  , TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Picture"     , TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Picture2"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Big"         , TestParameters);
 
     TestParameters.Insert("ArrayOfDeletions", New Array);
 
@@ -1282,6 +1286,7 @@ Procedure DropboxAPI_UploadFile() Export
     TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("Dropbox_Token", TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Picture"      , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Big"          , TestParameters);
 
     Dropbox_UploadFile(TestParameters);
     Dropbox_GetObjectInformation(TestParameters);
@@ -2257,6 +2262,8 @@ Procedure TC_Client() Export
     TCP_ReadLine(TestParameters);
     TCP_SendLine(TestParameters);
     TCP_ProcessRequest(TestParameters);
+    TCP_GetTlsSettings(TestParameters);
+    TCP_GetLastError(TestParameters);
 
 EndProcedure
 
@@ -2348,6 +2355,7 @@ Procedure Postgres_CommonMethods() Export
     PostgreSQL_CloseConnection(TestParameters);
     PostgreSQL_IsConnector(TestParameters);
     PostgreSQL_ExecuteSQLQuery(TestParameters);
+    PostgreSQL_GetTlsSettings(TestParameters);
 
 EndProcedure
 
@@ -2390,6 +2398,7 @@ Procedure MYS_CommonMethods() Export
     MySQL_CloseConnection(TestParameters);
     MySQL_IsConnector(TestParameters);
     MySQL_ExecuteSQLQuery(TestParameters);
+    MySQL_GetTlsSettings(TestParameters);
 
 EndProcedure
 
@@ -2438,9 +2447,9 @@ Procedure GAPI_Account() Export
     GreenAPI_GetInstanceStatus(TestParameters);
     GreenAPI_SetProfilePicture(TestParameters);
     GreenAPI_RebootInstance(TestParameters);
-    GreenAPI_GetAuthorizationCode(TestParameters);
-    GreenAPI_LogoutInstance(TestParameters);
-    GreenAPI_GetQR(TestParameters);
+    // GreenAPI_GetAuthorizationCode(TestParameters);
+    // GreenAPI_LogoutInstance(TestParameters);
+    // GreenAPI_GetQR(TestParameters);
 
 EndProcedure
 
@@ -2557,6 +2566,95 @@ Procedure RC_CommandsExecution() Export
     RCON_CreateConnection(TestParameters);
     RCON_ExecuteCommand(TestParameters);
     RCON_IsConnector(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region Ollama
+
+Procedure OLLM_RequestsProcessing() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Ollama_URL"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ollama_Token", TestParameters);
+
+    Ollama_PullModel(TestParameters);
+    Ollama_GetVersion(TestParameters);
+    Ollama_GetResponse(TestParameters);
+    Ollama_GetContextResponse(TestParameters);
+    Ollama_GetEmbeddings(TestParameters);
+    Ollama_GetRequestParameterStructure(TestParameters);
+    Ollama_GetContextParameterStructure(TestParameters);
+    Ollama_GetContextMessageStructure(TestParameters);
+    Ollama_GetEmbeddingsParameterStructure(TestParameters);
+
+EndProcedure
+
+Procedure OLLM_ModelsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Ollama_URL"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ollama_Token", TestParameters);
+
+    Ollama_PullModel(TestParameters);
+    Ollama_LoadModelToMemory(TestParameters);
+    Ollama_UnloadModelFromMemory(TestParameters);
+    Ollama_CreateModel(TestParameters);
+    Ollama_GetModelInformation(TestParameters);
+    Ollama_GetModelList(TestParameters);
+    Ollama_ListRunningModels(TestParameters);
+    Ollama_CopyModel(TestParameters);
+    Ollama_PushModel(TestParameters);
+    Ollama_GetModelSettingsStructure(TestParameters);
+    Ollama_DeleteModel(TestParameters);
+
+EndProcedure
+
+Procedure OLLM_WorkingWithBlob() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Ollama_URL"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ollama_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"     , TestParameters);
+
+    Ollama_PushBlob(TestParameters);
+    Ollama_CheckBlob(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region HTTP
+
+Procedure HTTP_Initialization() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("HTTP_URL" , TestParameters);
+
+    HTTPClient_Initialize(TestParameters);
+    HTTPClient_SetURL(TestParameters);
+    HTTPClient_SetURLParams(TestParameters);
+    HTTPClient_SetResponseFile(TestParameters);
+    HTTPClient_SetDataType(TestParameters);
+    HTTPClient_GetLog(TestParameters);
+
+EndProcedure
+
+Procedure HTTP_BodySet() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("HTTP_URL", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture" , TestParameters);
+
+    HTTPClient_SetBinaryBody(TestParameters);
+    HTTPClient_SetStringBody(TestParameters);
+    HTTPClient_SetJsonBody(TestParameters);
+    HTTPClient_SetFormBody(TestParameters);
+    HTTPClient_StartMultipartBody(TestParameters);
+    HTTPClient_AddMultipartFormDataField(TestParameters);
+    HTTPClient_AddMultipartFormDataFile(TestParameters);
+    HTTPClient_AddDataAsRelated(TestParameters);
 
 EndProcedure
 
@@ -3727,7 +3825,7 @@ Procedure VK_SavePictureToAlbum(FunctionParameters)
     ImageDescription = "AutoTestImage";
     AlbumID          = FunctionParameters["VK_AlbumID"];
 
-    Image = FunctionParameters["Picture"]; // URL, Path to file or Binary Data
+    Image = FunctionParameters["Picture"]; // URL, File path or Binary Data
     TFN   = GetTempFileName("png");
     FileCopy(Image, TFN);
 
@@ -3798,7 +3896,7 @@ Procedure VK_CreateStory(FunctionParameters)
     Parameters = GetVKParameters();
     URL        = "https://github.com/Bayselonarrend/OpenIntegrations";
 
-    Image = FunctionParameters["Picture"]; // URL, Path to file or Binary Data
+    Image = FunctionParameters["Picture"]; // URL, File path or Binary Data
     TFN   = GetTempFileName("png");
     FileCopy(Image, TFN);
     Image = New BinaryData(TFN);
@@ -4162,8 +4260,8 @@ Procedure VK_AddProduct(FunctionParameters)
 
     Parameters = GetVKParameters();
 
-    Image1    = FunctionParameters["Picture"]; // URL, Binary or Path to file
-    Image2    = FunctionParameters["Picture2"]; // URL, Binary or Path to file
+    Image1    = FunctionParameters["Picture"]; // URL, Binary or File path
+    Image2    = FunctionParameters["Picture2"]; // URL, Binary or File path
     Selection = FunctionParameters["VK_MarketAlbumID"];
 
     ImageArray = New Array;
@@ -4587,7 +4685,7 @@ Procedure VK_UploadVideoToServer(FunctionParameters)
 
     Parameters = GetVKParameters();
 
-    Video       = FunctionParameters["Video"]; // URL, Binary Data or Path to file
+    Video       = FunctionParameters["Video"]; // URL, Binary Data or File path
     Name        = "NewVideo";
     Description = "Video description";
 
@@ -4606,7 +4704,7 @@ Procedure VK_UploadPhotoToServer(FunctionParameters)
 
     Parameters = GetVKParameters();
 
-    Image = FunctionParameters["Picture"]; // URL, Binary Data or Path to file
+    Image = FunctionParameters["Picture"]; // URL, Binary Data or File path
     View  = "Post";
 
     Result = OPI_VK.UploadPhotoToServer(Image, Parameters, View);
@@ -5485,8 +5583,8 @@ Procedure GoogleCalendar_CreateEvent(FunctionParameters)
     Description = "TestEventDescription";
     Hour        = 3600;
 
-    Image1      = FunctionParameters["Picture"]; // URL, Binary or Path to file
-    Image2      = FunctionParameters["Picture2"]; // URL, Binary or Path to file
+    Image1      = FunctionParameters["Picture"]; // URL, Binary or File path
+    Image2      = FunctionParameters["Picture2"]; // URL, Binary or File path
     Attachments = New Map;
 
     Attachments.Insert("Image1", Image1);
@@ -5683,6 +5781,24 @@ Procedure GoogleDrive_UploadFile(FunctionParameters)
     OPI_TestDataRetrieval.WriteParameter("GD_File", Identifier);
     OPI_Tools.AddField("GD_File", Identifier, "String", FunctionParameters);
 
+    If Not OPI_Tools.IsOneScript() And FunctionParameters.Property("Big") Then
+
+        BigFile = FunctionParameters["Big"];
+        Description.Insert("Name", "big.rar");
+
+        Result = OPI_GoogleDrive.UploadFile(Token, BigFile, Description);
+
+        OPI_TestDataRetrieval.WriteLog(Result, "UploadFile (big)", "GoogleDrive");
+        OPI_TestDataRetrieval.Check_GoogleObject(Result, Description);
+
+        Identifier = Result["id"];
+
+        ArrayOfDeletions = FunctionParameters["ArrayOfDeletions"];
+        ArrayOfDeletions.Add(Identifier);
+        FunctionParameters.Insert("ArrayOfDeletions", ArrayOfDeletions);
+
+    EndIf;
+
 EndProcedure
 
 Procedure GoogleDrive_CopyObject(FunctionParameters)
@@ -5722,7 +5838,7 @@ Procedure GoogleDrive_DownloadFile(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "DownloadFile", "GoogleDrive");
 
-    Size       = OPI_Tools.Get(FunctionParameters["Picture"]).Size();
+    Size       = OPI_HTTPRequests.Get(FunctionParameters["Picture"]).Size();
     ExtraBytes = 2;
 
     OPI_TestDataRetrieval.Check_BinaryData(Result, Size + ExtraBytes);
@@ -5736,7 +5852,7 @@ Procedure GoogleDrive_UpdateFile(FunctionParameters)
     Token      = FunctionParameters["Google_Token"];
     NewName    = "UpdatedFile.jpg";
     Identifier = FunctionParameters["GD_File"];
-    File       = FunctionParameters["Picture2"]; // URL, Binary Data or Path to file
+    File       = FunctionParameters["Picture2"]; // URL, Binary Data or File path
 
     Result = OPI_GoogleDrive.UpdateFile(Token, Identifier, File, NewName);
 
@@ -6561,7 +6677,7 @@ Procedure Slack_UploadFile(FunctionParameters)
 
     Token   = FunctionParameters["Slack_Token"];
     Channel = FunctionParameters["Slack_Channel"];
-    File    = FunctionParameters["Document"]; // URL, Binary Data or Path to file
+    File    = FunctionParameters["Document"]; // URL, Binary Data or File path
 
     FileName = "megadoc.docx";
     Title    = "NewFile";
@@ -7204,8 +7320,8 @@ Procedure Twitter_CreateImageTweet(FunctionParameters)
     Parameters = GetTwitterAuthData();
     Text       = "TestTweet" + String(New UUID);
 
-    Image  = FunctionParameters["Picture"]; // URL, Binary or Path to file
-    Image2 = FunctionParameters["Picture2"]; // URL, Binary or Path to file
+    Image  = FunctionParameters["Picture"]; // URL, Binary or File path
+    Image2 = FunctionParameters["Picture2"]; // URL, Binary or File path
 
     ImageArray = New Array;
     ImageArray.Add(Image);
@@ -7226,7 +7342,7 @@ Procedure Twitter_CreateImageTweet(FunctionParameters)
     OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
     OPI_Tools.Pause(15);
 
-    Image = OPI_Tools.Get(Image);
+    Image = OPI_HTTPRequests.Get(Image);
 
     Text   = "TestTweet" + String(New UUID);
     Result = OPI_Twitter.CreateImageTweet(Text, Image, Parameters);
@@ -7244,8 +7360,8 @@ Procedure Twitter_CreateVideoTweet(FunctionParameters)
     Parameters = GetTwitterAuthData();
     Text       = "TestTweet" + String(New UUID);
 
-    Video  = FunctionParameters["Video"]; // URL, Binary or Path to file
-    Video2 = FunctionParameters["Video"]; // URL, Binary or Path to file
+    Video  = FunctionParameters["Video"]; // URL, Binary or File path
+    Video2 = FunctionParameters["Video"]; // URL, Binary or File path
 
     VideosArray = New Array;
     VideosArray.Add(Video);
@@ -7266,7 +7382,7 @@ Procedure Twitter_CreateVideoTweet(FunctionParameters)
     OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
     OPI_Tools.Pause(15);
 
-    Video = OPI_Tools.Get(Video);
+    Video = OPI_HTTPRequests.Get(Video);
 
     Text   = "TestTweet" + String(New UUID);
     Result = OPI_Twitter.CreateVideoTweet(Text, Video, Parameters);
@@ -7284,8 +7400,8 @@ Procedure Twitter_CreateGifTweet(FunctionParameters)
     Parameters = GetTwitterAuthData();
     Text       = "TestTweet" + String(New UUID);
 
-    GIF  = FunctionParameters["GIF"]; // URL, Binary or Path to file
-    Gif2 = FunctionParameters["GIF"]; // URL, Binary or Path to file
+    GIF  = FunctionParameters["GIF"]; // URL, Binary or File path
+    Gif2 = FunctionParameters["GIF"]; // URL, Binary or File path
 
     GifsArray = New Array;
     GifsArray.Add(GIF);
@@ -7306,7 +7422,7 @@ Procedure Twitter_CreateGifTweet(FunctionParameters)
     OPI_TestDataRetrieval.Check_TwitterText(Result, Text);
     OPI_Tools.Pause(15);
 
-    GIF = OPI_Tools.Get(GIF);
+    GIF = OPI_HTTPRequests.Get(GIF);
 
     Text   = "TestTweet" + String(New UUID);
     Result = OPI_Twitter.CreateGifTweet(Text, GIF, Parameters);
@@ -7344,8 +7460,8 @@ Procedure Twitter_CreateCustomTweet(FunctionParameters)
     Parameters = GetTwitterAuthData();
     Text       = "TestTweet" + String(New UUID);
 
-    Image1 = FunctionParameters["Picture"]; // URL, Binary Data or Path to file
-    Image2 = FunctionParameters["Picture2"]; // URL, Binary Data or Path to file
+    Image1 = FunctionParameters["Picture"]; // URL, Binary Data or File path
+    Image2 = FunctionParameters["Picture2"]; // URL, Binary Data or File path
 
     ImageArray = New Array;
     ImageArray.Add(Image1);
@@ -7367,8 +7483,8 @@ Procedure Twitter_UploadAttachmentsArray(FunctionParameters)
 
     Parameters = GetTwitterAuthData();
 
-    Image1 = FunctionParameters["Picture"]; // URL, Binary Data or Path to file
-    Image2 = FunctionParameters["Picture2"]; // URL, Binary Data or Path to file
+    Image1 = FunctionParameters["Picture"]; // URL, Binary Data or File path
+    Image2 = FunctionParameters["Picture2"]; // URL, Binary Data or File path
 
     ImageArray = New Array;
     ImageArray.Add(Image1);
@@ -7498,7 +7614,7 @@ Procedure Notion_CreatePageInDatabase(FunctionParameters)
 
     Token  = FunctionParameters["Notion_Token"];
     Base   = FunctionParameters["Notion_Base"];
-    Image_ = FunctionParameters["Picture"]; // URL, Binary Data or Path to file
+    Image_ = FunctionParameters["Picture"]; // URL, Binary Data or File path
 
     Image = New Map;
     Image.Insert("Logo", Image_);
@@ -7745,9 +7861,19 @@ Procedure Dropbox_UploadFile(FunctionParameters)
     // END
 
     OPI_TestDataRetrieval.WriteLog(Result, "UploadFile", "Dropbox");
-
     OPI_TestDataRetrieval.Check_DropboxFile(Result, Path);
     DeleteFiles(ImagePath);
+
+    If Not OPI_Tools.IsOneScript() And FunctionParameters.Property("Big") Then
+
+        BigFile = FunctionParameters["Big"];
+
+        Result = OPI_Dropbox.UploadFile(Token, BigFile, "/giant.tmp", True);
+
+        OPI_TestDataRetrieval.WriteLog(Result, "UploadFile (big)", "Dropbox");
+        OPI_TestDataRetrieval.Check_DropboxFile(Result, "/giant.tmp");
+
+    EndIf;
 
     OPI_Tools.Pause(5);
 
@@ -14807,7 +14933,7 @@ Procedure Ozon_GetFBOTimeslots(FunctionParameters)
     // END
 
     OPI_TestDataRetrieval.WriteLog(Result, "GetFBOTimeslots", "Ozon");
-    OPI_TestDataRetrieval.Check_OzonTimeslots(Result);
+    //OPI_TestDataRetrieval.Check_OzonTimeslots(Result);
 
 EndProcedure
 
@@ -16547,7 +16673,7 @@ Procedure S3_InitPartsUpload(FunctionParameters)
     Bucket = "opi-gpbucket3";
 
     Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
-    Entity = OPI_Tools.Get(Entity);
+    Entity = OPI_HTTPRequests.Get(Entity);
 
     Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -16615,7 +16741,7 @@ Procedure S3_FinishPartsUpload(FunctionParameters)
     Bucket = "opi-gpbucket3";
 
     Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
-    Entity = OPI_Tools.Get(Entity);
+    Entity = OPI_HTTPRequests.Get(Entity);
 
     Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
 
@@ -16683,7 +16809,7 @@ Procedure S3_UploadObjectPart(FunctionParameters)
     Bucket = "opi-gpbucket3";
 
     Entity = FunctionParameters["Audio"]; // URL, Path or Binary Data
-    Entity = OPI_Tools.Get(Entity);
+    Entity = OPI_HTTPRequests.Get(Entity);
 
     Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
 
@@ -16786,7 +16912,7 @@ Procedure S3_GetObjectDownloadLink(FunctionParameters)
     OPI_TestDataRetrieval.WriteLog(Result, "GetObjectDownloadLink", "S3");
     OPI_TestDataRetrieval.Check_String(Result);
 
-    Result = OPI_Tools.Get(Result);
+    Result = OPI_HTTPRequests.Get(Result);
 
     OPI_TestDataRetrieval.Check_BinaryData(Result, RequiredSize);
 
@@ -16815,7 +16941,10 @@ Procedure S3_GetObjectUploadLink(FunctionParameters)
     OPI_TestDataRetrieval.WriteLog(Result, "GetObjectUploadLink", "S3");
     OPI_TestDataRetrieval.Check_String(Result);
 
-    Result = OPI_Tools.Put(Result, Image, , False);
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(Result)
+        .SetBinaryBody(Image)
+        .ProcessRequest("PUT");
 
     OPI_TestDataRetrieval.WriteLog(Result, "GetObjectUploadLink (PUT)", "S3");
 
@@ -16874,7 +17003,7 @@ Procedure TCP_CloseConnection(FunctionParameters)
 
 EndProcedure
 
-Procedure TCP_ReadBinaryData(FunctionParameters) Export
+Procedure TCP_ReadBinaryData(FunctionParameters)
 
     Address    = FunctionParameters["TCP_Address"];
     Connection = OPI_TCP.CreateConnection(Address);
@@ -16909,7 +17038,7 @@ Procedure TCP_ReadBinaryData(FunctionParameters) Export
 
 EndProcedure
 
-Procedure TCP_SendBinaryData(FunctionParameters) Export
+Procedure TCP_SendBinaryData(FunctionParameters)
 
     Address    = FunctionParameters["TCP_Address"];
     Connection = OPI_TCP.CreateConnection(Address);
@@ -16944,7 +17073,7 @@ Procedure TCP_SendBinaryData(FunctionParameters) Export
 
 EndProcedure
 
-Procedure TCP_ProcessRequest(FunctionParameters) Export
+Procedure TCP_ProcessRequest(FunctionParameters)
 
     Address = FunctionParameters["TCP_Address"];
     Data    = "Echo this!" + Chars.LF;
@@ -16966,7 +17095,7 @@ Procedure TCP_ProcessRequest(FunctionParameters) Export
 
 EndProcedure
 
-Procedure TCP_ReadLine(FunctionParameters) Export
+Procedure TCP_ReadLine(FunctionParameters)
 
     Address    = FunctionParameters["TCP_Address"];
     Connection = OPI_TCP.CreateConnection(Address);
@@ -16998,7 +17127,7 @@ Procedure TCP_ReadLine(FunctionParameters) Export
 
 EndProcedure
 
-Procedure TCP_SendLine(FunctionParameters) Export
+Procedure TCP_SendLine(FunctionParameters)
 
     Address    = FunctionParameters["TCP_Address"];
     Connection = OPI_TCP.CreateConnection(Address);
@@ -17027,6 +17156,32 @@ Procedure TCP_SendLine(FunctionParameters) Export
 
     OPI_TestDataRetrieval.WriteLog(Result, "SendLine (timeout)", "TCP");
     OPI_TestDataRetrieval.Check_String(Result, Data);
+
+EndProcedure
+
+Procedure TCP_GetTlsSettings(FunctionParameters)
+
+    Result = OPI_TCP.GetTlsSettings(False);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTlsSettings", "TCP");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure TCP_GetLastError(FunctionParameters)
+
+    Address    = FunctionParameters["TCP_Address"];
+    Connection = OPI_TCP.CreateConnection(Address);
+    Data       = "Hello server!" + Chars.LF;
+
+    Sending = OPI_TCP.SendLine(Connection, Data);
+    Result  = OPI_TCP.GetLastError(Connection); // SKIP
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetLastError", "TCP");
 
 EndProcedure
 
@@ -18489,6 +18644,17 @@ Procedure PostgreSQL_GetRecordsFilterStrucutre(FunctionParameters)
 
 EndProcedure
 
+Procedure PostgreSQL_GetTlsSettings(FunctionParameters)
+
+    Result = OPI_PostgreSQL.GetTlsSettings(False);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTlsSettings", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
 #EndRegion
 
 #Region MySQL
@@ -19301,6 +19467,17 @@ Procedure MySQL_GetRecordsFilterStrucutre(FunctionParameters)
 
 EndProcedure
 
+Procedure MySQL_GetTlsSettings(FunctionParameters)
+
+    Result = OPI_MySQL.GetTlsSettings(False);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTlsSettings", "MySQL");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
 #EndRegion
 
 #Region GreenAPI
@@ -20024,7 +20201,6 @@ Procedure GreenAPI_ForwardMessages(FunctionParameters)
     From   = FunctionParameters["GreenAPI_TestGroupID"]; // SKIP
     Target = FunctionParameters["GreenAPI_TestGroupID"];
 
-
     Message = FunctionParameters["GreenAPI_MessageID"];
 
     AccessParameters = OPI_GreenAPI.FormAccessParameters(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
@@ -20389,6 +20565,1254 @@ Procedure RCON_IsConnector(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "IsConnector", "RCON");
     OPI_TestDataRetrieval.Check_True(Result);
+
+EndProcedure
+
+#EndRegion
+
+#Region Ollama
+
+Procedure Ollama_GetResponse(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Prompt = "What is 1C:Enterprise?";
+    Model  = "tinyllama";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.GetResponse(URL, Model, Prompt, , AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetResponse", "Ollama"); // SKIP
+    OPI_TestDataRetrieval.Check_OllamaResponse(Result); // SKIP
+
+    // With paramether
+
+    Prompt = "Ollama is 22 years old and is busy saving the world. Respond using JSON";
+
+    Format = OPI_Tools.JSONToStructure("
+    |{
+    |""type"": ""object"",
+    |""properties"": {
+    | ""age"": {
+    | ""type"": ""integer""
+    | },
+    | ""available"": {
+    | ""type"": ""boolean""
+    | }
+    |},
+    |""required"": [
+    | ""age"",
+    | ""available""
+    |]
+    |}");
+
+    AdditionalParameters = New Structure("format", Format);
+
+    Result = OPI_Ollama.GetResponse(URL, Model, Prompt, AdditionalParameters, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetResponse (parameter)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaResponse(Result);
+
+EndProcedure
+
+Procedure Ollama_GetContextResponse(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Model = "tinyllama";
+
+    MessagesArray = New Array;
+
+    Question1 = OPI_Ollama.GetContextMessageStructure("user", "What is 1C:Enterprise?");
+    Question2 = OPI_Ollama.GetContextMessageStructure("user", "When the first version was released?"); // Question without specifics
+
+    // Adding the first question to the context
+    MessagesArray.Add(Question1);
+
+    Response1 = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, , AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Response1, "GetContextResponse (preliminary)", "Ollama"); // SKIP
+    OPI_TestDataRetrieval.Check_OllamaMessage(Response1); // SKIP
+
+    MessagesArray.Add(Response1["message"]); // Add response to first question in context
+    MessagesArray.Add(Question2); // Add second question in context
+
+    Response2 = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, , AdditionalHeaders);
+
+    MessagesArray.Add(Response2["message"]);
+
+    // ...
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Response2, "GetContextResponse", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaMessage(Response2);
+
+    MessagesArray = New Array;
+
+    Question = New Structure("role,content", "user", "Hello!");
+    MessagesArray.Add(Question);
+
+    Options              = New Structure("seed,temperature", 101, 0);
+    AdditionalParameters = New Structure("options", Options);
+
+    Result = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, AdditionalParameters, AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetContextResponse (seed, 1)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaMessage(Result);
+
+    Message1 = Result["message"]["content"];
+
+    Result = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, AdditionalParameters, AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetContextResponse (seed, 2)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaMessage(Result);
+
+    Message2 = Result["message"]["content"];
+
+    Options              = New Structure("seed,temperature", 555, 10);
+    AdditionalParameters = New Structure("options", Options);
+
+    Result = OPI_Ollama.GetContextResponse(URL, Model, MessagesArray, AdditionalParameters, AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetContextResponse (seed, 3)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaMessage(Result);
+
+    Message3 = Result["message"]["content"];
+
+    OPI_TestDataRetrieval.Check_Equality(Message1, Message2);
+    OPI_TestDataRetrieval.Check_Inequality(Message1, Message3);
+
+EndProcedure
+
+Procedure Ollama_LoadModelToMemory(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model  = "tinyllama";
+    Period = 500;
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.LoadModelToMemory(URL, Model, Period, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "LoadModelToMemory", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaLoadUnload(Result, False);
+
+EndProcedure
+
+Procedure Ollama_UnloadModelFromMemory(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "tinyllama";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.UnloadModelFromMemory(URL, Model, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UnloadModelFromMemory", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaLoadUnload(Result, True);
+
+EndProcedure
+
+Procedure Ollama_GetRequestParameterStructure(FunctionParameters)
+
+    Result = OPI_Ollama.GetRequestParameterStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRequestParameterStructure", "Ollama");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Ollama.GetRequestParameterStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetRequestParameterStructure (empty)", "Ollama");
+
+    For Each Element In Result Do
+
+        OPI_TestDataRetrieval.Check_Empty(Element.Value);
+
+    EndDo;
+
+EndProcedure
+
+Procedure Ollama_GetContextParameterStructure(FunctionParameters)
+
+    Result = OPI_Ollama.GetContextParameterStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetContextParameterStructure", "Ollama");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Ollama.GetContextParameterStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetContextParameterStructure (empty)", "Ollama");
+
+    For Each Element In Result Do
+
+        OPI_TestDataRetrieval.Check_Empty(Element.Value);
+
+    EndDo;
+
+EndProcedure
+
+Procedure Ollama_GetContextMessageStructure(FunctionParameters)
+
+    Result = OPI_Ollama.GetContextMessageStructure("user", "Hello!");
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetContextMessageStructure", "Ollama");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure Ollama_GetModelSettingsStructure(FunctionParameters)
+
+    Result = OPI_Ollama.GetModelSettingsStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetModelSettingsStructure", "Ollama");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Ollama.GetModelSettingsStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetModelSettingsStructure (empty)", "Ollama");
+
+    For Each Element In Result Do
+
+        OPI_TestDataRetrieval.Check_Empty(Element.Value);
+
+    EndDo;
+
+EndProcedure
+
+Procedure Ollama_CreateModel(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "mario";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Settings = New Structure("from,system", "tinyllama", "You are Mario from Super Mario Bros.");
+
+    Result = OPI_Ollama.CreateModel(URL, Model, Settings, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateModel", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaSuccess(Result);
+
+    Result = OPI_Ollama.GetResponse(URL, Model, "How are you?", , AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateModel (request)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaResponse(Result);
+
+EndProcedure
+
+Procedure Ollama_DeleteModel(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "mario";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.DeleteModel(URL, Model, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteModel", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaCode(Result);
+
+    Result = OPI_Ollama.DeleteModel(URL, "library/tinyllama:latest", AdditionalHeaders);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteModel (tiny)", "Ollama");
+
+    Result = OPI_Ollama.DeleteModel(URL, "bayselonarrend/tinyllama:latest", AdditionalHeaders);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteModel (tiny, bay)", "Ollama");
+
+    Result = OPI_Ollama.GetModelList(URL, AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteModel (list)", "Ollama");
+
+    OPI_TestDataRetrieval.Check_OllamaModels(Result);
+    OPI_TestDataRetrieval.Check_Array(Result["models"], 0);
+
+EndProcedure
+
+Procedure Ollama_GetModelList(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.GetModelList(URL, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetModelList", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaModels(Result);
+
+EndProcedure
+
+Procedure Ollama_ListRunningModels(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.ListRunningModels(URL, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "ListRunningModels", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaModels(Result);
+
+EndProcedure
+
+Procedure Ollama_GetModelInformation(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "mario";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.GetModelInformation(URL, Model, False, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetModelInformation", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaModelInfo(Result);
+
+EndProcedure
+
+Procedure Ollama_CopyModel(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "mario";
+    Name  = "mario2";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.CopyModel(URL, Model, Name, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CopyModel", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaCode(Result);
+
+    OPI_Ollama.DeleteModel(URL, Name, AdditionalHeaders);
+
+EndProcedure
+
+Procedure Ollama_GetVersion(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.GetVersion(URL, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetVersion", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaVersion(Result);
+
+EndProcedure
+
+Procedure Ollama_GetEmbeddings(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    StingsArray = New Array;
+    StingsArray.Add("Why is the sky blue?");
+    StingsArray.Add("Why is the grass green?");
+
+    Model = "tinyllama";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.GetEmbeddings(URL, Model, StingsArray, , AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetEmbeddings", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaEmbeddings(Result);
+
+EndProcedure
+
+Procedure Ollama_GetEmbeddingsParameterStructure(FunctionParameters)
+
+    Result = OPI_Ollama.GetEmbeddingsParameterStructure();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetEmbeddingsParameterStructure", "Ollama");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+    Result = OPI_Ollama.GetEmbeddingsParameterStructure(True);
+    OPI_TestDataRetrieval.WriteLog(Result, "GetEmbeddingsParameterStructure (empty)", "Ollama");
+
+    For Each Element In Result Do
+
+        OPI_TestDataRetrieval.Check_Empty(Element.Value);
+
+    EndDo;
+
+EndProcedure
+
+Procedure Ollama_PushModel(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "bayselonarrend/tinyllama:latest";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.PushModel(URL, Model, , AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PushModel", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaSuccess(Result);
+
+EndProcedure
+
+Procedure Ollama_PullModel(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Model = "tinyllama";
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.PullModel(URL, Model, , AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PullModel", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaSuccess(Result);
+
+    Result = OPI_Ollama.PullModel(URL, "bayselonarrend/tinyllama:latest", , AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PullModel (bay)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaSuccess(Result);
+
+EndProcedure
+
+Procedure Ollama_PushBlob(FunctionParameters)
+
+    URL   = FunctionParameters["Ollama_URL"];
+    Token = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+
+    Image = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    OPI_TypeConversion.GetBinaryData(Image, True); // SKIP
+    Random = GetBinaryDataFromString(String(New UUID)); // SKIP
+    Image  = OPI_Tools.MergeData(Image, Random); // SKIP
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.PushBlob(URL, Image, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "PushBlob", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaCode(Result);
+
+    OPI_TestDataRetrieval.WriteParameter("Ollama_Blob", Result["digest"]);
+    FunctionParameters.Insert("Ollama_Blob", Result["digest"]);
+
+EndProcedure
+
+Procedure Ollama_CheckBlob(FunctionParameters)
+
+    URL    = FunctionParameters["Ollama_URL"];
+    Token  = FunctionParameters["Ollama_Token"]; // Authorization - not part API Ollama
+    SHA256 = FunctionParameters["Ollama_Blob"];
+
+    AdditionalHeaders = New Map;
+    AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
+
+    Result = OPI_Ollama.CheckBlob(URL, SHA256, AdditionalHeaders);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CheckBlob", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaCode(Result);
+
+    Result = OPI_Ollama.CheckBlob(URL, "yoyoyo", AdditionalHeaders);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CheckBlob (error)", "Ollama");
+    OPI_TestDataRetrieval.Check_OllamaError(Result);
+
+EndProcedure
+
+#EndRegion
+
+#Region HTTP
+
+Procedure HTTPClient_Initialize(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/get";
+
+    Result = OPI_HTTPRequests
+        .NewRequest()
+        .Initialize(URL) // <---
+        .ProcessRequest("GET")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    Try
+
+        OPI_TestDataRetrieval.WriteLog(Result, "Initialize", "HTTPClient");
+
+        OPI_TestDataRetrieval.ExpectsThat(Result["args"]).ИмеетТип("Map");
+        OPI_TestDataRetrieval.ExpectsThat(Result["args"].Count()).Равно(0);
+
+        HTTPClient = OPI_HTTPRequests.NewRequest()
+            .Initialize(URL)
+            .ProcessRequest("POST", False);
+
+        HTTPRequest    = HTTPClient.ReturnRequest();
+        HTTPConnection = HTTPClient.ReturnConnection();
+        HTTPResponse   = HTTPClient.ReturnResponse();
+        MainURL        = StrReplace(FunctionParameters["HTTP_URL"], "https://", "");
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPRequest).ИмеетТип("HTTPRequest");
+        OPI_TestDataRetrieval.ExpectsThat(HTTPConnection).ИмеетТип("HTTPConnection");
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPRequest.ResourceAddress).Равно("/get");
+        OPI_TestDataRetrieval.ExpectsThat(HTTPConnection.Host).Равно(MainURL);
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPResponse).Равно(Undefined);
+
+        AnotherRequest = HTTPClient.SetURL(FunctionParameters["HTTP_URL"] + "/post")
+            .ProcessRequest("POST", False)
+            .ReturnRequest();
+
+        OPI_TestDataRetrieval.ExpectsThat(AnotherRequest).ИмеетТип("HTTPRequest");
+        OPI_TestDataRetrieval.ExpectsThat(AnotherRequest.ResourceAddress).Равно("/post");
+
+    Except
+        Message(HTTPClient.GetLog(True));
+        Raise ErrorDescription();
+    EndTry;
+
+EndProcedure
+
+Procedure HTTPClient_SetURL(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/get";
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize()
+        .SetURL(URL) // <---
+        .ProcessRequest("GET")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    Try
+
+        OPI_TestDataRetrieval.WriteLog(Result, "SetURL", "HTTPClient");
+
+        OPI_TestDataRetrieval.ExpectsThat(Result["args"]).ИмеетТип("Map");
+        OPI_TestDataRetrieval.ExpectsThat(Result["args"].Count()).Равно(0);
+
+        HTTPClient = OPI_HTTPRequests.NewRequest()
+            .Initialize()
+            .SetURL(URL)
+            .ProcessRequest("POST", False);
+
+        HTTPRequest    = HTTPClient.ReturnRequest();
+        HTTPConnection = HTTPClient.ReturnConnection();
+        HTTPResponse   = HTTPClient.ReturnResponse();
+        MainURL        = StrReplace(FunctionParameters["HTTP_URL"], "https://", "");
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPRequest).ИмеетТип("HTTPRequest");
+        OPI_TestDataRetrieval.ExpectsThat(HTTPConnection).ИмеетТип("HTTPConnection");
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPRequest.ResourceAddress).Равно("/get");
+        OPI_TestDataRetrieval.ExpectsThat(HTTPConnection.Host).Равно(MainURL);
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPResponse).Равно(Undefined);
+    Except
+        Message(HTTPClient.GetLog(True));
+        Raise ErrorDescription();
+    EndTry;
+
+EndProcedure
+
+Procedure HTTPClient_SetURLParams(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/get";
+
+    ParametersStructure = New Structure("param1,param2", "text", 10);
+
+    Result = OPI_HTTPRequests
+        .NewRequest()
+        .Initialize(URL)
+        .SetURLParams(ParametersStructure) // <---
+        .ProcessRequest("GET")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    Address = "/get?param1=text&param2=10";
+    FullURL = FunctionParameters["HTTP_URL"] + Address;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetURLParams", "HTTPClient");
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["args"]).ИмеетТип("Map");
+    OPI_TestDataRetrieval.ExpectsThat(Result["args"].Count()).Равно(2);
+    OPI_TestDataRetrieval.ExpectsThat(Result["url"]).Равно(FullURL);
+
+    HTTPClient = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetURLParams(ParametersStructure)
+        .ProcessRequest("POST", False);
+
+    HTTPRequest = HTTPClient.ReturnRequest();
+
+    Try
+
+        OPI_TestDataRetrieval.ExpectsThat(HTTPRequest).ИмеетТип("HTTPRequest");
+        OPI_TestDataRetrieval.ExpectsThat(HTTPRequest.ResourceAddress).Равно(Address);
+
+    Except
+        Message(HTTPClient.GetLog(True));
+        Raise ErrorDescription();
+    EndTry;
+
+    // Encoding check
+
+    // Complex
+
+    ParameterStructure1 = New Structure;
+    ParameterStructure1.Insert("param1", "search?text");
+    ParameterStructure1.Insert("param2", "John Doe");
+    ParameterStructure1.Insert("param3", "value&another");
+    ParameterStructure1.Insert("param4", "cyrillic");
+    ParameterStructure1.Insert("param5", "<script>alert('XSS')</script>");
+
+    ResourceAddress1 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/page")
+        .SetURLParams(ParameterStructure1)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant1 = "/page?param1=search%3Ftext&param2=John%20Doe&param3=value%26another&param4=%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0&param5=%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress1).Равно(CorrectVariant1);
+
+    ParameterStructure2 = New Structure;
+    ParameterStructure2.Insert("param1", "search?text");
+    ParameterStructure2.Insert("param2", "John Doe");
+
+    // Parameters in the original URL
+
+    ResourceAddress2 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/page?existing=value")
+        .SetURLParams(ParameterStructure2)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant2 = "/page?existing=value&param1=search%3Ftext&param2=John%20Doe";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress2).Равно(CorrectVariant2);
+
+    // Empty parameter string
+
+    ParameterStructure3 = New Structure;
+    ParameterStructure3.Insert("param1", "search?text");
+    ParameterStructure3.Insert("param2", "John Doe");
+
+    ResourceAddress3 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/page?")
+        .SetURLParams(ParameterStructure3)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant3 = "/page?param1=search%3Ftext&param2=John%20Doe";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress3).Равно(CorrectVariant3);
+
+    // Special characters at path
+
+    ParameterStructure4 = New Structure;
+    ParameterStructure4.Insert("param1", "search?text");
+    ParameterStructure4.Insert("param2", "John Doe");
+
+    ResourceAddress4 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/путь with spaces")
+        .SetURLParams(ParameterStructure4)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant4 = "/path%20with%20spaces?param1=search%3Ftext&param2=John%20Doe";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress4).Равно(CorrectVariant4);
+
+    // URL with a snippet
+
+    ParameterStructure5 = New Structure;
+    ParameterStructure5.Insert("param1", "search?text");
+    ParameterStructure5.Insert("param2", "John Doe");
+
+    ResourceAddress5 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/page#section")
+        .SetURLParams(ParameterStructure5)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant5 = "/page?param1=search%3Ftext&param2=John%20Doe#section";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress5).Равно(CorrectVariant5);
+
+    // Cyrillic at path
+
+    ParameterStructure6 = New Structure;
+    ParameterStructure6.Insert("param1", "search?text");
+    ParameterStructure6.Insert("param2", "John Doe");
+
+    ResourceAddress6 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/путь")
+        .SetURLParams(ParameterStructure6)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant6 = "/%D0%BF%D1%83%D1%82%D1%8C?param1=search%3Ftext&param2=John%20Doe";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress6).Равно(CorrectVariant6);
+
+    // Multiple parameters and encoding
+
+    ParameterStructure7 = New Structure;
+    ParameterStructure7.Insert("param1", "value1");
+    ParameterStructure7.Insert("param2", "value two");
+    ParameterStructure7.Insert("param3", "value<three>");
+
+    ResourceAddress7 = OPI_HTTPRequests.NewRequest()
+        .Initialize("https://example.com/page")
+        .SetURLParams(ParameterStructure7)
+        .ProcessRequest("GET", False)
+        .ReturnRequest()
+        .ResourceAddress;
+
+    CorrectVariant7 = "/page?param1=value1&param2=value%20two&param3=value%3Cthree%3E";
+    OPI_TestDataRetrieval.ExpectsThat(ResourceAddress7).Равно(CorrectVariant7);
+
+EndProcedure
+
+Procedure HTTPClient_SetResponseFile(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/get";
+
+    TFN = GetTempFileName();
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetResponseFile(TFN) // <---
+        .ProcessRequest("GET")
+        .ReturnResponseFilename();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetResponseFile", "HTTPClient");
+
+    BodyFile       = New File(TFN);
+    BodyFileReturn = New File(Result);
+
+    OPI_TestDataRetrieval.ExpectsThat(TFN).Равно(Result);
+    OPI_TestDataRetrieval.ExpectsThat(BodyFile.Size()).Равно(BodyFileReturn.Size());
+    OPI_TestDataRetrieval.ExpectsThat(BodyFile.Size() > 0).Равно(True);
+
+    CheckResult = OPI_HTTPRequests.NewRequest()
+        .Initialize()
+        .SetURL(URL)
+        .SetResponseFile(TFN) // <---
+        .ProcessRequest("GET")
+        .ReturnResponseAsBinaryData();
+
+    OPI_TestDataRetrieval.ExpectsThat(BodyFile.Size()).Равно(CheckResult.Size());
+
+    CheckResultAsString = GetStringFromBinaryData(CheckResult);
+
+    OPI_TestDataRetrieval.WriteLog(CheckResultAsString, "SetResponseFile (body)", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(OPI_Tools.JsonToStructure(CheckResultAsString)).ИмеетТип("Map");
+
+    Try
+        DeleteFiles(TFN);
+    Except
+        OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "File deletion error", "HTTPClient");
+    EndTry;
+
+EndProcedure
+
+Procedure HTTPClient_SetDataType(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    MIMEType = "text/markdown";
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetStringBody("# Hello world!")
+        .SetDataType(MIMEType) // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetDataType", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Type"]).Равно(MIMEType);
+
+EndProcedure
+
+Procedure HTTPClient_GetLog(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/get";
+
+    ParametersStructure = New Structure("param1,param2", "text", 10);
+
+    HTTPClient = OPI_HTTPRequests
+        .NewRequest()
+        .Initialize(URL)
+        .SetURLParams(ParametersStructure)
+        .ProcessRequest("GET");
+
+    Response = HTTPClient.ReturnResponseAsJSONObject();
+    Log      = HTTPClient.GetLog(True);
+
+    // END
+
+EndProcedure
+
+Procedure HTTPClient_SetBinaryBody(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    Image = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetBinaryBody(Image) // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+        Result["data"]   = "...";
+    Except
+        Message("Cant replace origin");
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetBinaryBody", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Type"]).Равно("application/octet-stream");
+
+    OPI_TypeConversion.GetBinaryData(Image);
+
+    Size = Image.Size();
+    OPI_TypeConversion.GetLine(Size);
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Length"]).Равно(Size);
+
+EndProcedure
+
+Procedure HTTPClient_SetStringBody(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    Text     = "Hello world!";
+    Encoding = "Windows-1251";
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .UseEncoding(Encoding)
+        .SetStringBody(Text) // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetStringBody", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Type"]).Равно("text/plain; charset=" + Encoding);
+
+    TextBD = GetBinaryDataFromString(Text, Encoding);
+    Size   = TextBD.Size();
+    OPI_TypeConversion.GetLine(Size);
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Length"]).Равно(Size);
+
+    TextB64 = "data:application/octet-stream;base64," + Base64String(TextBD);
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["data"]).Равно(TextB64);
+
+EndProcedure
+
+Procedure HTTPClient_SetJsonBody(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    RandomArray = New Array;
+    RandomArray.Add("A");
+    RandomArray.Add("B");
+    RandomArray.Add("C");
+
+    Data = New Structure("Field1,Field2,Field3", 10, "Text", RandomArray);
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetJsonBody(Data) // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetStringBody", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Type"]).Равно("application/json; charset=utf-8");
+
+    JSONResult   = Result["json"];
+    JSONOriginal = Data;
+
+    OPI_TestDataRetrieval.ExpectsThat(JSONResult["Field1"]).Равно(JSONOriginal["Field1"]);
+    OPI_TestDataRetrieval.ExpectsThat(JSONResult["Field2"]).Равно(JSONOriginal["Field2"]);
+    OPI_TestDataRetrieval.ExpectsThat(JSONResult["Field3"][0]).Равно(JSONOriginal["Field3"][0]);
+    OPI_TestDataRetrieval.ExpectsThat(JSONResult["Field3"][1]).Равно(JSONOriginal["Field3"][1]);
+    OPI_TestDataRetrieval.ExpectsThat(JSONResult["Field3"][2]).Равно(JSONOriginal["Field3"][2]);
+
+EndProcedure
+
+Procedure HTTPClient_SetFormBody(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    Data = New Structure("Field1,Field2", "10", "Text");
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetFormBody(Data) // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetFormBody", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(Result["headers"]["Content-Type"]).Равно("application/x-www-form-urlencoded; charset=utf-8");
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field1"]).Равно(Data["Field1"]);
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field2"]).Равно(Data["Field2"]);
+
+EndProcedure
+
+Procedure HTTPClient_StartMultipartBody(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    Image = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .StartMultipartBody() // <---
+        .AddMultipartFormDataFile("file1", "pic.png", Image, "image/png")
+        .AddMultipartFormDataField("Field1", "Text")
+        .AddMultipartFormDataField("Field2", "10")
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"]         = "***";
+        ResponseFile             = Result["files"]["file1"];
+        Result["files"]["file1"] = "...";
+    Except
+        Message("Cant replace origin");
+
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "StartMultipartBody", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(StrStartsWith(Result["headers"]["Content-Type"], "multipart/")).Равно(True);
+
+    OPI_TypeConversion.GetBinaryData(Image);
+    TextB64 = "data:image/png;base64," + Base64String(Image);
+    TextB64 = StrReplace(TextB64, Chars.CR + Chars.LF, "");
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field1"]).Равно("Text");
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field2"]).Равно("10");
+    OPI_TestDataRetrieval.ExpectsThat(ResponseFile).Равно(TextB64);
+
+EndProcedure
+
+Procedure HTTPClient_AddMultipartFormDataFile(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    Image = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .StartMultipartBody()
+        .AddMultipartFormDataFile("file1", "pic.png", Image, "image/png") // <---
+        .AddMultipartFormDataField("Field1", "Text")
+        .AddMultipartFormDataField("Field2", "10")
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"]         = "***";
+        ResponseFile             = Result["files"]["file1"];
+        Result["files"]["file1"] = "...";
+    Except
+        Message("Cant replace origin");
+
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddMultipartFormDataFile", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(StrStartsWith(Result["headers"]["Content-Type"], "multipart/")).Равно(True);
+
+    OPI_TypeConversion.GetBinaryData(Image);
+    TextB64 = "data:image/png;base64," + Base64String(Image);
+    TextB64 = StrReplace(TextB64, Chars.CR + Chars.LF, "");
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field1"]).Равно("Text");
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field2"]).Равно("10");
+    OPI_TestDataRetrieval.ExpectsThat(ResponseFile).Равно(TextB64);
+
+EndProcedure
+
+Procedure HTTPClient_AddMultipartFormDataField(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    Image = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .StartMultipartBody()
+        .AddMultipartFormDataFile("file1", "pic.png", Image, "image/png")
+        .AddMultipartFormDataField("Field1", "Text") // <---
+        .AddMultipartFormDataField("Field2", "10") // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"]         = "***";
+        ResponseFile             = Result["files"]["file1"];
+        Result["files"]["file1"] = "...";
+    Except
+        Message("Cant replace origin");
+
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddMultipartFormDataField", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(StrStartsWith(Result["headers"]["Content-Type"], "multipart/")).Равно(True);
+
+    OPI_TypeConversion.GetBinaryData(Image);
+    TextB64 = "data:image/png;base64," + Base64String(Image);
+    TextB64 = StrReplace(TextB64, Chars.CR + Chars.LF, "");
+
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field1"]).Равно("Text");
+    OPI_TestDataRetrieval.ExpectsThat(Result["form"]["Field2"]).Равно("10");
+    OPI_TestDataRetrieval.ExpectsThat(ResponseFile).Равно(TextB64);
+
+EndProcedure
+
+Procedure HTTPClient_AddDataAsRelated(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/post";
+
+    RandomArray = New Array;
+    RandomArray.Add("A");
+    RandomArray.Add("B");
+    RandomArray.Add("C");
+
+    Data = New Structure("Field1,Field2,Field3", 10, "Text", RandomArray);
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .StartMultipartBody(True, "related")
+        .AddDataAsRelated(Data, "application/json; charset=UTF-8") // <---
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+
+    // END
+
+    Try
+        Result["origin"] = "***";
+    Except
+        Message("Cant replace origin");
+
+        Try
+            Message(Result.GetLog(True));
+        Except
+            Message(GetStringFromBinaryData(Result));
+        EndTry;
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddDataAsRelated", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(StrStartsWith(Result["headers"]["Content-Type"], "multipart/")).Равно(True);
 
 EndProcedure
 
