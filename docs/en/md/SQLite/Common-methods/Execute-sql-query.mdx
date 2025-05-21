@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 4
+description: Execute SQL query and other functions to work with SQLite in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, SQLite]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -120,7 +122,7 @@ When performing multiple requests within a single connection, it is better to co
             
             oint sqlite ExecuteSQLQuery \
              --sql "SELECT uuid4();" \
-             --db "C:\Users\Administrator\AppData\Local\Temp\cwr1yddsvyw.sqlite" \
+             --db "C:\Users\Administrator\AppData\Local\Temp\erpnp03saux.sqlite" \
              --exts "{'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/uuid.dll':'sqlite3_uuid_init'}"
         ```
     </TabItem>
@@ -131,7 +133,7 @@ When performing multiple requests within a single connection, it is better to co
             
             oint sqlite ExecuteSQLQuery ^
              --sql "SELECT uuid4();" ^
-             --db "C:\Users\Administrator\AppData\Local\Temp\cwr1yddsvyw.sqlite" ^
+             --db "C:\Users\Administrator\AppData\Local\Temp\erpnp03saux.sqlite" ^
              --exts "{'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/uuid.dll':'sqlite3_uuid_init'}"
         ```
     </TabItem>

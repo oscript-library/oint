@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 9
+description: Move object and other functions to work with Yandex Disk in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Yandex Disk]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -29,7 +31,7 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="1C:Enterprise/OneScript code example"
     Token    = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
-    Original = "/15c8e799-0071-41db-8218-236514d8f0c6.png";
+    Original = "/9954eb38-e72f-4ec7-833d-c9b69a7463f3.png";
     Path     = "/" + String(New UUID) + ".png";
 
     Result = OPI_YandexDisk.MoveObject(Token, Original, Path, True);
@@ -42,8 +44,8 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint yadisk MoveObject \
              --token "***" \
-             --from "/2dba97ac-7a52-4519-9b54-888a1201c79a.png" \
-             --to "/9a3913ae-2570-4ab3-b9e3-6c9b4638ff1e.png" \
+             --from "/7225f224-2142-40a5-9d1e-ba8c54e0f347.png" \
+             --to "/4f6ecfd4-6733-4b3d-85c9-8d9db1440d09.png" \
              --rewrite true
         ```
     </TabItem>
@@ -52,8 +54,8 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint yadisk MoveObject ^
              --token "***" ^
-             --from "/2dba97ac-7a52-4519-9b54-888a1201c79a.png" ^
-             --to "/9a3913ae-2570-4ab3-b9e3-6c9b4638ff1e.png" ^
+             --from "/7225f224-2142-40a5-9d1e-ba8c54e0f347.png" ^
+             --to "/4f6ecfd4-6733-4b3d-85c9-8d9db1440d09.png" ^
              --rewrite true
         ```
     </TabItem>

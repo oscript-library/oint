@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 2
+description: Modify table and other functions to work with Airtable in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Airtable]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -30,8 +32,8 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="1C:Enterprise/OneScript code example"
     Token       = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
-    Base        = "appPvIb7wxCkgyZKC";
-    Table       = "tbl2x83eNbGHdzxxj";
+    Base        = "app7HgN8N8JXk96nj";
+    Table       = "tblDHsmb8j2zvXWAs";
     Name        = "Test table 2 (change.)";
     Description = "New table (change.)";
 
@@ -45,8 +47,8 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint airtable ModifyTable \
              --token "***" \
-             --base "app0SvCs0MbKiXML2" \
-             --table "tblHCb2NG3vEhdtJI" \
+             --base "appd1JtQRWxOoweQg" \
+             --table "tblh0DeyKd6T8nEUj" \
              --title "Test table 2 (change.)" \
              --description "New table (change.)"
         ```
@@ -56,8 +58,8 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint airtable ModifyTable ^
              --token "***" ^
-             --base "app0SvCs0MbKiXML2" ^
-             --table "tblHCb2NG3vEhdtJI" ^
+             --base "appd1JtQRWxOoweQg" ^
+             --table "tblh0DeyKd6T8nEUj" ^
              --title "Test table 2 (change.)" ^
              --description "New table (change.)"
         ```

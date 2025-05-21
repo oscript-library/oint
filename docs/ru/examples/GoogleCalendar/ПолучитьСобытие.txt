@@ -1,5 +1,5 @@
-﻿    Токен     = "ya29.a0AZYkNZiCaf3vW8I05cl_i6pLKCRWSjff1YhC7Yi0SgLO50zysjwrX_9QPi1WejmqgGdFjcbaOJKsPO3tvT7gB712mg1gxgxiL1pCUVthx...";
-    Календарь = "eb6cf62ed0d8a131b78d5d654a4ec4eb828192397f987cb90f003e77804508ae@group.calendar.google.com";
-    Событие   = "i7ngv6s6lpqk9c6u6bancubnfk";
+﻿    Токен     = "ya29.a0AW4XtxhtghlL7aK7VhJX0jOgNWau4CUoOEDkQBr4uJEjPidCjKm-4r4l7AoJnODBt7yblowJtvv_3vETd6CulW4V5zxxPx8TTvQAMESj7...";
+    Календарь = "fe4bd80b7ead13d35f71c0ac29e9e95ab721e9292cb911fef6947f71ac87df84@group.calendar.google.com";
+    Событие   = "blllfmka97itfpk2ua2mr5c8jc";
 
     Результат = OPI_GoogleCalendar.ПолучитьСобытие(Токен, Календарь, Событие);

@@ -1,4 +1,4 @@
-﻿    Токен        = "ya29.a0AZYkNZiCaf3vW8I05cl_i6pLKCRWSjff1YhC7Yi0SgLO50zysjwrX_9QPi1WejmqgGdFjcbaOJKsPO3tvT7gB712mg1gxgxiL1pCUVthx...";
+﻿    Токен        = "ya29.a0AW4XtxhtghlL7aK7VhJX0jOgNWau4CUoOEDkQBr4uJEjPidCjKm-4r4l7AoJnODBt7yblowJtvv_3vETd6CulW4V5zxxPx8TTvQAMESj7...";
     Наименование = "Тестовая таблица";
 
     МассивЛистов = Новый Массив;

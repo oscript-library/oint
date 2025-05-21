@@ -1,0 +1,48 @@
+﻿---
+sidebar_position: 3
+description: Return response as binary data and other functions to work with HTTP-client in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, HTTP-client]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Return response as binary data
+ Returns the response body as binary data
+
+
+
+`Function ReturnResponseAsBinaryData(Val Forced = False, Val ExceptionOnError = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Forced | --force | Boolean | &#x2716; | False > The processor object will be returned instead of the response if there were errors in it |
+  | ExceptionOnError | --ex | Boolean | &#x2716; | Causes an exception with a log if there were errors during processing |
+
+  
+  Returns:  Arbitrary - The response or the same processing object
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL = "https://httpbin.org";
+    URL = URL + "/post";
+
+    Image = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Path or Binary Data
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .SetBinaryBody(Image)
+        .ProcessRequest("POST")
+        .ReturnResponseAsBinaryData(); // <---
+```
+ 
+
+
+
+```json title="Result"
+NOT JSON: 7B 0A 20 20 22 61 72 67 73 22 3A 20 7B 7D 2C 20 0A 20 20 22 64 61 74 61 22 3A 20 22 64 61 74 61 3A 61 70 70 6C 69 63 61 74 69 6F 6E 2F 6F 63 74 65 74 2D 73 74 72 65 61 6D 3B 62 61 73 65 36 34…
+```

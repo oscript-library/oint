@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 5
+description: Update deal and other functions to work with Bitrix24 in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Bitrix24]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -38,7 +40,7 @@ Method at API documentation: [crm.deal.update](https://dev.1c-bitrix.ru/rest_hel
     FieldsStructure.Insert("OPPORTUNITY", 50000);
 
     URL    = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    DealID = "3438";
+    DealID = "3630";
 
     Result = OPI_Bitrix24.UpdateDeal(URL, DealID, FieldsStructure);
 
@@ -46,8 +48,8 @@ Method at API documentation: [crm.deal.update](https://dev.1c-bitrix.ru/rest_hel
     FieldsStructure.Insert("BEGINDATE", "2025-01-01");
 
     URL    = "b24-ar17wx.bitrix24.by";
-    Token  = "139a1268006e9f06006b12e400000001000...";
-    DealID = "3440";
+    Token  = "4dee2c68006e9f06006b12e400000001000...";
+    DealID = "3632";
 
     Result = OPI_Bitrix24.UpdateDeal(URL, DealID, FieldsStructure, Token);
 ```
@@ -61,7 +63,7 @@ Method at API documentation: [crm.deal.update](https://dev.1c-bitrix.ru/rest_hel
             
             oint bitrix24 UpdateDeal \
              --url "b24-ar17wx.bitrix24.by" \
-             --deal 3480 \
+             --deal 3648 \
              --fields "{'TITLE':'Future deal in RUB','CURRENCY_ID':'RUB','OPPORTUNITY':50000,'BEGINDATE':'2025-01-01'}" \
              --token "***"
         ```
@@ -73,7 +75,7 @@ Method at API documentation: [crm.deal.update](https://dev.1c-bitrix.ru/rest_hel
             
             oint bitrix24 UpdateDeal ^
              --url "b24-ar17wx.bitrix24.by" ^
-             --deal 3480 ^
+             --deal 3648 ^
              --fields "{'TITLE':'Future deal in RUB','CURRENCY_ID':'RUB','OPPORTUNITY':50000,'BEGINDATE':'2025-01-01'}" ^
              --token "***"
         ```

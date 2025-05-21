@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 5
+description: Copy model and other functions to work with Ollama in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Ollama]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -45,6 +47,32 @@ Method at API documentation: [Copy a Model](https://github.com/ollama/ollama/blo
 ```
  
 
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint ollama CopyModel \
+             --url "https://api.athenaeum.digital/ollama" \
+             --model "mario" \
+             --name "mario2" \
+             --headers "{'Authorization':'***'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint ollama CopyModel ^
+             --url "https://api.athenaeum.digital/ollama" ^
+             --model "mario" ^
+             --name "mario2" ^
+             --headers "{'Authorization':'***'}"
+        ```
+    </TabItem>
+</Tabs>
 
 
 ```json title="Result"

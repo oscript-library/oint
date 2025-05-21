@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 2
+description: Изменить поле и другие функции для работы с Airtable в Открытом пакете интеграций - бесплатной open-source библиотеке интеграций для 1С:Предприятие 8, OneScript и CLI
+keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, API, Интеграция, Сервисы, Обмен, OneScript, CLI, Airtable]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -31,9 +33,9 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Токен   = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
-    База    = "appPvIb7wxCkgyZKC";
-    Таблица = "tbl2x83eNbGHdzxxj";
-    Поле    = "fldTItoMVUypCSm8A";
+    База    = "app7HgN8N8JXk96nj";
+    Таблица = "tblDHsmb8j2zvXWAs";
+    Поле    = "fldjm76pFdhOTKHjy";
 
     Имя      = Строка(Новый УникальныйИдентификатор) + "(изм.)";
     Описание = "Новое описание";
@@ -48,10 +50,10 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint airtable ИзменитьПоле \
               --token "***" \
-              --base "appJxIgJ7TbozmnoO" \
-              --table "tbl1jlqRjEs4XyNjt" \
-              --field "fldwLPlJBbZFuegx0" \
-              --title "bee313a3-bcce-473c-9310-0f9d5cd60c2b(изм.)" \
+              --base "appPli0MOZzZfk9cC" \
+              --table "tblCWdRHnJcWIZttO" \
+              --field "fldbxOszmd1Ts6ar7" \
+              --title "0d940124-fc66-41a5-8633-cf8257f8a4e2(изм.)" \
               --description "Новое описание"
         ```
     </TabItem>
@@ -60,10 +62,10 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint airtable ИзменитьПоле ^
               --token "***" ^
-              --base "appJxIgJ7TbozmnoO" ^
-              --table "tbl1jlqRjEs4XyNjt" ^
-              --field "fldwLPlJBbZFuegx0" ^
-              --title "bee313a3-bcce-473c-9310-0f9d5cd60c2b(изм.)" ^
+              --base "appPli0MOZzZfk9cC" ^
+              --table "tblCWdRHnJcWIZttO" ^
+              --field "fldbxOszmd1Ts6ar7" ^
+              --title "0d940124-fc66-41a5-8633-cf8257f8a4e2(изм.)" ^
               --description "Новое описание"
         ```
     </TabItem>

@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 4
+description: Delete object and other functions to work with Yandex Disk in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Yandex Disk]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -28,7 +30,7 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="1C:Enterprise/OneScript code example"
     Token = "y0_AgAAAABdylaOAAs0QgAAAAD5i-a...";
-    Path  = "/88ff2e96-3270-4216-b443-151f90e2ccec.png";
+    Path  = "/74281cd6-b81c-412a-8ae1-d9a101c7733c.png";
 
     Result = OPI_YandexDisk.DeleteObject(Token, Path, False);
 ```
@@ -40,7 +42,7 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint yadisk DeleteObject \
              --token "***" \
-             --path "/c2341bd7-db37-4e20-bf33-861fe70ebc09.png" \
+             --path "/2baf0f76-3628-4421-a35a-19160b97608f.png" \
              --can false
         ```
     </TabItem>
@@ -49,7 +51,7 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint yadisk DeleteObject ^
              --token "***" ^
-             --path "/c2341bd7-db37-4e20-bf33-861fe70ebc09.png" ^
+             --path "/2baf0f76-3628-4421-a35a-19160b97608f.png" ^
              --can false
         ```
     </TabItem>

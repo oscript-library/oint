@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 13
+description: Replace message keyboard and other functions to work with Telegram in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Telegram]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -34,7 +36,7 @@ Method at API documentation: [editMessageReplyMarkup](https://core.telegram.org/
 ```bsl title="1C:Enterprise/OneScript code example"
     Token     = "6129457865:AAFyzNYOAFbu...";
     ChatID    = "461699897";
-    MessageID = "13335";
+    MessageID = "13740";
 
     ButtonArray = New Array;
     ButtonArray.Add("New button 3");
@@ -56,7 +58,7 @@ Method at API documentation: [editMessageReplyMarkup](https://core.telegram.org/
             oint telegram ReplaceMessageKeyboard \
              --token "***" \
              --chat "461699897" \
-             --message "13407" \
+             --message "13768" \
              --keyboard "{'inline_keyboard':[[{'text':'1','callback_data':'1'},{'text':'2','callback_data':'2'},{'text':'3','callback_data':'3'}]],'rows':1}"
         ```
     </TabItem>
@@ -68,7 +70,7 @@ Method at API documentation: [editMessageReplyMarkup](https://core.telegram.org/
             oint telegram ReplaceMessageKeyboard ^
              --token "***" ^
              --chat "461699897" ^
-             --message "13407" ^
+             --message "13768" ^
              --keyboard "{'inline_keyboard':[[{'text':'1','callback_data':'1'},{'text':'2','callback_data':'2'},{'text':'3','callback_data':'3'}]],'rows':1}"
         ```
     </TabItem>

@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 5
+description: Download file and other functions to work with Telegram in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Telegram]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -30,7 +32,7 @@ Method at API documentation: [getFile](https://core.telegram.org/bots/api#getfil
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    FileID = "CQACAgIAAx0EcNsaZQACQPRoEn4N8q46RiaMrRJhtG9hRymgGgACRXkAAjMGkEghikYRor4RHjYE";
+    FileID = "CQACAgIAAx0EcNsaZQACQ25oLOd57jz-ulyDDHGbuEsLN1rjBAACvHYAAn2saEmQbhgZTctxbDYE";
     Token  = "6129457865:AAFyzNYOAFbu...";
 
     Result = OPI_Telegram.DownloadFile(Token, FileID);
@@ -43,7 +45,7 @@ Method at API documentation: [getFile](https://core.telegram.org/bots/api#getfil
         ```bash
             oint telegram DownloadFile \
              --token "***" \
-             --fileid "CQACAgIAAx0EcNsaZQACQVNoE2yZVdjBgKSj_rI9b6YehWQvZwAC7HEAAjMGmEhrN5V9XvfqdzYE"
+             --fileid "CQACAgIAAx0EcNsaZQACQ5FoLWqmpjgPbmfrYeu-qviM6xE8AgACCnkAAn2saEk9c4-cyQ-WwDYE"
         ```
     </TabItem>
   
@@ -51,7 +53,7 @@ Method at API documentation: [getFile](https://core.telegram.org/bots/api#getfil
         ```batch
             oint telegram DownloadFile ^
              --token "***" ^
-             --fileid "CQACAgIAAx0EcNsaZQACQVNoE2yZVdjBgKSj_rI9b6YehWQvZwAC7HEAAjMGmEhrN5V9XvfqdzYE"
+             --fileid "CQACAgIAAx0EcNsaZQACQ5FoLWqmpjgPbmfrYeu-qviM6xE8AgACCnkAAn2saEk9c4-cyQ-WwDYE"
         ```
     </TabItem>
 </Tabs>

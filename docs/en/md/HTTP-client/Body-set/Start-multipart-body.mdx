@@ -1,0 +1,82 @@
+﻿---
+sidebar_position: 5
+description: Start Multipart body  and other functions to work with HTTP-client in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, HTTP-client]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Start Multipart body 
+ Initializes writing data to the body in multipart format
+
+
+
+`Function StartMultipartBody(UseFile = True, Val View = "form-data") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | UseFile | - | Boolean | &#x2716; | True > use a temporary file, False > form a body in memory |
+  | View | - | String | &#x2716; | Multipart data type: form data, related |
+
+  
+  Returns:  DataProcessorObject.OPI_HTTPClient - This processor object
+
+<br/>
+
+:::tip
+The `AddMultipartFormDataFile` and `AddMultipartFormDataField` methods are used for further body formation
+:::
+
+:::caution
+**NOCLI:** this method is not available in CLI version
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL = "https://httpbin.org";
+    URL = URL + "/post";
+
+    Image = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Path or Binary Data
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize(URL)
+        .StartMultipartBody() // <---
+        .AddMultipartFormDataFile("file1", "pic.png", Image, "image/png")
+        .AddMultipartFormDataField("Field1", "Text")
+        .AddMultipartFormDataField("Field2", "10")
+        .ProcessRequest("POST")
+        .ReturnResponseAsJSONObject();
+```
+ 
+
+
+
+```json title="Result"
+{
+ "args": {},
+ "data": "",
+ "files": {
+  "file1": "..."
+ },
+ "form": {
+  "Field1": "Text",
+  "Field2": "10"
+ },
+ "headers": {
+  "Accept": "*/*",
+  "Accept-Charset": "utf-8",
+  "Accept-Encoding": "gzip",
+  "Content-Length": "2114372",
+  "Content-Type": "multipart/form-data; boundary=5e72ac80b8b046caabe050446d3ce734",
+  "Host": "httpbin.org",
+  "User-Agent": "1Script v$1.9.2.10",
+  "X-Amzn-Trace-Id": "Root=1-682cd6a3-47e4b39b749910d77683a89a"
+ },
+ "json": null,
+ "origin": "***",
+ "url": "https://httpbin.org/post"
+}
+```

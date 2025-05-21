@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 5
+description: Send file and other functions to work with Bitrix24 in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, Bitrix24]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -34,7 +36,7 @@ Method at API documentation: [im.disk.file.commit](https://dev.1c-bitrix.ru/lear
 
 ```bsl title="1C:Enterprise/OneScript code example"
     URL         = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    ChatID      = "2326";
+    ChatID      = "2422";
     File        = "https://api.athenaeum.digital/test_data/document.docx"; // Binary Data, URL or path to file
     Description = "Very important file";
 
@@ -47,8 +49,8 @@ Method at API documentation: [im.disk.file.commit](https://dev.1c-bitrix.ru/lear
     Result = OPI_Bitrix24.SendFile(URL, ChatID, FileID, Description);
 
     URL    = "b24-ar17wx.bitrix24.by";
-    Token  = "139a1268006e9f06006b12e400000001000...";
-    ChatID = "2328";
+    Token  = "4dee2c68006e9f06006b12e400000001000...";
+    ChatID = "2424";
 
     Directory = OPI_Bitrix24.GetChatFilesFolder(URL, ChatID, Token);
     FolderID  = Directory["result"]["ID"];
@@ -66,8 +68,8 @@ Method at API documentation: [im.disk.file.commit](https://dev.1c-bitrix.ru/lear
         ```bash
             oint bitrix24 SendFile \
              --url "b24-ar17wx.bitrix24.by" \
-             --chat 2348 \
-             --fileid 32628 \
+             --chat 2432 \
+             --fileid 33872 \
              --description "Very important file" \
              --token "***"
         ```
@@ -77,8 +79,8 @@ Method at API documentation: [im.disk.file.commit](https://dev.1c-bitrix.ru/lear
         ```batch
             oint bitrix24 SendFile ^
              --url "b24-ar17wx.bitrix24.by" ^
-             --chat 2348 ^
-             --fileid 32628 ^
+             --chat 2432 ^
+             --fileid 33872 ^
              --description "Very important file" ^
              --token "***"
         ```

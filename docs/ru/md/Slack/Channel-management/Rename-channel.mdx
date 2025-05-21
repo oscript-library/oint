@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 13
+description: Переименовать канал и другие функции для работы с Slack в Открытом пакете интеграций - бесплатной open-source библиотеке интеграций для 1С:Предприятие 8, OneScript и CLI
+keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, API, Интеграция, Сервисы, Обмен, OneScript, CLI, Slack]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -28,7 +30,7 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Токен    = "xoxb-6965308400114-696804637...";
-    Канал    = "C08R3K6LXJL";
+    Канал    = "C08TMMCHZGR";
     Название = "testconv" + Строка(Новый УникальныйИдентификатор);
 
     Результат = OPI_Slack.ПереименоватьКанал(Токен, Канал, Название);
@@ -41,8 +43,8 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint slack ПереименоватьКанал \
               --token "***" \
-              --channel "C08QL4MLNSX" \
-              --title "testconvf4cddb97-a8e8-43d0-9422-bc8a9625c790"
+              --channel "C08T2SPTLS2" \
+              --title "testconva7e100ab-f032-4eea-ba42-fe3668caf472"
         ```
     </TabItem>
   
@@ -50,8 +52,8 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint slack ПереименоватьКанал ^
               --token "***" ^
-              --channel "C08QL4MLNSX" ^
-              --title "testconvf4cddb97-a8e8-43d0-9422-bc8a9625c790"
+              --channel "C08T2SPTLS2" ^
+              --title "testconva7e100ab-f032-4eea-ba42-fe3668caf472"
         ```
     </TabItem>
 </Tabs>

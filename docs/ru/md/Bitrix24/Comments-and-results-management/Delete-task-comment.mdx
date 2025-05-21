@@ -1,5 +1,7 @@
 ﻿---
 sidebar_position: 5
+description: Удалить комментарий и другие функции для работы с Bitrix24 в Открытом пакете интеграций - бесплатной open-source библиотеке интеграций для 1С:Предприятие 8, OneScript и CLI
+keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, API, Интеграция, Сервисы, Обмен, OneScript, CLI, Bitrix24]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -33,14 +35,14 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     URL           = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    IDЗадачи      = "5818";
-    IDКомментария = "13560";
+    IDЗадачи      = "6070";
+    IDКомментария = "14124";
 
     Результат = OPI_Bitrix24.УдалитьКомментарийЗадачи(URL, IDЗадачи, IDКомментария);
 
     URL           = "b24-ar17wx.bitrix24.by";
-    Токен         = "139a1268006e9f06006b12e400000001000...";
-    IDКомментария = "13562";
+    Токен         = "4dee2c68006e9f06006b12e400000001000...";
+    IDКомментария = "14126";
 
     Результат = OPI_Bitrix24.УдалитьКомментарийЗадачи(URL, IDЗадачи, IDКомментария, Токен);
 ```
@@ -52,8 +54,8 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint bitrix24 УдалитьКомментарийЗадачи \
               --url "b24-ar17wx.bitrix24.by" \
-              --task "5858" \
-              --comment 13650 \
+              --task "6080" \
+              --comment 14148 \
               --token "***"
         ```
     </TabItem>
@@ -62,8 +64,8 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint bitrix24 УдалитьКомментарийЗадачи ^
               --url "b24-ar17wx.bitrix24.by" ^
-              --task "5858" ^
-              --comment 13650 ^
+              --task "6080" ^
+              --comment 14148 ^
               --token "***"
         ```
     </TabItem>
