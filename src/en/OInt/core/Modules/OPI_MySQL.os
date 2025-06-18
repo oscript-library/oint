@@ -1,4 +1,4 @@
-﻿// OneScript: ./OInt/core/Modules/OPI_MySQL.os
+// OneScript: ./OInt/core/Modules/OPI_MySQL.os
 // Lib: MySQL
 // CLI: mysql
 // Keywords: mysql, my sql
@@ -284,6 +284,66 @@ Function CreateTable(Val Table, Val ColoumnsStruct, Val Connection = "", Val Tls
 
 EndFunction
 
+// Add table column
+// Adds a new column to an existing table
+//
+// Parameters:
+// Table - String - Table name - table
+// Name - String - Column name - name
+// DataType - String - Column data type - type
+// Connection - String, Arbitrary - Connection or connection string - dbc
+// Tls - Structure Of KeyAndValue - TLS settings, if necessary. See GetTlsSettings - tls
+//
+// Returns:
+// Map Of KeyAndValue - Result of query execution
+Function AddTableColumn(Val Table, Val Name, Val DataType, Val Connection = "", Val Tls = "") Export
+
+    Result = OPI_SQLQueries.AddTableColumn(OPI_MySQL, Table, Name, DataType, Connection, Tls);
+    Return Result;
+
+EndFunction
+
+// Delete table column
+// Deletes a column from the table
+//
+// Parameters:
+// Table - String - Table name - table
+// Name - String - Column name - name
+// Connection - String, Arbitrary - Connection or connection string - dbc
+// Tls - Structure Of KeyAndValue - TLS settings, if necessary. See GetTlsSettings - tls
+//
+// Returns:
+// Map Of KeyAndValue - Result of query execution
+Function DeleteTableColumn(Val Table, Val Name, Val Connection = "", Val Tls = "") Export
+
+    Result = OPI_SQLQueries.DeleteTableColumn(OPI_MySQL, Table, Name, Connection, Tls);
+    Return Result;
+
+EndFunction
+
+// Ensure table
+// Creates a new table if it does not exist or updates the composition of columns in an existing table
+//
+// Note
+// As a result of changing the table structure, data may be lost!^^
+// It is recommended to test this method on test data beforehand
+// This function does not update the data type of existing columns
+//
+// Parameters:
+// Table - String - Table name - table
+// ColoumnsStruct - Structure Of KeyAndValue - Column structure: Key > Name, Value > Data type - cols
+// Connection - String, Arbitrary - Existing connection or database path - dbc
+// Tls - Structure Of KeyAndValue - TLS settings, if necessary. See GetTlsSettings - tls
+//
+// Returns:
+// Map Of KeyAndValue - Result of query execution
+Function EnsureTable(Val Table, Val ColoumnsStruct, Val Connection = "", Val Tls = "") Export
+
+    Result = OPI_SQLQueries.EnsureTable(OPI_MySQL, Table, ColoumnsStruct, Connection, Tls);
+    Return Result;
+
+EndFunction
+
 // Clear table
 // Clears the database table
 //
@@ -472,6 +532,7 @@ Function GetFeatures() Export
     Features.Insert("ParameterNumeration", False);
     Features.Insert("ParameterMarker"    , "?");
     Features.Insert("DBMS"               , "mysql");
+    Features.Insert("ColumnField"        , "COLUMN_NAME");
 
     Return Features;
 
@@ -608,6 +669,94 @@ Function ProcessBlobStructure(Val Value)
 
     Return Value;
 
+EndFunction
+
+#EndRegion
+
+#Region Alternate
+
+Function ОткрытьСоединение(Val СтрокаПодключения = "", Val Tls = "") Export
+	Return CreateConnection(СтрокаПодключения, Tls);
+EndFunction
+
+Function ЗакрытьСоединение(Val Соединение) Export
+	Return CloseConnection(Соединение);
+EndFunction
+
+Function ЭтоКоннектор(Val Значение) Export
+	Return IsConnector(Значение);
+EndFunction
+
+Function ВыполнитьЗапросSQL(Val ТекстЗапроса, Val Параметры = "", Val ФорсироватьРезультат = False, Val Соединение = "", Val Tls = "") Export
+	Return ExecuteSQLQuery(ТекстЗапроса, Параметры, ФорсироватьРезультат, Соединение, Tls);
+EndFunction
+
+Function СформироватьСтрокуПодключения(Val Адрес, Val База = "", Val Логин = "", Val Пароль = "", Val Порт = "3306") Export
+	Return GenerateConnectionString(Адрес, База, Логин, Пароль, Порт);
+EndFunction
+
+Function ПолучитьНастройкиTls(Val ОтключитьПроверкуСертификатов, Val ПутьКСертификату = "") Export
+	Return GetTlsSettings(ОтключитьПроверкуСертификатов, ПутьКСертификату);
+EndFunction
+
+Function СоздатьБазуДанных(Val База, Val Соединение = "", Val Tls = "") Export
+	Return CreateDatabase(База, Соединение, Tls);
+EndFunction
+
+Function УдалитьБазуДанных(Val База, Val Соединение = "", Val Tls = "") Export
+	Return DeleteDatabase(База, Соединение, Tls);
+EndFunction
+
+Function СоздатьТаблицу(Val Таблица, Val СтруктураКолонок, Val Соединение = "", Val Tls = "") Export
+	Return CreateTable(Таблица, СтруктураКолонок, Соединение, Tls);
+EndFunction
+
+Function ДобавитьКолонкуТаблицы(Val Таблица, Val Имя, Val ТипДанных, Val Соединение = "", Val Tls = "") Export
+	Return AddTableColumn(Таблица, Имя, ТипДанных, Соединение, Tls);
+EndFunction
+
+Function УдалитьКолонкуТаблицы(Val Таблица, Val Имя, Val Соединение = "", Val Tls = "") Export
+	Return DeleteTableColumn(Таблица, Имя, Соединение, Tls);
+EndFunction
+
+Function ГарантироватьТаблицу(Val Таблица, Val СтруктураКолонок, Val Соединение = "", Val Tls = "") Export
+	Return EnsureTable(Таблица, СтруктураКолонок, Соединение, Tls);
+EndFunction
+
+Function ОчиститьТаблицу(Val Таблица, Val Соединение = "", Val Tls = "") Export
+	Return ClearTable(Таблица, Соединение, Tls);
+EndFunction
+
+Function УдалитьТаблицу(Val Таблица, Val Соединение = "", Val Tls = "") Export
+	Return DeleteTable(Таблица, Соединение, Tls);
+EndFunction
+
+Function ПолучитьИнформациюОТаблице(Val Таблица, Val Соединение = "", Val Tls = "") Export
+	Return GetTableInformation(Таблица, Соединение, Tls);
+EndFunction
+
+Function ДобавитьЗаписи(Val Таблица, Val МассивДанных, Val Транзакция = True, Val Соединение = "", Val Tls = "") Export
+	Return AddRecords(Таблица, МассивДанных, Транзакция, Соединение, Tls);
+EndFunction
+
+Function ПолучитьЗаписи(Val Таблица, Val Поля = "*", Val Фильтры = "", Val Сортировка = "", Val Количество = "", Val Соединение = "", Val Tls = "") Export
+	Return GetRecords(Таблица, Поля, Фильтры, Сортировка, Количество, Соединение, Tls);
+EndFunction
+
+Function ОбновитьЗаписи(Val Таблица, Val СтруктураЗначений, Val Фильтры = "", Val Соединение = "", Val Tls = "") Export
+	Return UpdateRecords(Таблица, СтруктураЗначений, Фильтры, Соединение, Tls);
+EndFunction
+
+Function УдалитьЗаписи(Val Таблица, Val Фильтры = "", Val Соединение = "", Val Tls = "") Export
+	Return DeleteRecords(Таблица, Фильтры, Соединение, Tls);
+EndFunction
+
+Function ПолучитьСтруктуруФильтраЗаписей(Val Пустая = False) Export
+	Return GetRecordsFilterStrucutre(Пустая);
+EndFunction
+
+Function ПолучитьОсобенности() Export
+	Return GetFeatures();
 EndFunction
 
 #EndRegion

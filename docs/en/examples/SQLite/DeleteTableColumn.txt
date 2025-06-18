@@ -1,0 +1,5 @@
+﻿    Base  = "C:\Users\Administrator\AppData\Local\Temp\v8_B4C9_162.sqlite";
+    Table = "test";
+    Name  = "new_col";
+
+    Result = OPI_SQLite.DeleteTableColumn(Table, Name, Base);

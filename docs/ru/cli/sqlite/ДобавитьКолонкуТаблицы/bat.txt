@@ -1,0 +1,5 @@
+oint sqlite ДобавитьКолонкуТаблицы ^
+  --table "test" ^
+  --name "new_col" ^
+  --type "TEXT" ^
+  --db "C:\Users\Administrator\AppData\Local\Temp\1sexl2ya2j1.sqlite"

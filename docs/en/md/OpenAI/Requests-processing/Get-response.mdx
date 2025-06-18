@@ -1,0 +1,121 @@
+﻿---
+sidebar_position: 1
+description: Get response and other functions to work with OpenAI in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, OpenAI]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get response
+ Generates a response for a given text query
+
+
+
+`Function GetResponse(Val URL, Val Token, Val Model, Val Messages, Val AdditionalParameters = "", Val AdditionalHeaders = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | OpenAI server URL |
+  | Token | --token | String | &#x2714; | OpenAI authorization token |
+  | Model | --model | String | &#x2714; | Models name |
+  | Messages | --msgs | String, Array of String | &#x2714; | Conversation messages. See GetMessageStructure |
+  | AdditionalParameters | --options | Structure Of KeyAndValue | &#x2716; | Additional request parameters, if necessary |
+  | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+Method at API documentation: [Create chat completion](https://platform.openai.com/docs/api-reference/chat/create)
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL   = "https://api.athenaeum.digital:1122/";
+    Token = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+
+    // Text messages
+
+    Messages = New Array;
+    Messages.Add(OPI_OpenAI.GetMessageStructure("user"     , "What is 1C:Enterprise?"));
+    Messages.Add(OPI_OpenAI.GetMessageStructure("assistant", "1C:Enterprise is a full-stack, low-code platform"));
+    Messages.Add(OPI_OpenAI.GetMessageStructure("user"     , "When the first version was released?"));
+
+    Model = "smolvlm-256m-instruct";
+
+    Result = OPI_OpenAI.GetResponse(URL, Token, Model, Messages);
+
+    // Pictures
+
+    Model       = "moondream2-20250414";
+    File        = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Path or Binary Data
+    FileName    = StrTemplate("%1.png", String(New UUID()));
+    Destination = "user_data";
+
+    Messages = New Array;
+
+    ImageUpload = OPI_OpenAI.UploadFile(URL, Token, FileName, File, Destination);
+    ImageID     = ImageUpload["id"];
+
+    Description = OPI_OpenAI.GetImageMessageStructure("user", ImageID, "What is in this image?");
+
+    Messages.Add(Description);
+
+    Result = OPI_OpenAI.GetResponse(URL, Token, Model, Messages);
+
+    OPI_OpenAI.DeleteFile(URL, Token, ImageID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint openai GetResponse \
+             --url "https://api.athenaeum.digital:1122/" \
+             --token "***" \
+             --model "smolvlm-256m-instruct" \
+             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a full-stack, low-code platform'},{'role':'user','content':'When the first version was released?'}]"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint openai GetResponse ^
+             --url "https://api.athenaeum.digital:1122/" ^
+             --token "***" ^
+             --model "smolvlm-256m-instruct" ^
+             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a full-stack, low-code platform'},{'role':'user','content':'When the first version was released?'}]"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "created": 1750098805,
+ "object": "chat.completion",
+ "id": "39a36b68-de88-476a-a746-d379d12d30b7",
+ "model": "smolvlm-256m-instruct",
+ "choices": [
+  {
+   "index": 0,
+   "finish_reason": "stop",
+   "message": {
+    "role": "assistant",
+    "content": "2015"
+   }
+  }
+ ],
+ "usage": {
+  "prompt_tokens": 53,
+  "completion_tokens": 5,
+  "total_tokens": 58
+ }
+}
+```

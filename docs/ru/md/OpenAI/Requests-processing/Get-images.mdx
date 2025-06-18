@@ -1,0 +1,85 @@
+﻿---
+sidebar_position: 2
+description: Получить картинки и другие функции для работы с OpenAI в Открытом пакете интеграций - бесплатной open-source библиотеке интеграций для 1С:Предприятие 8, OneScript и CLI
+keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, API, Интеграция, Сервисы, Обмен, OneScript, CLI, OpenAI]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить картинки
+ Генерирует картинки по указанному описанию
+
+
+
+`Функция ПолучитьКартинки(Знач URL, Знач Токен, Знач Модель, Знач Описание, Знач ДопЗаголовки = "") Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | URL | --url | Строка | &#x2714; | URL сервера OpenAI |
+  | Токен | --token | Строка | &#x2714; | Токен авторизации OpenAI |
+  | Модель | --model | Строка | &#x2714; | Имя модели |
+  | Описание | --descr | Структура Из КлючИЗначение | &#x2714; | Параметры генерации. См. ПолучитьСтруктуруОписанияКартинок |
+  | ДопЗаголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Доп. заголовки запроса, если необходимо |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - Результат обработки
+
+<br/>
+
+:::tip
+Метод в документации API: [Create image](https://platform.openai.com/docs/api-reference/images/create)
+:::
+<br/>
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    URL   = "https://bothub.chat/api/v2/openai/";
+    Токен = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYTUwNWFiLTdhYmEtNDkyNy05YmQ0LTZlNDFlZGEyZGRmYyIsImlzRGV2Z...";
+
+    Модель    = "dall-e-3";
+    Описание  = OPI_OpenAI.ПолучитьСтруктуруОписанияКартинок("Yellow alpaca", 1, , "1024x1024");
+    Результат = OPI_OpenAI.ПолучитьКартинки(URL, Токен, Модель, Описание);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON данные также могут быть переданы как путь к файлу .json
+            
+            oint openai ПолучитьКартинки \
+              --url "https://bothub.chat/api/v2/openai/" \
+              --token "***" \
+              --model "dall-e-3" \
+              --descr "{'prompt':'Yellow alpaca','n':1,'size':'1024x1024'}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON данные также могут быть переданы как путь к файлу .json
+            
+            oint openai ПолучитьКартинки ^
+              --url "https://bothub.chat/api/v2/openai/" ^
+              --token "***" ^
+              --model "dall-e-3" ^
+              --descr "{'prompt':'Yellow alpaca','n':1,'size':'1024x1024'}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "created": 1749756865,
+ "data": [
+  {
+   "revised_prompt": "Imagine a sunny meadow with lush green grass. In the heart of this vibrant landscape, stands a yellow alpaca with its woolly fur, shining brightly under the sunlight. Its features are comically endearing with a long neck, a small rounded head, and large, expressive eyes. It is peacefully grazing, unperturbed by the world around it, epitomizing the tranquility of the idyllic meadow. The gentle breeze flutters its fur, adding an element of charisma to this adorable creature. The picture is a beautiful blend of vibrant colors, and a sense of calmness.",
+   "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-Dy8ARyqBtu507OGoMBxfUU0S/user-n4L5wc2dF1fH9APAG2dE3Rw9/img-oEeMH1QJWSvtVlmG3yc1KOqx.png?st=2025-06-12T18%3A34%3A25Z&se=2025-06-12T20%3A34%3A25Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-12T11%3A41%3A33Z&ske=2025-06-13T11%3A41%3A33Z&sks=b&skv=2024-08-04&sig=%2BjegkXiCFSi3l80vNiH1IOij4nQ%2BD%2Bd%2BNitOmxISJ1c%3D"
+  }
+ ]
+}
+```

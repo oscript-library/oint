@@ -4,7 +4,7 @@ pipeline {
    	stages {
           stage('Prepare'){
              steps{
-                powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.23.0.ospx; del oint-1.23.0.ospx'
+                powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.25.0.ospx; del oint-1.25.0.ospx'
                 powershell encoding: 'UTF-8', script:'oscript -make ./src/en/cli/core/Classes/app.os oint.exe'          
              }
           }
@@ -79,6 +79,11 @@ pipeline {
           stage('ollama'){
              steps{
                 test_ollama()
+             }
+          }
+          stage('openai'){
+             steps{
+                test_openai()
              }
           }
           stage('ozon'){
@@ -1655,6 +1660,18 @@ def test_mysql(){
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe mysql AddTableColumn --table "test" --name "test" --type "test" --dbc "test" --tls "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe mysql DeleteTableColumn --table "test" --name "test" --dbc "test" --tls "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe mysql EnsureTable --table "test" --cols "test" --dbc "test" --tls "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe mysql ClearTable --table "test" --dbc "test" --tls "test" --debug --test '
                }
 
@@ -1866,6 +1883,84 @@ def test_ollama(){
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe ollama CheckBlob --url "test" --digest "test" --headers "test" --debug --test '
+               }
+
+}
+
+
+def test_openai(){
+					
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetResponse --url "test" --token "test" --model "test" --msgs "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetImages --url "test" --token "test" --model "test" --descr "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetEmbeddings --url "test" --token "test" --model "test" --input "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetMessageStructure --role "test" --text "test" --name "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetImageMessageStructure --role "test" --file "test" --prompt "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetImageDescriptionStructure --prompt "test" --amount "test" --bg "test" --size "test" --options "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetAssistantsList --url "test" --token "test" --limit "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai CreateAssistant --url "test" --token "test" --model "test" --name "test" --inst "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai RetrieveAssistant --url "test" --token "test" --id "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai DeleteAssistant --url "test" --token "test" --id "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetFilesList --url "test" --token "test" --limit "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai UploadFile --url "test" --token "test" --name "test" --data "test" --purpose "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetFileInformation --url "test" --token "test" --id "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai DownloadFile --url "test" --token "test" --id "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai DeleteFile --url "test" --token "test" --id "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GenerateSpeech --url "test" --token "test" --model "test" --input "test" --voice "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai CreateTranscription --url "test" --token "test" --model "test" --audio "test" --type "test" --options "test" --headers "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe openai GetModelList --url "test" --token "test" --headers "test" --debug --test '
                }
 
 }
@@ -2122,6 +2217,18 @@ def test_postgres(){
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe postgres CreateTable --table "test" --cols "test" --dbc "test" --tls "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe postgres AddTableColumn --table "test" --name "test" --type "test" --dbc "test" --tls "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe postgres DeleteTableColumn --table "test" --name "test" --dbc "test" --tls "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe postgres EnsureTable --table "test" --cols "test" --dbc "test" --tls "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
@@ -2470,6 +2577,18 @@ def test_sqlite(){
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 					powershell encoding: 'UTF-8', script:'./oint.exe sqlite CreateTable --table "test" --cols "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite AddTableColumn --table "test" --name "test" --type "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite DeleteTableColumn --table "test" --name "test" --db "test" --debug --test '
+               }
+
+               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+					powershell encoding: 'UTF-8', script:'./oint.exe sqlite EnsureTable --table "test" --cols "test" --db "test" --debug --test '
                }
 
                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
@@ -3294,7 +3413,7 @@ pipeline {
    stages {
       stage('Prepare'){
          steps{
-            powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.23.0.ospx; del oint-1.23.0.ospx'
+            powershell encoding: 'UTF-8', script:'cd ./src/en/OInt; opm build; opm install oint-1.25.0.ospx; del oint-1.25.0.ospx'
             powershell encoding: 'UTF-8', script:'oscript -make ./src/en/cli/core/Classes/app.os oint.exe'          
          }
       }
@@ -3314,6 +3433,7 @@ test_mysql()
 test_neocities()
 test_notion()
 test_ollama()
+test_openai()
 test_ozon()
 test_postgres()
 test_rcon()

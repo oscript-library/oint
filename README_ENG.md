@@ -6,6 +6,7 @@
 ![Версия](https://img.shields.io/badge/1C_version-8.3.10-yellow)
 [![OpenYellow](https://img.shields.io/endpoint?url=https://openyellow.org/data/badges/2/736878759.json)](https://openyellow.org/grid?data=top&repo=736878759)
 [![OneScript](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Bayselonarrend/OpenIntegrations/refs/heads/main/media/os-logo.json)](https://github.com/EvilBeaver/OneScript)
+[![Boosty](media/boosty.svg)](https://boosty.to/bayselonarrend)
 
 <br>
 A set of tools for integration with popular APIs: console application (Windows/Linux) and library (extension) for 1C:Enterprise/OneScript, consisting of a common set of ready-made functions for working with many well-known cloud services <br>
@@ -36,6 +37,7 @@ List of currently available APIs:
   <a href="https://en.openintegrations.dev/docs/Instructions/GoogleCalendar/"><img src="media/GoogleCalendar.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/GoogleDrive/"><img src="media/GoogleDrive.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/GoogleSheets/"><img src="media/GoogleSheets.png" width="40"></a>
+    <a href="https://en.openintegrations.dev/docs/Instructions/OpenAI/"><img src="media/OpenAI.png" width="40"></a>
     <a href="https://en.openintegrations.dev/docs/Instructions/Ollama/"><img src="media/Ollama.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Slack/"><img src="media/Slack.png" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Airtable/"><img src="media/Airtable.png?6" width="40"></a>
@@ -132,11 +134,14 @@ OpenIntegrations has detailed documentation with examples available at [https://
 
 The CLI version of OpenIntegrations has its own built-in help for all methods. The help is displayed when calling the library without a method, a method without options, or by specifying the `--help` option.
 
-___
-<br>
+## Support the project
 
+![image](media/boosty.png)
 
-<img src="media/heartnstar.png?1" align="right" width="384">
+If you like this or my other projects, you can support me [on Boosty](https://boosty.to/bayselonarrend) (regularly or one-time). With a subscription of 500 rubles (~6 dollars) or more, you'll get access to a private Telegram chat where you can ask questions about the project and receive direct assistance from me.
+
+**Thanks for your support!**
+
 
 <br>
 

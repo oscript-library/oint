@@ -1139,17 +1139,24 @@ Function GetProductsByID(Val Products, Val Parameters = "") Export
 
     OPI_TypeConversion.GetCollection(Products);
 
-    Parameters_    = GetStandardParameters(Parameters);
-    ProductsString = "";
-    Owner          = "owner_id";
+    ItemsStringsArray = New Array;
+    Parameters_       = GetStandardParameters(Parameters);
+    ProductsString    = "";
+    OwnerID           = Parameters_["owner_id"];
+
+    OPI_TypeConversion.GetLine(OwnerID);
 
     For Each Product In Products Do
-        CurrentProduct = Parameters_[Owner] + "_" + Product;
-        CurrentProduct = OPI_Tools.NumberToString(CurrentProduct);
-        ProductsString = ProductsString + CurrentProduct + ",";
+
+        CurrentProduct = OPI_Tools.NumberToString(Product);
+        CurrentProduct = OwnerID + "_" + CurrentProduct;
+
+        ItemsStringsArray.Add(CurrentProduct);
+
     EndDo;
 
-    ProductsString = Left(ProductsString, StrLen(ProductsString) - 1);
+    ProductsString = StrConcat(ItemsStringsArray, ",");
+
     Parameters_.Insert("item_ids", ProductsString);
     Parameters_.Insert("extended", 1);
 

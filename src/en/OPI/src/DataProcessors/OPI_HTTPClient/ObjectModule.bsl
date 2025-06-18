@@ -319,6 +319,40 @@ Function SetProxy(Val Settings) Export
 
 EndFunction
 
+// Set timeout !NOCLI
+// Sets the connection timeout
+//
+// Note
+// Default timeout is 3600 seconds
+//
+// Parameters:
+// Value - Number - Connection timeout - value
+//
+// Returns:
+// DataProcessorObject.OPI_HTTPClient - This processor object
+Function SetTimeout(Val Value) Export
+
+    Try
+
+        If StopExecution() Then Return ThisObject; EndIf;
+
+        OPI_TypeConversion.GetNumber(Value);
+
+        If Value           = 0 Then
+            AddLog("SetTimeout: incorrect value passed, timeout not changed");
+        Else
+            AddLog("SetTimeout: setting value");
+            RequestTimeout = Value;
+        EndIf;
+
+        Return ThisObject;
+
+    Except
+        Return Error(DetailErrorDescription(ErrorInfo()));
+    EndTry;
+
+EndFunction
+
 // Get log !NOCLI
 // Gets the execution log
 //
@@ -796,6 +830,8 @@ Function AddMultipartFormDataFile(Val FieldName, Val FileName, Val Data, Val Dat
         If Not Multipart Then Return Error("AddMultipartFile: Multipart record not initialized"); EndIf;
 
         OPI_TypeConversion.GetBinaryData(Data);
+        OPI_TypeConversion.GetLine(FieldName);
+        OPI_TypeConversion.GetLine(FileName);
 
         AddLog("AddMultipartFile: writing the block header");
 
@@ -1305,6 +1341,9 @@ EndFunction
 
 // Return response as JSON object !NOCLI
 // Returns the response body as a collection from JSON
+//
+// Note
+// If it is not possible to obtain a collection from the body, binary data will be returned
 //
 // Parameters:
 // ToMap - Boolean - Use map instead of structure - map
@@ -1864,7 +1903,9 @@ Function ExecuteMethod(Val RedirectCount = 0, Val Forced = False)
 
     If ThisIsRedirection(Response) Then
 
-        If RedirectCount = 5 Then
+        MaximumNumberOfRedirects = 5;
+
+        If RedirectCount = MaximumNumberOfRedirects Then
             Error("ExecuteMethod: the number of redirects has been exceeded");
             Return ThisObject;
         EndIf;

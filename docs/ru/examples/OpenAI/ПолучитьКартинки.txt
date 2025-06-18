@@ -1,0 +1,6 @@
+﻿    URL   = "https://bothub.chat/api/v2/openai/";
+    Токен = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYTUwNWFiLTdhYmEtNDkyNy05YmQ0LTZlNDFlZGEyZGRmYyIsImlzRGV2Z...";
+
+    Модель    = "dall-e-3";
+    Описание  = OPI_OpenAI.ПолучитьСтруктуруОписанияКартинок("Yellow alpaca", 1, , "1024x1024");
+    Результат = OPI_OpenAI.ПолучитьКартинки(URL, Токен, Модель, Описание);

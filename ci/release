@@ -4,8 +4,9 @@ pipeline {
 
         stage('Release') {
             steps {
+                    powershell encoding: 'UTF-8', script:'Remove-Item -Path "./Melezh" -Recurse -Force'
                     bat 'oscript ./ci/os/releasemaker.os'
-                    archiveArtifacts artifacts: '1.23.0/*'
+                    archiveArtifacts artifacts: '1.25.0/*'
             }
         }
     }

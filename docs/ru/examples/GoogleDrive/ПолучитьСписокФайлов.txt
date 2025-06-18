@@ -1,4 +1,4 @@
-﻿    Токен       = "ya29.a0AW4XtxhtghlL7aK7VhJX0jOgNWau4CUoOEDkQBr4uJEjPidCjKm-4r4l7AoJnODBt7yblowJtvv_3vETd6CulW4V5zxxPx8TTvQAMESj7...";
+﻿    Токен       = "ya29.a0AW4XtxgOTUonqiJAYqYtxcBh8MI1VxhOH0B9hCii3RQaZlp1PVWulwBqV-y7CkKAad7Ofs4NlHXhJ3-Qe1lj4xEd-ubK_QpjEkbdCVoUW...";
     Каталог     = "root";
     ИмяСодержит = "data";
 

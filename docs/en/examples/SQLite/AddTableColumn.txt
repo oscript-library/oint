@@ -1,0 +1,6 @@
+﻿    Base     = "C:\Users\Administrator\AppData\Local\Temp\v8_B4C9_162.sqlite";
+    Table    = "test";
+    Name     = "new_col";
+    DataType = "TEXT";
+
+    Result = OPI_SQLite.AddTableColumn(Table, Name, DataType, Base);

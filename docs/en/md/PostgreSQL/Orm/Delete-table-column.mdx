@@ -1,0 +1,79 @@
+﻿---
+sidebar_position: 7
+description: Delete table column and other functions to work with PostgreSQL in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, PostgreSQL]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete table column
+ Deletes a column from the table
+
+
+
+`Function DeleteTableColumn(Val Table, Val Name, Val Connection = "", Val Tls = "") Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Table | --table | String | &#x2714; | Table name |
+  | Name | --name | String | &#x2714; | Column name |
+  | Connection | --dbc | String, Arbitrary | &#x2716; | Connection or connection string |
+  | Tls | --tls | Structure Of KeyAndValue | &#x2716; | TLS settings, if necessary. See GetTlsSettings |
+
+  
+  Returns:  Map Of KeyAndValue - Result of query execution
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Address  = "127.0.0.1";
+    Login    = "bayselonarrend";
+    Password = "12we...";
+
+    Base  = "testbase1";
+    Table = "testtable";
+    Name  = "new_field";
+
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    Result = OPI_PostgreSQL.DeleteTableColumn(Table, Name, ConnectionString);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            # JSON data can also be passed as a path to a .json file
+            
+            oint postgres DeleteTableColumn \
+             --table "testtable" \
+             --name "new_field" \
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+             --tls "{'use_tls':true,'accept_invalid_certs':false}"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            :: JSON data can also be passed as a path to a .json file
+            
+            oint postgres DeleteTableColumn ^
+             --table "testtable" ^
+             --name "new_field" ^
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" ^
+             --tls "{'use_tls':true,'accept_invalid_certs':false}"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": true
+}
+```

@@ -1,4 +1,4 @@
-﻿// OneScript: ./OInt/tools/Modules/internal/Modules/OPI_Криптография.os
+// OneScript: ./OInt/tools/Modules/internal/Modules/OPI_Криптография.os
 
 // MIT License
 
@@ -65,7 +65,7 @@
     ИначеЕсли ФункцияХеша = "SHA1" Тогда
         Результат = Компонента.RsaSha1(Ключ, Данные);
     Иначе
-        Результат = "неподдержииваемый метод хеширования";
+        Результат = "неподдерживаемый метод хеширования";
     КонецЕсли;
 
     Если ТипЗнч(Результат) = Тип("Строка") Тогда
@@ -110,11 +110,11 @@
 
     КонецЕсли;
 
-    PayloadСтрокой  = OPI_Инструменты.JSONСтрокой(Payload, , Ложь);
-    ЗаголовкиСтркой = OPI_Инструменты.JSONСтрокой(Заголовки, , Ложь);
+    PayloadСтрокой   = OPI_Инструменты.JSONСтрокой(Payload, , Ложь);
+    ЗаголовкиСтрокой = OPI_Инструменты.JSONСтрокой(Заголовки, , Ложь);
 
     PayloadДвоичные   = ПолучитьДвоичныеДанныеИзСтроки(PayloadСтрокой);
-    ЗаголовкиДвоичные = ПолучитьДвоичныеДанныеИзСтроки(ЗаголовкиСтркой);
+    ЗаголовкиДвоичные = ПолучитьДвоичныеДанныеИзСтроки(ЗаголовкиСтрокой);
 
     PayloadBase64   = Base64UrlEncode(PayloadДвоичные);
     ЗаголовкиBase64 = Base64UrlEncode(ЗаголовкиДвоичные);
@@ -226,7 +226,7 @@
 
 // https://github.com/pintov/1c-jwt
 
-Функция Base64UrlEncode(Знач Значение)
+Функция Base64UrlEncode(Знач Значение) Экспорт
 
     Вывод = Base64Строка(Значение);
     Вывод  = СтрРазделить(Вывод, "=")[0];
@@ -240,3 +240,23 @@
 #КонецОбласти
 
 #КонецОбласти
+
+#Region Alternate
+
+Function CreateSignature(Val SignKey, Val SignatureData, Val Algorithm, Val HashFunc) Export
+	Return СоздатьПодпись(SignKey, SignatureData, Algorithm, HashFunc);
+EndFunction
+
+Function Hash(BinaryData, Type) Export
+	Return Хеш(BinaryData, Type);
+EndFunction
+
+Function UniteBinaryData(BinaryData1, BinaryData2) Export
+	Return СклеитьДвоичныеДанные(BinaryData1, BinaryData2);
+EndFunction
+
+Function RepeatString(String, Count) Export
+	Return ПовторитьСтроку(String, Count);
+EndFunction
+
+#EndRegion

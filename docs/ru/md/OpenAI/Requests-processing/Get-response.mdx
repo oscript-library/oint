@@ -1,0 +1,121 @@
+﻿---
+sidebar_position: 1
+description: Получить ответ и другие функции для работы с OpenAI в Открытом пакете интеграций - бесплатной open-source библиотеке интеграций для 1С:Предприятие 8, OneScript и CLI
+keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, API, Интеграция, Сервисы, Обмен, OneScript, CLI, OpenAI]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Получить ответ
+ Генерирует ответ по заданному текстовому запросу
+
+
+
+`Функция ПолучитьОтвет(Знач URL, Знач Токен, Знач Модель, Знач Сообщения, Знач ДопПараметры = "", Знач ДопЗаголовки = "") Экспорт`
+
+  | Параметр | CLI опция | Тип | Обяз. | Назначение |
+  |-|-|-|-|-|
+  | URL | --url | Строка | &#x2714; | URL сервера OpenAI |
+  | Токен | --token | Строка | &#x2714; | Токен авторизации OpenAI |
+  | Модель | --model | Строка | &#x2714; | Имя модели |
+  | Сообщения | --msgs | Строка, Массив Из Строка | &#x2714; | Сообщения разговора. См. ПолучитьСтруктуруСообщения |
+  | ДопПараметры | --options | Структура Из КлючИЗначение | &#x2716; | Доп. параметры запроса, если необходимо |
+  | ДопЗаголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Доп. заголовки запроса, если необходимо |
+
+  
+  Возвращаемое значение:   Соответствие Из КлючИЗначение - Результат обработки
+
+<br/>
+
+:::tip
+Метод в документации API: [Create chat completion](https://platform.openai.com/docs/api-reference/chat/create)
+:::
+<br/>
+
+
+
+```bsl title="Пример использования для 1С:Предприятие/OneScript"
+    URL   = "https://api.athenaeum.digital:1122/";
+    Токен = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+
+    // Текстовые сообщения
+
+    Сообщения = Новый Массив;
+    Сообщения.Добавить(OPI_OpenAI.ПолучитьСтруктуруСообщения("user"     , "What is 1C:Enterprise?"));
+    Сообщения.Добавить(OPI_OpenAI.ПолучитьСтруктуруСообщения("assistant", "1C:Enterprise is a full-stack, low-code platform"));
+    Сообщения.Добавить(OPI_OpenAI.ПолучитьСтруктуруСообщения("user"     , "When the first version was released?"));
+
+    Модель = "smolvlm-256m-instruct";
+
+    Результат = OPI_OpenAI.ПолучитьОтвет(URL, Токен, Модель, Сообщения);
+
+    // Картинки
+
+    Модель     = "moondream2-20250414";
+    Файл       = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Путь или Двоичные данные
+    ИмяФайла   = СтрШаблон("%1.png", Строка(Новый УникальныйИдентификатор()));
+    Назначение = "user_data";
+
+    Сообщения = Новый Массив;
+
+    ЗагрузкаКартинки = OPI_OpenAI.ЗагрузитьФайл(URL, Токен, ИмяФайла, Файл, Назначение);
+    IDКартинки       = ЗагрузкаКартинки["id"];
+
+    Описание = OPI_OpenAI.ПолучитьСтруктуруСообщенияКартинки("user", IDКартинки, "What is in this image?");
+
+    Сообщения.Добавить(Описание);
+
+    Результат = OPI_OpenAI.ПолучитьОтвет(URL, Токен, Модель, Сообщения);
+
+    OPI_OpenAI.УдалитьФайл(URL, Токен, IDКартинки);
+```
+    
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint openai ПолучитьОтвет \
+              --url "https://api.athenaeum.digital:1122/" \
+              --token "***" \
+              --model "smolvlm-256m-instruct" \
+              --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a full-stack, low-code platform'},{'role':'user','content':'When the first version was released?'}]"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint openai ПолучитьОтвет ^
+              --url "https://api.athenaeum.digital:1122/" ^
+              --token "***" ^
+              --model "smolvlm-256m-instruct" ^
+              --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a full-stack, low-code platform'},{'role':'user','content':'When the first version was released?'}]"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Результат"
+{
+ "created": 1749751723,
+ "object": "chat.completion",
+ "id": "e51a994a-a3d9-4df8-8fc6-5035fa3f63da",
+ "model": "smolvlm-256m-instruct",
+ "choices": [
+  {
+   "index": 0,
+   "finish_reason": "stop",
+   "message": {
+    "role": "assistant",
+    "content": "2001"
+   }
+  }
+ ],
+ "usage": {
+  "prompt_tokens": 53,
+  "completion_tokens": 5,
+  "total_tokens": 58
+ }
+}
+```

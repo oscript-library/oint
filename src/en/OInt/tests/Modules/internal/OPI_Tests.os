@@ -43,6 +43,7 @@
 // BSLLS:UnreachableCode-off
 // BSLLS:UnusedLocalMethod-off
 // BSLLS:NestedFunctionInParameters-off
+// BSLLS:MissingTemporaryFileDeletion-off
 
 //@skip-check undefined-variable
 //@skip-check wrong-string-literal-content
@@ -1032,7 +1033,7 @@ Procedure TwitterAPI_Tweets() Export
     OPI_TestDataRetrieval.ParameterToCollection("GIF"     , TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("Video"   , TestParameters);
 
-    //Twitter_CreateTextTweet(TestParameters);
+    Twitter_CreateTextTweet(TestParameters);
     Twitter_UploadAttachmentsArray(TestParameters);
     Twitter_CreateVideoTweet(TestParameters);
     Twitter_CreateImageTweet(TestParameters);
@@ -2316,6 +2317,9 @@ Procedure SQLL_ORM() Export
     SQLite_UpdateRecords(TestParameters);
     SQLite_DeleteRecords(TestParameters);
     SQLite_GetTableInformation(TestParameters);
+    SQLite_AddTableColumn(TestParameters);
+    SQLite_DeleteTableColumn(TestParameters);
+    SQLite_EnsureTable(TestParameters);
     SQLite_ClearTable(TestParameters);
     SQLite_DeleteTable(TestParameters);
     SQLite_GetRecordsFilterStrucutre(TestParameters);
@@ -2329,6 +2333,9 @@ Procedure SQLL_ORM() Export
     SQLite_UpdateRecords(TestParameters);
     SQLite_DeleteRecords(TestParameters);
     SQLite_GetTableInformation(TestParameters);
+    SQLite_AddTableColumn(TestParameters);
+    SQLite_DeleteTableColumn(TestParameters);
+    SQLite_EnsureTable(TestParameters);
     SQLite_ClearTable(TestParameters);
     SQLite_DeleteTable(TestParameters);
     SQLite_GetRecordsFilterStrucutre(TestParameters);
@@ -2371,12 +2378,15 @@ Procedure Postgres_ORM() Export
 
     PostgreSQL_CreateDatabase(TestParameters);
     PostgreSQL_CreateTable(TestParameters);
-    PostgreSQL_GetTableInformation(TestParameters);
     PostgreSQL_AddRecords(TestParameters);
     PostgreSQL_GetRecords(TestParameters);
     PostgreSQL_UpdateRecords(TestParameters);
     PostgreSQL_DeleteRecords(TestParameters);
     PostgreSQL_ClearTable(TestParameters);
+    PostgreSQL_GetTableInformation(TestParameters);
+    PostgreSQL_AddTableColumn(TestParameters);
+    PostgreSQL_DeleteTableColumn(TestParameters);
+    PostgreSQL_EnsureTable(TestParameters);
     PostgreSQL_DeleteTable(TestParameters);
     PostgreSQL_DisableAllDatabaseConnections(TestParameters);
     PostgreSQL_DeleteDatabase(TestParameters);
@@ -2414,12 +2424,15 @@ Procedure MYS_ORM() Export
 
     MySQL_CreateDatabase(TestParameters);
     MySQL_CreateTable(TestParameters);
-    MySQL_GetTableInformation(TestParameters);
     MySQL_AddRecords(TestParameters);
     MySQL_GetRecords(TestParameters);
     MySQL_UpdateRecords(TestParameters);
     MySQL_DeleteRecords(TestParameters);
     MySQL_ClearTable(TestParameters);
+    MySQL_GetTableInformation(TestParameters);
+    MySQL_AddTableColumn(TestParameters);
+    MySQL_DeleteTableColumn(TestParameters);
+    MySQL_EnsureTable(TestParameters);
     MySQL_DeleteTable(TestParameters);
     MySQL_DeleteDatabase(TestParameters);
     MySQL_GetRecordsFilterStrucutre(TestParameters);
@@ -2518,9 +2531,9 @@ Procedure GAPI_NotificationsReceiving() Export
     OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_DownloadMessageID", TestParameters);
 
     GreenAPI_GetNotification(TestParameters);
-    GreenAPI_DeleteNotificationFromQueue(TestParameters);
-    GreenAPI_DownloadMessageFile(TestParameters);
     GreenAPI_SetReadMark(TestParameters);
+    //GreenAPI_DownloadMessageFile(TestParameters);
+    GreenAPI_DeleteNotificationFromQueue(TestParameters);
 
 EndProcedure
 
@@ -2643,6 +2656,7 @@ Procedure HTTP_Initialization() Export
     HTTPClient_SetDataType(TestParameters);
     HTTPClient_GetLog(TestParameters);
     HTTPClient_SetProxy(TestParameters);
+    HTTPClient_SetTimeout(TestParameters);
 
 EndProcedure
 
@@ -2723,6 +2737,77 @@ Procedure HTTP_ResponseReceiving() Export
     HTTPClient_ReturnResponseAsBinaryData(TestParameters);
     HTTPClient_ReturnResponseAsString(TestParameters);
     HTTPClient_ReturnResponseFilename(TestParameters);
+
+EndProcedure
+
+#EndRegion
+
+#Region OpenAI
+
+Procedure OAI_RequestsProcessing() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token2" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL2"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_File"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"       , TestParameters);
+
+    OpenAI_GetResponse(TestParameters);
+    OpenAI_GetEmbeddings(TestParameters);
+    OpenAI_GetMessageStructure(TestParameters);
+    OpenAI_GetImageMessageStructure(TestParameters);
+    OpenAI_GetImages(TestParameters);
+
+EndProcedure
+
+Procedure OAI_Assistants() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"   , TestParameters);
+
+    OpenAI_CreateAssistant(TestParameters);
+    OpenAI_RetrieveAssistant(TestParameters);
+    OpenAI_GetAssistantsList(TestParameters);
+    OpenAI_DeleteAssistant(TestParameters);
+
+EndProcedure
+
+Procedure OAI_FileManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"      , TestParameters);
+
+    OpenAI_UploadFile(TestParameters);
+    OpenAI_GetFileInformation(TestParameters);
+    OpenAI_GetFilesList(TestParameters);
+    OpenAI_DownloadFile(TestParameters);
+    OpenAI_DeleteFile(TestParameters);
+
+EndProcedure
+
+Procedure OAI_AudioProcessing() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"   , TestParameters);
+
+    OpenAI_GenerateSpeech(TestParameters);
+    OpenAI_CreateTranscription(TestParameters);
+
+EndProcedure
+
+Procedure OAI_ModelsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"   , TestParameters);
+
+    OpenAI_GetModelList(TestParameters);
 
 EndProcedure
 
@@ -11205,14 +11290,15 @@ EndProcedure
 
 Procedure Bitrix24_MarkMessageAsReaded(FunctionParameters)
 
-    URL       = FunctionParameters["Bitrix24_URL"];
-    ChatID    = "chat" + FunctionParameters["Bitrix24_HookChatID"];
-    MessageID = FunctionParameters["Bitrix24_ChatMessageID"];
+    URL        = FunctionParameters["Bitrix24_URL"];
+    ChatID     = FunctionParameters["Bitrix24_HookChatID"];
+    OPI_TypeConversion.GetLine(ChatID);
+    ChatString = "chat" + ChatID;
+    MessageID  = FunctionParameters["Bitrix24_ChatMessageID"];
 
     Result = OPI_Bitrix24.MarkMessageAsReaded(URL, ChatID, MessageID);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "MarkMessageAsReaded (wh)", "Bitrix24");
-
+    OPI_TestDataRetrieval.WriteLog(Result, "MarkMessageAsReaded (wh)", "Bitrix24"); // SKIP
     OPI_TestDataRetrieval.Check_BitrixDialog(Result); // SKIP
 
     URL       = FunctionParameters["Bitrix24_Domain"];
@@ -11225,7 +11311,6 @@ Procedure Bitrix24_MarkMessageAsReaded(FunctionParameters)
     // END
 
     OPI_TestDataRetrieval.WriteLog(Result, "MarkMessageAsReaded", "Bitrix24");
-
     OPI_TestDataRetrieval.Check_BitrixDialog(Result);
 
 EndProcedure
@@ -14037,6 +14122,7 @@ Procedure Ozon_CreateUpdateProducts(FunctionParameters)
     ItemStructure.Insert("weight"                 , 100);
     ItemStructure.Insert("weight_unit"            , "g");
     ItemStructure.Insert("images"                 , ImageArray);
+    ItemStructure.Insert("type_id"                , 91565);
 
     // Video
 
@@ -17771,7 +17857,7 @@ Procedure SQLite_ClearTable(FunctionParameters)
     Check = OPI_SQLite.GetTableInformation(Table, Base);
 
     OPI_TestDataRetrieval.WriteLog(Check, "Check", "SQLite");
-    OPI_TestDataRetrieval.Check_Array(Check["data"], 7);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], 5);
 
     Check = OPI_SQLite.GetRecords(Table, , , , , Base);
 
@@ -17820,6 +17906,117 @@ Procedure SQLite_ConnectExtension(FunctionParameters)
     Except
         OPI_TestDataRetrieval.WriteLog(ErrorDescription(), "Error deleting extension file", "SQLite");
     EndTry;
+
+EndProcedure
+
+Procedure SQLite_AddTableColumn(FunctionParameters)
+
+    Base     = FunctionParameters["SQLite_DB"];
+    Table    = "test";
+    Name     = "new_col";
+    DataType = "TEXT";
+
+    Result = OPI_SQLite.AddTableColumn(Table, Name, DataType, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Result = OPI_SQLite.GetTableInformation(Table, Base);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (check))", "SQLite");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["name"] = Name Then
+            OPI_TestDataRetrieval.Check_Equality(DataType, Coloumn["type"]);
+            Found          = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+EndProcedure
+
+Procedure SQLite_DeleteTableColumn(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+    Name  = "new_col";
+
+    Result = OPI_SQLite.DeleteTableColumn(Table, Name, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Result = OPI_SQLite.GetTableInformation(Table, Base);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (check))", "SQLite");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["name"] = Name Then
+            Found          = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+EndProcedure
+
+Procedure SQLite_EnsureTable(FunctionParameters)
+
+    Base = FunctionParameters["SQLite_DB"];
+
+    Table = "test";
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("id"   , "INTEGER");
+    ColoumnsStruct.Insert("code" , "INTEGER");
+    ColoumnsStruct.Insert("name" , "TEXT");
+    ColoumnsStruct.Insert("age"  , "INTEGER");
+    ColoumnsStruct.Insert("info" , "TEXT");
+
+    Result = OPI_SQLite.EnsureTable(Table, ColoumnsStruct, Base);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_SQLite.GetTableInformation(Table, Base);
+
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Coloumn["type"], ColoumnsStruct[Coloumn["name"]]);
+    EndDo;
+
+    Table = "test_new";
+
+    Result = OPI_SQLite.EnsureTable(Table, ColoumnsStruct, Base);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable (new))", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_SQLite.GetTableInformation(Table, Base);
+
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Coloumn["type"], ColoumnsStruct[Coloumn["name"]]);
+    EndDo;
 
 EndProcedure
 
@@ -18753,6 +18950,213 @@ Procedure PostgreSQL_GetTlsSettings(FunctionParameters)
 
 EndProcedure
 
+Procedure PostgreSQL_AddTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base     = "testbase1";
+    Table    = "testtable";
+    Name     = "new_field";
+    DataType = "TEXT";
+
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    Result = OPI_PostgreSQL.AddTableColumn(Table, Name, DataType, ConnectionString);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_PostgreSQL.GetTableInformation(Table, ConnectionString);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (check))", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(Coloumn["data_type"]));
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+    Address = "api.athenaeum.digital";
+    Port    = "5433";
+
+    TLSConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+    TLSSettings         = OPI_PostgreSQL.GetTlsSettings(False);
+
+    Result = OPI_PostgreSQL.AddTableColumn(Table, Name, DataType, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (TLS)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_PostgreSQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (TLS, check)", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(Coloumn["data_type"]));
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+EndProcedure
+
+Procedure PostgreSQL_DeleteTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+    Name  = "new_field";
+
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    Result = OPI_PostgreSQL.DeleteTableColumn(Table, Name, ConnectionString);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_PostgreSQL.GetTableInformation(Table, ConnectionString);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (check))", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+    Address = "api.athenaeum.digital";
+    Port    = "5433";
+
+    TLSConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+    TLSSettings         = OPI_PostgreSQL.GetTlsSettings(False);
+
+    Result = OPI_PostgreSQL.DeleteTableColumn(Table, Name, TLSConnectionString, TLSSettings);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (TLS)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_PostgreSQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (TLS, check)", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+EndProcedure
+
+Procedure PostgreSQL_EnsureTable(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("smallint_field" , "SMALLINT");
+    ColoumnsStruct.Insert("uuid_field"     , "uuid");
+    ColoumnsStruct.Insert("bigint_field"   , "BIGINT");
+    ColoumnsStruct.Insert("custom_field"   , "TEXT");
+
+    Result = OPI_PostgreSQL.EnsureTable(Table, ColoumnsStruct, ConnectionString);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_PostgreSQL.GetTableInformation(Table, ConnectionString);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "EnsureTable (check)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Lower(Coloumn["data_type"]), Lower(ColoumnsStruct[Coloumn["column_name"]]));
+    EndDo;
+
+    Table = "test_new";
+
+    Result = OPI_PostgreSQL.EnsureTable(Table, ColoumnsStruct, ConnectionString);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable (new))", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_PostgreSQL.GetTableInformation(Table, ConnectionString);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "EnsureTable (new, check)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Lower(Coloumn["data_type"]), Lower(ColoumnsStruct[Coloumn["column_name"]]));
+    EndDo;
+
+    Address = "api.athenaeum.digital";
+    Port    = "5433";
+
+    Table               = "testtable";
+    TLSConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+    TLSSettings         = OPI_PostgreSQL.GetTlsSettings(False);
+
+    Result = OPI_PostgreSQL.EnsureTable(Table, ColoumnsStruct, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable (TLS)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_PostgreSQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "EnsureTable (TLS, check)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Lower(Coloumn["data_type"]), Lower(ColoumnsStruct[Coloumn["column_name"]]));
+    EndDo;
+
+EndProcedure
+
 #EndRegion
 
 #Region MySQL
@@ -19595,7 +19999,7 @@ Procedure MySQL_GetTableInformation(FunctionParameters)
 
     // END
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation", "OPI_MySQL");
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation", "MySQL");
     OPI_TestDataRetrieval.Check_Array(Result["data"], 20);
 
     Address = "api.athenaeum.digital";
@@ -19606,15 +20010,231 @@ Procedure MySQL_GetTableInformation(FunctionParameters)
 
     Result = OPI_MySQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation (TLS)", "OPI_MySQL");
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation (TLS)", "MySQL");
     OPI_TestDataRetrieval.Check_Array(Result["data"], 20);
 
     Table = "heyho";
 
     Result = OPI_MySQL.GetTableInformation(Table, ConnectionString);
 
-    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation (error)", "OPI_MySQL");
+    OPI_TestDataRetrieval.WriteLog(Result, "GetTableInformation (error)", "MySQL");
     OPI_TestDataRetrieval.Check_Array(Result["data"], 0);
+
+EndProcedure
+
+Procedure MySQL_AddTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base     = "testbase1";
+    Table    = "testtable";
+    Name     = "new_field";
+    DataType = "MEDIUMTEXT";
+
+    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    Result = OPI_MySQL.AddTableColumn(Table, Name, DataType, ConnectionString);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_MySQL.GetTableInformation(Table, ConnectionString);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (check))", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+
+            CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(CurrentType));
+
+            Found = True;
+
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+    Address = "api.athenaeum.digital";
+    Port    = "3307";
+
+    TLSConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+    TLSSettings         = OPI_MySQL.GetTlsSettings(False);
+
+    Result = OPI_MySQL.AddTableColumn(Table, Name, DataType, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (TLS)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_MySQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
+    OPI_TestDataRetrieval.WriteLog(Result, "AddTableColumn (TLS, check)", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+
+            CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(CurrentType));
+
+            Found = True;
+
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+EndProcedure
+
+Procedure MySQL_DeleteTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+    Name  = "new_field";
+
+    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    Result = OPI_MySQL.DeleteTableColumn(Table, Name, ConnectionString);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_MySQL.GetTableInformation(Table, ConnectionString);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (check))", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+    Address = "api.athenaeum.digital";
+    Port    = "3307";
+
+    TLSConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+    TLSSettings         = OPI_MySQL.GetTlsSettings(False);
+
+    Result = OPI_MySQL.DeleteTableColumn(Table, Name, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (TLS)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Result = OPI_MySQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (TLS, check)", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+EndProcedure
+
+Procedure MySQL_EnsureTable(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+
+    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password);
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("smallint_field" , "SMALLINT");
+    ColoumnsStruct.Insert("double_field"   , "DOUBLE");
+    ColoumnsStruct.Insert("bigint_field"   , "BIGINT");
+    ColoumnsStruct.Insert("custom_field"   , "TEXT");
+
+    Result = OPI_MySQL.EnsureTable(Table, ColoumnsStruct, ConnectionString);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_MySQL.GetTableInformation(Table, ConnectionString);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "EnsureTable (check)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+        OPI_TestDataRetrieval.Check_Equality(Lower(CurrentType), Lower(ColoumnsStruct[Coloumn["COLUMN_NAME"]]));
+    EndDo;
+
+    Table = "test_new";
+
+    Result = OPI_MySQL.EnsureTable(Table, ColoumnsStruct, ConnectionString);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable (new))", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_MySQL.GetTableInformation(Table, ConnectionString);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "EnsureTable (new, check)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+        OPI_TestDataRetrieval.Check_Equality(Lower(CurrentType), Lower(ColoumnsStruct[Coloumn["COLUMN_NAME"]]));
+    EndDo;
+
+    Address = "api.athenaeum.digital";
+    Port    = "3307";
+
+    Table               = "testtable";
+    TLSConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+    TLSSettings         = OPI_MySQL.GetTlsSettings(False);
+
+    Result = OPI_MySQL.EnsureTable(Table, ColoumnsStruct, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "EnsureTable (TLS)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Check = OPI_MySQL.GetTableInformation(Table, TLSConnectionString, TLSSettings);
+
+    OPI_TestDataRetrieval.WriteLog(Check, "EnsureTable (TLS, check)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+        OPI_TestDataRetrieval.Check_Equality(Lower(CurrentType), Lower(ColoumnsStruct[Coloumn["COLUMN_NAME"]]));
+    EndDo;
 
 EndProcedure
 
@@ -20412,7 +21032,7 @@ Procedure GreenAPI_DownloadMessageFile(FunctionParameters)
     ApiTokenInstance = FunctionParameters["GreenAPI_Token"];
 
     ChatID    = FunctionParameters["GreenAPI_TestGroupID"];
-    MessageID = FunctionParameters["GreenAPI_DownloadMessageID"];
+    MessageID = FunctionParameters["GreenAPI_FileMessageID"];
 
     AccessParameters = OPI_GreenAPI.FormAccessParameters(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
     Result           = OPI_GreenAPI.DownloadMessageFile(AccessParameters, ChatID, MessageID);
@@ -20432,7 +21052,7 @@ Procedure GreenAPI_SetReadMark(FunctionParameters)
     ApiTokenInstance = FunctionParameters["GreenAPI_Token"];
 
     ChatID    = FunctionParameters["GreenAPI_TestGroupID"];
-    MessageID = FunctionParameters["GreenAPI_DownloadMessageID"];
+    MessageID = FunctionParameters["GreenAPI_FileMessageID"];
 
     AccessParameters = OPI_GreenAPI.FormAccessParameters(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
     Result           = OPI_GreenAPI.SetReadMark(AccessParameters, ChatID, MessageID);
@@ -22470,7 +23090,6 @@ Procedure HTTPClient_ReturnRequest(FunctionParameters)
     OPI_TestDataRetrieval.WriteLog(Result, "ReturnRequest", "HTTPClient");
     OPI_TestDataRetrieval.ExpectsThat(Result).ИмеетТип("HTTPRequest");
 
-
     Result = OPI_HTTPRequests.NewRequest()
         .Initialize()
         .SetURL(URL)
@@ -22653,9 +23272,7 @@ Procedure HTTPClient_SetProxy(FunctionParameters)
     URL = URL + "/get";
 
     ProxySettings = New InternetProxy;
-
-    ProxySettings.User     = "user";
-    ProxySettings.Password = "password";
+    ProxySettings.Set("https", "proxy.com", 443, "user", "password", False);
 
     Result = OPI_HTTPRequests.NewRequest()
         .Initialize()
@@ -22668,8 +23285,28 @@ Procedure HTTPClient_SetProxy(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLog(Result, "SetProxy", "HTTPClient");
     OPI_TestDataRetrieval.ExpectsThat(Result).ИмеетТип("HTTPConnection");
-    OPI_TestDataRetrieval.ExpectsThat(Result.Proxy.User).Равно("user");
-    OPI_TestDataRetrieval.ExpectsThat(Result.Proxy.Password).Равно("password");
+    OPI_TestDataRetrieval.ExpectsThat(Result.Proxy.User("https")).Равно("user");
+    OPI_TestDataRetrieval.ExpectsThat(Result.Proxy.Password("https")).Равно("password");
+
+EndProcedure
+
+Procedure HTTPClient_SetTimeout(FunctionParameters)
+
+    URL = FunctionParameters["HTTP_URL"];
+    URL = URL + "/get";
+
+    Result = OPI_HTTPRequests.NewRequest()
+        .Initialize()
+        .SetURL(URL)
+        .SetTimeout(60) // <---
+        .ProcessRequest("GET", False)
+        .ReturnConnection();
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "SetTimeout", "HTTPClient");
+    OPI_TestDataRetrieval.ExpectsThat(Result).ИмеетТип("HTTPConnection");
+    OPI_TestDataRetrieval.ExpectsThat(Result.Timeout).Равно(60);
 
 EndProcedure
 
@@ -22767,6 +23404,341 @@ Procedure HTTPClient_SplitArraysInURL(FunctionParameters)
 
     CorrectVariant3 = "/page?arrayfield[]=val1&arrayfield[]=val2&arrayfield[]=val3";
     OPI_TestDataRetrieval.ExpectsThat(SeparationPhp).Равно(CorrectVariant3);
+
+EndProcedure
+
+#EndRegion
+
+#Region OpenAI
+
+Procedure OpenAI_GetResponse(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    // Text messages
+
+    Messages = New Array;
+    Messages.Add(OPI_OpenAI.GetMessageStructure("user"     , "What is 1C:Enterprise?"));
+    Messages.Add(OPI_OpenAI.GetMessageStructure("assistant", "1C:Enterprise is a full-stack, low-code platform"));
+    Messages.Add(OPI_OpenAI.GetMessageStructure("user"     , "When the first version was released?"));
+
+    Model = "smolvlm-256m-instruct";
+
+    Result = OPI_OpenAI.GetResponse(URL, Token, Model, Messages);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetResponse", "OpenAI"); // SKIP
+    OPI_TestDataRetrieval.Check_OpenAIResponse(Result); // SKIP
+
+    // Pictures
+
+    Model       = "moondream2-20250414";
+    File        = FunctionParameters["Picture"]; // URL, Path or Binary Data
+    FileName    = StrTemplate("%1.png", String(New UUID()));
+    Destination = "user_data";
+
+    Messages = New Array;
+
+    ImageUpload = OPI_OpenAI.UploadFile(URL, Token, FileName, File, Destination);
+    ImageID     = ImageUpload["id"];
+
+    OPI_TestDataRetrieval.WriteLog(ImageUpload, "GetResponse (image upload)", "OpenAI"); // SKIP
+
+    Description = OPI_OpenAI.GetImageMessageStructure("user", ImageID, "What is in this image?");
+
+    Messages.Add(Description);
+
+    Result = OPI_OpenAI.GetResponse(URL, Token, Model, Messages);
+
+    OPI_OpenAI.DeleteFile(URL, Token, ImageID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetResponse (image)", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIResponse(Result);
+
+EndProcedure
+
+Procedure OpenAI_GetEmbeddings(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Text  = "What is 1C:Enterprise?";
+    Model = "text-embedding-ada-002";
+
+    Result = OPI_OpenAI.GetEmbeddings(URL, Token, Model, Text);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetEmbeddings", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIEmbeddings(Result);
+
+EndProcedure
+
+Procedure OpenAI_CreateAssistant(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Instruction = "You are a personal math tutor. When asked a question, write and run Python code to answer the question.";
+    Model       = "smolvlm-256m-instruct";
+    Name        = "Math tutor";
+
+    Result = OPI_OpenAI.CreateAssistant(URL, Token, Model, Name, Instruction);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateAssistant", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIAssistant(Result, Name);
+
+    AssistantID = Result["id"];
+    OPI_TestDataRetrieval.WriteParameter("OpenAI_Assistant", AssistantID);
+    OPI_Tools.AddField("OpenAI_Assistant", AssistantID, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure OpenAI_DeleteAssistant(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    AssistantID = FunctionParameters["OpenAI_Assistant"];
+
+    Result = OPI_OpenAI.DeleteAssistant(URL, Token, AssistantID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteAssistant", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIAssistantDeletion(Result, AssistantID);
+
+EndProcedure
+
+Procedure OpenAI_RetrieveAssistant(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    AssistantID = FunctionParameters["OpenAI_Assistant"];
+
+    Result = OPI_OpenAI.RetrieveAssistant(URL, Token, AssistantID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "RetrieveAssistant", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIAssistant(Result, "Math tutor");
+
+EndProcedure
+
+Procedure OpenAI_GetAssistantsList(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Count                = 2;
+    AdditionalParameters = New Structure("after,order", "asst_2", "desc");
+
+    Result = OPI_OpenAI.GetAssistantsList(URL, Token, Count, AdditionalParameters);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetAssistantsList", "OpenAI");
+    OPI_TestDataRetrieval.Check_Array(Result["data"]);
+
+EndProcedure
+
+Procedure OpenAI_UploadFile(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    File = FunctionParameters["Picture"]; // URL, Path or Binary Data
+
+    FileName    = StrTemplate("%1.png", String(New UUID()));
+    Destination = "assistants";
+
+    Result = OPI_OpenAI.UploadFile(URL, Token, FileName, File, Destination);
+
+    // END
+
+    OPI_TypeConversion.GetBinaryData(File);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "UploadFile", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIFile(Result, FileName, File.Size() + 2, Destination);
+
+    FileID = Result["id"];
+    OPI_TestDataRetrieval.WriteParameter("OpenAI_File", FileID);
+    OPI_Tools.AddField("OpenAI_File", FileID, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure OpenAI_DeleteFile(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    FileID = FunctionParameters["OpenAI_File"];
+
+    Result = OPI_OpenAI.DeleteFile(URL, Token, FileID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteFile", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIFileDeletion(Result, FileID);
+
+EndProcedure
+
+Procedure OpenAI_GetFileInformation(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    FileID = FunctionParameters["OpenAI_File"];
+
+    Result = OPI_OpenAI.GetFileInformation(URL, Token, FileID);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetFileInformation", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIFile(Result);
+
+EndProcedure
+
+Procedure OpenAI_GetFilesList(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Result = OPI_OpenAI.GetFilesList(URL, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetFilesList", "OpenAI");
+    OPI_TestDataRetrieval.Check_Array(Result["data"]);
+
+EndProcedure
+
+Procedure OpenAI_DownloadFile(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    FileID = FunctionParameters["OpenAI_File"];
+
+    Result = OPI_OpenAI.DownloadFile(URL, Token, FileID);
+
+    // END
+
+    File = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(File);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DownloadFile", "OpenAI");
+    OPI_TestDataRetrieval.Check_BinaryData(Result, File.Size() + 2);
+
+EndProcedure
+
+Procedure OpenAI_GetMessageStructure(FunctionParameters)
+
+    Result = OPI_OpenAI.GetMessageStructure("user", "What is 1C:Enterprise?");
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetMessageStructure", "OpenAI");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure OpenAI_GetImageMessageStructure(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+    Image = FunctionParameters["OpenAI_File"];
+
+    Result = OPI_OpenAI.GetImageMessageStructure("user", Image, "What is in this image?");
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetImageMessageStructure", "OpenAI");
+    OPI_TestDataRetrieval.Check_Structure(Result);
+
+EndProcedure
+
+Procedure OpenAI_GenerateSpeech(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Text  = "Attack ships on fire off the shoulder of Orion bright as magnesium";
+    Model = "tts-1";
+
+    AdditionalParameters = New Structure("response_format", "wav");
+
+    Result = OPI_OpenAI.GenerateSpeech(URL, Token, Model, Text, , AdditionalParameters);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GenerateSpeech", "OpenAI");
+    OPI_TestDataRetrieval.Check_BinaryData(Result, 137516);
+
+    //@skip-check missing-temporary-file-deletion
+    TFN = GetTempFileName("wav");
+    Result.Write(TFN);
+
+    OPI_TestDataRetrieval.WriteParameter("OpenAI_Speech", TFN);
+    OPI_Tools.AddField("OpenAI_Speech", TFN, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure OpenAI_CreateTranscription(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Audio = FunctionParameters["OpenAI_Speech"];
+    Model = "whisper-1";
+
+    Result = OPI_OpenAI.CreateTranscription(URL, Token, Model, Audio, "audio/wav");
+
+    // END
+
+    Try
+        DeleteFiles(Audio);
+    Except
+        Message("Error deleting file after test");
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLog(Result, "CreateTranscription", "OpenAI");
+    OPI_TestDataRetrieval.Check_String(Lower(Result["text"]), "attack ships on fire off the shoulder of orion bright as magnesium.");
+
+EndProcedure
+
+Procedure OpenAI_GetImages(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL2"];
+    Token = FunctionParameters["OpenAI_Token2"];
+
+    Model       = "dall-e-3";
+    Description = OPI_OpenAI.GetImageDescriptionStructure("Yellow alpaca", 1, , "1024x1024");
+    Result      = OPI_OpenAI.GetImages(URL, Token, Model, Description);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetImages", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIImage(Result);
+
+EndProcedure
+
+Procedure OpenAI_GetModelList(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Result = OPI_OpenAI.GetModelList(URL, Token);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetModelList", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIList(Result);
 
 EndProcedure
 

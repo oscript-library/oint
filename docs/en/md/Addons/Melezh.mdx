@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+id: Melezh
+sidebar_class_name: Melezh
+---
+
+<img src={require('../../static/img/melezh_ico.png').default} width='64px' />
+
+# Melezh  
+
+The server version of the Open Integration Package, providing a unified configurable HTTP API for accessing any of its libraries with default value settings, a web console, and built-in request logging.  
+
+## How it works  
+
+This server is based on oint - the console application of the Open Integrations Package, and allows remote invocation of its methods via HTTP requests from anywhere, just as it would happen in the console on a local machine. Melezh uses the Kestrel server built into OneScript to receive HTTP requests, which are then interpreted into oint commands (or commands of extension modules) for further execution.
+
+The solution features a flexible configuration system, enabling restrictions on available commands/methods and setting default parameter values for command execution. It includes a logging system and a built-in web console for convenient management.  
+
+> **[📘 Go to Melezh Documentation](/docs/Addons/Melezh/Overview)** <br/>  
+> **[🏰 Go to Melezh Repository](https://github.com/Bayselonarrend/Melezh)** 

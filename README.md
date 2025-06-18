@@ -19,6 +19,7 @@
 ![Версия](https://img.shields.io/badge/Версия_1С-8.3.10-yellow)
 [![OpenYellow](https://img.shields.io/endpoint?url=https://openyellow.org/data/badges/2/736878759.json)](https://openyellow.org/grid?data=top&repo=736878759)
 [![OneScript](media/oscript.svg)](https://github.com/EvilBeaver/OneScript)
+[![OneScript](media/boosty.svg)](https://boosty.to/bayselonarrend)
 
 <br>
 Набор инструментов интеграции с популярными API: консольное приложение (Windows/Linux) и библиотека (расширение) для 1C:Enterprise/OneScript, состоящие из общего набора готовых функций для работы с множеством известных облачных сервисов<br>
@@ -49,6 +50,7 @@
   <a href="https://openintegrations.dev/docs/Instructions/GoogleCalendar/"><img src="media/GoogleCalendar.png" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/GoogleDrive/"><img src="media/GoogleDrive.png" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/GoogleSheets/"><img src="media/GoogleSheets.png" width="40"></a>
+   <a href="https://openintegrations.dev/docs/Instructions/OpenAI/"><img src="media/OpenAI.png" width="40"></a>
    <a href="https://openintegrations.dev/docs/Instructions/Ollama/"><img src="media/Ollama.png" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/Slack/"><img src="media/Slack.png" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/Airtable/"><img src="media/Airtable.png?6" width="40"></a>
@@ -143,7 +145,6 @@
 >[!WARNING]
 >Также, для CLI приложения существует поставка единым exe-файлом. Для его запуска требуется .Net Framework 4.8 или Mono соответствующей версии. 
 >Данный вариант поставки имеет проблемы с производительностью, поэтому рекомендуется использовать его только в том случае, если использование других вариантов на целевой системе нежелательно или невозможно
-<br/>
 
 
 ## Документация ##
@@ -155,24 +156,15 @@
 CLI версия ОПИ имеет собственную встроенную справку по всем методам. Показ справки осуществляется при вызове библиотеки без метода, метода без опций или при указании опции `--help`
 
 
-<br>
+## Поддержать проект
 
-## Поддержать проект ##
-<img src="media/heartnstar.png?4" align="right" width="320">
+![image](media/boosty.png)
 
-Если вам нравится проект OpenIntegrations и вы хотите его поддержать, то можете сделать это одним из следующих способов:
-
-+ Поставить ⭐ этому репозиторию
-+ Поставить `+` на статьи про ОПИ [на Инфостарт](https://infostart.ru/profile/1793672/)
-
-При желании, вы также можете помочь проекту материально через Tribute или YooMoney, нажав на один из значков ниже или по ссылкам, которые находятся в правой части страницы
-
-<a href="https://t.me/tribute/app?startapp=dnje"><img src="media/tribute.png" width="40"></a>
-<a href="https://yoomoney.ru/to/4100117914332065"><img src="media/yoomoney.png" width="40"></a>
+Если вам нравится этот или другие мои проекты, то вы можете поддержать меня [на Boosty](https://boosty.to/bayselonarrend) (регулярно или единоразово). При подписке от 500 рублей открывается доступ в приватный Telegram-чат, где можно задать интересующие вопросы о проекте и получить помощь от меня напрямую
 
 **Спасибо за вашу поддержку!**
 
-<br>
+
 
 ___
 >![Infostart](https://github.com/Bayselonarrend/TelegramEnterprise/raw/main/infostart.svg)

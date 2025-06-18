@@ -1,4 +1,4 @@
-﻿// OneScript: ./OInt/core/Modules/OPI_GoogleWorkspace.os
+// OneScript: ./OInt/core/Modules/OPI_GoogleWorkspace.os
 // Lib: Google Workspace
 // CLI: google
 
@@ -29,6 +29,7 @@
 // BSLLS:LatinAndCyrillicSymbolInWord-off
 // BSLLS:IncorrectLineBreak-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:LineLength-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -243,3 +244,27 @@
 КонецФункции
 
 #КонецОбласти
+
+#Region Alternate
+
+Function FormCodeRetrievalLink(Val ClientID, Val Calendar = True, Val Drive = True, Val Sheets = True) Export
+	Return СформироватьСсылкуПолученияКода(ClientID, Calendar, Drive, Sheets);
+EndFunction
+
+Function GetTokenByCode(Val ClientID, Val ClientSecret, Val Code) Export
+	Return ПолучитьТокенПоКоду(ClientID, ClientSecret, Code);
+EndFunction
+
+Function RefreshToken(Val ClientID, Val ClientSecret, Val RefreshToken) Export
+	Return ОбновитьТокен(ClientID, ClientSecret, RefreshToken);
+EndFunction
+
+Function GetServiceAccountToken(Val Data, Val Scope, Val Expire = 3600) Export
+	Return ПолучитьТокенServiceАккаунта(Data, Scope, Expire);
+EndFunction
+
+Function GetAuthorizationHeader(Val Token) Export
+	Return ПолучитьЗаголовокАвторизации(Token);
+EndFunction
+
+#EndRegion

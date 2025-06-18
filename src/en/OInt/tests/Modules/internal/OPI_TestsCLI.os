@@ -43,6 +43,7 @@
 // BSLLS:UnreachableCode-off
 // BSLLS:UnusedLocalMethod-off
 // BSLLS:NestedFunctionInParameters-off
+// BSLLS:MissingTemporaryFileDeletion-off
 
 //@skip-check undefined-variable
 //@skip-check wrong-string-literal-content
@@ -56,7 +57,6 @@
 #Use "../../../tools"
 #Use "../../../core"
 #Use asserts
-
 #Region Internal
 
 Procedure ИсполняемыеСценарии() Export
@@ -69,7 +69,7 @@ EndProcedure
 
 Function ПолучитьСписокТестов(UnitTesting) Export
 
-   Return OPI_TestDataRetrieval.FormAssertsTestsCLI();
+    Return OPI_TestDataRetrieval.FormAssertsTestsCLI();
 
 EndFunction
 
@@ -98,9 +98,9 @@ EndProcedure
 
 Procedure CLI_TelegramAPI_SetWebhook() Export
 
-     TestParameters = New Structure;
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token", TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_URL"  , TestParameters);
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_URL"  , TestParameters);
 
     CLI_Telegram_SetWebhook(TestParameters);
     CLI_Telegram_DeleteWebhook(TestParameters);
@@ -125,11 +125,11 @@ EndProcedure
 Procedure CLI_TelegramAPI_SendImage() Export
 
     TestParameters = New Structure;
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token"    , TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChatID"   , TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChannelID", TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("String"            , TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Picture"           , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChatID"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChannelID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("String"            , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"           , TestParameters);
 
     CLI_Telegram_SendPicture(TestParameters);
     CLI_Telegram_ReplaceMessageCaption(TestParameters);
@@ -140,11 +140,11 @@ EndProcedure
 Procedure CLI_TelegramAPI_SendVideo() Export
 
     TestParameters = New Structure;
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token"    , TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChatID"   , TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChannelID", TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("String"            , TestParameters);
-     OPI_TestDataRetrieval.ParameterToCollection("Video"             , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChatID"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChannelID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("String"            , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Video"             , TestParameters);
 
     CLI_Telegram_SendVideo(TestParameters);
     CLI_Telegram_DownloadFile(TestParameters);
@@ -259,9 +259,9 @@ EndProcedure
 Procedure CLI_TelegramAPI_BanUnban() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token"     , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChatID"    , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChannelID" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_Token"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChatID"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Telegram_ChannelID", TestParameters);
 
     CLI_Telegram_Ban(TestParameters);
     CLI_Telegram_Unban(TestParameters);
@@ -375,8 +375,8 @@ EndProcedure
 Procedure CLI_VKAPI_CreateCompositePost() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Picture" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Video"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Video"  , TestParameters);
 
     CLI_VK_CreateCompositePost(TestParameters);
 
@@ -391,7 +391,7 @@ EndProcedure
 Procedure CLI_VKAPI_SaveDeleteImage() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Picture" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture", TestParameters);
 
     CLI_VK_CreateAlbum(TestParameters);
     CLI_VK_SavePictureToAlbum(TestParameters);
@@ -404,7 +404,7 @@ EndProcedure
 Procedure CLI_VKAPI_CreateStory() Export
 
     TestParameters = New Map;
-    OPI_TestDataRetrieval.ParameterToCollection("Picture" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture", TestParameters);
 
     CLI_VK_CreateStory(TestParameters);
 
@@ -428,7 +428,7 @@ EndProcedure
 
 Procedure CLI_VKAPI_LikeRepostComment() Export
 
-    TestParameters = New Structure();
+    TestParameters = New Structure;
     Parameters     = GetVKParameters();
     Text           = "Post from autotest";
 
@@ -452,7 +452,7 @@ EndProcedure
 
 Procedure CLI_VKAPI_GetStatistics() Export
 
-    TestParameters = New Structure();
+    TestParameters = New Structure;
 
     CLI_VK_GetStatistics(TestParameters);
 
@@ -462,7 +462,7 @@ EndProcedure
 
 Procedure CLI_VKAPI_GetPostStatistics() Export
 
-    TestParameters = New Structure();
+    TestParameters = New Structure;
 
     CLI_VK_GetPostStatistics(TestParameters);
 
@@ -480,7 +480,7 @@ Procedure CLI_VKAPI_CreateAdCampaign() Export
 
     OPI_TestDataRetrieval.WriteParameter("VK_PostID", PostID);
 
-    TestParameters = New Structure();
+    TestParameters = New Structure;
     OPI_TestDataRetrieval.ParameterToCollection("VK_AdsCabinetID", TestParameters);
     OPI_TestDataRetrieval.ParameterToCollection("VK_PostID"      , TestParameters);
 
@@ -985,7 +985,7 @@ EndProcedure
 Procedure CLI_GT_FillClearCells() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Google_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Google_Token", TestParameters);
 
     CLI_GoogleSheets_CreateSpreadsheet(TestParameters);
     CLI_GoogleSheets_SetCellValues(TestParameters);
@@ -1123,8 +1123,8 @@ EndProcedure
 Procedure CLI_Slack_CreateArchiveChannel() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Slack_Token" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Slack_User"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Slack_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Slack_User" , TestParameters);
 
     CLI_Slack_CreateChannel(TestParameters);
     CLI_Slack_SetChannelTopic(TestParameters);
@@ -1145,8 +1145,8 @@ EndProcedure
 Procedure CLI_Slack_OpenCloseDialog() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Slack_Token" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Slack_User"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Slack_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Slack_User" , TestParameters);
 
     CLI_Slack_OpenDialog(TestParameters);
     CLI_Slack_CloseDialog(TestParameters);
@@ -1401,10 +1401,10 @@ EndProcedure
 Procedure CLI_VKT_ChatManagement() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("VkTeams_Token"   , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("VkTeams_ChatID"  , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("VkTeams_ChatID2" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Picture3"        , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("VkTeams_Token"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("VkTeams_ChatID" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("VkTeams_ChatID2", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture3"       , TestParameters);
 
     CLI_VKTeams_RemoveChatMembers(TestParameters);
     CLI_VKTeams_ChangeChatPicture(TestParameters);
@@ -1430,8 +1430,8 @@ EndProcedure
 Procedure CLI_OzonAPI_AttributesAndFeatures() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"  , TestParameters);
 
     CLI_Ozon_GetCategoriesAndProductTypesTree(TestParameters);
     CLI_Ozon_GetCategoryAttributes(TestParameters);
@@ -1444,10 +1444,10 @@ EndProcedure
 Procedure CLI_OzonAPI_UploadingAndUpdatingProducts() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Picture"       , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Picture2"      , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"      , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture2"     , TestParameters);
 
     CLI_Ozon_GetProductStructure(TestParameters);
 
@@ -1518,8 +1518,8 @@ EndProcedure
 Procedure CLI_OzonAPI_WarehousesManagement() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"  , TestParameters);
 
     CLI_Ozon_GetWarehousesList(TestParameters);
 
@@ -1528,8 +1528,8 @@ EndProcedure
 Procedure CLI_OzonAPI_PromotionsManagement() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"  , TestParameters);
 
     CLI_Ozon_GetPromotionsList(TestParameters);
     CLI_Ozon_GetCurrentPromoProducts(TestParameters);
@@ -1540,8 +1540,8 @@ EndProcedure
 Procedure CLI_OzonAPI_FBOScheme() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ClientID", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Ozon_ApiKey"  , TestParameters);
 
     CLI_Ozon_GetClustersList(TestParameters);
     CLI_Ozon_GetShippingWarehousesList(TestParameters);
@@ -1561,10 +1561,10 @@ EndProcedure
 Procedure CLI_NC_FilesManagement() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("NC_Token" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Picture"  , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Picture2" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Gif"      , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("NC_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture2", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Gif"     , TestParameters);
 
     CLI_Neocities_UploadFile(TestParameters);
     CLI_Neocities_UploadFiles(TestParameters);
@@ -2025,9 +2025,9 @@ EndProcedure
 Procedure CLI_B24_CalendarsManagement() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"    , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Domain" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Token"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_URL"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Domain", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Bitrix24_Token" , TestParameters);
 
     CLI_Bitrix24_CreateCalendar(TestParameters);
     CLI_Bitrix24_UpdateCalendar(TestParameters);
@@ -2058,8 +2058,8 @@ EndProcedure
 Procedure CLI_CdekAPI_CommonMethods() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("CDEK_Account"  , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("CDEK_Password" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("CDEK_Account" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("CDEK_Password", TestParameters);
 
     CLI_CDEK_GetToken(TestParameters);
     CLI_CDEK_GetCashboxChecksByDate(TestParameters);
@@ -2074,7 +2074,7 @@ EndProcedure
 Procedure CLI_CDEKAPI_OrdersManagement() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("CDEK_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("CDEK_Token", TestParameters);
 
     CLI_CDEK_GetOrderDescription(TestParameters);
     CLI_CDEK_CreateOrder(TestParameters);
@@ -2271,7 +2271,7 @@ Procedure CLI_SQLL_CommonMethods() Export
     CLI_SQLite_ExecuteSQLQuery(TestParameters);
 
     Try
-       DeleteFiles(Base);
+        DeleteFiles(Base);
     Except
         OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Database file deletion error", "SQLite");
     EndTry;
@@ -2294,13 +2294,16 @@ Procedure CLI_SQLL_ORM() Export
     CLI_SQLite_GetRecords(TestParameters);
     CLI_SQLite_UpdateRecords(TestParameters);
     CLI_SQLite_DeleteRecords(TestParameters);
-    CLI_SQLite_GetTableInformation(TestParameters);
     CLI_SQLite_ClearTable(TestParameters);
+    CLI_SQLite_GetTableInformation(TestParameters);
+    CLI_SQLite_AddTableColumn(TestParameters);
+    CLI_SQLite_DeleteTableColumn(TestParameters);
+    CLI_SQLite_EnsureTable(TestParameters);
     CLI_SQLite_DeleteTable(TestParameters);
     CLI_SQLite_GetRecordsFilterStrucutre(TestParameters);
 
     Try
-       DeleteFiles(Base);
+        DeleteFiles(Base);
     Except
         OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Database file deletion error", "SQLite");
     EndTry;
@@ -2334,12 +2337,15 @@ Procedure CLI_Postgres_ORM() Export
 
     CLI_PostgreSQL_CreateDatabase(TestParameters);
     CLI_PostgreSQL_CreateTable(TestParameters);
-    CLI_PostgreSQL_GetTableInformation(TestParameters);
     CLI_PostgreSQL_AddRecords(TestParameters);
     CLI_PostgreSQL_GetRecords(TestParameters);
     CLI_PostgreSQL_UpdateRecords(TestParameters);
     CLI_PostgreSQL_DeleteRecords(TestParameters);
     CLI_PostgreSQL_ClearTable(TestParameters);
+    CLI_PostgreSQL_GetTableInformation(TestParameters);
+    CLI_PostgreSQL_AddTableColumn(TestParameters);
+    CLI_PostgreSQL_DeleteTableColumn(TestParameters);
+    CLI_PostgreSQL_EnsureTable(TestParameters);
     CLI_PostgreSQL_DeleteTable(TestParameters);
     CLI_PostgreSQL_DisableAllDatabaseConnections(TestParameters);
     CLI_PostgreSQL_DeleteDatabase(TestParameters);
@@ -2374,12 +2380,15 @@ Procedure CLI_MYS_ORM() Export
 
     CLI_MySQL_CreateDatabase(TestParameters);
     CLI_MySQL_CreateTable(TestParameters);
-    CLI_MySQL_GetTableInformation(TestParameters);
     CLI_MySQL_AddRecords(TestParameters);
     CLI_MySQL_GetRecords(TestParameters);
     CLI_MySQL_UpdateRecords(TestParameters);
     CLI_MySQL_DeleteRecords(TestParameters);
     CLI_MySQL_ClearTable(TestParameters);
+    CLI_MySQL_GetTableInformation(TestParameters);
+    CLI_MySQL_AddTableColumn(TestParameters);
+    CLI_MySQL_DeleteTableColumn(TestParameters);
+    CLI_MySQL_EnsureTable(TestParameters);
     CLI_MySQL_DeleteTable(TestParameters);
     CLI_MySQL_DeleteDatabase(TestParameters);
     CLI_MySQL_GetRecordsFilterStrucutre(TestParameters);
@@ -2479,7 +2488,7 @@ Procedure CLI_GAPI_NotificationsReceiving() Export
 
     CLI_GreenAPI_GetNotification(TestParameters);
     CLI_GreenAPI_DeleteNotificationFromQueue(TestParameters);
-    CLI_GreenAPI_DownloadMessageFile(TestParameters);
+    //CLI_GreenAPI_DownloadMessageFile(TestParameters);
     CLI_GreenAPI_SetReadMark(TestParameters);
 
 EndProcedure
@@ -2487,11 +2496,11 @@ EndProcedure
 Procedure CLI_GAPI_MessageQueue() Export
 
     TestParameters = New Structure;
-    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_ApiURL"     , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_MediaURL"   , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_IdInstance" , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_Token"      , TestParameters);
-    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_AccountID"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_ApiURL"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_MediaURL"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_IdInstance", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_Token"     , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("GreenAPI_AccountID" , TestParameters);
 
     CLI_GreenAPI_GetMessageQueue(TestParameters);
     CLI_GreenAPI_ClearMessageQueue(TestParameters);
@@ -2608,6 +2617,101 @@ Procedure CLI_HTTP_Settings() Export
 
 EndProcedure
 
+Procedure CLI_HTTP_HeadersSetting() Export
+
+    TestParameters = New Structure;
+
+EndProcedure
+
+Procedure CLI_HTTP_Authorization() Export
+
+    TestParameters = New Structure;
+
+EndProcedure
+
+Procedure CLI_HTTP_RequestProcessing() Export
+
+    TestParameters = New Structure;
+
+EndProcedure
+
+Procedure CLI_HTTP_ResponseReceiving() Export
+
+    TestParameters = New Structure;
+
+EndProcedure
+
+#EndRegion
+
+#Region OpenAI
+
+Procedure CLI_OAI_RequestsProcessing() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"    , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token2" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL2"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_File"   , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"       , TestParameters);
+
+    CLI_OpenAI_GetResponse(TestParameters);
+    CLI_OpenAI_GetEmbeddings(TestParameters);
+    CLI_OpenAI_GetMessageStructure(TestParameters);
+    CLI_OpenAI_GetImageMessageStructure(TestParameters);
+    CLI_OpenAI_GetImages(TestParameters);
+
+EndProcedure
+
+Procedure CLI_OAI_Assistants() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"  , TestParameters);
+
+    CLI_OpenAI_CreateAssistant(TestParameters);
+    CLI_OpenAI_RetrieveAssistant(TestParameters);
+    CLI_OpenAI_GetAssistantsList(TestParameters);
+    CLI_OpenAI_DeleteAssistant(TestParameters);
+
+EndProcedure
+
+Procedure CLI_OAI_FileManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token", TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"  , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("Picture"     , TestParameters);
+
+    CLI_OpenAI_UploadFile(TestParameters);
+    CLI_OpenAI_GetFileInformation(TestParameters);
+    CLI_OpenAI_GetFilesList(TestParameters);
+    CLI_OpenAI_DownloadFile(TestParameters);
+    CLI_OpenAI_DeleteFile(TestParameters);
+
+EndProcedure
+
+Procedure CLI_OAI_AudioProcessing() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"   , TestParameters);
+
+    CLI_OpenAI_GenerateSpeech(TestParameters);
+    CLI_OpenAI_CreateTranscription(TestParameters);
+
+EndProcedure
+
+Procedure CLI_OAI_ModelsManagement() Export
+
+    TestParameters = New Structure;
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_Token" , TestParameters);
+    OPI_TestDataRetrieval.ParameterToCollection("OpenAI_URL"   , TestParameters);
+
+    CLI_OpenAI_GetModelList(TestParameters);
+
+EndProcedure
+
 #EndRegion
 
 #EndRegion
@@ -2621,10 +2725,10 @@ Function GetVKParameters()
     Parameters  = New Structure;
     GroupNumber = OPI_TestDataRetrieval.GetParameter("VK_GroupID");
 
-    Parameters.Insert("access_token" , OPI_TestDataRetrieval.GetParameter("VK_Token"));
-    Parameters.Insert("owner_id"     , "-" + GroupNumber);
-    Parameters.Insert("app_id"       , OPI_TestDataRetrieval.GetParameter("VK_AppID"));
-    Parameters.Insert("group_id"     , GroupNumber);
+    Parameters.Insert("access_token", OPI_TestDataRetrieval.GetParameter("VK_Token"));
+    Parameters.Insert("owner_id"    , "-" + GroupNumber);
+    Parameters.Insert("app_id"      , OPI_TestDataRetrieval.GetParameter("VK_AppID"));
+    Parameters.Insert("group_id"    , GroupNumber);
 
     Return Parameters;
 
@@ -2634,18 +2738,17 @@ Function GetTwitterAuthData()
 
     Parameters = New Map;
 
-    Parameters.Insert("redirect_uri"       , OPI_TestDataRetrieval.GetParameter("Twitter_Redirect"));
-    Parameters.Insert("client_id"          , OPI_TestDataRetrieval.GetParameter("Twitter_ClinetID"));
-    Parameters.Insert("client_secret"      , OPI_TestDataRetrieval.GetParameter("Twitter_ClientSecret"));
-    Parameters.Insert("access_token"       , OPI_TestDataRetrieval.GetParameter("Twitter_Token"));
-    Parameters.Insert("refresh_token"      , OPI_TestDataRetrieval.GetParameter("Twitter_Refresh"));
-    Parameters.Insert("oauth_token"        , OPI_TestDataRetrieval.GetParameter("Twitter_OAuthToken"));
-    Parameters.Insert("oauth_token_secret" , OPI_TestDataRetrieval.GetParameter("Twitter_OAuthSecret"));
+    Parameters.Insert("redirect_uri"      , OPI_TestDataRetrieval.GetParameter("Twitter_Redirect"));
+    Parameters.Insert("client_id"         , OPI_TestDataRetrieval.GetParameter("Twitter_ClinetID"));
+    Parameters.Insert("client_secret"     , OPI_TestDataRetrieval.GetParameter("Twitter_ClientSecret"));
+    Parameters.Insert("access_token"      , OPI_TestDataRetrieval.GetParameter("Twitter_Token"));
+    Parameters.Insert("refresh_token"     , OPI_TestDataRetrieval.GetParameter("Twitter_Refresh"));
+    Parameters.Insert("oauth_token"       , OPI_TestDataRetrieval.GetParameter("Twitter_OAuthToken"));
+    Parameters.Insert("oauth_token_secret", OPI_TestDataRetrieval.GetParameter("Twitter_OAuthSecret"));
 
-    Parameters.Insert("oauth_consumer_key"
-        , OPI_TestDataRetrieval.GetParameter("Twitter_OAuthConsumerKey"));
-    Parameters.Insert("oauth_consumer_secret"
-        , OPI_TestDataRetrieval.GetParameter("Twitter_OAuthConsumerSecret"));
+    Parameters.Insert("oauth_consumer_key"   , OPI_TestDataRetrieval.GetParameter("Twitter_OAuthConsumerKey"));
+    Parameters.Insert("oauth_consumer_secret", OPI_TestDataRetrieval.GetParameter(
+        "Twitter_OAuthConsumerSecret"));
 
     Return Parameters;
 
@@ -2740,7 +2843,7 @@ Procedure CLI_Telegram_SendTextMessage(FunctionParameters)
     OPI_Tools.AddField("Telegram_ChannelMessageID", MessageID, "String", FunctionParameters);
 
     // Additional test 1
-    Options.Insert("text" , "<b>Text html %%F0%%9F%%93%%9E 10%%</b>");
+    Options.Insert("text", "<b>Text html %%F0%%9F%%93%%9E 10%%</b>");
     Options.Insert("parsemode", "HTML");
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendTextMessage", Options);
 
@@ -2749,7 +2852,7 @@ Procedure CLI_Telegram_SendTextMessage(FunctionParameters)
     OPI_TestDataRetrieval.Check_TelegramOk(Result);
 
     // Additional test 2
-    Options.Insert("text" , "%%F0%%9F%%A4%%BC");
+    Options.Insert("text", "%%F0%%9F%%A4%%BC");
     Options.Insert("parsemode", "Markdown");
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendTextMessage", Options);
 
@@ -2758,7 +2861,7 @@ Procedure CLI_Telegram_SendTextMessage(FunctionParameters)
     OPI_TestDataRetrieval.Check_TelegramOk(Result);
 
     // Additional test 3
-    Options.Insert("text" , "Text %%F0%%9F%%A5%%9D and emoji \(10%%\)");
+    Options.Insert("text", "Text %%F0%%9F%%A5%%9D and emoji \(10%%\)");
     Options.Insert("parsemode", "MarkdownV2");
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendTextMessage", Options);
 
@@ -2793,10 +2896,10 @@ Procedure CLI_Telegram_SendPicture(FunctionParameters)
     Image = FunctionParameters["Picture"];
 
     Options = New Structure;
-    Options.Insert("token"   , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"    , FunctionParameters["Telegram_ChatID"]);
-    Options.Insert("text"    , Text);
-    Options.Insert("picture" , Image);
+    Options.Insert("token"  , FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat"   , FunctionParameters["Telegram_ChatID"]);
+    Options.Insert("text"   , Text);
+    Options.Insert("picture", Image);
 
     ImagePath = GetTempFileName("png");
     CopyFile(Image, ImagePath);
@@ -2810,8 +2913,8 @@ Procedure CLI_Telegram_SendPicture(FunctionParameters)
     OPI_TestDataRetrieval.WriteParameter("Telegram_PicMessageID", MessageID);
     OPI_Tools.AddField("Telegram_PicMessageID", MessageID, "String", FunctionParameters);
 
-    Options.Insert("picture" , ImagePath);
-    Options.Insert("chat"    , FunctionParameters["Telegram_ChannelID"]);
+    Options.Insert("picture", ImagePath);
+    Options.Insert("chat"   , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendImage", Options);
 
@@ -2835,10 +2938,10 @@ Procedure CLI_Telegram_SendVideo(FunctionParameters)
     Video = FunctionParameters["Video"];
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChatID"]);
-    Options.Insert("text"  , Text);
-    Options.Insert("video" , Video);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChatID"]);
+    Options.Insert("text" , Text);
+    Options.Insert("video", Video);
 
     VideoPath = GetTempFileName("mp4");
     CopyFile(Video, VideoPath);
@@ -2848,8 +2951,8 @@ Procedure CLI_Telegram_SendVideo(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendVideo", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramVideo(Result, Text);
 
-    Options.Insert("video" , VideoPath);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChannelID"]);
+    Options.Insert("video", VideoPath);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendVideo", Options);
 
@@ -2873,10 +2976,10 @@ Procedure CLI_Telegram_SendAudio(FunctionParameters)
     Audio = FunctionParameters["Audio"];
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChatID"]);
-    Options.Insert("text"  , Text);
-    Options.Insert("audio" , Audio);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChatID"]);
+    Options.Insert("text" , Text);
+    Options.Insert("audio", Audio);
 
     AudioPath = GetTempFileName("mp3");
     CopyFile(Audio, AudioPath);
@@ -2886,8 +2989,8 @@ Procedure CLI_Telegram_SendAudio(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SendAudio", "Telegram");
     OPI_TestDataRetrieval.Check_TelegramAudio(Result, Text);
 
-    Options.Insert("audio" , AudioPath);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChannelID"]);
+    Options.Insert("audio", AudioPath);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendAudio", Options);
 
@@ -2911,10 +3014,10 @@ Procedure CLI_Telegram_SendDocument(FunctionParameters)
     Document = FunctionParameters["Document"];
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChatID"]);
-    Options.Insert("text"  , Text);
-    Options.Insert("doc"   , Document);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChatID"]);
+    Options.Insert("text" , Text);
+    Options.Insert("doc"  , Document);
 
     DocumentPath = GetTempFileName("docx");
     CopyFile(Document, DocumentPath);
@@ -2991,10 +3094,10 @@ Procedure CLI_Telegram_SendMediaGroup(FunctionParameters)
     MediaGroup.Insert(Video    , "video");
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChatID"]);
-    Options.Insert("text"  , FunctionParameters["String"]);
-    Options.Insert("media" , MediaGroup);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChatID"]);
+    Options.Insert("text" , FunctionParameters["String"]);
+    Options.Insert("media", MediaGroup);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendMediaGroup", Options);
 
@@ -3010,8 +3113,8 @@ Procedure CLI_Telegram_SendMediaGroup(FunctionParameters)
     MediaGroup.Insert(DocumentURL , "document");
     MediaGroup.Insert(DocumentPath, "document");
 
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChannelID"]);
-    Options.Insert("media" , MediaGroup);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChannelID"]);
+    Options.Insert("media", MediaGroup);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendMediaGroup", Options);
 
@@ -3028,10 +3131,10 @@ EndProcedure
 Procedure CLI_Telegram_SendLocation(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChatID"]);
-    Options.Insert("lat"   , FunctionParameters["Lat"]);
-    Options.Insert("long"  , FunctionParameters["Long"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChatID"]);
+    Options.Insert("lat"  , FunctionParameters["Lat"]);
+    Options.Insert("long" , FunctionParameters["Long"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "SendLocation", Options);
 
@@ -3108,8 +3211,8 @@ EndProcedure
 Procedure CLI_Telegram_DownloadFile(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token"  , FunctionParameters["Telegram_Token"]);
-    Options.Insert("fileid" , FunctionParameters["Telegram_FileID"]);
+    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
+    Options.Insert("fileid", FunctionParameters["Telegram_FileID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "DownloadFile", Options);
 
@@ -3229,8 +3332,8 @@ EndProcedure
 Procedure CLI_Telegram_GetParticipantCount(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("chat"  , FunctionParameters["Telegram_ChannelID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("chat" , FunctionParameters["Telegram_ChannelID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "GetParticipantCount", Options);
 
@@ -3245,7 +3348,7 @@ EndProcedure
 Procedure CLI_Telegram_GetAvatarIconList(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "GetAvatarIconList", Options);
 
@@ -3265,10 +3368,10 @@ Procedure CLI_Telegram_CreateForumTopic(FunctionParameters)
     Token = FunctionParameters["Telegram_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("forum" , Chat);
-    Options.Insert("icon"  , Icon);
-    Options.Insert("title" , Name);
+    Options.Insert("token", Token);
+    Options.Insert("forum", Chat);
+    Options.Insert("icon" , Icon);
+    Options.Insert("title", Name);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "CreateForumThread", Options);
 
@@ -3293,11 +3396,11 @@ EndProcedure
 Procedure CLI_Telegram_EditForumTopic(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
-    Options.Insert("icon"  , "5310132165583840589");
-    Options.Insert("title" , "NewTestTitle");
-    Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("icon" , "5310132165583840589");
+    Options.Insert("title", "NewTestTitle");
+    Options.Insert("topic", FunctionParameters["Telegram_TopicID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "EditForumTopic", Options);
 
@@ -3314,8 +3417,8 @@ Procedure CLI_Telegram_CloseForumTopic(FunctionParameters)
     Chat  = FunctionParameters["Telegram_ForumID"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("forum" , Chat);
+    Options.Insert("token", Token);
+    Options.Insert("forum", Chat);
 
     OPI_Telegram.OpenForumThread(Token, Chat);
 
@@ -3324,7 +3427,7 @@ Procedure CLI_Telegram_CloseForumTopic(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CloseForumTopic (main)");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
-    Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
+    Options.Insert("topic", FunctionParameters["Telegram_TopicID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "CloseForumThread", Options);
 
@@ -3338,15 +3441,15 @@ EndProcedure
 Procedure CLI_Telegram_OpenForumTopic(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "OpenForumThread", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "OpenForumTopic (main)");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
-    Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
+    Options.Insert("topic", FunctionParameters["Telegram_TopicID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "OpenForumThread", Options);
 
@@ -3360,9 +3463,9 @@ EndProcedure
 Procedure CLI_Telegram_DeleteForumTopic(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
-    Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("topic", FunctionParameters["Telegram_TopicID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "DeleteForumTopic", Options);
 
@@ -3376,15 +3479,15 @@ EndProcedure
 Procedure CLI_Telegram_ClearPinnedMessagesList(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ClearThreadPinnedMessagesList", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "ClearPinnedMessagesList (main)");
     OPI_TestDataRetrieval.Check_TelegramTrue(Result);
 
-    Options.Insert("topic" , FunctionParameters["Telegram_TopicID"]);
+    Options.Insert("topic", FunctionParameters["Telegram_TopicID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ClearThreadPinnedMessagesList", Options);
 
@@ -3398,8 +3501,8 @@ EndProcedure
 Procedure CLI_Telegram_HideMainForumTopic(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "HideMainForumTopic", Options);
 
@@ -3413,8 +3516,8 @@ EndProcedure
 Procedure CLI_Telegram_ShowMainForumTopic(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ShowMainForumTopic", Options);
 
@@ -3428,9 +3531,9 @@ EndProcedure
 Procedure CLI_Telegram_ChangeMainTopicName(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("token" , FunctionParameters["Telegram_Token"]);
-    Options.Insert("forum" , FunctionParameters["Telegram_ForumID"]);
-    Options.Insert("title" , "New main thread name " + String(New UUID));
+    Options.Insert("token", FunctionParameters["Telegram_Token"]);
+    Options.Insert("forum", FunctionParameters["Telegram_ForumID"]);
+    Options.Insert("title", "New main thread name " + String(New UUID));
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "EditMainForumTopicName", Options);
 
@@ -3519,10 +3622,10 @@ Procedure CLI_Telegram_ReplaceMessageCaption(FunctionParameters)
     Description = "New picture description";
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("chat"    , ChatID);
-    Options.Insert("message" , MessageID);
-    Options.Insert("caption" , Description);
+    Options.Insert("token"  , Token);
+    Options.Insert("chat"   , ChatID);
+    Options.Insert("message", MessageID);
+    Options.Insert("caption", Description);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("telegram", "ReplaceMessageCaption", Options);
 
@@ -3538,7 +3641,7 @@ EndProcedure
 Procedure CLI_VK_CreateTokenRetrievalLink(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("app" , FunctionParameters["VK_AppID"]);
+    Options.Insert("app", FunctionParameters["VK_AppID"]);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "CreateTokenRetrievalLink", Options);
 
@@ -3710,9 +3813,9 @@ Procedure CLI_VK_CreateAlbum(FunctionParameters)
     Description = "NewAlbumFromAutoTest";
 
     Options = New Structure;
-    Options.Insert("title"       , Name);
-    Options.Insert("description" , Description);
-    Options.Insert("auth"        , Parameters);
+    Options.Insert("title"      , Name);
+    Options.Insert("description", Description);
+    Options.Insert("auth"       , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "CreateAlbum", Options);
 
@@ -3734,10 +3837,10 @@ Procedure CLI_VK_SavePictureToAlbum(FunctionParameters)
     Image = FunctionParameters["Picture"];
 
     Options = New Structure;
-    Options.Insert("album"       , AlbumID);
-    Options.Insert("picture"     , Image);
-    Options.Insert("description" , ImageDescription);
-    Options.Insert("auth"        , Parameters);
+    Options.Insert("album"      , AlbumID);
+    Options.Insert("picture"    , Image);
+    Options.Insert("description", ImageDescription);
+    Options.Insert("auth"       , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "SaveImageToAlbum", Options);
 
@@ -3891,8 +3994,8 @@ Procedure CLI_VK_OpenDiscussion(FunctionParameters)
     DiscussionID = FunctionParameters["VK_ConvID"];
 
     Options = New Structure;
-    Options.Insert("topic" , DiscussionID);
-    Options.Insert("auth"  , Parameters);
+    Options.Insert("topic", DiscussionID);
+    Options.Insert("auth" , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "OpenDiscussion", Options);
 
@@ -3911,9 +4014,9 @@ Procedure CLI_VK_PostToDiscussion(FunctionParameters)
     Message      = "I like yellow more";
 
     Options = New Structure;
-    Options.Insert("topic" , DiscussionID);
-    Options.Insert("text"  , Message);
-    Options.Insert("auth"  , Parameters);
+    Options.Insert("topic", DiscussionID);
+    Options.Insert("text" , Message);
+    Options.Insert("auth" , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "WriteInDiscussion", Options);
 
@@ -3929,8 +4032,8 @@ Procedure CLI_VK_LikePost(FunctionParameters)
     PostID     = FunctionParameters["VK_PostID"];
 
     Options = New Structure;
-    Options.Insert("post" , PostID);
-    Options.Insert("auth" , Parameters);
+    Options.Insert("post", PostID);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "LikePost", Options);
 
@@ -3948,9 +4051,9 @@ Procedure CLI_VK_MakeRepost(FunctionParameters)
     WallID     = -218704372;
 
     Options = New Structure;
-    Options.Insert("post" , PostID);
-    Options.Insert("from" , WallID);
-    Options.Insert("auth" , Parameters);
+    Options.Insert("post", PostID);
+    Options.Insert("from", WallID);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "MakeRepost", Options);
 
@@ -3971,10 +4074,10 @@ Procedure CLI_VK_WriteComment(FunctionParameters)
     WallID     = Parameters["owner_id"];
 
     Options = New Structure;
-    Options.Insert("post" , PostID);
-    Options.Insert("wall" , WallID);
-    Options.Insert("text" , Text);
-    Options.Insert("auth" , Parameters);
+    Options.Insert("post", PostID);
+    Options.Insert("wall", WallID);
+    Options.Insert("text", Text);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "WriteComment", Options);
 
@@ -3990,8 +4093,8 @@ Procedure CLI_VK_ShortenLink(FunctionParameters)
     Parameters = GetVKParameters();
 
     Options = New Structure;
-    Options.Insert("url"  , "https://github.com/Bayselonarrend/OpenIntegrations");
-    Options.Insert("auth" , Parameters);
+    Options.Insert("url" , "https://github.com/Bayselonarrend/OpenIntegrations");
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "ShortenLink", Options);
 
@@ -4105,9 +4208,9 @@ Procedure CLI_VK_PauseAdvertising(FunctionParameters)
     AdID      = FunctionParameters["VK_AdsPostID"];
 
     Options = New Structure;
-    Options.Insert("adv"     , AdID);
-    Options.Insert("cabinet" , AccountID);
-    Options.Insert("auth"    , Parameters);
+    Options.Insert("adv"    , AdID);
+    Options.Insert("cabinet", AccountID);
+    Options.Insert("auth"   , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "PauseAdvertising", Options);
 
@@ -4121,7 +4224,7 @@ Procedure CLI_VK_GetAdvertisingCategoryList(FunctionParameters)
     Parameters = GetVKParameters();
 
     Options = New Structure;
-    Options.Insert("auth" , Parameters);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "GetAdvertisingCategoryList", Options);
 
@@ -4247,8 +4350,8 @@ Procedure CLI_VK_GetSelectionsByID(FunctionParameters)
     Selection  = FunctionParameters["VK_MarketAlbumID"];
 
     Options = New Structure;
-    Options.Insert("sels" , Selection);
-    Options.Insert("auth" , Parameters);
+    Options.Insert("sels", Selection);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vk", "GetSelectionsByID", Options);
 
@@ -4269,7 +4372,7 @@ Procedure CLI_VK_AddProduct(FunctionParameters)
     ImageArray.Add(Image1);
     ImageArray.Add(Image2);
 
-    ProductDescription = New Map();
+    ProductDescription = New Map;
     ProductDescription.Insert("Name"             , "TestProduct");
     ProductDescription.Insert("Description"      , "Product description");
     ProductDescription.Insert("Category"         , "20173");
@@ -4518,7 +4621,7 @@ Procedure CLI_VK_CreateProductWithProp(FunctionParameters)
     ImageArray.Add(Image1);
     ImageArray.Add(Image2);
 
-    Product = New Map();
+    Product = New Map;
     Product.Insert("Name"             , "Test product (with prop)");
     Product.Insert("Description"      , "Product description");
     Product.Insert("Category"         , "20173");
@@ -5137,8 +5240,8 @@ Procedure CLI_Viber_SetWebhook(FunctionParameters)
     URL   = "http://api.athenaeum.digital/hs/viber";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("url"   , URL);
+    Options.Insert("token", Token);
+    Options.Insert("url"  , URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("viber", "SetWebhook", Options);
 
@@ -5152,7 +5255,7 @@ Procedure CLI_Viber_GetChannelInformation(FunctionParameters)
     Token = FunctionParameters["Viber_ChannelToken"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("viber", "GetChannelInformation", Options);
 
@@ -5476,7 +5579,7 @@ Procedure CLI_GoogleWorkspace_FormCodeRetrievalLink(FunctionParameters)
     ClientID = FunctionParameters["Google_ClientID"];
 
     Options = New Structure;
-    Options.Insert("id" , ClientID);
+    Options.Insert("id", ClientID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("google", "FormCodeRetrievalLink", Options);
     Result = ПолучитьСтрокуИзДвоичныхДанных(Result);
@@ -5501,8 +5604,7 @@ Procedure CLI_GoogleWorkspace_GetTokenByCode(FunctionParameters)
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("google", "GetTokenByCode", Options);
 
-    If ValueIsFilled(Result["access_token"])
-        And ValueIsFilled(Result["refresh_token"]) Then
+    If ValueIsFilled(Result["access_token"]) And ValueIsFilled(Result["refresh_token"]) Then
 
         OPI_TestDataRetrieval.WriteParameter("Google_Token"  , Result["access_token"]);
         OPI_TestDataRetrieval.WriteParameter("Google_Refresh", Result["refresh_token"]);
@@ -5599,8 +5701,8 @@ Procedure CLI_GoogleCalendar_GetCalendarMetadata(FunctionParameters)
     Calendar = FunctionParameters["Google_NewCalendarID"];
 
     Options = New Structure;
-    Options.Insert("token"    , Token);
-    Options.Insert("calendar" , Calendar);
+    Options.Insert("token"   , Token);
+    Options.Insert("calendar", Calendar);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "GetCalendarMetadata", Options);
 
@@ -5619,8 +5721,8 @@ Procedure CLI_GoogleCalendar_AddCalendarToList(FunctionParameters)
     Calendar = FunctionParameters["Google_NewCalendarID"];
 
     Options = New Structure;
-    Options.Insert("token"    , Token);
-    Options.Insert("calendar" , Calendar);
+    Options.Insert("token"   , Token);
+    Options.Insert("calendar", Calendar);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "AddCalendarToList", Options);
 
@@ -5661,8 +5763,8 @@ Procedure CLI_GoogleCalendar_GetListCalendar(FunctionParameters)
     Calendar = FunctionParameters["Google_NewCalendarID"];
 
     Options = New Structure;
-    Options.Insert("token"    , Token);
-    Options.Insert("calendar" , Calendar);
+    Options.Insert("token"   , Token);
+    Options.Insert("calendar", Calendar);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "GetListCalendar", Options);
 
@@ -5695,8 +5797,8 @@ Procedure CLI_GoogleCalendar_DeleteCalendarFromList(FunctionParameters)
     Calendar = FunctionParameters["Google_NewCalendarID"];
 
     Options = New Structure;
-    Options.Insert("token"    , Token);
-    Options.Insert("calendar" , Calendar);
+    Options.Insert("token"   , Token);
+    Options.Insert("calendar", Calendar);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "DeleteCalendarFromList", Options);
 
@@ -5711,8 +5813,8 @@ Procedure CLI_GoogleCalendar_DeleteCalendar(FunctionParameters)
     Calendar = FunctionParameters["Google_NewCalendarID"];
 
     Options = New Structure;
-    Options.Insert("token"    , Token);
-    Options.Insert("calendar" , Calendar);
+    Options.Insert("token"   , Token);
+    Options.Insert("calendar", Calendar);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "DeleteCalendar", Options);
 
@@ -5738,13 +5840,13 @@ Procedure CLI_GoogleCalendar_CreateEvent(FunctionParameters)
     Attachments.Insert("Image2", Image2);
 
     EventDescription = New Map;
-    EventDescription.Insert("Description"           , Description);
-    EventDescription.Insert("Title"                 , Name);
-    EventDescription.Insert("Venue"                 , "InOffice");
-    EventDescription.Insert("StartDate"             , CurrentDate);
-    EventDescription.Insert("EndDate"               , EventDescription["StartDate"] + Hour);
-    EventDescription.Insert("ArrayOfAttachmentURLs" , Attachments);
-    EventDescription.Insert("SendNotifications"     , True);
+    EventDescription.Insert("Description"          , Description);
+    EventDescription.Insert("Title"                , Name);
+    EventDescription.Insert("Venue"                , "InOffice");
+    EventDescription.Insert("StartDate"            , CurrentDate);
+    EventDescription.Insert("EndDate"              , EventDescription["StartDate"] + Hour);
+    EventDescription.Insert("ArrayOfAttachmentURLs", Attachments);
+    EventDescription.Insert("SendNotifications"    , True);
 
     Options = New Structure;
     Options.Insert("token"   , Token);
@@ -5875,7 +5977,7 @@ EndProcedure
 Procedure CLI_GoogleCalendar_GetEventDescription(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gcalendar", "GetEventDescription", Options);
 
@@ -5996,8 +6098,8 @@ Procedure CLI_GoogleDrive_DownloadFile(FunctionParameters)
     Identifier = FunctionParameters["GD_File"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("object" , Identifier);
+    Options.Insert("token" , Token);
+    Options.Insert("object", Identifier);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gdrive", "DownloadFile", Options);
 
@@ -6020,10 +6122,10 @@ Procedure CLI_GoogleDrive_UpdateFile(FunctionParameters)
     File       = FunctionParameters["Picture2"]; // URL, Binary Data or File path
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("object" , Identifier);
-    Options.Insert("file"   , File);
-    Options.Insert("title"  , NewName);
+    Options.Insert("token" , Token);
+    Options.Insert("object", Identifier);
+    Options.Insert("file"  , File);
+    Options.Insert("title" , NewName);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gdrive", "UpdateFile", Options);
 
@@ -6060,8 +6162,8 @@ Procedure CLI_GoogleDrive_DeleteObject(FunctionParameters)
     Identifier = FunctionParameters["GD_File"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("object" , Identifier);
+    Options.Insert("token" , Token);
+    Options.Insert("object", Identifier);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gdrive", "DeleteObject", Options);
 
@@ -6100,9 +6202,9 @@ Procedure CLI_GoogleDrive_CreateComment(FunctionParameters)
     Comment    = "Comment text";
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("object" , Identifier);
-    Options.Insert("text"   , Comment);
+    Options.Insert("token" , Token);
+    Options.Insert("object", Identifier);
+    Options.Insert("text"  , Comment);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gdrive", "CreateComment", Options);
 
@@ -6142,8 +6244,8 @@ Procedure CLI_GoogleDrive_GetCommentList(FunctionParameters)
     Identifier = FunctionParameters["GD_File"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("object" , Identifier);
+    Options.Insert("token" , Token);
+    Options.Insert("object", Identifier);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gdrive", "GetCommentList", Options);
 
@@ -6194,8 +6296,8 @@ Procedure CLI_GoogleDrive_CreateFolder(FunctionParameters)
     OPI_GoogleDrive.DeleteObject(Token, CatalogID);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("title" , Name);
+    Options.Insert("token", Token);
+    Options.Insert("title", Name);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("gdrive", "CreateFolder", Options);
 
@@ -6469,8 +6571,8 @@ Procedure CLI_Twitter_GetToken(FunctionParameters)
     Code       = "123456";
 
     Options = New Structure;
-    Options.Insert("code" , Code);
-    Options.Insert("auth" , Parameters);
+    Options.Insert("code", Code);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "GetToken", Options);
 
@@ -6484,7 +6586,7 @@ Procedure CLI_Twitter_GetAuthorizationLink(FunctionParameters)
     Parameters = GetTwitterAuthData();
 
     Options = New Structure;
-    Options.Insert("auth" , Parameters);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "GetAuthorizationLink", Options);
 
@@ -6504,7 +6606,7 @@ Procedure CLI_Twitter_RefreshToken(FunctionParameters)
     Parameters = GetTwitterAuthData();
 
     Options = New Structure;
-    Options.Insert("auth" , Parameters);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "RefreshToken", Options);
 
@@ -6519,7 +6621,7 @@ Procedure CLI_Twitter_RefreshToken(FunctionParameters)
     EndIf;
 
     If ValueIsFilled(Token) And Not Token = "null" Then
-        OPI_TestDataRetrieval.WriteParameter("Twitter_Token" , Token);
+        OPI_TestDataRetrieval.WriteParameter("Twitter_Token", Token);
     EndIf;
 
     OPI_Tools.Pause(5);
@@ -6532,8 +6634,8 @@ Procedure CLI_Twitter_CreateTextTweet(FunctionParameters)
     Text       = "TestTweet" + String(New UUID);
 
     Options = New Structure;
-    Options.Insert("text" , Text);
-    Options.Insert("auth" , Parameters);
+    Options.Insert("text", Text);
+    Options.Insert("auth", Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "CreateTextTweet", Options);
 
@@ -6741,7 +6843,7 @@ Procedure CLI_Twitter_CreateCustomTweet(FunctionParameters)
     Image1 = FunctionParameters["Picture"]; // URL, Binary Data or File path
     Image2 = FunctionParameters["Picture2"]; // URL, Binary Data or File path
 
-    ImageArray = New Array();
+    ImageArray = New Array;
     ImageArray.Add(Image1);
     ImageArray.Add(Image2);
 
@@ -6753,9 +6855,9 @@ Procedure CLI_Twitter_CreateCustomTweet(FunctionParameters)
     MediaArray = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "UploadAttachmentsArray", Options);
 
     Options = New Structure;
-    Options.Insert("text"  , Text);
-    Options.Insert("media" , MediaArray);
-    Options.Insert("auth"  , Parameters);
+    Options.Insert("text" , Text);
+    Options.Insert("media", MediaArray);
+    Options.Insert("auth" , Parameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("twitter", "CreateCustomTweet", Options);
 
@@ -6773,7 +6875,7 @@ Procedure CLI_Twitter_UploadAttachmentsArray(FunctionParameters)
     Image1 = FunctionParameters["Picture"]; // URL, Binary Data or File path
     Image2 = FunctionParameters["Picture2"]; // URL, Binary Data or File path
 
-    ImageArray = New Array();
+    ImageArray = New Array;
     ImageArray.Add(Image1);
     ImageArray.Add(Image2);
 
@@ -6822,17 +6924,17 @@ Procedure CLI_Notion_CreateDatabase(FunctionParameters)
     Title  = "TestTitle";
 
     Properties = New Map;
-    Properties.Insert("Name"         , "title");
-    Properties.Insert("Description"  , "rich_text");
-    Properties.Insert("Number"       , "number");
-    Properties.Insert("Status"       , "status");
-    Properties.Insert("CreationDate" , "date");
-    Properties.Insert("Image"        , "files");
-    Properties.Insert("Active"       , "checkbox");
-    Properties.Insert("Website"      , "url");
-    Properties.Insert("Email"        , "email");
-    Properties.Insert("Phone"        , "phone_number");
-    Properties.Insert("User"         , "people");
+    Properties.Insert("Name"        , "title");
+    Properties.Insert("Description" , "rich_text");
+    Properties.Insert("Number"      , "number");
+    Properties.Insert("Status"      , "status");
+    Properties.Insert("CreationDate", "date");
+    Properties.Insert("Image"       , "files");
+    Properties.Insert("Active"      , "checkbox");
+    Properties.Insert("Website"     , "url");
+    Properties.Insert("Email"       , "email");
+    Properties.Insert("Phone"       , "phone_number");
+    Properties.Insert("User"        , "people");
 
     ValueSelection = New Map;
     ValueSelection.Insert("New"        , "green");
@@ -6890,8 +6992,8 @@ Procedure CLI_Notion_GetPage(FunctionParameters)
     Page  = FunctionParameters["Notion_Page"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("page"  , Page);
+    Options.Insert("token", Token);
+    Options.Insert("page" , Page);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "GetPage", Options);
 
@@ -6926,17 +7028,17 @@ Procedure CLI_Notion_CreatePageInDatabase(FunctionParameters)
     Image.Insert("Logo", Image_);
 
     Properties = New Map;
-    Properties.Insert("Name"         , "LLC Vector");
-    Properties.Insert("Description"  , "OurFirstClient");
-    Properties.Insert("Number"       , 1);
-    Properties.Insert("Status"       , "Regular");
-    Properties.Insert("CreationDate" , OPI_Tools.GetCurrentDate());
-    Properties.Insert("Image"        , Image);
-    Properties.Insert("Active"       , True);
-    Properties.Insert("Website"      , "https://vector.ru");
-    Properties.Insert("Email"        , "mail@vector.ru");
-    Properties.Insert("Phone"        , "88005553535");
-    Properties.Insert("Status"       , "New");
+    Properties.Insert("Name"        , "LLC Vector");
+    Properties.Insert("Description" , "OurFirstClient");
+    Properties.Insert("Number"      , 1);
+    Properties.Insert("Status"      , "Regular");
+    Properties.Insert("CreationDate", OPI_Tools.GetCurrentDate());
+    Properties.Insert("Image"       , Image);
+    Properties.Insert("Active"      , True);
+    Properties.Insert("Website"     , "https://vector.ru");
+    Properties.Insert("Email"       , "mail@vector.ru");
+    Properties.Insert("Phone"       , "88005553535");
+    Properties.Insert("Status"      , "New");
 
     Options = New Structure;
     Options.Insert("token", Token);
@@ -6959,8 +7061,8 @@ Procedure CLI_Notion_EditPageProperties(FunctionParameters)
     Archive = False;
 
     Properties = New Map;
-    Properties.Insert("Active" , False);
-    Properties.Insert("Email"  , "vector@mail.ru");
+    Properties.Insert("Active", False);
+    Properties.Insert("Email" , "vector@mail.ru");
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -6983,8 +7085,8 @@ Procedure CLI_Notion_ReturnBlock(FunctionParameters)
     Block = FunctionParameters["Notion_Block"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("block" , Block);
+    Options.Insert("token", Token);
+    Options.Insert("block", Block);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "ReturnBlock", Options);
 
@@ -7000,15 +7102,15 @@ Procedure CLI_Notion_CreateBlock(FunctionParameters)
     Block  = FunctionParameters["Notion_Block"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("block" , Block);
+    Options.Insert("token", Token);
+    Options.Insert("block", Block);
 
     BlockData = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "ReturnBlock", Options);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("page"  , Parent);
-    Options.Insert("block" , BlockData);
+    Options.Insert("token", Token);
+    Options.Insert("page" , Parent);
+    Options.Insert("block", BlockData);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "CreateBlock", Options);
 
@@ -7027,8 +7129,8 @@ Procedure CLI_Notion_ReturnChildBlocks(FunctionParameters)
     Block = FunctionParameters["Notion_NewBlock"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("block" , Block);
+    Options.Insert("token", Token);
+    Options.Insert("block", Block);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "ReturnChildBlocks", Options);
 
@@ -7043,8 +7145,8 @@ Procedure CLI_Notion_DeleteBlock(FunctionParameters)
     Block = FunctionParameters["Notion_NewBlock"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("block" , Block);
+    Options.Insert("token", Token);
+    Options.Insert("block", Block);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "DeleteBlock", Options);
 
@@ -7058,7 +7160,7 @@ Procedure CLI_Notion_UserList(FunctionParameters)
     Token = FunctionParameters["Notion_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "UserList", Options);
 
@@ -7073,8 +7175,8 @@ Procedure CLI_Notion_GetUserData(FunctionParameters)
     User  = FunctionParameters["Notion_User"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("user"  , User);
+    Options.Insert("token", Token);
+    Options.Insert("user" , User);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("notion", "GetUserData", Options);
 
@@ -7553,7 +7655,7 @@ Procedure CLI_Slack_GetChannelList(FunctionParameters)
     Token = FunctionParameters["Slack_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "GetChannelList", Options);
 
@@ -7619,7 +7721,7 @@ Procedure CLI_Slack_GetFilesList(FunctionParameters)
     OPI_TestDataRetrieval.Check_SlackFilesList(Result);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "GetFilesList", Options);
 
@@ -7675,8 +7777,8 @@ Procedure CLI_Slack_MakeFilePublic(FunctionParameters)
     FileID = FunctionParameters["Slack_FileID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("token" , Token);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "MakeFilePublic", Options);
 
@@ -7690,8 +7792,8 @@ Procedure CLI_Slack_MakeFilePrivate(FunctionParameters)
     FileID = FunctionParameters["Slack_FileID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("token" , Token);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "MakeFilePrivate", Options);
 
@@ -7705,8 +7807,8 @@ Procedure CLI_Slack_GetFileData(FunctionParameters)
     FileID = FunctionParameters["Slack_FileID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("token" , Token);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "GetFileData", Options);
 
@@ -7721,8 +7823,8 @@ Procedure CLI_Slack_DeleteFile(FunctionParameters)
     FileID = FunctionParameters["Slack_FileID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("token" , Token);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "DeleteFile", Options);
 
@@ -7737,8 +7839,8 @@ Procedure CLI_Slack_GetExternalFileList(FunctionParameters)
     Channel = FunctionParameters["Slack_Channel"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("channel" , Channel);
+    Options.Insert("token"  , Token);
+    Options.Insert("channel", Channel);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "GetExternalFileList", Options);
 
@@ -7746,7 +7848,7 @@ Procedure CLI_Slack_GetExternalFileList(FunctionParameters)
     OPI_TestDataRetrieval.Check_SlackFilesList(Result);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "GetExternalFileList", Options);
 
@@ -7762,9 +7864,9 @@ Procedure CLI_Slack_AddExternalFile(FunctionParameters)
     File  = FunctionParameters["Document"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("url"   , File);
-    Options.Insert("title" , Title);
+    Options.Insert("token", Token);
+    Options.Insert("url"  , File);
+    Options.Insert("title", Title);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("slack", "AddExternalFile", Options);
 
@@ -7869,8 +7971,8 @@ Procedure CLI_Airtable_GetDatabaseTables(FunctionParameters)
     Base  = FunctionParameters["Airtable_Base"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("base"  , Base);
+    Options.Insert("token", Token);
+    Options.Insert("base" , Base);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("airtable", "GetDatabaseTables", Options);
 
@@ -8119,10 +8221,10 @@ Procedure CLI_Airtable_CreatePosts(FunctionParameters)
     ArrayOfDescriptions.Add(RowDescription2);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("base"  , Base);
-    Options.Insert("table" , Table);
-    Options.Insert("data"  , ArrayOfDescriptions);
+    Options.Insert("token", Token);
+    Options.Insert("base" , Base);
+    Options.Insert("table", Table);
+    Options.Insert("data" , ArrayOfDescriptions);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("airtable", "CreatePosts", Options);
 
@@ -8143,10 +8245,10 @@ Procedure CLI_Airtable_CreatePosts(FunctionParameters)
     // Single
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("base"  , Base);
-    Options.Insert("table" , Table);
-    Options.Insert("data"  , RowDescription1);
+    Options.Insert("token", Token);
+    Options.Insert("base" , Base);
+    Options.Insert("table", Table);
+    Options.Insert("data" , RowDescription1);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("airtable", "CreatePosts", Options);
 
@@ -8238,10 +8340,10 @@ Procedure CLI_Airtable_GetComments(FunctionParameters)
     Record = FunctionParameters["Airtable_Record"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("base"   , Base);
-    Options.Insert("table"  , Table);
-    Options.Insert("record" , Record);
+    Options.Insert("token" , Token);
+    Options.Insert("base"  , Base);
+    Options.Insert("table" , Table);
+    Options.Insert("record", Record);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("airtable", "GetComments", Options);
 
@@ -8279,9 +8381,9 @@ Procedure CLI_Airtable_GetListOfRecords(FunctionParameters)
     Table = FunctionParameters["Airtable_Table"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("base"  , Base);
-    Options.Insert("table" , Table);
+    Options.Insert("token", Token);
+    Options.Insert("base" , Base);
+    Options.Insert("table", Table);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("airtable", "GetListOfRecords", Options);
 
@@ -8405,8 +8507,8 @@ Procedure CLI_Dropbox_GetPreview(FunctionParameters)
     Path  = "/New/mydoc.docx";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetPreview", Options);
 
@@ -8449,9 +8551,9 @@ Procedure CLI_Dropbox_UploadFileByURL(FunctionParameters)
     URL   = FunctionParameters["Document"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("url"   , URL);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "UploadFileByURL", Options);
 
@@ -8477,8 +8579,8 @@ Procedure CLI_Dropbox_GetUploadStatusByURL(FunctionParameters)
     While Status = "in_progress" Do
 
         Options = New Structure;
-        Options.Insert("token" , Token);
-        Options.Insert("job"   , WorkID);
+        Options.Insert("token", Token);
+        Options.Insert("job"  , WorkID);
 
         Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetUploadStatusByURL", Options);
         Status = Result[".tag"];
@@ -8494,8 +8596,8 @@ Procedure CLI_Dropbox_GetUploadStatusByURL(FunctionParameters)
     Path = "/New/url_doc.docx";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "DeleteObject", Options);
 
@@ -8510,8 +8612,8 @@ Procedure CLI_Dropbox_DeleteObject(FunctionParameters)
     Token = FunctionParameters["Dropbox_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "DeleteObject", Options);
 
@@ -8529,9 +8631,9 @@ Procedure CLI_Dropbox_CopyObject(FunctionParameters)
     Token    = FunctionParameters["Dropbox_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("from"  , Original);
-    Options.Insert("to"    , Copy);
+    Options.Insert("token", Token);
+    Options.Insert("from" , Original);
+    Options.Insert("to"   , Copy);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "CopyObject", Options);
 
@@ -8539,8 +8641,8 @@ Procedure CLI_Dropbox_CopyObject(FunctionParameters)
     OPI_TestDataRetrieval.Check_DropboxMetadata(Result, Copy);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Copy);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Copy);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "DeleteObject", Options);
 
@@ -8556,9 +8658,9 @@ Procedure CLI_Dropbox_MoveObject(FunctionParameters)
     Token        = FunctionParameters["Dropbox_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("from"  , OriginalPath);
-    Options.Insert("to"    , TargetPath);
+    Options.Insert("token", Token);
+    Options.Insert("from" , OriginalPath);
+    Options.Insert("to"   , TargetPath);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "MoveObject", Options);
 
@@ -8566,9 +8668,9 @@ Procedure CLI_Dropbox_MoveObject(FunctionParameters)
     OPI_TestDataRetrieval.Check_DropboxMetadata(Result, TargetPath);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("from"  , TargetPath);
-    Options.Insert("to"    , OriginalPath);
+    Options.Insert("token", Token);
+    Options.Insert("from" , TargetPath);
+    Options.Insert("to"   , OriginalPath);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "MoveObject", Options);
 
@@ -8584,8 +8686,8 @@ Procedure CLI_Dropbox_CreateFolder(FunctionParameters)
     Path  = "/New catalog";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "CreateFolder", Options);
 
@@ -8593,8 +8695,8 @@ Procedure CLI_Dropbox_CreateFolder(FunctionParameters)
     OPI_TestDataRetrieval.Check_DropboxMetadata(Result, Path);
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "DeleteObject", Options);
     OPI_TestDataRetrieval.Check_DropboxMetadata(Result, Path);
@@ -8609,8 +8711,8 @@ Procedure CLI_Dropbox_DownloadFile(FunctionParameters)
     Path  = "/New/pic.png";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "DownloadFile", Options);
 
@@ -8627,8 +8729,8 @@ Procedure CLI_Dropbox_DownloadFolder(FunctionParameters)
     Path  = "/New";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "DownloadFolder", Options);
 
@@ -8645,8 +8747,8 @@ Procedure CLI_Dropbox_GetFolderFileList(FunctionParameters)
     Token = FunctionParameters["Dropbox_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetListOfFolderFiles", Options);
 
@@ -8688,9 +8790,9 @@ Procedure CLI_Dropbox_RestoreObjectToVersion(FunctionParameters)
     Path    = "/New/pic.png";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
-    Options.Insert("rev"   , Version);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
+    Options.Insert("rev"  , Version);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "RestoreObjectToVersion", Options);
 
@@ -8711,8 +8813,8 @@ Procedure CLI_Dropbox_GetTagList(FunctionParameters)
     PathsArray.Add("/New/mydoc.docx");
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("paths" , PathsArray);
+    Options.Insert("token", Token);
+    Options.Insert("paths", PathsArray);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetTagList", Options);
 
@@ -8720,8 +8822,8 @@ Procedure CLI_Dropbox_GetTagList(FunctionParameters)
     OPI_TestDataRetrieval.Check_DropboxTags(Result, PathsArray.Count());
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("paths" , "/New/mydoc.docx");
+    Options.Insert("token", Token);
+    Options.Insert("paths", "/New/mydoc.docx");
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetTagList", Options);
 
@@ -8749,9 +8851,9 @@ Procedure CLI_Dropbox_AddTag(FunctionParameters)
     Path  = "/New/mydoc.docx";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
-    Options.Insert("tag"   , Tag);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
+    Options.Insert("tag"  , Tag);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "AddTag", Options);
 
@@ -8769,9 +8871,9 @@ Procedure CLI_Dropbox_DeleteTag(FunctionParameters)
     Path  = "/New/mydoc.docx";
 
     Options = New Structure;
-    Options.Insert("token" , Token);
-    Options.Insert("path"  , Path);
-    Options.Insert("tag"   , Tag);
+    Options.Insert("token", Token);
+    Options.Insert("path" , Path);
+    Options.Insert("tag"  , Tag);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "AddTag", Options);
 
@@ -8787,7 +8889,7 @@ Procedure CLI_Dropbox_GetAccountInformation(FunctionParameters)
     Token = FunctionParameters["Dropbox_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetAccountInformation", Options);
 
@@ -8812,7 +8914,7 @@ Procedure CLI_Dropbox_GetSpaceUsageData(FunctionParameters)
     Token = FunctionParameters["Dropbox_Token"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetSpaceUsageData", Options);
 
@@ -8896,8 +8998,8 @@ Procedure CLI_Dropbox_CancelFolderPublication(FunctionParameters)
     While CurrentStatus = "in_progress" Do
 
         Options = New Structure;
-        Options.Insert("token" , Token);
-        Options.Insert("job"   , JobID);
+        Options.Insert("token", Token);
+        Options.Insert("job"  , JobID);
 
         Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "GetAsynchronousChangeStatus", Options);
 
@@ -8970,8 +9072,8 @@ Procedure CLI_Dropbox_CancelFilePublication(FunctionParameters)
     File  = FunctionParameters["Dropbox_FileID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("fileid" , File);
+    Options.Insert("token" , Token);
+    Options.Insert("fileid", File);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("dropbox", "CancelFilePublication", Options);
 
@@ -9066,8 +9168,8 @@ Procedure CLI_VKTeams_SendTextMessage(FunctionParameters)
     ButtonsLineArray.Add(Button);
 
     Options = New Structure;
-    Options.Insert("text" , "Button2");
-    Options.Insert("url"  , "https://openintegrations.dev");
+    Options.Insert("text", "Button2");
+    Options.Insert("url" , "https://openintegrations.dev");
 
     Button = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "MakeActionButton", Options);
     ButtonsLineArray.Add(Button);
@@ -9144,9 +9246,9 @@ Procedure CLI_VKTeams_SendFile(FunctionParameters)
     FileBD = New BinaryData(FilePath); // Binary
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("file"   , File);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("file"  , File);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendFile", Options);
 
@@ -9154,10 +9256,10 @@ Procedure CLI_VKTeams_SendFile(FunctionParameters)
     OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("file"   , FilePath);
-    Options.Insert("text"   , Text);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("file"  , FilePath);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendFile", Options);
 
@@ -9165,11 +9267,11 @@ Procedure CLI_VKTeams_SendFile(FunctionParameters)
     OPI_TestDataRetrieval.Check_VKTMessage(Result);
 
     Options = New Structure;
-    Options.Insert("token"    , Token);
-    Options.Insert("chatid"   , ChatID);
-    Options.Insert("file"     , FileBD);
-    Options.Insert("text"     , Text);
-    Options.Insert("filename" , "ImportantDocument.docx");
+    Options.Insert("token"   , Token);
+    Options.Insert("chatid"  , ChatID);
+    Options.Insert("file"    , FileBD);
+    Options.Insert("text"    , Text);
+    Options.Insert("filename", "ImportantDocument.docx");
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SendFile", Options);
 
@@ -9194,10 +9296,10 @@ Procedure CLI_VKTeams_ResendFile(FunctionParameters)
     Text   = "File caption";
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("text"   , Text);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("fileid", FileID);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ResendFile", Options);
 
@@ -9212,8 +9314,8 @@ Procedure CLI_VKTeams_GetFileInformation(FunctionParameters)
     FileID = FunctionParameters["VkTeams_FileID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("token" , Token);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetFileInformation", Options);
 
@@ -9285,7 +9387,7 @@ Procedure CLI_VKTeams_SendVoice(FunctionParameters)
     ChatID  = FunctionParameters["VkTeams_ChatID2"];
     ReplyID = FunctionParameters["VkTeams_MessageID"];
 
-    File     = FunctionParameters["Audio2"] ; // URL
+    File     = FunctionParameters["Audio2"]; // URL
     FilePath = GetTempFileName("m4a"); // Path
 
     CopyFile(File, FilePath);
@@ -9370,9 +9472,9 @@ Procedure CLI_VKTeams_ChangeChatPicture(FunctionParameters)
     CopyFile(File, FilePath);
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("file"   , File);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("file"  , File);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ChangeChatPicture", Options);
 
@@ -9380,9 +9482,9 @@ Procedure CLI_VKTeams_ChangeChatPicture(FunctionParameters)
     OPI_TestDataRetrieval.Check_VKTTrue(Result);
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("file"   , FilePath);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("file"  , FilePath);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ChangeChatPicture", Options);
 
@@ -9399,8 +9501,8 @@ Procedure CLI_VKTeams_GetChatInfo(FunctionParameters)
     ChatID = FunctionParameters["VkTeams_ChatID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetChatInfo", Options);
 
@@ -9415,8 +9517,8 @@ Procedure CLI_VKTeams_GetChatAdmins(FunctionParameters)
     ChatID = FunctionParameters["VkTeams_ChatID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetChatAdmins", Options);
 
@@ -9431,8 +9533,8 @@ Procedure CLI_VKTeams_GetChatMembers(FunctionParameters)
     ChatID = FunctionParameters["VkTeams_ChatID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetChatMembers", Options);
 
@@ -9447,8 +9549,8 @@ Procedure CLI_VKTeams_GetChatBlockedUsers(FunctionParameters)
     ChatID = FunctionParameters["VkTeams_ChatID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetChatBlockedUsers", Options);
 
@@ -9463,8 +9565,8 @@ Procedure CLI_VKTeams_GetChatJoinRequests(FunctionParameters)
     ChatID = FunctionParameters["VkTeams_ChatID"];
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "GetChatJoinRequests", Options);
 
@@ -9499,9 +9601,9 @@ Procedure CLI_VKTeams_UnblockChatUser(FunctionParameters)
     User   = 1011987091;
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("userid" , User);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("userid", User);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "UnblockChatUser", Options);
 
@@ -9517,9 +9619,9 @@ Procedure CLI_VKTeams_PinMessage(FunctionParameters)
     MessageID = FunctionParameters["VkTeams_MessageID"];
 
     Options = New Structure;
-    Options.Insert("token"     , Token);
-    Options.Insert("chatid"    , ChatID);
-    Options.Insert("messageid" , MessageID);
+    Options.Insert("token"    , Token);
+    Options.Insert("chatid"   , ChatID);
+    Options.Insert("messageid", MessageID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "PinMessage", Options);
 
@@ -9535,9 +9637,9 @@ Procedure CLI_VKTeams_UnpinMessage(FunctionParameters)
     MessageID = FunctionParameters["VkTeams_MessageID"];
 
     Options = New Structure;
-    Options.Insert("token"     , Token);
-    Options.Insert("chatid"    , ChatID);
-    Options.Insert("messageid" , MessageID);
+    Options.Insert("token"    , Token);
+    Options.Insert("chatid"   , ChatID);
+    Options.Insert("messageid", MessageID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "UnpinMessage", Options);
 
@@ -9553,9 +9655,9 @@ Procedure CLI_VKTeams_ApprovePending(FunctionParameters)
     User   = 1011987091;
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("userid" , User);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("userid", User);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ApprovePending", Options);
 
@@ -9563,8 +9665,8 @@ Procedure CLI_VKTeams_ApprovePending(FunctionParameters)
     OPI_TestDataRetrieval.Check_VKTPending(Result);
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "ApprovePending", Options);
 
@@ -9580,9 +9682,9 @@ Procedure CLI_VKTeams_DisapprovePending(FunctionParameters)
     User   = 1011987091;
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("userid" , User);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("userid", User);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "DisapprovePending", Options);
 
@@ -9590,8 +9692,8 @@ Procedure CLI_VKTeams_DisapprovePending(FunctionParameters)
     OPI_TestDataRetrieval.Check_VKTPending(Result);
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "DisapprovePending", Options);
 
@@ -9607,9 +9709,9 @@ Procedure CLI_VKTeams_SetChatTitle(FunctionParameters)
     Text   = "New title";
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("text"   , Text);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SetChatTitle", Options);
 
@@ -9625,9 +9727,9 @@ Procedure CLI_VKTeams_SetChatDescription(FunctionParameters)
     Text   = "New description";
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("text"   , Text);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SetChatDescription", Options);
 
@@ -9643,9 +9745,9 @@ Procedure CLI_VKTeams_SetChatRules(FunctionParameters)
     Text   = "Text of the new rules";
 
     Options = New Structure;
-    Options.Insert("token"  , Token);
-    Options.Insert("chatid" , ChatID);
-    Options.Insert("text"   , Text);
+    Options.Insert("token" , Token);
+    Options.Insert("chatid", ChatID);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SetChatRules", Options);
 
@@ -9657,9 +9759,9 @@ EndProcedure
 Procedure CLI_VKTeams_MakeActionButton(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("text"  , "Button1");
-    Options.Insert("data"  , "ButtonEvent1");
-    Options.Insert("style" , "attention");
+    Options.Insert("text" , "Button1");
+    Options.Insert("data" , "ButtonEvent1");
+    Options.Insert("style", "attention");
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("vkteams", "SetChatRules", Options);
 
@@ -9808,18 +9910,19 @@ Procedure CLI_Ozon_CreateUpdateProducts(FunctionParameters)
     // Video
 
     Options = New Structure;
-    Options.Insert("item"  , ItemStructure);
-    Options.Insert("url"   , Video);
-    Options.Insert("title" , "video1");
+    Options.Insert("item" , ItemStructure);
+    Options.Insert("url"  , Video);
+    Options.Insert("title", "video1");
 
     ItemStructure = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "AddProductVideo", Options);
 
     // Attributes individualized for different categories
 
     CategoryAttribute1 = New Structure("dictionary_value_id,value", 971082156, "Speaker stand");
-    CategoryAttribute2 = New Structure("dictionary_value_id,value", 5060050 , "Samsung");
-    CategoryAttribute3 = New Structure("dictionary_value_id,value", 61576 , "gray");
-    CategoryAttribute4 = New Structure("dictionary_value_id,value", 95911 , "Protective film set for X3 NFC. Dark cotton");
+    CategoryAttribute2 = New Structure("dictionary_value_id,value", 5060050, "Samsung");
+    CategoryAttribute3 = New Structure("dictionary_value_id,value", 61576, "gray");
+    CategoryAttribute4 = New Structure("dictionary_value_id,value", 95911,
+        "Protective film set for X3 NFC. Dark cotton");
 
     CategoryAttribute5 = New Structure("value", "Protective film set for X3 NFC. Dark cotton");
 
@@ -9876,9 +9979,9 @@ Procedure CLI_Ozon_AddProductVideo(FunctionParameters)
     // Video
 
     Options = New Structure;
-    Options.Insert("item"  , ItemStructure);
-    Options.Insert("url"   , Video);
-    Options.Insert("title" , "video1");
+    Options.Insert("item" , ItemStructure);
+    Options.Insert("url"  , Video);
+    Options.Insert("title", "video1");
 
     ItemStructure = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "AddProductVideo", Options);
 
@@ -9909,8 +10012,8 @@ Procedure CLI_Ozon_AddProductVideoCover(FunctionParameters)
     // Videocover
 
     Options = New Structure;
-    Options.Insert("item" , ItemStructure);
-    Options.Insert("url"  , Video);
+    Options.Insert("item", ItemStructure);
+    Options.Insert("url" , Video);
 
     ItemStructure = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "AddProductVideoCover", Options);
 
@@ -9958,9 +10061,9 @@ Procedure CLI_Ozon_GetProductCreationStatus(FunctionParameters)
     TaskID   = FunctionParameters["Ozon_TaskID"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("taskid"   , TaskID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("taskid"  , TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductCreationStatus", Options);
 
@@ -9992,9 +10095,9 @@ Procedure CLI_Ozon_CreateProductByOzonID(FunctionParameters)
     ItemStructure.Insert("currency_code", "RUB");
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("items"    , ItemStructure);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("items"   , ItemStructure);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "CreateProductByOzonID", Options);
 
@@ -10006,9 +10109,9 @@ Procedure CLI_Ozon_CreateProductByOzonID(FunctionParameters)
     FunctionParameters.Insert("Ozon_SkuTaskID", TaskID);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("taskid"   , TaskID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("taskid"  , TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductCreationStatus", Options);
 
@@ -10057,17 +10160,17 @@ Procedure CLI_Ozon_UpdateProductsAttributes(FunctionParameters)
     AttributesStructure = New Structure("offer_id", "143210609");
 
     CategoryAttribute1 = New Structure("dictionary_value_id,value", 971082156, "Speaker stand");
-    CategoryAttribute2 = New Structure("dictionary_value_id,value", 5060050 , "Samsung");
-    CategoryAttribute3 = New Structure("dictionary_value_id,value", 61576 , "red");
+    CategoryAttribute2 = New Structure("dictionary_value_id,value", 5060050, "Samsung");
+    CategoryAttribute3 = New Structure("dictionary_value_id,value", 61576, "red");
 
     OPI_Ozon.CompleteComplexAttribute(AttributesStructure, 5076 , 0, CategoryAttribute1);
     OPI_Ozon.CompleteComplexAttribute(AttributesStructure, 85   , 0, CategoryAttribute2);
     OPI_Ozon.CompleteComplexAttribute(AttributesStructure, 10096, 0, CategoryAttribute3);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("items"    , AttributesStructure);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("items"   , AttributesStructure);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "UpdateProductsAttributes", Options);
 
@@ -10114,13 +10217,13 @@ Procedure CLI_Ozon_GetProductList(FunctionParameters)
     IDArray.Add("143210609");
 
     Filter = New Structure;
-    Filter.Insert("visibility" , "ALL");
-    Filter.Insert("offer_id"   , IDArray);
+    Filter.Insert("visibility", "ALL");
+    Filter.Insert("offer_id"  , IDArray);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("filter"   , Filter);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("filter"  , Filter);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductList", Options);
 
@@ -10146,9 +10249,9 @@ Procedure CLI_Ozon_GetProductsAttributesData(FunctionParameters)
     Filter.Insert("offer_id"  , IDArray);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("filter"   , Filter);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("filter"  , Filter);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductsAttributesData", Options);
 
@@ -10164,9 +10267,9 @@ Procedure CLI_Ozon_GetProductsContentRating(FunctionParameters)
     SKU      = 1626044001;
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("sku"      , SKU);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("sku"     , SKU);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductsContentRating", Options);
 
@@ -10182,9 +10285,9 @@ Procedure CLI_Ozon_GetProductsInformation(FunctionParameters)
     Article  = "143210609";
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("offerid"  , Article);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("offerid" , Article);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductsInformation", Options);
 
@@ -10200,9 +10303,9 @@ Procedure CLI_Ozon_GetProductDescription(FunctionParameters)
     Article  = "143210609";
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("offerid"  , Article);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("offerid" , Article);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductDescription", Options);
 
@@ -10217,8 +10320,8 @@ Procedure CLI_Ozon_GetProductsRequestsLimits(FunctionParameters)
     APIKey   = FunctionParameters["Ozon_ApiKey"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductsRequestsLimits", Options);
 
@@ -10263,9 +10366,9 @@ Procedure CLI_Ozon_CheckProductsImagesUpload(FunctionParameters)
     ProductID = FunctionParameters["Ozon_ProductID"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("products" , ProductID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("products", ProductID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "CheckProductsImagesUpload", Options);
 
@@ -10283,9 +10386,9 @@ Procedure CLI_Ozon_UpdateProductsArticles(FunctionParameters)
     ArticlesMap.Insert("143210609", "143210613");
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("offers"   , ArticlesMap);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("offers"  , ArticlesMap);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "UpdateProductsArticles", Options);
 
@@ -10310,9 +10413,9 @@ Procedure CLI_Ozon_ArchiveProducts(FunctionParameters)
     ProductID = FunctionParameters["Ozon_ProductID"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("products" , ProductID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("products", ProductID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "ArchiveProducts", Options);
 
@@ -10328,9 +10431,9 @@ Procedure CLI_Ozon_UnarchiveProducts(FunctionParameters)
     ProductID = FunctionParameters["Ozon_ProductID"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("products" , ProductID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("products", ProductID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "UnarchiveProducts", Options);
 
@@ -10355,9 +10458,9 @@ Procedure CLI_Ozon_DeleteProductsWithoutSKU(FunctionParameters)
     Article = "143210609";
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("articles" , Article);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("articles", Article);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "DeleteProductsWithoutSKU", Options);
 
@@ -10400,9 +10503,9 @@ Procedure CLI_Ozon_GetCodesUploadStatus(FunctionParameters)
     TaskID   = FunctionParameters["Ozon_CodesTaskID"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("taskid"   , TaskID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("taskid"  , TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetCodesUploadStatus", Options);
 
@@ -10428,9 +10531,9 @@ Procedure CLI_Ozon_GetProductSubscribersCount(FunctionParameters)
     SKU      = 1626044001;
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("sku"      , 1626044001);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("sku"     , 1626044001);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductSubscribersCount", Options);
 
@@ -10446,9 +10549,9 @@ Procedure CLI_Ozon_GetRelatedSKUs(FunctionParameters)
     SKU      = 1626044001;
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("sku"      , 1626044001);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("sku"     , 1626044001);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetRelatedSKUs", Options);
 
@@ -10466,9 +10569,9 @@ Procedure CLI_Ozon_BindBarcodes(FunctionParameters)
     BarcodesMap.Insert("1626044001", "112233");
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("barcodes" , BarcodesMap);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("barcodes", BarcodesMap);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "BindBarcodes", Options);
 
@@ -10500,8 +10603,8 @@ Procedure CLI_Ozon_GetWarehousesList(FunctionParameters)
     APIKey   = FunctionParameters["Ozon_ApiKey"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetWarehousesList", Options);
 
@@ -10519,13 +10622,13 @@ Procedure CLI_Ozon_GetProductsStocks(FunctionParameters)
     IDArray.Add("143210608");
 
     Filter = New Structure;
-    Filter.Insert("visibility" , "ALL");
-    Filter.Insert("offer_id"   , IDArray);
+    Filter.Insert("visibility", "ALL");
+    Filter.Insert("offer_id"  , IDArray);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("filter"   , Filter);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("filter"  , Filter);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductsStocks", Options);
 
@@ -10551,9 +10654,9 @@ Procedure CLI_Ozon_UpdateProductsPrices(FunctionParameters)
     Prices.Insert("product_id"            , ProductID);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("prices"   , Prices);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("prices"  , Prices);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "UpdateProductsPrices", Options);
 
@@ -10575,9 +10678,9 @@ Procedure CLI_Ozon_UpdateProductsStocks(FunctionParameters)
     Stocks.Insert("warehouse_id", 1);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("stocks"   , Stocks);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("stocks"  , Stocks);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "UpdateProductsStocks", Options);
 
@@ -10591,8 +10694,8 @@ Procedure CLI_Ozon_GetProductsPrices(FunctionParameters)
     APIKey   = FunctionParameters["Ozon_ApiKey"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductsPrices", Options);
 
@@ -10645,8 +10748,8 @@ Procedure CLI_Ozon_GetPromotionsList(FunctionParameters)
     APIKey   = FunctionParameters["Ozon_ApiKey"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetPromotionsList", Options);
 
@@ -10662,9 +10765,9 @@ Procedure CLI_Ozon_GetAvailablePromoProducts(FunctionParameters)
     PromoID  = 111111111;
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("actionid" , PromoID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("actionid", PromoID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetAvailablePromoProducts", Options);
 
@@ -10679,9 +10782,9 @@ Procedure CLI_Ozon_GetCurrentPromoProducts(FunctionParameters)
     PromoID  = 111111111;
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("actionid" , PromoID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("actionid", PromoID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetCurrentPromoProducts", Options);
 
@@ -10692,7 +10795,7 @@ EndProcedure
 Procedure CLI_Ozon_GetProductStocksStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductStocksStructure", Options);
 
@@ -10704,7 +10807,7 @@ EndProcedure
 Procedure CLI_Ozon_GetProductPriceStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetProductPriceStructure", Options);
 
@@ -10719,8 +10822,8 @@ Procedure CLI_Ozon_GetClustersList(FunctionParameters)
     APIKey   = FunctionParameters["Ozon_ApiKey"];
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetClustersList", Options);
 
@@ -10736,9 +10839,9 @@ Procedure CLI_Ozon_GetShippingWarehousesList(FunctionParameters)
     Search   = "Tver";
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("search"   , Search);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("search"  , Search);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetShippingWarehousesList", Options);
 
@@ -10758,10 +10861,10 @@ Procedure CLI_Ozon_CreateFBODraft(FunctionParameters)
     Items.Insert("1784654052", 2);
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("clusters" , Cluster);
-    Options.Insert("items"    , Items);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("clusters", Cluster);
+    Options.Insert("items"   , Items);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "CreateFBODraft", Options);
 
@@ -10783,9 +10886,9 @@ Procedure CLI_Ozon_GetFBODraft(FunctionParameters)
     Status = "CALCULATION_STATUS_IN_PROGRESS";
 
     Options = New Structure;
-    Options.Insert("clientid" , ClientID);
-    Options.Insert("apikey"   , APIKey);
-    Options.Insert("oper"     , OperationID);
+    Options.Insert("clientid", ClientID);
+    Options.Insert("apikey"  , APIKey);
+    Options.Insert("oper"    , OperationID);
 
     While Status = "CALCULATION_STATUS_IN_PROGRESS" Do
 
@@ -10812,7 +10915,7 @@ EndProcedure
 Procedure CLI_Ozon_GetShipmentAdditionalFields(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetShipmentAdditionalFields", Options);
 
@@ -10824,7 +10927,7 @@ EndProcedure
 Procedure CLI_Ozon_GetShipmentsFilterStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("ozon", "GetShipmentsFilterStructure", Options);
 
@@ -11173,11 +11276,11 @@ Procedure CLI_Bitrix24_CreatePost(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("text"  , Text);
-    Options.Insert("files" , Files);
-    Options.Insert("title" , Title);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("text" , Text);
+    Options.Insert("files", Files);
+    Options.Insert("title", Title);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreatePost", Options);
 
@@ -11204,11 +11307,11 @@ Procedure CLI_Bitrix24_UpdatePost(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("text"   , Text);
-    Options.Insert("files"  , Files);
-    Options.Insert("title"  , Title);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("text"  , Text);
+    Options.Insert("files" , Files);
+    Options.Insert("title" , Title);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdatePost", Options);
 
@@ -11220,12 +11323,12 @@ Procedure CLI_Bitrix24_UpdatePost(FunctionParameters)
     PostID = FunctionParameters["Bitrix24_HookPostID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("text"   , Text);
-    Options.Insert("files"  , Files);
-    Options.Insert("title"  , Title);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("text"  , Text);
+    Options.Insert("files" , Files);
+    Options.Insert("title" , Title);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdatePost", Options);
 
@@ -11240,8 +11343,8 @@ Procedure CLI_Bitrix24_DeletePost(FunctionParameters)
     URL    = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeletePost", Options);
 
@@ -11253,9 +11356,9 @@ Procedure CLI_Bitrix24_DeletePost(FunctionParameters)
     Token  = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeletePost", Options);
 
@@ -11270,8 +11373,8 @@ Procedure CLI_Bitrix24_GetImportantPostViewers(FunctionParameters)
     URL    = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetImportantPostViewers", Options);
 
@@ -11282,9 +11385,9 @@ Procedure CLI_Bitrix24_GetImportantPostViewers(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetImportantPostViewers", Options);
 
@@ -11299,8 +11402,8 @@ Procedure CLI_Bitrix24_GetPosts(FunctionParameters)
     URL    = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetPosts", Options);
 
@@ -11311,9 +11414,9 @@ Procedure CLI_Bitrix24_GetPosts(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetPosts", Options);
 
@@ -11329,9 +11432,9 @@ Procedure CLI_Bitrix24_AddPostComment(FunctionParameters)
     URL    = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("text"   , Text);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddPostComment", Options);
 
@@ -11343,10 +11446,10 @@ Procedure CLI_Bitrix24_AddPostComment(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("text"   , Text);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("text"  , Text);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddPostComment", Options);
 
@@ -11362,9 +11465,9 @@ Procedure CLI_Bitrix24_AddPostRecipients(FunctionParameters)
     URL        = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("vision" , Visibility);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("vision", Visibility);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddPostRecipients", Options);
 
@@ -11375,10 +11478,10 @@ Procedure CLI_Bitrix24_AddPostRecipients(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("postid" , PostID);
-    Options.Insert("vision" , Visibility);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("postid", PostID);
+    Options.Insert("vision", Visibility);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddPostRecipients", Options);
 
@@ -11392,7 +11495,7 @@ Procedure CLI_Bitrix24_GetTaskFieldsStructure(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskFieldsStructure", Options);
 
@@ -11403,8 +11506,8 @@ Procedure CLI_Bitrix24_GetTaskFieldsStructure(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskFieldsStructure", Options);
 
@@ -11432,8 +11535,8 @@ Procedure CLI_Bitrix24_CreateTask(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fields" , TaskData);
+    Options.Insert("url"   , URL);
+    Options.Insert("fields", TaskData);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateTask", Options);
 
@@ -11449,9 +11552,9 @@ Procedure CLI_Bitrix24_CreateTask(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fields" , TaskData);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fields", TaskData);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateTask", Options);
 
@@ -11480,9 +11583,9 @@ Procedure CLI_Bitrix24_UpdateTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("fields" , TaskData);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("fields", TaskData);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTask", Options);
 
@@ -11494,10 +11597,10 @@ Procedure CLI_Bitrix24_UpdateTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("fields" , TaskData);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("fields", TaskData);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTask", Options);
 
@@ -11512,8 +11615,8 @@ Procedure CLI_Bitrix24_GetTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTask", Options);
 
@@ -11525,9 +11628,9 @@ Procedure CLI_Bitrix24_GetTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTask", Options);
 
@@ -11542,8 +11645,8 @@ Procedure CLI_Bitrix24_ApproveTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ApproveTask", Options);
 
@@ -11555,9 +11658,9 @@ Procedure CLI_Bitrix24_ApproveTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ApproveTask", Options);
 
@@ -11572,8 +11675,8 @@ Procedure CLI_Bitrix24_DisapproveTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DisapproveTask", Options);
 
@@ -11585,9 +11688,9 @@ Procedure CLI_Bitrix24_DisapproveTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DisapproveTask", Options);
 
@@ -11602,8 +11705,8 @@ Procedure CLI_Bitrix24_CompleteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CompleteTask", Options);
 
@@ -11615,9 +11718,9 @@ Procedure CLI_Bitrix24_CompleteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CompleteTask", Options);
 
@@ -11632,8 +11735,8 @@ Procedure CLI_Bitrix24_RenewTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenewTask", Options);
 
@@ -11645,9 +11748,9 @@ Procedure CLI_Bitrix24_RenewTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenewTask", Options);
 
@@ -11662,8 +11765,8 @@ Procedure CLI_Bitrix24_DeferTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeferTask", Options);
 
@@ -11675,9 +11778,9 @@ Procedure CLI_Bitrix24_DeferTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeferTask", Options);
 
@@ -11692,8 +11795,8 @@ Procedure CLI_Bitrix24_StartTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartTask", Options);
 
@@ -11705,9 +11808,9 @@ Procedure CLI_Bitrix24_StartTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartTask", Options);
 
@@ -11722,8 +11825,8 @@ Procedure CLI_Bitrix24_StartWatchingTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartWatchingTask", Options);
 
@@ -11735,9 +11838,9 @@ Procedure CLI_Bitrix24_StartWatchingTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartWatchingTask", Options);
 
@@ -11752,8 +11855,8 @@ Procedure CLI_Bitrix24_StopWatchingTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StopWatchingTask", Options);
 
@@ -11765,9 +11868,9 @@ Procedure CLI_Bitrix24_StopWatchingTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StopWatchingTask", Options);
 
@@ -11782,8 +11885,8 @@ Procedure CLI_Bitrix24_PauseTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "PauseTask", Options);
 
@@ -11795,9 +11898,9 @@ Procedure CLI_Bitrix24_PauseTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "PauseTask", Options);
 
@@ -11812,8 +11915,8 @@ Procedure CLI_Bitrix24_DeleteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTask", Options);
 
@@ -11825,9 +11928,9 @@ Procedure CLI_Bitrix24_DeleteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTask", Options);
 
@@ -11843,9 +11946,9 @@ Procedure CLI_Bitrix24_DelegateTask(FunctionParameters)
     UserID = FunctionParameters["Bitrix24_UserID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
-    Options.Insert("user" , UserID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
+    Options.Insert("user", UserID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DelegateTask", Options);
 
@@ -11857,10 +11960,10 @@ Procedure CLI_Bitrix24_DelegateTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("user"  , UserID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("user" , UserID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DelegateTask", Options);
 
@@ -11875,8 +11978,8 @@ Procedure CLI_Bitrix24_AddTaskToFavorites(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTaskToFavorites", Options);
 
@@ -11888,9 +11991,9 @@ Procedure CLI_Bitrix24_AddTaskToFavorites(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTaskToFavorites", Options);
 
@@ -11905,8 +12008,8 @@ Procedure CLI_Bitrix24_RemoveTaskFromFavorites(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RemoveTaskFromFavorites", Options);
 
@@ -11918,9 +12021,9 @@ Procedure CLI_Bitrix24_RemoveTaskFromFavorites(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RemoveTaskFromFavorites", Options);
 
@@ -11935,8 +12038,8 @@ Procedure CLI_Bitrix24_GetTaskHistory(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskHistory", Options);
 
@@ -11948,9 +12051,9 @@ Procedure CLI_Bitrix24_GetTaskHistory(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskHistory", Options);
 
@@ -11963,15 +12066,15 @@ Procedure CLI_Bitrix24_GetTasksList(FunctionParameters)
 
     // Full filter structure you can find at GetTasksFilterStructure method
     Filter = New Structure;
-    Filter.Insert("CREATED_BY" , 1);
+    Filter.Insert("CREATED_BY", 1);
     Filter.Insert("RESPONSIBLE_ID", 10);
 
     Indent = 1;
     URL    = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("filter" , Filter);
+    Options.Insert("url"   , URL);
+    Options.Insert("filter", Filter);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksList", Options);
 
@@ -11982,9 +12085,9 @@ Procedure CLI_Bitrix24_GetTasksList(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("offset" , Indent);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("offset", Indent);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksList", Options);
 
@@ -12021,10 +12124,10 @@ Procedure CLI_Bitrix24_AddTasksChecklistElement(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("text"  , Text);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("text" , Text);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTasksChecklistElement", Options);
 
@@ -12047,10 +12150,10 @@ Procedure CLI_Bitrix24_UpdateTasksChecklistElement(FunctionParameters)
     Text = "New elements text";
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
-    Options.Insert("text"    , Text);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
+    Options.Insert("text"   , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTasksChecklistElement", Options);
 
@@ -12063,11 +12166,11 @@ Procedure CLI_Bitrix24_UpdateTasksChecklistElement(FunctionParameters)
     ElementID = FunctionParameters["Bitrix24_CheckElementID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
-    Options.Insert("text"    , Text);
-    Options.Insert("token"   , Token);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
+    Options.Insert("text"   , Text);
+    Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTasksChecklistElement", Options);
 
@@ -12083,9 +12186,9 @@ Procedure CLI_Bitrix24_DeleteTasksChecklistElement(FunctionParameters)
     ElementID = FunctionParameters["Bitrix24_HookCheckElementID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTasksChecklistElement", Options);
 
@@ -12099,10 +12202,10 @@ Procedure CLI_Bitrix24_DeleteTasksChecklistElement(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
-    Options.Insert("token"   , Token);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
+    Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTasksChecklistElement", Options);
 
@@ -12117,8 +12220,8 @@ Procedure CLI_Bitrix24_GetTasksChecklist(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksChecklist", Options);
 
@@ -12130,9 +12233,9 @@ Procedure CLI_Bitrix24_GetTasksChecklist(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksChecklist", Options);
 
@@ -12148,9 +12251,9 @@ Procedure CLI_Bitrix24_GetTasksChecklistElement(FunctionParameters)
     ElementID = FunctionParameters["Bitrix24_HookCheckElementID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksChecklistElement", Options);
 
@@ -12164,10 +12267,10 @@ Procedure CLI_Bitrix24_GetTasksChecklistElement(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
-    Options.Insert("token"   , Token);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
+    Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTasksChecklistElement", Options);
 
@@ -12183,9 +12286,9 @@ Procedure CLI_Bitrix24_CompleteTasksChecklistElement(FunctionParameters)
     ElementID = FunctionParameters["Bitrix24_HookCheckElementID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CompleteTasksChecklistElement", Options);
 
@@ -12199,10 +12302,10 @@ Procedure CLI_Bitrix24_CompleteTasksChecklistElement(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
-    Options.Insert("token"   , Token);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
+    Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CompleteTasksChecklistElement", Options);
 
@@ -12218,9 +12321,9 @@ Procedure CLI_Bitrix24_RenewTasksChecklistElement(FunctionParameters)
     ElementID = FunctionParameters["Bitrix24_HookCheckElementID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenewTasksChecklistElement", Options);
 
@@ -12234,10 +12337,10 @@ Procedure CLI_Bitrix24_RenewTasksChecklistElement(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("task"    , TaskID);
-    Options.Insert("element" , ElementID);
-    Options.Insert("token"   , Token);
+    Options.Insert("url"    , URL);
+    Options.Insert("task"   , TaskID);
+    Options.Insert("element", ElementID);
+    Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenewTasksChecklistElement", Options);
 
@@ -12253,9 +12356,9 @@ Procedure CLI_Bitrix24_AttachFileToTopic(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_TaskFileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AttachFileToTopic", Options);
 
@@ -12267,10 +12370,10 @@ Procedure CLI_Bitrix24_AttachFileToTopic(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("fileid", FileID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AttachFileToTopic", Options);
 
@@ -12289,9 +12392,9 @@ Procedure CLI_Bitrix24_CheckTaskAccesses(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("users" , ArrayOfUsers);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("users", ArrayOfUsers);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CheckTaskAccesses", Options);
 
@@ -12303,10 +12406,10 @@ Procedure CLI_Bitrix24_CheckTaskAccesses(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("users" , ArrayOfUsers);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("users", ArrayOfUsers);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CheckTaskAccesses", Options);
 
@@ -12321,8 +12424,8 @@ Procedure CLI_Bitrix24_MuteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MuteTask", Options);
 
@@ -12334,9 +12437,9 @@ Procedure CLI_Bitrix24_MuteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MuteTask", Options);
 
@@ -12351,8 +12454,8 @@ Procedure CLI_Bitrix24_UnmuteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_HookTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UnmuteTask", Options);
 
@@ -12364,9 +12467,9 @@ Procedure CLI_Bitrix24_UnmuteTask(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_TaskID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UnmuteTask", Options);
 
@@ -12384,10 +12487,10 @@ Procedure CLI_Bitrix24_CreateTasksDependencies(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("taskfrom" , FromID);
-    Options.Insert("taskto"   , DestinationID);
-    Options.Insert("linktype" , LinkType);
+    Options.Insert("url"     , URL);
+    Options.Insert("taskfrom", FromID);
+    Options.Insert("taskto"  , DestinationID);
+    Options.Insert("linktype", LinkType);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateTasksDependencies", Options);
 
@@ -12404,11 +12507,11 @@ Procedure CLI_Bitrix24_CreateTasksDependencies(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("taskfrom" , FromID);
-    Options.Insert("taskto"   , DestinationID);
-    Options.Insert("linktype" , LinkType);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("taskfrom", FromID);
+    Options.Insert("taskto"  , DestinationID);
+    Options.Insert("linktype", LinkType);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateTasksDependencies", Options);
 
@@ -12430,10 +12533,10 @@ Procedure CLI_Bitrix24_DeleteTasksDependencies(FunctionParameters)
     Result = OPI_Bitrix24.CreateTasksDependencies(URL, FromID, DestinationID, LinkType);
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("taskfrom" , FromID);
-    Options.Insert("taskto"   , DestinationID);
-    Options.Insert("linktype" , LinkType);
+    Options.Insert("url"     , URL);
+    Options.Insert("taskfrom", FromID);
+    Options.Insert("taskto"  , DestinationID);
+    Options.Insert("linktype", LinkType);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTasksDependencies", Options);
 
@@ -12450,11 +12553,11 @@ Procedure CLI_Bitrix24_DeleteTasksDependencies(FunctionParameters)
     Result = OPI_Bitrix24.CreateTasksDependencies(URL, FromID, DestinationID, LinkType, Token);
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("taskfrom" , FromID);
-    Options.Insert("taskto"   , DestinationID);
-    Options.Insert("linktype" , LinkType);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("taskfrom", FromID);
+    Options.Insert("taskto"  , DestinationID);
+    Options.Insert("linktype", LinkType);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTasksDependencies", Options);
 
@@ -12468,7 +12571,7 @@ Procedure CLI_Bitrix24_GetDailyPlan(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDailyPlan", Options);
 
@@ -12479,8 +12582,8 @@ Procedure CLI_Bitrix24_GetDailyPlan(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDailyPlan", Options);
 
@@ -12643,8 +12746,8 @@ Procedure CLI_Bitrix24_GetResultsList(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_CommentsTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetResultsList", Options);
 
@@ -12672,8 +12775,8 @@ Procedure CLI_Bitrix24_GetTaskCommentsList(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_CommentsTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskCommentsList", Options);
 
@@ -12879,8 +12982,8 @@ Procedure CLI_Bitrix24_DeleteFile(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_HookFileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteFile", Options);
 
@@ -12892,9 +12995,9 @@ Procedure CLI_Bitrix24_DeleteFile(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_FileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteFile", Options);
 
@@ -12951,8 +13054,8 @@ Procedure CLI_Bitrix24_DeleteFolder(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_HookFolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteFolder", Options);
 
@@ -12964,9 +13067,9 @@ Procedure CLI_Bitrix24_DeleteFolder(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteFolder", Options);
 
@@ -12981,8 +13084,8 @@ Procedure CLI_Bitrix24_GetStorage(FunctionParameters)
     StorageID = 3;
 
     Options = New Structure;
-    Options.Insert("url"       , URL);
-    Options.Insert("storageid" , StorageID);
+    Options.Insert("url"      , URL);
+    Options.Insert("storageid", StorageID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStorage", Options);
 
@@ -12993,9 +13096,9 @@ Procedure CLI_Bitrix24_GetStorage(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"       , URL);
-    Options.Insert("storageid" , StorageID);
-    Options.Insert("token"     , Token);
+    Options.Insert("url"      , URL);
+    Options.Insert("storageid", StorageID);
+    Options.Insert("token"    , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStorage", Options);
 
@@ -13010,8 +13113,8 @@ Procedure CLI_Bitrix24_GetStorageObjects(FunctionParameters)
     StorageID = 3;
 
     Options = New Structure;
-    Options.Insert("url"       , URL);
-    Options.Insert("storageid" , StorageID);
+    Options.Insert("url"      , URL);
+    Options.Insert("storageid", StorageID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStorageObjects", Options);
 
@@ -13022,9 +13125,9 @@ Procedure CLI_Bitrix24_GetStorageObjects(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"       , URL);
-    Options.Insert("storageid" , StorageID);
-    Options.Insert("token"     , Token);
+    Options.Insert("url"      , URL);
+    Options.Insert("storageid", StorageID);
+    Options.Insert("token"    , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetStorageObjects", Options);
 
@@ -13041,10 +13144,10 @@ Procedure CLI_Bitrix24_RenameStorage(FunctionParameters)
     StorageID = FunctionParameters["Bitrix24_StorageID"];
 
     Options = New Structure;
-    Options.Insert("url"       , URL);
-    Options.Insert("storageid" , StorageID);
-    Options.Insert("title"     , Name);
-    Options.Insert("token"     , Token);
+    Options.Insert("url"      , URL);
+    Options.Insert("storageid", StorageID);
+    Options.Insert("title"    , Name);
+    Options.Insert("token"    , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameStorage", Options);
 
@@ -13059,8 +13162,8 @@ Procedure CLI_Bitrix24_GetFolderInformation(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderInformation", Options);
 
@@ -13071,9 +13174,9 @@ Procedure CLI_Bitrix24_GetFolderInformation(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderInformation", Options);
 
@@ -13091,9 +13194,9 @@ Procedure CLI_Bitrix24_CreateSubfolder(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("title"    , Filename2);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("title"   , Filename2);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateSubfolder", Options);
 
@@ -13108,10 +13211,10 @@ Procedure CLI_Bitrix24_CreateSubfolder(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("title"    , Name);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("title"   , Name);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateSubfolder", Options);
 
@@ -13132,9 +13235,9 @@ Procedure CLI_Bitrix24_MakeFolderCopy(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("tagetid"  , DestinationID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("tagetid" , DestinationID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MakeFolderCopy", Options);
 
@@ -13148,10 +13251,10 @@ Procedure CLI_Bitrix24_MakeFolderCopy(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("tagetid"  , DestinationID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("tagetid" , DestinationID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MakeFolderCopy", Options);
 
@@ -13166,8 +13269,8 @@ Procedure CLI_Bitrix24_GetFolderExternalLink(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderExternalLink", Options);
 
@@ -13178,9 +13281,9 @@ Procedure CLI_Bitrix24_GetFolderExternalLink(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderExternalLink", Options);
 
@@ -13194,7 +13297,7 @@ Procedure CLI_Bitrix24_GetFolderFilterStructure(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderFilterStructure", Options);
 
@@ -13205,8 +13308,8 @@ Procedure CLI_Bitrix24_GetFolderFilterStructure(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderFilterStructure", Options);
 
@@ -13221,8 +13324,8 @@ Procedure CLI_Bitrix24_GetFolderItems(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderItems", Options);
 
@@ -13233,9 +13336,9 @@ Procedure CLI_Bitrix24_GetFolderItems(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFolderItems", Options);
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFolderItems", "Bitrix24");
@@ -13249,8 +13352,8 @@ Procedure CLI_Bitrix24_MarkFolderAsDeleted(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkFolderAsDeleted", Options);
 
@@ -13261,9 +13364,9 @@ Procedure CLI_Bitrix24_MarkFolderAsDeleted(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkFolderAsDeleted", Options);
 
@@ -13278,8 +13381,8 @@ Procedure CLI_Bitrix24_RestoreFolder(FunctionParameters)
     FolderID = FunctionParameters["Bitrix24_FolderID"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RestoreFolder", Options);
 
@@ -13290,9 +13393,9 @@ Procedure CLI_Bitrix24_RestoreFolder(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RestoreFolder", Options);
 
@@ -13309,9 +13412,9 @@ Procedure CLI_Bitrix24_MoveFolder(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("tagetid"  , DestinationID);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("tagetid" , DestinationID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveFolder", Options);
 
@@ -13324,10 +13427,10 @@ Procedure CLI_Bitrix24_MoveFolder(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("tagetid"  , DestinationID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("tagetid" , DestinationID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveFolder", Options);
 
@@ -13345,9 +13448,9 @@ Procedure CLI_Bitrix24_RenameFolder(FunctionParameters)
     URL       = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID2);
-    Options.Insert("title"    , Filename2);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID2);
+    Options.Insert("title"   , Filename2);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameFolder", Options);
 
@@ -13359,10 +13462,10 @@ Procedure CLI_Bitrix24_RenameFolder(FunctionParameters)
     Token    = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("title"    , Name);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("title"   , Name);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameFolder", Options);
 
@@ -13384,10 +13487,10 @@ Procedure CLI_Bitrix24_UploadFileToFolder(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("title"    , Filename2);
-    Options.Insert("file"     , Image2);
-    Options.Insert("folderid" , DestinationID);
+    Options.Insert("url"     , URL);
+    Options.Insert("title"   , Filename2);
+    Options.Insert("file"    , Image2);
+    Options.Insert("folderid", DestinationID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UploadFileToFolder", Options);
 
@@ -13401,11 +13504,11 @@ Procedure CLI_Bitrix24_UploadFileToFolder(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("title"    , Name);
-    Options.Insert("file"     , Image);
-    Options.Insert("folderid" , DestinationID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("title"   , Name);
+    Options.Insert("file"    , Image);
+    Options.Insert("folderid", DestinationID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UploadFileToFolder", Options);
 
@@ -13425,9 +13528,9 @@ Procedure CLI_Bitrix24_MakeCopyFile(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("fileid"   , FileID);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("fileid"  , FileID);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MakeCopyFile", Options);
 
@@ -13440,10 +13543,10 @@ Procedure CLI_Bitrix24_MakeCopyFile(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("fileid"   , FileID);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("fileid"  , FileID);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MakeCopyFile", Options);
 
@@ -13458,8 +13561,8 @@ Procedure CLI_Bitrix24_GetFileInformation(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_FileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFileInformation", Options);
 
@@ -13470,9 +13573,9 @@ Procedure CLI_Bitrix24_GetFileInformation(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFileInformation", Options);
 
@@ -13489,8 +13592,8 @@ Procedure CLI_Bitrix24_GetFileExternalLink(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_FileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFileExternalLink", Options);
 
@@ -13502,9 +13605,9 @@ Procedure CLI_Bitrix24_GetFileExternalLink(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFileExternalLink", Options);
 
@@ -13520,8 +13623,8 @@ Procedure CLI_Bitrix24_MarkFileAsDeleted(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_FileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkFileAsDeleted", Options);
 
@@ -13532,9 +13635,9 @@ Procedure CLI_Bitrix24_MarkFileAsDeleted(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MarkFileAsDeleted", Options);
 
@@ -13549,8 +13652,8 @@ Procedure CLI_Bitrix24_RestoreFile(FunctionParameters)
     FileID = FunctionParameters["Bitrix24_FileID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RestoreFile", Options);
 
@@ -13561,9 +13664,9 @@ Procedure CLI_Bitrix24_RestoreFile(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RestoreFile", Options);
 
@@ -13581,9 +13684,9 @@ Procedure CLI_Bitrix24_RenameFile(FunctionParameters)
     URL     = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID2);
-    Options.Insert("title"  , Filename2);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID2);
+    Options.Insert("title" , Filename2);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameFile", Options);
 
@@ -13595,10 +13698,10 @@ Procedure CLI_Bitrix24_RenameFile(FunctionParameters)
     Token  = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("fileid" , FileID);
-    Options.Insert("title"  , Name);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("fileid", FileID);
+    Options.Insert("title" , Name);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "RenameFile", Options);
 
@@ -13615,9 +13718,9 @@ Procedure CLI_Bitrix24_MoveFileToFolder(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("fileid"   , FileID);
-    Options.Insert("folderid" , FolderID);
+    Options.Insert("url"     , URL);
+    Options.Insert("fileid"  , FileID);
+    Options.Insert("folderid", FolderID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveFileToFolder", Options);
 
@@ -13630,10 +13733,10 @@ Procedure CLI_Bitrix24_MoveFileToFolder(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"      , URL);
-    Options.Insert("fileid"   , FileID);
-    Options.Insert("folderid" , FolderID);
-    Options.Insert("token"    , Token);
+    Options.Insert("url"     , URL);
+    Options.Insert("fileid"  , FileID);
+    Options.Insert("folderid", FolderID);
+    Options.Insert("token"   , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "MoveFileToFolder", Options);
 
@@ -13650,9 +13753,9 @@ Procedure CLI_Bitrix24_AddTaskTimeAccounting(FunctionParameters)
     Time = 3600;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("amount" , Time);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("amount", Time);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTaskTimeAccounting", Options);
 
@@ -13672,13 +13775,13 @@ Procedure CLI_Bitrix24_AddTaskTimeAccounting(FunctionParameters)
     SetupDate = AddMonth(OPI_Tools.GetCurrentDate(), -1);
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("amount" , Time);
-    Options.Insert("user"   , UserID);
-    Options.Insert("text"   , Text);
-    Options.Insert("date"   , SetupDate);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("amount", Time);
+    Options.Insert("user"  , UserID);
+    Options.Insert("text"  , Text);
+    Options.Insert("date"  , SetupDate);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddTaskTimeAccounting", Options);
 
@@ -13701,11 +13804,11 @@ Procedure CLI_Bitrix24_UpdateTaskTimeAccounting(FunctionParameters)
     Time = 4800;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("record" , RecordID);
-    Options.Insert("amount" , Time);
-    Options.Insert("text"   , Text);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("record", RecordID);
+    Options.Insert("amount", Time);
+    Options.Insert("text"  , Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTaskTimeAccounting", Options);
 
@@ -13721,13 +13824,13 @@ Procedure CLI_Bitrix24_UpdateTaskTimeAccounting(FunctionParameters)
     SetupDate = AddMonth(OPI_Tools.GetCurrentDate(), -1);
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("record" , RecordID);
-    Options.Insert("amount" , Time);
-    Options.Insert("text"   , Text);
-    Options.Insert("date"   , SetupDate);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("record", RecordID);
+    Options.Insert("amount", Time);
+    Options.Insert("text"  , Text);
+    Options.Insert("date"  , SetupDate);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateTaskTimeAccounting", Options);
 
@@ -13743,9 +13846,9 @@ Procedure CLI_Bitrix24_DeleteTaskTimeAccounting(FunctionParameters)
     RecordID = FunctionParameters["Bitrix24_HookTimeID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("record" , RecordID);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("record", RecordID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTaskTimeAccounting", Options);
 
@@ -13757,10 +13860,10 @@ Procedure CLI_Bitrix24_DeleteTaskTimeAccounting(FunctionParameters)
     RecordID = FunctionParameters["Bitrix24_TimeID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("record" , RecordID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("record", RecordID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteTaskTimeAccounting", Options);
 
@@ -13776,9 +13879,9 @@ Procedure CLI_Bitrix24_GetTaskTimeAccounting(FunctionParameters)
     RecordID = FunctionParameters["Bitrix24_HookTimeID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("record" , RecordID);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("record", RecordID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskTimeAccounting", Options);
 
@@ -13790,10 +13893,10 @@ Procedure CLI_Bitrix24_GetTaskTimeAccounting(FunctionParameters)
     RecordID = FunctionParameters["Bitrix24_TimeID"];
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("task"   , TaskID);
-    Options.Insert("record" , RecordID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("task"  , TaskID);
+    Options.Insert("record", RecordID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskTimeAccounting", Options);
 
@@ -13808,8 +13911,8 @@ Procedure CLI_Bitrix24_GetTaskTimeAccountingList(FunctionParameters)
     TaskID = FunctionParameters["Bitrix24_ElapsedTaskID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("task" , TaskID);
+    Options.Insert("url" , URL);
+    Options.Insert("task", TaskID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskTimeAccountingList", Options);
 
@@ -13820,9 +13923,9 @@ Procedure CLI_Bitrix24_GetTaskTimeAccountingList(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("task"  , TaskID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("task" , TaskID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTaskTimeAccountingList", Options);
 
@@ -13836,7 +13939,7 @@ Procedure CLI_Bitrix24_StartTimekeeping(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartTimekeeping", Options);
 
@@ -13849,11 +13952,11 @@ Procedure CLI_Bitrix24_StartTimekeeping(FunctionParameters)
     Report = "Late";
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("userid" , UserID);
-    Options.Insert("time"   , Time);
-    Options.Insert("report" , Report);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("userid", UserID);
+    Options.Insert("time"  , Time);
+    Options.Insert("report", Report);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StartTimekeeping", Options);
 
@@ -13864,7 +13967,7 @@ Procedure CLI_Bitrix24_StopTimekeeping(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StopTimekeeping", Options);
 
@@ -13875,11 +13978,11 @@ Procedure CLI_Bitrix24_StopTimekeeping(FunctionParameters)
     Report = "Time off";
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("userid" , UserID);
-    Options.Insert("time"   , Time);
-    Options.Insert("report" , Report);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("userid", UserID);
+    Options.Insert("time"  , Time);
+    Options.Insert("report", Report);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "StopTimekeeping", Options);
 
@@ -13890,7 +13993,7 @@ Procedure CLI_Bitrix24_PauseTimekeeping(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "PauseTimekeeping", Options);
 
@@ -13899,9 +14002,9 @@ Procedure CLI_Bitrix24_PauseTimekeeping(FunctionParameters)
     UserID = 1;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("userid" , UserID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("userid", UserID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "PauseTimekeeping", Options);
 
@@ -13912,7 +14015,7 @@ Procedure CLI_Bitrix24_GetTimekeepingStatus(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTimekeepingStatus", Options);
 
@@ -13921,9 +14024,9 @@ Procedure CLI_Bitrix24_GetTimekeepingStatus(FunctionParameters)
     UserID = 1;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("userid" , UserID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("userid", UserID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTimekeepingStatus", Options);
 
@@ -13934,7 +14037,7 @@ Procedure CLI_Bitrix24_GetTimekeepingSettings(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTimekeepingSettings", Options);
 
@@ -13943,9 +14046,9 @@ Procedure CLI_Bitrix24_GetTimekeepingSettings(FunctionParameters)
     UserID = 1;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("userid" , UserID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("userid", UserID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetTimekeepingSettings", Options);
 
@@ -14005,9 +14108,9 @@ Procedure CLI_Bitrix24_DeleteKanbanStage(FunctionParameters)
     URL     = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("stage" , StageID);
-    Options.Insert("admin" , True);
+    Options.Insert("url"  , URL);
+    Options.Insert("stage", StageID);
+    Options.Insert("admin", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteKanbanStage", Options);
 
@@ -14020,9 +14123,9 @@ Procedure CLI_Bitrix24_DeleteKanbanStage(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("stage" , StageID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("stage", StageID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteKanbanStage", Options);
 
@@ -14036,8 +14139,8 @@ Procedure CLI_Bitrix24_GetKanbanStages(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("admin" , True);
+    Options.Insert("url"  , URL);
+    Options.Insert("admin", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetKanbanStages", Options);
 
@@ -14048,8 +14151,8 @@ Procedure CLI_Bitrix24_GetKanbanStages(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetKanbanStages", Options);
 
@@ -14171,11 +14274,11 @@ Procedure CLI_Bitrix24_CreatePersonalNotification(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("user"  , UserID);
-    Options.Insert("text"  , Text);
-    Options.Insert("tag"   , Tag);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("user" , UserID);
+    Options.Insert("text" , Text);
+    Options.Insert("tag"  , Tag);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreatePersonalNotification", Options);
 
@@ -14222,11 +14325,11 @@ Procedure CLI_Bitrix24_CreateSystemNotification(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("user"  , UserID);
-    Options.Insert("text"  , Text);
-    Options.Insert("tag"   , Tag);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("user" , UserID);
+    Options.Insert("text" , Text);
+    Options.Insert("tag"  , Tag);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "CreateSystemNotification", Options);
 
@@ -14245,8 +14348,8 @@ Procedure CLI_Bitrix24_DeleteNotification(FunctionParameters)
     NotificationID = FunctionParameters["Bitrix24_PersoalHookNotifyID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("notif" , NotificationID);
+    Options.Insert("url"  , URL);
+    Options.Insert("notif", NotificationID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteNotification", Options);
 
@@ -14258,9 +14361,9 @@ Procedure CLI_Bitrix24_DeleteNotification(FunctionParameters)
     NotificationID = FunctionParameters["Bitrix24_PersoalNotifyID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("notif" , NotificationID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("notif", NotificationID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteNotification", Options);
 
@@ -14313,9 +14416,9 @@ Procedure CLI_Bitrix24_UpdateCustomTaskField(FunctionParameters)
     Title   = "New title";
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("fieldid" , FieldID);
-    Options.Insert("title"   , Title);
+    Options.Insert("url"    , URL);
+    Options.Insert("fieldid", FieldID);
+    Options.Insert("title"  , Title);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "UpdateCustomTaskField", Options);
 
@@ -14343,8 +14446,8 @@ Procedure CLI_Bitrix24_GetCustomTaskField(FunctionParameters)
     FieldID = FunctionParameters["Bitrix24_HookTaskFieldID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("fieldid" , FieldID);
+    Options.Insert("url"    , URL);
+    Options.Insert("fieldid", FieldID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomTaskField", Options);
 
@@ -14353,9 +14456,9 @@ Procedure CLI_Bitrix24_GetCustomTaskField(FunctionParameters)
     FieldID = FunctionParameters["Bitrix24_TaskFieldID"];
 
     Options = New Structure;
-    Options.Insert("url"     , URL);
-    Options.Insert("fieldid" , FieldID);
-    Options.Insert("token"   , Token);
+    Options.Insert("url"    , URL);
+    Options.Insert("fieldid", FieldID);
+    Options.Insert("token"  , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomTaskField", Options);
 
@@ -14366,9 +14469,10 @@ Procedure CLI_Bitrix24_GetCustomTaskFieldsList(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomTaskFieldsList", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomTaskFieldsList",
+        Options);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -14377,7 +14481,8 @@ Procedure CLI_Bitrix24_GetCustomTaskFieldsList(FunctionParameters)
     Options.Insert("url"  , URL);
     Options.Insert("token", Token);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomTaskFieldsList", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomTaskFieldsList",
+        Options);
 
 EndProcedure
 
@@ -14497,8 +14602,8 @@ Procedure CLI_Bitrix24_DeleteDepartment(FunctionParameters)
     DepartmentID = FunctionParameters["Bitrix24_DepID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("depid" , DepartmentID);
+    Options.Insert("url"  , URL);
+    Options.Insert("depid", DepartmentID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteDepartment", Options);
 
@@ -14510,9 +14615,9 @@ Procedure CLI_Bitrix24_DeleteDepartment(FunctionParameters)
     DepartmentID = FunctionParameters["Bitrix24_HookDepID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("depid" , DepartmentID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("depid", DepartmentID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteDepartment", Options);
 
@@ -14527,8 +14632,8 @@ Procedure CLI_Bitrix24_GetDepartments(FunctionParameters)
     DepartmentID = FunctionParameters["Bitrix24_DepID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("depid" , DepartmentID);
+    Options.Insert("url"  , URL);
+    Options.Insert("depid", DepartmentID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDepartments", Options);
 
@@ -14541,9 +14646,9 @@ Procedure CLI_Bitrix24_GetDepartments(FunctionParameters)
     HeadID = 1;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("headid" , HeadID);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("headid", HeadID);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDepartments", Options);
 
@@ -14591,9 +14696,9 @@ Procedure CLI_Bitrix24_CreateChat(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     ChatStructure = New Structure;
-    ChatStructure.Insert("TYPE"  , "CHAT");
-    ChatStructure.Insert("TITLE" , "Private chat");
-    ChatStructure.Insert("USERS" , MembersArray);
+    ChatStructure.Insert("TYPE" , "CHAT");
+    ChatStructure.Insert("TITLE", "Private chat");
+    ChatStructure.Insert("USERS", MembersArray);
 
     Options = New Structure;
     Options.Insert("url"   , URL);
@@ -14617,8 +14722,8 @@ Procedure CLI_Bitrix24_GetChatUsers(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatUsers", Options);
 
@@ -14630,9 +14735,9 @@ Procedure CLI_Bitrix24_GetChatUsers(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatUsers", Options);
 
@@ -14647,8 +14752,8 @@ Procedure CLI_Bitrix24_LeaveChat(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "LeaveChat", Options);
 
@@ -14660,9 +14765,9 @@ Procedure CLI_Bitrix24_LeaveChat(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "LeaveChat", Options);
 
@@ -14679,9 +14784,9 @@ Procedure CLI_Bitrix24_DeleteUserFromChat(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
-    Options.Insert("user" , UserID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
+    Options.Insert("user", UserID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteUserFromChat", Options);
 
@@ -14693,10 +14798,10 @@ Procedure CLI_Bitrix24_DeleteUserFromChat(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("user"  , UserID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("user" , UserID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteUserFromChat", Options);
 
@@ -14716,9 +14821,9 @@ Procedure CLI_Bitrix24_AddUsersToChat(FunctionParameters)
     UserIDs.Add(12);
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("users" , UserID);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("users", UserID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddUsersToChat", Options);
 
@@ -14730,11 +14835,11 @@ Procedure CLI_Bitrix24_AddUsersToChat(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("users" , UserIDs);
-    Options.Insert("hide"  , True);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("users", UserIDs);
+    Options.Insert("hide" , True);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "AddUsersToChat", Options);
 
@@ -14751,9 +14856,9 @@ Procedure CLI_Bitrix24_ChangeChatTitle(FunctionParameters)
     Title = "New chat title";
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("title" , Title);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("title", Title);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatTitle", Options);
 
@@ -14767,10 +14872,10 @@ Procedure CLI_Bitrix24_ChangeChatTitle(FunctionParameters)
     Title = "Another title";
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("title" , Title);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("title", Title);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatTitle", Options);
 
@@ -14787,9 +14892,9 @@ Procedure CLI_Bitrix24_ChangeChatColor(FunctionParameters)
     Color = "AZURE";
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("color" , Color);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("color", Color);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatColor", Options);
 
@@ -14804,10 +14909,10 @@ Procedure CLI_Bitrix24_ChangeChatColor(FunctionParameters)
     Color = "PURPLE";
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("color" , Color);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("color", Color);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatColor", Options);
 
@@ -14856,8 +14961,8 @@ Procedure CLI_Bitrix24_DisableChatNotifications(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DisableChatNotifications", Options);
 
@@ -14869,9 +14974,9 @@ Procedure CLI_Bitrix24_DisableChatNotifications(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DisableChatNotifications", Options);
 
@@ -14886,8 +14991,8 @@ Procedure CLI_Bitrix24_EnableChatNotifications(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "EnableChatNotifications", Options);
 
@@ -14899,9 +15004,9 @@ Procedure CLI_Bitrix24_EnableChatNotifications(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "EnableChatNotifications", Options);
 
@@ -14918,9 +15023,9 @@ Procedure CLI_Bitrix24_ChangeChatOwner(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
-    Options.Insert("user" , UserID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
+    Options.Insert("user", UserID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatOwner", Options);
 
@@ -14932,10 +15037,10 @@ Procedure CLI_Bitrix24_ChangeChatOwner(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("user"  , UserID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("user" , UserID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ChangeChatOwner", Options);
 
@@ -14950,8 +15055,8 @@ Procedure CLI_Bitrix24_GetChatMessagesList(FunctionParameters)
     ChatID = "chat4";
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatMessagesList", Options);
 
@@ -14967,10 +15072,10 @@ Procedure CLI_Bitrix24_GetChatMessagesList(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , UserID);
-    Options.Insert("first" , 0);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , UserID);
+    Options.Insert("first", 0);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatMessagesList", Options);
 
@@ -15057,8 +15162,8 @@ Procedure CLI_Bitrix24_GetDialog(FunctionParameters)
     ChatID = "chat" + FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDialog", Options);
 
@@ -15070,9 +15175,9 @@ Procedure CLI_Bitrix24_GetDialog(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , UserID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , UserID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDialog", Options);
 
@@ -15087,8 +15192,8 @@ Procedure CLI_Bitrix24_GetChatMembersList(FunctionParameters)
     ChatID = "chat" + FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatMembersList", Options);
 
@@ -15100,9 +15205,9 @@ Procedure CLI_Bitrix24_GetChatMembersList(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , UserID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , UserID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatMembersList", Options);
 
@@ -15117,8 +15222,8 @@ Procedure CLI_Bitrix24_SendWritingNotification(FunctionParameters)
     ChatID = "chat" + FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendWritingNotification", Options);
 
@@ -15130,9 +15235,9 @@ Procedure CLI_Bitrix24_SendWritingNotification(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , UserID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , UserID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendWritingNotification", Options);
 
@@ -15146,7 +15251,7 @@ Procedure CLI_Bitrix24_ReadAll(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ReadAll", Options);
 
@@ -15157,8 +15262,8 @@ Procedure CLI_Bitrix24_ReadAll(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "ReadAll", Options);
 
@@ -15178,14 +15283,14 @@ Procedure CLI_Bitrix24_SendMessage(FunctionParameters)
     Attachments = New Array;
 
     Options = New Structure;
-    Options.Insert("title" , "Image1");
-    Options.Insert("url"   , Image);
+    Options.Insert("title", "Image1");
+    Options.Insert("url"  , Image);
 
     Attachment1 = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetPictureBlock", Options);
 
     Options = New Structure;
-    Options.Insert("title" , "File1.docx");
-    Options.Insert("url"   , File);
+    Options.Insert("title", "File1.docx");
+    Options.Insert("url"  , File);
 
     Attachment2 = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetFileBlock", Options);
 
@@ -15193,9 +15298,9 @@ Procedure CLI_Bitrix24_SendMessage(FunctionParameters)
     Attachments.Add(Attachment2);
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
-    Options.Insert("text" , Text);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
+    Options.Insert("text", Text);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendMessage", Options);
 
@@ -15211,11 +15316,11 @@ Procedure CLI_Bitrix24_SendMessage(FunctionParameters)
     UserID = 10;
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("chat"   , UserID);
-    Options.Insert("text"   , Text);
-    Options.Insert("blocks" , Attachments);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("chat"  , UserID);
+    Options.Insert("text"  , Text);
+    Options.Insert("blocks", Attachments);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SendMessage", Options);
 
@@ -15336,8 +15441,8 @@ Procedure CLI_Bitrix24_GetChatFilesFolder(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_HookChatID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatFilesFolder", Options);
 
@@ -15349,9 +15454,9 @@ Procedure CLI_Bitrix24_GetChatFilesFolder(FunctionParameters)
     ChatID = FunctionParameters["Bitrix24_ChatID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("chat"  , ChatID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("chat" , ChatID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatFilesFolder", Options);
 
@@ -15368,8 +15473,8 @@ Procedure CLI_Bitrix24_SendFile(FunctionParameters)
     Description = "Very important file";
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("chat" , ChatID);
+    Options.Insert("url" , URL);
+    Options.Insert("chat", ChatID);
 
     Directory = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetChatFilesFolder", Options);
     FolderID  = Directory["result"]["ID"];
@@ -15429,8 +15534,8 @@ Procedure CLI_Bitrix24_GetUsers(FunctionParameters)
     ArrayOfUsers.Add(10);
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("users" , UserID);
+    Options.Insert("url"  , URL);
+    Options.Insert("users", UserID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUsers", Options);
 
@@ -15441,9 +15546,9 @@ Procedure CLI_Bitrix24_GetUsers(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("users" , ArrayOfUsers);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("users", ArrayOfUsers);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUsers", Options);
 
@@ -15457,7 +15562,7 @@ Procedure CLI_Bitrix24_GetUserStatus(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserStatus", Options);
 
@@ -15468,8 +15573,8 @@ Procedure CLI_Bitrix24_GetUserStatus(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserStatus", Options);
 
@@ -15484,8 +15589,8 @@ Procedure CLI_Bitrix24_SetUserStatus(FunctionParameters)
     Status = "dnd";
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("status" , Status);
+    Options.Insert("url"   , URL);
+    Options.Insert("status", Status);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetUserStatus", Options);
 
@@ -15497,9 +15602,9 @@ Procedure CLI_Bitrix24_SetUserStatus(FunctionParameters)
     Status = "away";
 
     Options = New Structure;
-    Options.Insert("url"    , URL);
-    Options.Insert("status" , Status);
-    Options.Insert("token"  , Token);
+    Options.Insert("url"   , URL);
+    Options.Insert("status", Status);
+    Options.Insert("token" , Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetUserStatus", Options);
 
@@ -15557,7 +15662,7 @@ Procedure CLI_Bitrix24_GetCurrentUser(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCurrentUser", Options);
 
@@ -15583,7 +15688,7 @@ Procedure CLI_Bitrix24_GetUserFieldsStructure(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserFieldsStructure", Options);
 
@@ -15682,10 +15787,10 @@ Procedure CLI_Bitrix24_UpdateUser(FunctionParameters)
     Email  = String(New UUID) + "@exepmple.org";
 
     UserStructure = New Structure;
-    UserStructure.Insert("EMAIL"         , Email);
-    UserStructure.Insert("NAME"          , "Oleg");
-    UserStructure.Insert("LAST_NAME"     , "Lama");
-    UserStructure.Insert("UF_DEPARTMENT" , 7);
+    UserStructure.Insert("EMAIL"        , Email);
+    UserStructure.Insert("NAME"         , "Oleg");
+    UserStructure.Insert("LAST_NAME"    , "Lama");
+    UserStructure.Insert("UF_DEPARTMENT", 7);
 
     Options = New Structure;
     Options.Insert("url"   , URL);
@@ -15829,7 +15934,7 @@ Procedure CLI_Bitrix24_GetLeadStructure(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLeadStructure", Options);
 
@@ -15840,8 +15945,8 @@ Procedure CLI_Bitrix24_GetLeadStructure(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLeadStructure", Options);
 
@@ -15883,8 +15988,8 @@ Procedure CLI_Bitrix24_CreateLead(FunctionParameters)
     OPI_TestDataRetrieval.WriteParameter("Bitrix24_HookLeadID", LeadID);
     FunctionParameters.Insert("Bitrix24_HookLeadID", LeadID);
 
-    FieldsStructure.Insert("NAME"      , "Ivan");
-    FieldsStructure.Insert("LAST_NAME" , "Ivanov");
+    FieldsStructure.Insert("NAME"     , "Ivan");
+    FieldsStructure.Insert("LAST_NAME", "Ivanov");
 
     URL   = FunctionParameters["Bitrix24_Domain"];
     Token = FunctionParameters["Bitrix24_Token"];
@@ -15925,8 +16030,8 @@ Procedure CLI_Bitrix24_UpdateLead(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "UpdateLead (wh)", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
-    FieldsStructure.Insert("NAME"      , "Evgeniy");
-    FieldsStructure.Insert("LAST_NAME" , "Evgeniev");
+    FieldsStructure.Insert("NAME"     , "Evgeniy");
+    FieldsStructure.Insert("LAST_NAME", "Evgeniev");
 
     URL    = FunctionParameters["Bitrix24_Domain"];
     Token  = FunctionParameters["Bitrix24_Token"];
@@ -15951,8 +16056,8 @@ Procedure CLI_Bitrix24_DeleteLead(FunctionParameters)
     LeadID = FunctionParameters["Bitrix24_HookLeadID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("lead" , LeadID);
+    Options.Insert("url" , URL);
+    Options.Insert("lead", LeadID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteLead", Options);
 
@@ -15964,9 +16069,9 @@ Procedure CLI_Bitrix24_DeleteLead(FunctionParameters)
     LeadID = FunctionParameters["Bitrix24_LeadID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("lead"  , LeadID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("lead" , LeadID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteLead", Options);
 
@@ -15981,8 +16086,8 @@ Procedure CLI_Bitrix24_GetLead(FunctionParameters)
     LeadID = FunctionParameters["Bitrix24_HookLeadID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("lead" , LeadID);
+    Options.Insert("url" , URL);
+    Options.Insert("lead", LeadID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLead", Options);
 
@@ -15994,9 +16099,9 @@ Procedure CLI_Bitrix24_GetLead(FunctionParameters)
     LeadID = FunctionParameters["Bitrix24_LeadID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("lead"  , LeadID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("lead" , LeadID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLead", Options);
 
@@ -16010,7 +16115,7 @@ Procedure CLI_Bitrix24_GetLeadsList(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLeadsList", Options);
 
@@ -16025,8 +16130,8 @@ Procedure CLI_Bitrix24_GetLeadsList(FunctionParameters)
     Filter.Insert("HAS_EMAIL", "Y");
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetLeadsList", Options);
 
@@ -16052,7 +16157,7 @@ Procedure CLI_Bitrix24_GetDealStructure(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDealStructure", Options);
 
@@ -16063,8 +16168,8 @@ Procedure CLI_Bitrix24_GetDealStructure(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDealStructure", Options);
 
@@ -16130,9 +16235,9 @@ EndProcedure
 Procedure CLI_Bitrix24_UpdateDeal(FunctionParameters)
 
     FieldsStructure = New Structure;
-    FieldsStructure.Insert("TITLE"       , "Sale in RUB");
-    FieldsStructure.Insert("CURRENCY_ID" , "RUB");
-    FieldsStructure.Insert("OPPORTUNITY" , 50000);
+    FieldsStructure.Insert("TITLE"      , "Sale in RUB");
+    FieldsStructure.Insert("CURRENCY_ID", "RUB");
+    FieldsStructure.Insert("OPPORTUNITY", 50000);
 
     URL    = FunctionParameters["Bitrix24_URL"];
     DealID = FunctionParameters["Bitrix24_HookDealID"];
@@ -16173,8 +16278,8 @@ Procedure CLI_Bitrix24_GetDeal(FunctionParameters)
     DealID = FunctionParameters["Bitrix24_HookDealID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("deal" , DealID);
+    Options.Insert("url" , URL);
+    Options.Insert("deal", DealID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDeal", Options);
 
@@ -16186,9 +16291,9 @@ Procedure CLI_Bitrix24_GetDeal(FunctionParameters)
     DealID = FunctionParameters["Bitrix24_HookDealID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("deal"  , DealID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("deal" , DealID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDeal", Options);
 
@@ -16203,8 +16308,8 @@ Procedure CLI_Bitrix24_DeleteDeal(FunctionParameters)
     DealID = FunctionParameters["Bitrix24_HookDealID"];
 
     Options = New Structure;
-    Options.Insert("url"  , URL);
-    Options.Insert("deal" , DealID);
+    Options.Insert("url" , URL);
+    Options.Insert("deal", DealID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteDeal", Options);
 
@@ -16216,9 +16321,9 @@ Procedure CLI_Bitrix24_DeleteDeal(FunctionParameters)
     DealID = FunctionParameters["Bitrix24_DealID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("deal"  , DealID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("deal" , DealID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteDeal", Options);
 
@@ -16232,7 +16337,7 @@ Procedure CLI_Bitrix24_GetDealsList(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetDealsList", Options);
 
@@ -16269,9 +16374,9 @@ Procedure CLI_Bitrix24_CreateCalendar(FunctionParameters)
     CalendarsStructure.Insert("color"      , "#FFFFFF");
     CalendarsStructure.Insert("text_color" , "#000000");
 
-        ExportStructure = New Structure;
-        ExportStructure.Insert("ALLOW", "True");
-        ExportStructure.Insert("SET"  , "all");
+    ExportStructure = New Structure;
+    ExportStructure.Insert("ALLOW", "True");
+    ExportStructure.Insert("SET"  , "all");
 
     CalendarsStructure.Insert("export", ExportStructure);
 
@@ -16391,14 +16496,14 @@ EndProcedure
 Procedure CLI_Bitrix24_GetCalendarStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarStructure", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarStructure", "Bitrix24");
     OPI_TestDataRetrieval.Check_Map(Result);
 
-    Options.Insert("empty" , True);
+    Options.Insert("empty", True);
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarStructure", Options);
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarStructure (empty)", "Bitrix24");
 
@@ -16419,9 +16524,9 @@ Procedure CLI_Bitrix24_GetCalendarList(FunctionParameters)
     Type    = "user";
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("owner" , OwnerID);
-    Options.Insert("type"  , Type);
+    Options.Insert("url"  , URL);
+    Options.Insert("owner", OwnerID);
+    Options.Insert("type" , Type);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarList", Options);
 
@@ -16432,10 +16537,10 @@ Procedure CLI_Bitrix24_GetCalendarList(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("owner" , OwnerID);
-    Options.Insert("type"  , Type);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("owner", OwnerID);
+    Options.Insert("type" , Type);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarList", Options);
 
@@ -16449,7 +16554,7 @@ Procedure CLI_Bitrix24_GetCalendarSettingsStructure(FunctionParameters)
     URL = FunctionParameters["Bitrix24_URL"];
 
     Options = New Structure;
-    Options.Insert("url" , URL);
+    Options.Insert("url", URL);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarSettingsStructure", Options);
 
@@ -16460,8 +16565,8 @@ Procedure CLI_Bitrix24_GetCalendarSettingsStructure(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarSettingsStructure", Options);
 
@@ -16475,16 +16580,20 @@ EndProcedure
 Procedure CLI_Bitrix24_GetCalednarCustomSettingsStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalednarCustomSettingsStructure", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24",
+        "GetCalednarCustomSettingsStructure", Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalednarCustomSettingsStructure", "Bitrix24");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalednarCustomSettingsStructure",
+        "Bitrix24");
     OPI_TestDataRetrieval.Check_Map(Result);
 
-    Options.Insert("empty" , True);
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalednarCustomSettingsStructure", Options);
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalednarCustomSettingsStructure)", "Bitrix24");
+    Options.Insert("empty", True);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24",
+        "GetCalednarCustomSettingsStructure", Options);
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalednarCustomSettingsStructure)",
+        "Bitrix24");
 
     For Each Element In Result Do
 
@@ -16503,7 +16612,8 @@ Procedure CLI_Bitrix24_GetCustomCalendarSettings(FunctionParameters)
     Options = New Structure;
     Options.Insert("url", URL);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomCalendarSettings", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomCalendarSettings",
+        Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCustomCalendarSettings (wh)", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixMap(Result);
@@ -16512,10 +16622,11 @@ Procedure CLI_Bitrix24_GetCustomCalendarSettings(FunctionParameters)
     Token = FunctionParameters["Bitrix24_Token"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomCalendarSettings", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCustomCalendarSettings",
+        Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCustomCalendarSettings", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixMap(Result);
@@ -16536,9 +16647,11 @@ Procedure CLI_Bitrix24_SetCustomCalendarSettings(FunctionParameters)
     Options.Insert("url"     , URL);
     Options.Insert("settings", CalendarsStructure);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetCustomCalendarSettings", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetCustomCalendarSettings",
+        Options);
 
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "SetCustomCalendarSettings (wh)", "Bitrix24");
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "SetCustomCalendarSettings (wh)",
+        "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixTrue(Result);
 
     URL   = FunctionParameters["Bitrix24_Domain"];
@@ -16549,7 +16662,8 @@ Procedure CLI_Bitrix24_SetCustomCalendarSettings(FunctionParameters)
     Options.Insert("settings", CalendarsStructure);
     Options.Insert("token"   , Token);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetCustomCalendarSettings", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "SetCustomCalendarSettings",
+        Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "SetCustomCalendarSettings", "Bitrix24");
     OPI_TestDataRetrieval.Check_BitrixTrue(Result);
@@ -16626,39 +16740,39 @@ Procedure CLI_Bitrix24_CreateCalendarEvent(FunctionParameters)
     EventStucture.Insert("importance"   , "high");
     EventStucture.Insert("private_event", "N");
 
-        RepeatabilityStructure = New Structure;
-        RepeatabilityStructure.Insert("FREQ"    , "DAILY");
-        RepeatabilityStructure.Insert("COUNT"   , 3);
-        RepeatabilityStructure.Insert("INTERVAL", 10);
+    RepeatabilityStructure = New Structure;
+    RepeatabilityStructure.Insert("FREQ"    , "DAILY");
+    RepeatabilityStructure.Insert("COUNT"   , 3);
+    RepeatabilityStructure.Insert("INTERVAL", 10);
 
-            DaysArray = New Array;
-            DaysArray.Add("SA");
-            DaysArray.Add("MO");
+    DaysArray = New Array;
+    DaysArray.Add("SA");
+    DaysArray.Add("MO");
 
-        RepeatabilityStructure.Insert("BYDAY" , DaysArray);
-        RepeatabilityStructure.Insert("UNTIL" , XMLString(Tomorrow + Hour * 24 * 10));
+    RepeatabilityStructure.Insert("BYDAY", DaysArray);
+    RepeatabilityStructure.Insert("UNTIL", XMLString(Tomorrow + Hour * 24 * 10));
 
     EventStucture.Insert("rrule"     , RepeatabilityStructure);
     EventStucture.Insert("is_meeting", "Y");
     EventStucture.Insert("location"  , "Office");
 
-        RemindersArray = New Array;
+    RemindersArray = New Array;
 
-            ReminderStructure = New Structure;
-            ReminderStructure.Insert("type" , "day");
-            ReminderStructure.Insert("count", 1);
+    ReminderStructure = New Structure;
+    ReminderStructure.Insert("type" , "day");
+    ReminderStructure.Insert("count", 1);
 
-        RemindersArray.Add(ReminderStructure);
+    RemindersArray.Add(ReminderStructure);
 
     EventStucture.Insert("remind"   , RemindersArray);
     EventStucture.Insert("attendees", StrSplit("1,10", ","));
     EventStucture.Insert("host"     , 1);
 
-        MeetingStructure = New Structure;
-        MeetingStructure.Insert("notify"      , "Y");
-        MeetingStructure.Insert("reinvite"    , "Y");
-        MeetingStructure.Insert("allow_invite", "N");
-        MeetingStructure.Insert("hide_guests" , "N");
+    MeetingStructure = New Structure;
+    MeetingStructure.Insert("notify"      , "Y");
+    MeetingStructure.Insert("reinvite"    , "Y");
+    MeetingStructure.Insert("allow_invite", "N");
+    MeetingStructure.Insert("hide_guests" , "N");
 
     EventStucture.Insert("meeting", MeetingStructure);
 
@@ -16703,8 +16817,8 @@ Procedure CLI_Bitrix24_DeleteCalendarEvent(FunctionParameters)
     EventID = FunctionParameters["Bitrix24_HookCEventID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("event" , EventID);
+    Options.Insert("url"  , URL);
+    Options.Insert("event", EventID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteCalendarEvent", Options);
 
@@ -16716,9 +16830,9 @@ Procedure CLI_Bitrix24_DeleteCalendarEvent(FunctionParameters)
     EventID = FunctionParameters["Bitrix24_CEventID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("event" , EventID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("event", EventID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "DeleteCalendarEvent", Options);
 
@@ -16733,8 +16847,8 @@ Procedure CLI_Bitrix24_GetCalendarEvent(FunctionParameters)
     EventID = FunctionParameters["Bitrix24_HookCEventID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("event" , EventID);
+    Options.Insert("url"  , URL);
+    Options.Insert("event", EventID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvent", Options);
 
@@ -16746,9 +16860,9 @@ Procedure CLI_Bitrix24_GetCalendarEvent(FunctionParameters)
     EventID = FunctionParameters["Bitrix24_CEventID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("event" , EventID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("event", EventID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvent", Options);
 
@@ -16764,9 +16878,9 @@ Procedure CLI_Bitrix24_GetCalendarEvents(FunctionParameters)
     Type    = "user";
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("owner" , OwnerID);
-    Options.Insert("type"  , Type);
+    Options.Insert("url"  , URL);
+    Options.Insert("owner", OwnerID);
+    Options.Insert("type" , Type);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEvents", Options);
 
@@ -16894,8 +17008,8 @@ Procedure CLI_Bitrix24_GetUserParticipationStatus(FunctionParameters)
     EventID = FunctionParameters["Bitrix24_HookCEventID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("event" , EventID);
+    Options.Insert("url"  , URL);
+    Options.Insert("event", EventID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserParticipationStatus", Options);
 
@@ -16907,9 +17021,9 @@ Procedure CLI_Bitrix24_GetUserParticipationStatus(FunctionParameters)
     EventID = FunctionParameters["Bitrix24_CEventID"];
 
     Options = New Structure;
-    Options.Insert("url"   , URL);
-    Options.Insert("event" , EventID);
-    Options.Insert("token" , Token);
+    Options.Insert("url"  , URL);
+    Options.Insert("event", EventID);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetUserParticipationStatus", Options);
 
@@ -16921,7 +17035,7 @@ EndProcedure
 Procedure CLI_Bitrix24_GetCalendarEventsStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsStructure", Options);
 
@@ -16929,7 +17043,7 @@ Procedure CLI_Bitrix24_GetCalendarEventsStructure(FunctionParameters)
     OPI_TestDataRetrieval.Check_Map(Result);
 
     Options = New Structure;
-    Options.Insert("empty" , True);
+    Options.Insert("empty", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsStructure", Options);
 
@@ -16948,18 +17062,21 @@ EndProcedure
 Procedure CLI_Bitrix24_GetCalendarEventsFilterStructure(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsFilterStructure", Options);
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsFilterStructure",
+        Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEventsFilterStructure", "Bitrix24");
     OPI_TestDataRetrieval.Check_Map(Result);
 
     Options = New Structure;
-    Options.Insert("empty" , True);
+    Options.Insert("empty", True);
 
-    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsFilterStructure", Options);
-    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEventsFilterStructure (empty)", "Bitrix24");
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("bitrix24", "GetCalendarEventsFilterStructure",
+        Options);
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetCalendarEventsFilterStructure (empty)",
+        "Bitrix24");
 
     For Each Element In Result Do
 
@@ -17014,64 +17131,64 @@ Procedure CLI_CDEK_CreateOrder(FunctionParameters)
 
     OrderDescription = New Structure;
 
-        SendLocation = New Structure;
-        SendLocation.Insert("code"   , "44");
-        SendLocation.Insert("city"   , "Moscow");
-        SendLocation.Insert("address", "Ave. Leningradsky, 4");
+    SendLocation = New Structure;
+    SendLocation.Insert("code"   , "44");
+    SendLocation.Insert("city"   , "Moscow");
+    SendLocation.Insert("address", "Ave. Leningradsky, 4");
 
-        DestLocation = New Structure;
-        DestLocation.Insert("code"   , "270");
-        DestLocation.Insert("city"   , "Novosibirsk");
-        DestLocation.Insert("address", "st. Bluchera, 32");
+    DestLocation = New Structure;
+    DestLocation.Insert("code"   , "270");
+    DestLocation.Insert("city"   , "Novosibirsk");
+    DestLocation.Insert("address", "st. Bluchera, 32");
 
-        Recipient = New Structure;
+    Recipient = New Structure;
 
-            Phones = New Array;
-            Phones.Add(New Structure("number", "+79134637228"));
+    Phones = New Array;
+    Phones.Add(New Structure("number", "+79134637228"));
 
-        Recipient.Insert("phones", Phones);
-        Recipient.Insert("name"  , "Ivaniv Ivan");
+    Recipient.Insert("phones", Phones);
+    Recipient.Insert("name"  , "Ivaniv Ivan");
 
-        Sender = New Structure("name", "Petrov Petr");
+    Sender = New Structure("name", "Petrov Petr");
 
-        Services = New Array;
+    Services = New Array;
 
-            Service = New Structure;
-            Service.Insert("code"     , "SECURE_PACKAGE_A2");
-            Service.Insert("parameter", 10);
+    Service = New Structure;
+    Service.Insert("code"     , "SECURE_PACKAGE_A2");
+    Service.Insert("parameter", 10);
 
-        Services.Add(Service);
+    Services.Add(Service);
 
-        Packages = New Array;
+    Packages = New Array;
 
-            Package = New Structure;
+    Package = New Structure;
 
-                Items = New Array;
+    Items = New Array;
 
-                    Item = New Structure;
+    Item = New Structure;
 
-                        Payment = New Structure;
-                        Payment.Insert("value", 3000);
+    Payment = New Structure;
+    Payment.Insert("value", 3000);
 
-                    Item.Insert("payment" , Payment);
-                    Item.Insert("ware_key", "00055");
-                    Item.Insert("name"    , "Product");
-                    Item.Insert("cost"    , 300);
-                    Item.Insert("amount"  , 2);
-                    Item.Insert("weight"  , 700);
-                    Item.Insert("url"     , "www.item.ru");
+    Item.Insert("payment" , Payment);
+    Item.Insert("ware_key", "00055");
+    Item.Insert("name"    , "Product");
+    Item.Insert("cost"    , 300);
+    Item.Insert("amount"  , 2);
+    Item.Insert("weight"  , 700);
+    Item.Insert("url"     , "www.item.ru");
 
-                Items.Add(Item);
+    Items.Add(Item);
 
-            Package.Insert("items"  , Items);
-            Package.Insert("number" , "bar-001");
-            Package.Insert("comment", "Packaging");
-            Package.Insert("height" , 10);
-            Package.Insert("length" , 10);
-            Package.Insert("weight" , "4000");
-            Package.Insert("width"  , 10);
+    Package.Insert("items"  , Items);
+    Package.Insert("number" , "bar-001");
+    Package.Insert("comment", "Packaging");
+    Package.Insert("height" , 10);
+    Package.Insert("length" , 10);
+    Package.Insert("weight" , "4000");
+    Package.Insert("width"  , 10);
 
-        Packages.Add(Package);
+    Packages.Add(Package);
 
     OrderDescription.Insert("from_location", SendLocation);
     OrderDescription.Insert("to_location"  , DestLocation);
@@ -17152,10 +17269,10 @@ Procedure CLI_CDEK_UpdateOrder(FunctionParameters)
     OrderDescription = New Structure("comment", "NewComment");
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("order"   , OrderDescription);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("order"  , OrderDescription);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "UpdateOrder", Options);
 
@@ -17170,9 +17287,9 @@ Procedure CLI_CDEK_DeleteOrder(FunctionParameters)
     UUID  = FunctionParameters["CDEK_OrderUUID"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "DeleteOrder", Options);
 
@@ -17188,10 +17305,10 @@ Procedure CLI_CDEK_CreateCustomerRefund(FunctionParameters)
     Tariff = 139;
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("tariff"  , Tariff);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("tariff" , Tariff);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "CreateCustomerRefund", Options);
 
@@ -17206,9 +17323,9 @@ Procedure CLI_CDEK_CreateRefusal(FunctionParameters)
     UUID  = FunctionParameters["CDEK_OrderUUID"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "CreateRefusal", Options);
 
@@ -17246,30 +17363,30 @@ Procedure CLI_CDEK_CreateCourierInvitation(FunctionParameters)
     InvitationDescription.Insert("comment"         , "Comment to courier");
     InvitationDescription.Insert("need_call"       , False);
 
-        Sender = New Structure;
-        Sender.Insert("company", "Company");
-        Sender.Insert("name"   , "Ivaniv Ivan");
+    Sender = New Structure;
+    Sender.Insert("company", "Company");
+    Sender.Insert("name"   , "Ivaniv Ivan");
 
-            Phones = New Array;
-            Phone  = New Structure("number", "+79589441654");
-            Phones.Add(Phone);
+    Phones = New Array;
+    Phone  = New Structure("number", "+79589441654");
+    Phones.Add(Phone);
 
-        Sender.Insert("phones", Phones);
+    Sender.Insert("phones", Phones);
 
     InvitationDescription.Insert("sender", Sender);
 
-        ShippingPoint = New Structure;
-        ShippingPoint.Insert("code"        , "44");
-        ShippingPoint.Insert("fias_guid"   , "0c5b2444-70a0-4932-980c-b4dc0d3f02b5");
-        ShippingPoint.Insert("postal_code" , "109004");
-        ShippingPoint.Insert("longitude"   , 37.6204);
-        ShippingPoint.Insert("latitude"    , 55.754);
-        ShippingPoint.Insert("country_code", "RU");
-        ShippingPoint.Insert("region"      , "Moscow");
-        ShippingPoint.Insert("sub_region"  , "Moscow");
-        ShippingPoint.Insert("city"        , "Moscow");
-        ShippingPoint.Insert("kladr_code"  , "7700000000000");
-        ShippingPoint.Insert("address"     , "st. Bluchera, 32");
+    ShippingPoint = New Structure;
+    ShippingPoint.Insert("code"        , "44");
+    ShippingPoint.Insert("fias_guid"   , "0c5b2444-70a0-4932-980c-b4dc0d3f02b5");
+    ShippingPoint.Insert("postal_code" , "109004");
+    ShippingPoint.Insert("longitude"   , 37.6204);
+    ShippingPoint.Insert("latitude"    , 55.754);
+    ShippingPoint.Insert("country_code", "RU");
+    ShippingPoint.Insert("region"      , "Moscow");
+    ShippingPoint.Insert("sub_region"  , "Moscow");
+    ShippingPoint.Insert("city"        , "Moscow");
+    ShippingPoint.Insert("kladr_code"  , "7700000000000");
+    ShippingPoint.Insert("address"     , "st. Bluchera, 32");
 
     InvitationDescription.Insert("from_location", ShippingPoint);
 
@@ -17496,18 +17613,18 @@ Procedure CLI_CDEK_RegisterDeliveryAppointment(FunctionParameters)
     Appointment.Insert("time_to"    , "17:00");
     Appointment.Insert("comment"    , "Group office");
 
-        DeliveryLocation = New Structure;
-        DeliveryLocation.Insert("code"        , "270");
-        DeliveryLocation.Insert("fias_guid"   , "0c5b2444-70a0-4932-980c-b4dc0d3f02b5");
-        DeliveryLocation.Insert("postal_code" , "109004");
-        DeliveryLocation.Insert("longitude"   , 37.6204);
-        DeliveryLocation.Insert("latitude"    , 55.754);
-        DeliveryLocation.Insert("country_code", "RU");
-        DeliveryLocation.Insert("region"      , "Novosibirsk");
-        DeliveryLocation.Insert("sub_region"  , "Novosibirsk");
-        DeliveryLocation.Insert("city"        , "Novosibirsk");
-        DeliveryLocation.Insert("kladr_code"  , "7700000000000");
-        DeliveryLocation.Insert("address"     , "st. Bluchera, 33");
+    DeliveryLocation = New Structure;
+    DeliveryLocation.Insert("code"        , "270");
+    DeliveryLocation.Insert("fias_guid"   , "0c5b2444-70a0-4932-980c-b4dc0d3f02b5");
+    DeliveryLocation.Insert("postal_code" , "109004");
+    DeliveryLocation.Insert("longitude"   , 37.6204);
+    DeliveryLocation.Insert("latitude"    , 55.754);
+    DeliveryLocation.Insert("country_code", "RU");
+    DeliveryLocation.Insert("region"      , "Novosibirsk");
+    DeliveryLocation.Insert("sub_region"  , "Novosibirsk");
+    DeliveryLocation.Insert("city"        , "Novosibirsk");
+    DeliveryLocation.Insert("kladr_code"  , "7700000000000");
+    DeliveryLocation.Insert("address"     , "st. Bluchera, 33");
 
     Appointment.Insert("to_location", DeliveryLocation);
 
@@ -17552,11 +17669,11 @@ Procedure CLI_CDEK_CreatePrealert(FunctionParameters)
     TransferDate = OPI_Tools.GetCurrentDate() + 60 * 60 * 24;
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuids"   , UUID);
-    Options.Insert("date"    , TransferDate);
-    Options.Insert("point"   , Point);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuids"  , UUID);
+    Options.Insert("date"   , TransferDate);
+    Options.Insert("point"  , Point);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "CreatePrealert", Options);
 
@@ -17575,9 +17692,9 @@ Procedure CLI_CDEK_GetPrealert(FunctionParameters)
     UUID  = FunctionParameters["CDEK_PrealertUUID"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetPrealert", Options);
 
@@ -17592,9 +17709,9 @@ Procedure CLI_CDEK_GetPassportDataStatus(FunctionParameters)
     UUID  = FunctionParameters["CDEK_OrderUUID"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetPassportDataStatus", Options);
 
@@ -17609,9 +17726,9 @@ Procedure CLI_CDEK_GetCashboxCheck(FunctionParameters)
     UUID  = FunctionParameters["CDEK_OrderUUID"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("uuid"    , UUID);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("uuid"   , UUID);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetCashboxCheck", Options);
 
@@ -17626,9 +17743,9 @@ Procedure CLI_CDEK_GetCashboxChecksByDate(FunctionParameters)
     ReceivingDate = OPI_Tools.GetCurrentDate();
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("date"    , ReceivingDate);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("date"   , ReceivingDate);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetCashboxChecksByDate", Options);
 
@@ -17643,9 +17760,9 @@ Procedure CLI_CDEK_GetDeliveryCashRegistry(FunctionParameters)
     ReceivingDate = OPI_Tools.GetCurrentDate();
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("date"    , ReceivingDate);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("date"   , ReceivingDate);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetDeliveryCashRegistry", Options);
 
@@ -17660,9 +17777,9 @@ Procedure CLI_CDEK_GetDeliveryCashTransfers(FunctionParameters)
     ReceivingDate = OPI_Tools.GetCurrentDate();
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("date"    , ReceivingDate);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("date"   , ReceivingDate);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetDeliveryCashTransfers", Options);
 
@@ -17700,9 +17817,9 @@ Procedure CLI_CDEK_GetOfficeList(FunctionParameters)
     Filter.Insert("allowed_cod", True);
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("filter"  , Filter);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("filter" , Filter);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetOfficeList", Options);
 
@@ -17716,8 +17833,8 @@ Procedure CLI_CDEK_GetRegionsList(FunctionParameters)
     Token = FunctionParameters["CDEK_Token"];
 
     Options = New Structure;
-    Options.Insert("token"   , Token);
-    Options.Insert("testapi" , True);
+    Options.Insert("token"  , Token);
+    Options.Insert("testapi", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("cdek", "GetRegionsList", Options);
 
@@ -17833,43 +17950,43 @@ Procedure CLI_YandexMetrika_CreateCounter(FunctionParameters)
     CounterStructure = New Structure;
     CounterStructure.Insert("autogoals_enabled", True);
 
-        CodeSettingsStructure = New Structure;
-        CodeSettingsStructure.Insert("async"          , 0);
-        CodeSettingsStructure.Insert("clickmap"       , 1);
-        CodeSettingsStructure.Insert("ecommerce"      , 1);
-        CodeSettingsStructure.Insert("in_one_line"    , 0);
-        CodeSettingsStructure.Insert("track_hash"     , 1);
-        CodeSettingsStructure.Insert("visor"          , 1);
-        CodeSettingsStructure.Insert("xml_site"       , 0);
-        CodeSettingsStructure.Insert("ytm"            , 0);
-        CodeSettingsStructure.Insert("alternative_cdn", 1);
+    CodeSettingsStructure = New Structure;
+    CodeSettingsStructure.Insert("async"          , 0);
+    CodeSettingsStructure.Insert("clickmap"       , 1);
+    CodeSettingsStructure.Insert("ecommerce"      , 1);
+    CodeSettingsStructure.Insert("in_one_line"    , 0);
+    CodeSettingsStructure.Insert("track_hash"     , 1);
+    CodeSettingsStructure.Insert("visor"          , 1);
+    CodeSettingsStructure.Insert("xml_site"       , 0);
+    CodeSettingsStructure.Insert("ytm"            , 0);
+    CodeSettingsStructure.Insert("alternative_cdn", 1);
 
-            InformerStructure = New Structure;
-            InformerStructure.Insert("color_arrow", 1);
-            InformerStructure.Insert("color_end"  , "EFEFEFFE");
-            InformerStructure.Insert("color_start", "EEEEEEEE");
-            InformerStructure.Insert("color_text" , 0);
-            InformerStructure.Insert("enabled"    , 1);
-            InformerStructure.Insert("indicator"  , "uniques");
-            InformerStructure.Insert("size"       , 2);
-            InformerStructure.Insert("type"       , "ext");
+    InformerStructure = New Structure;
+    InformerStructure.Insert("color_arrow", 1);
+    InformerStructure.Insert("color_end"  , "EFEFEFFE");
+    InformerStructure.Insert("color_start", "EEEEEEEE");
+    InformerStructure.Insert("color_text" , 0);
+    InformerStructure.Insert("enabled"    , 1);
+    InformerStructure.Insert("indicator"  , "uniques");
+    InformerStructure.Insert("size"       , 2);
+    InformerStructure.Insert("type"       , "ext");
 
-        CodeSettingsStructure.Insert("informer", InformerStructure);
+    CodeSettingsStructure.Insert("informer", InformerStructure);
 
     CounterStructure.Insert("code_options", CodeSettingsStructure);
 
-        FlagsStructure = New Structure;
-        FlagsStructure.Insert("collect_first_party_data"             , True);
-        FlagsStructure.Insert("measurement_enabled"                  , True);
-        FlagsStructure.Insert("use_in_benchmarks"                    , True);
-        FlagsStructure.Insert("direct_allow_use_goals_without_access", True);
+    FlagsStructure = New Structure;
+    FlagsStructure.Insert("collect_first_party_data"             , True);
+    FlagsStructure.Insert("measurement_enabled"                  , True);
+    FlagsStructure.Insert("use_in_benchmarks"                    , True);
+    FlagsStructure.Insert("direct_allow_use_goals_without_access", True);
 
     CounterStructure.Insert("counter_flags"          , FlagsStructure);
     CounterStructure.Insert("favorite"               , 1);
     CounterStructure.Insert("filter_robots"          , 2);
     CounterStructure.Insert("gdpr_agreement_accepted", 1);
 
-        DomainStructure = New Structure("site", "openintegrations.dev");
+    DomainStructure = New Structure("site", "openintegrations.dev");
 
     CounterStructure.Insert("site2", DomainStructure);
 
@@ -17912,15 +18029,15 @@ Procedure CLI_YandexMetrika_UpdateCounter(FunctionParameters)
     CounterStructure = New Structure;
     CounterStructure.Insert("autogoals_enabled", True);
 
-        FlagsStructure = New Structure;
-        FlagsStructure.Insert("collect_first_party_data"             , False);
-        FlagsStructure.Insert("measurement_enabled"                  , False);
-        FlagsStructure.Insert("use_in_benchmarks"                    , False);
-        FlagsStructure.Insert("direct_allow_use_goals_without_access", False);
+    FlagsStructure = New Structure;
+    FlagsStructure.Insert("collect_first_party_data"             , False);
+    FlagsStructure.Insert("measurement_enabled"                  , False);
+    FlagsStructure.Insert("use_in_benchmarks"                    , False);
+    FlagsStructure.Insert("direct_allow_use_goals_without_access", False);
 
-    CounterStructure.Insert("counter_flags" , FlagsStructure);
-    CounterStructure.Insert("favorite"      , 0);
-    CounterStructure.Insert("filter_robots" , 1);
+    CounterStructure.Insert("counter_flags", FlagsStructure);
+    CounterStructure.Insert("favorite"     , 0);
+    CounterStructure.Insert("filter_robots", 1);
 
     Options = New Structure;
     Options.Insert("token"  , Token);
@@ -17972,7 +18089,7 @@ Procedure CLI_YandexMetrika_GetCountersList(FunctionParameters)
     CounterID = FunctionParameters["Metrika_CounterID"];
 
     Options = New Structure;
-    Options.Insert("token" , Token);
+    Options.Insert("token", Token);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("metrika", "GetCountersList", Options);
 
@@ -18322,12 +18439,12 @@ Procedure CLI_S3_PutBucketEncryption(FunctionParameters)
     Name = "opi-newbucket2";
 
     XmlConfig = "<ServerSideEncryptionConfiguration xmlns=""http://s3.amazonaws.com/doc/2006-03-01/"">
-    | <Rule>
-    | <ApplyServerSideEncryptionByDefault>
-    | <SSEAlgorithm>AES256</SSEAlgorithm>
-    | </ApplyServerSideEncryptionByDefault>
-    | </Rule>
-    |</ServerSideEncryptionConfiguration>";
+                      | <Rule>
+                      | <ApplyServerSideEncryptionByDefault>
+                      | <SSEAlgorithm>AES256</SSEAlgorithm>
+                      | </ApplyServerSideEncryptionByDefault>
+                      | </Rule>
+                      |</ServerSideEncryptionConfiguration>";
 
     XmlConfig = ПолучитьДвоичныеДанныеИзСтроки(XmlConfig);
     TFN       = GetTempFileName("xml");
@@ -19198,10 +19315,8 @@ Procedure CLI_S3_GetObjectUploadLink(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetObjectUploadLink", "S3");
     OPI_TestDataRetrieval.Check_String(Result);
 
-    Result = OPI_HTTPRequests.NewRequest()
-        .Initialize(Result)
-        .SetBinaryBody(Image)
-        .ProcessRequest("PUT");
+    Result = OPI_HTTPRequests.NewRequest().Initialize(Result).SetBinaryBody(
+        Image).ProcessRequest("PUT");
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetObjectUploadLink (PUT)", "S3");
 
@@ -19280,15 +19395,15 @@ Procedure CLI_SQLite_ExecuteSQLQuery(FunctionParameters)
     Blob = New Structure("blob", PictureFile);
 
     QueryText = "
-    |CREATE TABLE test_table (
-    |id INTEGER PRIMARY KEY,
-    |name TEXT,
-    |age INTEGER,
-    |salary REAL,
-    |is_active BOOLEAN,
-    |created_at DATETIME,
-    |data BLOB
-    |);";
+                   |CREATE TABLE test_table (
+                   |id INTEGER PRIMARY KEY,
+                   |name TEXT,
+                   |age INTEGER,
+                   |salary REAL,
+                   |is_active BOOLEAN,
+                   |created_at DATETIME,
+                   |data BLOB
+                   |);";
 
     Options = New Structure;
     Options.Insert("sql", StrReplace(QueryText, Chars.LF, ""));
@@ -19302,8 +19417,8 @@ Procedure CLI_SQLite_ExecuteSQLQuery(FunctionParameters)
     // INSERT with parameters
 
     QueryText = "
-    |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
-    |VALUES (?1, ?2, ?3, ?4, ?5, ?6);";
+                   |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
+                   |VALUES (?1, ?2, ?3, ?4, ?5, ?6);";
 
     ParameterArray = New Array;
     ParameterArray.Add("Vitaly"); // TEXT
@@ -19365,8 +19480,8 @@ Procedure CLI_SQLite_ExecuteSQLQuery(FunctionParameters)
     OPI_TestDataRetrieval.Check_Array(Result["data"], 1);
 
     Try
-       DeleteFiles(TFN);
-       DeleteFiles(PictureFile);
+        DeleteFiles(TFN);
+        DeleteFiles(PictureFile);
     Except
         OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Database file deletion error", "SQLite");
     EndTry;
@@ -19451,10 +19566,10 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
     RowStructure2.Insert("data"      , New Structure("blob", PictureFile)); // BLOB
 
     RowStrucutre1 = New Structure;
-    RowStrucutre1.Insert("name"      , "Lesha") ; // TEXT
+    RowStrucutre1.Insert("name"      , "Lesha"); // TEXT
     RowStrucutre1.Insert("age"       , 20); // INTEGER
-    RowStrucutre1.Insert("salary"    , 200.20) ; // REAL
-    RowStrucutre1.Insert("is_active" , False) ; // BOOL
+    RowStrucutre1.Insert("salary"    , 200.20); // REAL
+    RowStrucutre1.Insert("is_active" , False); // BOOL
     RowStrucutre1.Insert("created_at", OPI_Tools.GetCurrentDate()); // DATETIME
     RowStrucutre1.Insert("data"      , New Structure("blob", PictureFile)); // BLOB
 
@@ -19482,7 +19597,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "AddRecords (no tr)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
-    RowStrucutre1.Insert("error", "Lesha") ;
+    RowStrucutre1.Insert("error", "Lesha");
     DataArray.Add(RowStrucutre1);
 
     Options = New Structure;
@@ -19530,7 +19645,7 @@ Procedure CLI_SQLite_AddRecords(FunctionParameters)
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
     Try
-       DeleteFiles(PictureFile);
+        DeleteFiles(PictureFile);
     Except
         OPI_TestDataRetrieval.WriteLogCLI(ErrorDescription(), "Error deleting a picture file", "SQLite");
     EndTry;
@@ -19592,7 +19707,7 @@ Procedure CLI_SQLite_GetRecords(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecords (no params)", "SQLite");
     OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
 
-    FilterStructure2.Insert("type" , "BEETWEEN");
+    FilterStructure2.Insert("type", "BEETWEEN");
     Filters.Add(FilterStructure2);
 
     Options = New Structure;
@@ -19607,8 +19722,8 @@ Procedure CLI_SQLite_GetRecords(FunctionParameters)
     OPI_TestDataRetrieval.Check_SQLiteError(Result);
 
     Options = New Structure;
-    Options.Insert("table" , "test1");
-    Options.Insert("db"    , Base);
+    Options.Insert("table", "test1");
+    Options.Insert("db"   , Base);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecords", Options, False);
 
@@ -19711,14 +19826,14 @@ EndProcedure
 Procedure CLI_SQLite_GetRecordsFilterStrucutre(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecordsFilterStrucutre", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecordsFilterStrucutre", "SQLite");
     OPI_TestDataRetrieval.Check_Map(Result);
 
-    Options.Insert("empty" , True);
+    Options.Insert("empty", True);
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetRecordsFilterStrucutre", Options);
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecordsFilterStrucutre (empty)", "SQLite");
 
@@ -19777,6 +19892,149 @@ Procedure CLI_SQLite_ClearTable(FunctionParameters)
 
 EndProcedure
 
+Procedure CLI_SQLite_AddTableColumn(FunctionParameters)
+
+    Base     = FunctionParameters["SQLite_DB"];
+    Table    = "test";
+    Name     = "new_col";
+    DataType = "TEXT";
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("type" , DataType);
+    Options.Insert("db"   , Base);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "AddTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("db"   , Base);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (check))", "SQLite");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["name"] = Name Then
+            OPI_TestDataRetrieval.Check_Equality(DataType, Coloumn["type"]);
+            Found          = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+EndProcedure
+
+Procedure CLI_SQLite_DeleteTableColumn(FunctionParameters)
+
+    Base  = FunctionParameters["SQLite_DB"];
+    Table = "test";
+    Name  = "new_col";
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("db"   , Base);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "DeleteTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("db"   , Base);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn (check))", "SQLite");
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["name"] = Name Then
+            Found          = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+EndProcedure
+
+Procedure CLI_SQLite_EnsureTable(FunctionParameters)
+
+    Base = FunctionParameters["SQLite_DB"];
+
+    Table = "test";
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("id"  , "INTEGER");
+    ColoumnsStruct.Insert("code", "INTEGER");
+    ColoumnsStruct.Insert("name", "TEXT");
+    ColoumnsStruct.Insert("age" , "INTEGER");
+    ColoumnsStruct.Insert("info", "TEXT");
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("db"   , Base);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("db"   , Base);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Coloumn["type"], ColoumnsStruct[Coloumn["name"]]);
+    EndDo;
+
+    Table = "test_new";
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("db"   , Base);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable (new))", "SQLite");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("db"   , Base);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("sqlite", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Coloumn["type"], ColoumnsStruct[Coloumn["name"]]);
+    EndDo;
+
+EndProcedure
+
 #EndRegion
 
 #Region PostgreSQL
@@ -19824,11 +20082,12 @@ Procedure CLI_PostgreSQL_ExecuteSQLQuery(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
-    Options = New Structure();
-    Options.Insert("dbc" , ConnectionString);
+    Options = New Structure;
+    Options.Insert("dbc", ConnectionString);
 
     Options.Insert("table", "users");
     OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "DeleteTable", Options, False);
@@ -19842,19 +20101,19 @@ Procedure CLI_PostgreSQL_ExecuteSQLQuery(FunctionParameters)
     // CREATE
 
     QueryText = "
-    |CREATE TABLE test_table (
-    |id SERIAL PRIMARY KEY,
-    |name NAME,
-    |age INT,
-    |salary REAL,
-    |is_active BOOL,
-    |created_at DATE,
-    |data BYTEA
-    |);";
+                   |CREATE TABLE test_table (
+                   |id SERIAL PRIMARY KEY,
+                   |name NAME,
+                   |age INT,
+                   |salary REAL,
+                   |is_active BOOL,
+                   |created_at DATE,
+                   |data BYTEA
+                   |);";
 
     Options = New Structure;
-    Options.Insert("sql" , StrReplace(QueryText, Chars.LF, " "));
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", StrReplace(QueryText, Chars.LF, " "));
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "ExecuteSQLQuery", Options, False);
 
@@ -19864,8 +20123,8 @@ Procedure CLI_PostgreSQL_ExecuteSQLQuery(FunctionParameters)
     // INSERT with parameters
 
     QueryText = "
-    |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
-    |VALUES ($1, $2, $3, $4, $5, $6);";
+                   |INSERT INTO test_table (name, age, salary, is_active, created_at, data)
+                   |VALUES ($1, $2, $3, $4, $5, $6);";
 
     ParameterArray = New Array;
     ParameterArray.Add(New Structure("NAME" , "Vitaly"));
@@ -19890,8 +20149,8 @@ Procedure CLI_PostgreSQL_ExecuteSQLQuery(FunctionParameters)
     QueryText = "SELECT id, name, age, salary, is_active, created_at, data FROM test_table;";
 
     Options = New Structure;
-    Options.Insert("sql" , StrReplace(QueryText, Chars.LF, " "));
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", StrReplace(QueryText, Chars.LF, " "));
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "ExecuteSQLQuery", Options, False);
 
@@ -19905,21 +20164,21 @@ Procedure CLI_PostgreSQL_ExecuteSQLQuery(FunctionParameters)
     // DO + Transaction
 
     QueryText = "DO $$
-    |BEGIN
-    | CREATE TABLE users (
-    | id SMALLSERIAL,
-    | name TEXT NOT NULL,
-    | age INT NOT NULL
-    | );
-    | INSERT INTO users (name, age) VALUES ('Alice', 30);
-    | INSERT INTO users (name, age) VALUES ('Bob', 25);
-    | INSERT INTO users (name, age) VALUES ('Charlie', 35);
-    | COMMIT;
-    |END $$ LANGUAGE plpgsql;";
+                   |BEGIN
+                   | CREATE TABLE users (
+                   | id SMALLSERIAL,
+                   | name TEXT NOT NULL,
+                   | age INT NOT NULL
+                   | );
+                   | INSERT INTO users (name, age) VALUES ('Alice', 30);
+                   | INSERT INTO users (name, age) VALUES ('Bob', 25);
+                   | INSERT INTO users (name, age) VALUES ('Charlie', 35);
+                   | COMMIT;
+                   |END $$ LANGUAGE plpgsql;";
 
     Options = New Structure;
-    Options.Insert("sql" , StrReplace(QueryText, Chars.LF, " "));
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", StrReplace(QueryText, Chars.LF, " "));
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "ExecuteSQLQuery", Options, False);
 
@@ -19931,8 +20190,8 @@ Procedure CLI_PostgreSQL_ExecuteSQLQuery(FunctionParameters)
     SQLFile = FunctionParameters["SQL"]; // Binary Data, URL or path to file
 
     Options = New Structure;
-    Options.Insert("sql" , SQLFile);
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", SQLFile);
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "ExecuteSQLQuery", Options);
 
@@ -19960,12 +20219,13 @@ Procedure CLI_PostgreSQL_CreateDatabase(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Base = "testbase1";
 
-    Options = New Structure();
+    Options = New Structure;
     Options.Insert("dbc" , ConnectionString);
     Options.Insert("base", Base);
 
@@ -19973,8 +20233,8 @@ Procedure CLI_PostgreSQL_CreateDatabase(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Deletion, "CreateDatabase (deleting)", "PostgreSQL");
 
     Options = New Structure;
-    Options.Insert("base" , Base);
-    Options.Insert("dbc"  , ConnectionString);
+    Options.Insert("base", Base);
+    Options.Insert("dbc" , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "CreateDatabase", Options);
 
@@ -19993,9 +20253,9 @@ Procedure CLI_PostgreSQL_CreateDatabase(FunctionParameters)
     TLSSettings         = OPI_PostgreSQL.GetTlsSettings(True);
 
     Options = New Structure;
-    Options.Insert("base" , Base);
-    Options.Insert("dbc"  , TLSConnectionString);
-    Options.Insert("tls"  , TLSSettings);
+    Options.Insert("base", Base);
+    Options.Insert("dbc" , TLSConnectionString);
+    Options.Insert("tls" , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "CreateDatabase", Options);
 
@@ -20017,7 +20277,8 @@ Procedure CLI_PostgreSQL_CreateTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
@@ -20066,6 +20327,36 @@ Procedure CLI_PostgreSQL_CreateTable(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTable (exists)", "PostgreSQL");
     OPI_TestDataRetrieval.Check_ResultFalse(Result);
 
+    Address = "api.athenaeum.digital";
+    Port    = "5433";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+    Options.Insert("port" , Port);
+
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
+    TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
+
+    Options = New Structure;
+    Options.Insert("trust" , False);
+
+    TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTlsSettings", Options);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "CreateTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTable (TLS)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
 EndProcedure
 
 Procedure CLI_PostgreSQL_GetTableInformation(FunctionParameters)
@@ -20081,7 +20372,8 @@ Procedure CLI_PostgreSQL_GetTableInformation(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
@@ -20123,7 +20415,8 @@ Procedure CLI_PostgreSQL_AddRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table        = "testtable";
@@ -20164,7 +20457,7 @@ Procedure CLI_PostgreSQL_AddRecords(FunctionParameters)
     RecordStructure.Insert("jsonb_field"      , New Structure("JSONB"                   , CasualStructure));
     RecordStructure.Insert("date_field"       , New Structure("DATE"                    , CurrentDate));
     RecordStructure.Insert("time_field"       , New Structure("TIME"                    , CurrentDate));
-    RecordStructure.Insert("uuid_field"       , New Structure("UUID"                    , String(New UUID())));
+    RecordStructure.Insert("uuid_field"       , New Structure("UUID"                    , String(New UUID)));
 
     RecordsArray.Add(RecordStructure);
 
@@ -20200,7 +20493,8 @@ Procedure CLI_PostgreSQL_GetRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     // All records without filters
@@ -20229,7 +20523,8 @@ Procedure CLI_PostgreSQL_GetRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "test_data";
@@ -20291,7 +20586,8 @@ Procedure CLI_PostgreSQL_UpdateRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "test_data";
@@ -20362,7 +20658,8 @@ Procedure CLI_PostgreSQL_DeleteRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "test_data";
@@ -20411,8 +20708,8 @@ Procedure CLI_PostgreSQL_DeleteRecords(FunctionParameters)
     OPI_TestDataRetrieval.Check_ResultTrue(Result);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetRecords", Options);
 
@@ -20435,14 +20732,15 @@ Procedure CLI_PostgreSQL_ClearTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "ClearTable", Options);
 
@@ -20450,8 +20748,8 @@ Procedure CLI_PostgreSQL_ClearTable(FunctionParameters)
     OPI_TestDataRetrieval.Check_ResultTrue(Result);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetRecords", Options);
 
@@ -20474,14 +20772,15 @@ Procedure CLI_PostgreSQL_DeleteTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "DeleteTable", Options);
 
@@ -20496,7 +20795,8 @@ Procedure CLI_PostgreSQL_DeleteTable(FunctionParameters)
     Options.Insert("db"   , Base);
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Options = New Structure;
@@ -20522,7 +20822,8 @@ Procedure CLI_PostgreSQL_DisableAllDatabaseConnections(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Options = New Structure;
@@ -20549,7 +20850,8 @@ Procedure CLI_PostgreSQL_DeleteDatabase(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Base = "testbase1";
@@ -20570,9 +20872,9 @@ Procedure CLI_PostgreSQL_DeleteDatabase(FunctionParameters)
     TLSSettings         = OPI_PostgreSQL.GetTlsSettings(True);
 
     Options = New Structure;
-    Options.Insert("base" , Base);
-    Options.Insert("dbc"  , TLSConnectionString);
-    Options.Insert("tls"  , TLSSettings);
+    Options.Insert("base", Base);
+    Options.Insert("dbc" , TLSConnectionString);
+    Options.Insert("tls" , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "DeleteDatabase", Options);
 
@@ -20617,6 +20919,298 @@ Procedure CLI_PostgreSQL_GetTlsSettings(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTlsSettings", "PostgreSQL");
     OPI_TestDataRetrieval.Check_Map(Result);
+
+EndProcedure
+
+Procedure CLI_PostgreSQL_AddTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base     = "testbase1";
+    Table    = "testtable";
+    Name     = "new_field";
+    DataType = "TEXT";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
+    ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("type" , DataType);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "AddTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (check))", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(Coloumn["data_type"]));
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+    Address = "api.athenaeum.digital";
+    Port    = "5433";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+    Options.Insert("port" , Port);
+
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
+    TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
+
+    Options = New Structure;
+    Options.Insert("trust" , False);
+
+    TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTlsSettings", Options);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("type" , DataType);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "AddTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (TLS)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (TLS, check)", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(Coloumn["data_type"]));
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+EndProcedure
+
+Procedure CLI_PostgreSQL_DeleteTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+    Name  = "new_field";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
+    ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "DeleteTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn (check))", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+    Address = "api.athenaeum.digital";
+    Port    = "5433";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+    Options.Insert("port" , Port);
+
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
+    TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
+
+    Options = New Structure;
+    Options.Insert("trust" , False);
+
+    TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTlsSettings", Options);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "DeleteTableColumn", Options);
+
+    // END
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn (TLS)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn (TLS, check)", "PostgreSQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["column_name"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+EndProcedure
+
+Procedure CLI_PostgreSQL_EnsureTable(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GenerateConnectionString", Options,
+        False);
+    ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("smallint_field" , "SMALLINT");
+    ColoumnsStruct.Insert("uuid_field"     , "uuid");
+    ColoumnsStruct.Insert("bigint_field"   , "BIGINT");
+    ColoumnsStruct.Insert("custom_field"   , "TEXT");
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "EnsureTable (check)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Lower(Coloumn["data_type"]), Lower(ColoumnsStruct[Coloumn["column_name"]]));
+    EndDo;
+
+    Table = "test_new";
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable (new))", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("postgres", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "EnsureTable (new, check)", "PostgreSQL");
+    OPI_TestDataRetrieval.Check_SQLiteSuccess(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        OPI_TestDataRetrieval.Check_Equality(Lower(Coloumn["data_type"]), Lower(ColoumnsStruct[Coloumn["column_name"]]));
+    EndDo;
 
 EndProcedure
 
@@ -20666,11 +21260,12 @@ Procedure CLI_MySQL_ExecuteSQLQuery(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
-    Options = New Structure();
-    Options.Insert("dbc" , ConnectionString);
+    Options = New Structure;
+    Options.Insert("dbc", ConnectionString);
 
     Options.Insert("table", "users");
     OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteTable", Options, False);
@@ -20697,8 +21292,8 @@ Procedure CLI_MySQL_ExecuteSQLQuery(FunctionParameters)
                    |);";
 
     Options = New Structure;
-    Options.Insert("sql" , StrReplace(QueryText, Chars.LF, " "));
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", StrReplace(QueryText, Chars.LF, " "));
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "ExecuteSQLQuery", Options, False);
 
@@ -20736,8 +21331,8 @@ Procedure CLI_MySQL_ExecuteSQLQuery(FunctionParameters)
     QueryText = "SELECT name, age, salary, amount, type, date, time, data FROM test_table;";
 
     Options = New Structure;
-    Options.Insert("sql" , StrReplace(QueryText, Chars.LF, " "));
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", StrReplace(QueryText, Chars.LF, " "));
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "ExecuteSQLQuery", Options, False);
 
@@ -20749,8 +21344,9 @@ Procedure CLI_MySQL_ExecuteSQLQuery(FunctionParameters)
     OPI_TestDataRetrieval.Check_Equality(Base64Value(Blob).Size(), Image.Size()); // SKIP
 
     Options = New Structure;
-    Options.Insert("sql" , "create table TEST_DATA (id INT,first_name VARCHAR(50),last_name VARCHAR(50),email VARCHAR(50),gender VARCHAR(50),ip_address VARCHAR(20));");
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql",
+        "create table TEST_DATA (id INT,first_name VARCHAR(50),last_name VARCHAR(50),email VARCHAR(50),gender VARCHAR(50),ip_address VARCHAR(20));");
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "ExecuteSQLQuery", Options, False);
 
@@ -20759,8 +21355,8 @@ Procedure CLI_MySQL_ExecuteSQLQuery(FunctionParameters)
     SQLFile = FunctionParameters["SQL2"]; // Binary Data, URL or path to file
 
     Options = New Structure;
-    Options.Insert("sql" , SQLFile);
-    Options.Insert("dbc" , ConnectionString);
+    Options.Insert("sql", SQLFile);
+    Options.Insert("dbc", ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "ExecuteSQLQuery", Options);
 
@@ -20788,12 +21384,13 @@ Procedure CLI_MySQL_CreateDatabase(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Base = "testbase1";
 
-    Options = New Structure();
+    Options = New Structure;
     Options.Insert("dbc" , ConnectionString);
     Options.Insert("base", Base);
 
@@ -20801,8 +21398,8 @@ Procedure CLI_MySQL_CreateDatabase(FunctionParameters)
     OPI_TestDataRetrieval.WriteLogCLI(Deletion, "CreateDatabase (deleting)", "MySQL"); // SKIP
 
     Options = New Structure;
-    Options.Insert("base" , Base);
-    Options.Insert("dbc"  , ConnectionString);
+    Options.Insert("base", Base);
+    Options.Insert("dbc" , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "CreateDatabase", Options);
 
@@ -20825,7 +21422,8 @@ Procedure CLI_MySQL_CreateDatabase(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -20834,9 +21432,9 @@ Procedure CLI_MySQL_CreateDatabase(FunctionParameters)
     TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options, False);
 
     Options = New Structure;
-    Options.Insert("base" , Base);
-    Options.Insert("dbc"  , TLSConnectionString);
-    Options.Insert("tls"  , TLSSettings);
+    Options.Insert("base", Base);
+    Options.Insert("dbc" , TLSConnectionString);
+    Options.Insert("tls" , TLSSettings);
 
     Deletion = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteDatabase", Options, False);
     OPI_TestDataRetrieval.WriteLogCLI(Deletion, "CreateDatabase (deleting, TLS)", "MySQL"); // SKIP
@@ -20861,7 +21459,8 @@ Procedure CLI_MySQL_CreateTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
@@ -20913,7 +21512,8 @@ Procedure CLI_MySQL_CreateTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -20947,7 +21547,8 @@ Procedure CLI_MySQL_AddRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table        = "testtable";
@@ -20958,26 +21559,26 @@ Procedure CLI_MySQL_AddRecords(FunctionParameters)
     CurrentDate = OPI_Tools.GetCurrentDate();
 
     RecordStructure = New Structure;
-    RecordStructure.Insert("char_field"      , New Structure("TEXT"  , "AAAAA"));
-    RecordStructure.Insert("varchar_field"   , New Structure("TEXT"  , "Some varchar"));
-    RecordStructure.Insert("tinytext_field"  , New Structure("TEXT"  , "Some tiny text"));
-    RecordStructure.Insert("text_field"      , New Structure("TEXT"  , "Some text"));
-    RecordStructure.Insert("mediumtext_field", New Structure("TEXT"  , "Some medium text"));
-    RecordStructure.Insert("longtext_field"  , New Structure("TEXT"  , "Some looooooong text"));
-    RecordStructure.Insert("tinyint_field"   , New Structure("INT"   , 127));
-    RecordStructure.Insert("smallint_field"  , New Structure("INT"   , -32767));
-    RecordStructure.Insert("mediumint_field" , New Structure("INT"   , 8388607));
-    RecordStructure.Insert("int_field"       , New Structure("INT"   , -2147483647));
-    RecordStructure.Insert("uint_field"      , New Structure("UINT"  , 4294967295));
-    RecordStructure.Insert("bigint_field"    , New Structure("INT"   , 9223372036854775807));
-    RecordStructure.Insert("float_field"     , New Structure("FLOAT" , 100.50));
-    RecordStructure.Insert("double_field"    , New Structure("FLOAT" , 100.512123));
-    RecordStructure.Insert("date_field"      , New Structure("DATE"  , CurrentDate));
-    RecordStructure.Insert("time_field"      , New Structure("TIME"  , CurrentDate));
-    RecordStructure.Insert("datetime_field"  , New Structure("DATE"  , CurrentDate));
-    RecordStructure.Insert("timestamp_field" , New Structure("DATE"  , CurrentDate));
-    RecordStructure.Insert("mediumblob_field", New Structure("BYTES" , Image));
-    RecordStructure.Insert("set_field"       , New Structure("TEXT"  , "one"));
+    RecordStructure.Insert("char_field"      , New Structure("TEXT" , "AAAAA"));
+    RecordStructure.Insert("varchar_field"   , New Structure("TEXT" , "Some varchar"));
+    RecordStructure.Insert("tinytext_field"  , New Structure("TEXT" , "Some tiny text"));
+    RecordStructure.Insert("text_field"      , New Structure("TEXT" , "Some text"));
+    RecordStructure.Insert("mediumtext_field", New Structure("TEXT" , "Some medium text"));
+    RecordStructure.Insert("longtext_field"  , New Structure("TEXT" , "Some looooooong text"));
+    RecordStructure.Insert("tinyint_field"   , New Structure("INT"  , 127));
+    RecordStructure.Insert("smallint_field"  , New Structure("INT"  , -32767));
+    RecordStructure.Insert("mediumint_field" , New Structure("INT"  , 8388607));
+    RecordStructure.Insert("int_field"       , New Structure("INT"  , -2147483647));
+    RecordStructure.Insert("uint_field"      , New Structure("UINT" , 4294967295));
+    RecordStructure.Insert("bigint_field"    , New Structure("INT"  , 9223372036854775807));
+    RecordStructure.Insert("float_field"     , New Structure("FLOAT", 100.50));
+    RecordStructure.Insert("double_field"    , New Structure("FLOAT", 100.512123));
+    RecordStructure.Insert("date_field"      , New Structure("DATE" , CurrentDate));
+    RecordStructure.Insert("time_field"      , New Structure("TIME" , CurrentDate));
+    RecordStructure.Insert("datetime_field"  , New Structure("DATE" , CurrentDate));
+    RecordStructure.Insert("timestamp_field" , New Structure("DATE" , CurrentDate));
+    RecordStructure.Insert("mediumblob_field", New Structure("BYTES", Image));
+    RecordStructure.Insert("set_field"       , New Structure("TEXT" , "one"));
 
     RecordsArray.Add(RecordStructure);
 
@@ -21002,7 +21603,8 @@ Procedure CLI_MySQL_AddRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21037,7 +21639,8 @@ Procedure CLI_MySQL_GetRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
@@ -21049,7 +21652,8 @@ Procedure CLI_MySQL_GetRecords(FunctionParameters)
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecords", Options);
 
     If ValueIsFilled(Result["data"]) Then // SKIP
-        Result["data"][0]["mediumblob_field"]["BYTES"] = Left(Result["data"][0]["mediumblob_field"]["BYTES"], 10) + "..."; // SKIP
+        Result["data"][0]["mediumblob_field"]["BYTES"] = Left(Result["data"][0]["mediumblob_field"]["BYTES"], 10)
+            + "..."; // SKIP
     EndIf; // SKIP
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetRecords", "MySQL"); // SKIP
@@ -21061,7 +21665,8 @@ Procedure CLI_MySQL_GetRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "test_data";
@@ -21118,7 +21723,8 @@ Procedure CLI_MySQL_GetRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21129,9 +21735,9 @@ Procedure CLI_MySQL_GetRecords(FunctionParameters)
     Table = "testtable";
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , TLSConnectionString);
-    Options.Insert("tls"   , TLSSettings);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecords", Options);
 
@@ -21154,7 +21760,8 @@ Procedure CLI_MySQL_UpdateRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "test_data";
@@ -21226,7 +21833,8 @@ Procedure CLI_MySQL_UpdateRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21260,7 +21868,8 @@ Procedure CLI_MySQL_DeleteRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "test_data";
@@ -21310,8 +21919,8 @@ Procedure CLI_MySQL_DeleteRecords(FunctionParameters)
     OPI_TestDataRetrieval.Check_ResultTrue(Result);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecords", Options);
 
@@ -21330,7 +21939,8 @@ Procedure CLI_MySQL_DeleteRecords(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21339,9 +21949,9 @@ Procedure CLI_MySQL_DeleteRecords(FunctionParameters)
     TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options, False);
 
     Options = New Structure;
-    Options.Insert("table" , "testtable");
-    Options.Insert("dbc"   , TLSConnectionString);
-    Options.Insert("tls"   , TLSSettings);
+    Options.Insert("table", "testtable");
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecords", Options);
 
@@ -21363,14 +21973,15 @@ Procedure CLI_MySQL_DeleteTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteTable", Options);
 
@@ -21388,7 +21999,8 @@ Procedure CLI_MySQL_DeleteTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21397,9 +22009,9 @@ Procedure CLI_MySQL_DeleteTable(FunctionParameters)
     TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options, False);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , TLSConnectionString);
-    Options.Insert("tls"   , TLSSettings);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteTable", Options);
 
@@ -21415,12 +22027,13 @@ Procedure CLI_MySQL_DeleteTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteTable", Options);
 
@@ -21442,7 +22055,8 @@ Procedure CLI_MySQL_DeleteDatabase(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Base = "testbase1";
@@ -21466,7 +22080,8 @@ Procedure CLI_MySQL_DeleteDatabase(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21477,9 +22092,9 @@ Procedure CLI_MySQL_DeleteDatabase(FunctionParameters)
     Base = "testbase1";
 
     Options = New Structure;
-    Options.Insert("base" , Base);
-    Options.Insert("dbc"  , TLSConnectionString);
-    Options.Insert("tls"  , TLSSettings);
+    Options.Insert("base", Base);
+    Options.Insert("dbc" , TLSConnectionString);
+    Options.Insert("tls" , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteDatabase", Options);
 
@@ -21501,14 +22116,15 @@ Procedure CLI_MySQL_ClearTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
 
     Table = "testtable";
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "ClearTable", Options);
 
@@ -21525,7 +22141,8 @@ Procedure CLI_MySQL_ClearTable(FunctionParameters)
     Options.Insert("login", Login);
     Options.Insert("pass" , Password);
 
-    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options, False);
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
     TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
 
     Options = New Structure;
@@ -21534,9 +22151,9 @@ Procedure CLI_MySQL_ClearTable(FunctionParameters)
     TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options, False);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , TLSConnectionString);
-    Options.Insert("tls"   , TLSSettings);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "ClearTable", Options);
 
@@ -21544,8 +22161,8 @@ Procedure CLI_MySQL_ClearTable(FunctionParameters)
     OPI_TestDataRetrieval.Check_ResultTrue(Result);
 
     Options = New Structure;
-    Options.Insert("table" , Table);
-    Options.Insert("dbc"   , ConnectionString);
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecords", Options);
 
@@ -21558,7 +22175,7 @@ EndProcedure
 Procedure CLI_MySQL_GetRecordsFilterStrucutre(FunctionParameters)
 
     Options = New Structure;
-    Options.Insert("empty" , False);
+    Options.Insert("empty", False);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecordsFilterStrucutre", Options);
 
@@ -21566,7 +22183,7 @@ Procedure CLI_MySQL_GetRecordsFilterStrucutre(FunctionParameters)
     OPI_TestDataRetrieval.Check_Map(Result);
 
     Options = New Structure;
-    Options.Insert("empty" , True);
+    Options.Insert("empty", True);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetRecordsFilterStrucutre", Options);
 
@@ -21633,6 +22250,355 @@ Procedure CLI_MySQL_GetTableInformation(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetTableInformation (error)", "MySQL");
     OPI_TestDataRetrieval.Check_Array(Result["data"], 0);
+
+EndProcedure
+
+Procedure CLI_MySQL_AddTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base     = "testbase1";
+    Table    = "testtable";
+    Name     = "new_field";
+    DataType = "MEDIUMTEXT";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
+    ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("type" , DataType);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "AddTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (check))", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+
+            CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(CurrentType));
+
+            Found = True;
+
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+    Address = "api.athenaeum.digital";
+    Port    = "3307";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+    Options.Insert("port" , Port);
+
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
+    TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
+
+    Options = New Structure;
+    Options.Insert("trust" , True);
+
+    TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("type" , DataType);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "AddTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (TLS)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "AddTableColumn (TLS, check)", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+
+            CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+            OPI_TestDataRetrieval.Check_Equality(Lower(DataType), Lower(CurrentType));
+
+            Found = True;
+
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, True);
+
+EndProcedure
+
+Procedure CLI_MySQL_DeleteTableColumn(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+    Name  = "new_field";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
+    ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn (check))", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+    Address = "api.athenaeum.digital";
+    Port    = "3307";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+    Options.Insert("port" , Port);
+
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
+    TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
+
+    Options = New Structure;
+    Options.Insert("trust" , True);
+
+    TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("name" , Name);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "DeleteTableColumn", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteTableColumn (TLS)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "DeleteTableColumn (TLS, check)", "MySQL");
+
+    Found = False;
+
+    For Each Coloumn In Result["data"] Do
+
+        If Coloumn["COLUMN_NAME"] = Name Then
+            Found                 = True;
+        EndIf;
+
+    EndDo;
+
+    OPI_TestDataRetrieval.Check_Equality(Found, False);
+
+EndProcedure
+
+Procedure CLI_MySQL_EnsureTable(FunctionParameters)
+
+    Address  = FunctionParameters["PG_IP"];
+    Login    = "bayselonarrend";
+    Password = FunctionParameters["PG_Password"];
+
+    Base  = "testbase1";
+    Table = "testtable";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+
+    ConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
+    ConnectionString = ПолучитьСтрокуИзДвоичныхДанных(ConnectionString);
+
+    ColoumnsStruct = New Structure;
+    ColoumnsStruct.Insert("smallint_field" , "SMALLINT");
+    ColoumnsStruct.Insert("double_field"   , "DOUBLE");
+    ColoumnsStruct.Insert("bigint_field"   , "BIGINT");
+    ColoumnsStruct.Insert("custom_field"   , "TEXT");
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "EnsureTable (check)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+        OPI_TestDataRetrieval.Check_Equality(Lower(CurrentType), Lower(ColoumnsStruct[Coloumn["COLUMN_NAME"]]));
+    EndDo;
+
+    Table = "test_new";
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable (new))", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , ConnectionString);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "EnsureTable (new, check)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+        OPI_TestDataRetrieval.Check_Equality(Lower(CurrentType), Lower(ColoumnsStruct[Coloumn["COLUMN_NAME"]]));
+    EndDo;
+
+    Address = "api.athenaeum.digital";
+    Port    = "3307";
+
+    Table = "testtable";
+
+    Options = New Structure;
+    Options.Insert("addr" , Address);
+    Options.Insert("db"   , Base);
+    Options.Insert("login", Login);
+    Options.Insert("pass" , Password);
+    Options.Insert("port" , Port);
+
+    TLSConnectionString = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GenerateConnectionString", Options,
+        False);
+    TLSConnectionString = ПолучитьСтрокуИзДвоичныхДанных(TLSConnectionString);
+
+    Options = New Structure;
+    Options.Insert("trust" , True);
+
+    TLSSettings = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTlsSettings", Options);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("cols" , ColoumnsStruct);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "EnsureTable", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "EnsureTable (TLS)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Result);
+    OPI_TestDataRetrieval.Check_True(Result["commit"]["result"]);
+
+    Options = New Structure;
+    Options.Insert("table", Table);
+    Options.Insert("dbc"  , TLSConnectionString);
+    Options.Insert("tls"  , TLSSettings);
+
+    Check = OPI_TestDataRetrieval.ExecuteTestCLI("mysql", "GetTableInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Check, "EnsureTable (TLS, check)", "MySQL");
+    OPI_TestDataRetrieval.Check_ResultTrue(Check);
+    OPI_TestDataRetrieval.Check_Array(Check["data"], ColoumnsStruct.Count());
+
+    For Each Coloumn In Check["data"] Do
+        CurrentType = ПолучитьСтрокуИзДвоичныхДанных(Base64Value(Coloumn["DATA_TYPE"]["BYTES"]));
+        OPI_TestDataRetrieval.Check_Equality(Lower(CurrentType), Lower(ColoumnsStruct[Coloumn["COLUMN_NAME"]]));
+    EndDo;
 
 EndProcedure
 
@@ -22497,9 +23463,9 @@ Procedure CLI_GreenAPI_SendLocation(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("chat"   , ChatID);
-    Options.Insert("loc"    , Location);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("chat"  , ChatID);
+    Options.Insert("loc"   , Location);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "SendLocation", Options);
 
@@ -22517,10 +23483,10 @@ Procedure CLI_GreenAPI_SendLocation(FunctionParameters)
     Location = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetLocationDescription", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("chat"   , ChatID);
-    Options.Insert("loc"    , Location);
-    Options.Insert("quoted" , MessageID);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("chat"  , ChatID);
+    Options.Insert("loc"   , Location);
+    Options.Insert("quoted", MessageID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "SendLocation", Options);
 
@@ -22640,10 +23606,10 @@ Procedure CLI_GreenAPI_ForwardMessages(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("from"   , From);
-    Options.Insert("to"     , Target);
-    Options.Insert("msgs"   , Message);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("from"  , From);
+    Options.Insert("to"    , Target);
+    Options.Insert("msgs"  , Message);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "ForwardMessages", Options);
 
@@ -22668,7 +23634,7 @@ Procedure CLI_GreenAPI_GetNotification(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
+    Options.Insert("access", AccessParameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetNotification", Options);
 
@@ -22792,7 +23758,7 @@ Procedure CLI_GreenAPI_GetMessageQueue(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
+    Options.Insert("access", AccessParameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetMessageQueue", Options);
 
@@ -22817,7 +23783,7 @@ Procedure CLI_GreenAPI_ClearMessageQueue(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
+    Options.Insert("access", AccessParameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "ClearMessageQueue", Options);
 
@@ -22844,8 +23810,8 @@ Procedure CLI_GreenAPI_GetChatHistory(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("chat"   , ChatID);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("chat"  , ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetChatHistory", Options);
 
@@ -22878,9 +23844,9 @@ Procedure CLI_GreenAPI_GetMessage(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("chat"   , ChatID);
-    Options.Insert("msg"    , MessageID);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("chat"  , ChatID);
+    Options.Insert("msg"   , MessageID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetMessage", Options);
 
@@ -22905,12 +23871,12 @@ Procedure CLI_GreenAPI_GetIncomingMessageLog(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
+    Options.Insert("access", AccessParameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetIncomingMessageLog", Options);
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "GetIncomingMessageLog", "GreenAPI");
-    OPI_TestDataRetrieval.Check_Array(Result);
+    OPI_TestDataRetrieval.Check_Map(Result, False);
 
 EndProcedure
 
@@ -22930,7 +23896,7 @@ Procedure CLI_GreenAPI_GetOutgoingMessageLog(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
+    Options.Insert("access", AccessParameters);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "GetOutgoingMessageLog", Options);
 
@@ -23021,8 +23987,8 @@ Procedure CLI_GreenAPI_ArchiveChat(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("chat"   , ChatID);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("chat"  , ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "ArchiveChat", Options);
 
@@ -23049,8 +24015,8 @@ Procedure CLI_GreenAPI_UnarchiveChat(FunctionParameters)
     AccessParameters = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "FormAccessParameters", Options);
 
     Options = New Structure;
-    Options.Insert("access" , AccessParameters);
-    Options.Insert("chat"   , ChatID);
+    Options.Insert("access", AccessParameters);
+    Options.Insert("chat"  , ChatID);
 
     Result = OPI_TestDataRetrieval.ExecuteTestCLI("greenapi", "UnarchiveChat", Options);
 
@@ -23682,6 +24648,381 @@ Procedure CLI_Ollama_CheckBlob(FunctionParameters)
 
     OPI_TestDataRetrieval.WriteLogCLI(Result, "CheckBlob (error)", "Ollama");
     OPI_TestDataRetrieval.Check_OllamaError(Result);
+
+EndProcedure
+
+#EndRegion
+
+#Region OpenAI
+
+Procedure CLI_OpenAI_GetResponse(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Messages = New Array;
+    Messages.Add(OPI_OpenAI.GetMessageStructure("user"     , "What is 1C:Enterprise?"));
+    Messages.Add(OPI_OpenAI.GetMessageStructure("assistant",
+        "1C:Enterprise is a full-stack, low-code platform"));
+    Messages.Add(OPI_OpenAI.GetMessageStructure("user"     , "When the first version was released?"));
+
+    Model = "smolvlm-256m-instruct";
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("model", Model);
+    Options.Insert("msgs" , Messages);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetResponse", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetResponse", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIResponse(Result);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetEmbeddings(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Text  = "What is 1C:Enterprise?";
+    Model = "text-embedding-ada-002";
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("model", Model);
+    Options.Insert("input", Text);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetEmbeddings", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetEmbeddings", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIEmbeddings(Result);
+
+EndProcedure
+
+Procedure CLI_OpenAI_CreateAssistant(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Instruction = "You are a personal math tutor. When asked a question, write and run Python code to answer the question.";
+    Model       = "smolvlm-256m-instruct";
+    Name        = "Math tutor";
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("model", Model);
+    Options.Insert("name" , Name);
+    Options.Insert("inst" , Instruction);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "CreateAssistant", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateAssistant", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIAssistant(Result, Name);
+
+    AssistantID = Result["id"];
+    OPI_TestDataRetrieval.WriteParameter("OpenAI_Assistant", AssistantID);
+    OPI_Tools.AddField("OpenAI_Assistant", AssistantID, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure CLI_OpenAI_DeleteAssistant(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    AssistantID = FunctionParameters["OpenAI_Assistant"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("id"   , AssistantID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "DeleteAssistant", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteAssistant", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIAssistantDeletion(Result, AssistantID);
+
+EndProcedure
+
+Procedure CLI_OpenAI_RetrieveAssistant(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    AssistantID = FunctionParameters["OpenAI_Assistant"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("id"   , AssistantID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "RetrieveAssistant", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "RetrieveAssistant", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIAssistant(Result, "Math tutor");
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetAssistantsList(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Count                = 2;
+    AdditionalParameters = New Structure("after,order", "asst_2", "desc");
+
+    Options = New Structure;
+    Options.Insert("url"    , URL);
+    Options.Insert("token"  , Token);
+    Options.Insert("limit"  , Count);
+    Options.Insert("options", AdditionalParameters);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetAssistantsList", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetAssistantsList", "OpenAI");
+    OPI_TestDataRetrieval.Check_Array(Result["data"]);
+
+EndProcedure
+
+Procedure CLI_OpenAI_UploadFile(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    File        = FunctionParameters["Picture"]; // URL, Path or Binary Data
+    FileName    = StrTemplate("%1.png", String(New UUID()));
+    Destination = "assistants";
+
+    Options = New Structure;
+    Options.Insert("url"    , URL);
+    Options.Insert("token"  , Token);
+    Options.Insert("name"   , FileName);
+    Options.Insert("data"   , File);
+    Options.Insert("purpose", Destination);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "UploadFile", Options);
+
+    OPI_TypeConversion.GetBinaryData(File);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "UploadFile", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIFile(Result, FileName, File.Size() + 2, Destination);
+
+    FileID = Result["id"];
+    OPI_TestDataRetrieval.WriteParameter("OpenAI_File", FileID);
+    OPI_Tools.AddField("OpenAI_File", FileID, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure CLI_OpenAI_DeleteFile(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    FileID = FunctionParameters["OpenAI_File"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("id"   , FileID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "DeleteFile", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DeleteFile", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIFileDeletion(Result, FileID);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetFileInformation(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    FileID = FunctionParameters["OpenAI_File"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("id"   , FileID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetFileInformation", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFileInformation", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIFile(Result);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetFilesList(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetFilesList", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetFilesList", "OpenAI");
+    OPI_TestDataRetrieval.Check_Array(Result["data"]);
+
+EndProcedure
+
+Procedure CLI_OpenAI_DownloadFile(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    FileID = FunctionParameters["OpenAI_File"];
+
+    Options = New Structure;
+    Options.Insert("url"  , URL);
+    Options.Insert("token", Token);
+    Options.Insert("id"   , FileID);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "DownloadFile", Options);
+
+    File = FunctionParameters["Picture"];
+    OPI_TypeConversion.GetBinaryData(File);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "DownloadFile", "OpenAI");
+    OPI_TestDataRetrieval.Check_BinaryData(Result, File.Size() + 2);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetMessageStructure(FunctionParameters)
+
+    Options = New Structure;
+    Options.Insert("role", "user");
+    Options.Insert("text", "What is 1C:Enterprise?");
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetMessageStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetMessageStructure", "OpenAI");
+    OPI_TestDataRetrieval.Check_Map(Result);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetImageMessageStructure(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+    Image = FunctionParameters["OpenAI_File"];
+
+    Options = New Structure;
+    Options.Insert("role"  , "user");
+    Options.Insert("file"  , Image);
+    Options.Insert("prompt", "What is in this image?");
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetImageMessageStructure", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetImageMessageStructure", "OpenAI");
+    OPI_TestDataRetrieval.Check_Map(Result);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GenerateSpeech(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Text  = "Attack ships on fire off the shoulder of Orion bright as magnesium";
+    Model = "tts-1";
+
+    AdditionalParameters = New Structure("response_format", "wav");
+
+    Options = New Structure;
+    Options.Insert("url"    , URL);
+    Options.Insert("token"  , Token);
+    Options.Insert("model"  , Model);
+    Options.Insert("input"  , Text);
+    Options.Insert("options", AdditionalParameters);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GenerateSpeech", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GenerateSpeech", "OpenAI");
+    OPI_TestDataRetrieval.Check_BinaryData(Result, 137516);
+
+    //@skip-check missing-temporary-file-deletion
+    TFN = GetTempFileName("wav");
+    Result.Write(TFN);
+
+    OPI_TestDataRetrieval.WriteParameter("OpenAI_Speech", TFN);
+    OPI_Tools.AddField("OpenAI_Speech", TFN, "String", FunctionParameters);
+
+EndProcedure
+
+Procedure CLI_OpenAI_CreateTranscription(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Audio = FunctionParameters["OpenAI_Speech"];
+    Model = "whisper-1";
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("token" , Token);
+    Options.Insert("model" , Model);
+    Options.Insert("audio" , Audio);
+    Options.Insert("type"  , "audio/wav");
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "CreateTranscription", Options);
+
+    Try
+        DeleteFiles(Audio);
+    Except
+        Message("Error deleting file after test");
+    EndTry;
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "CreateTranscription", "OpenAI");
+    OPI_TestDataRetrieval.Check_String(Lower(Result["text"]), "attack ships on fire off the shoulder of orion bright as magnesium.");
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetImages(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL2"];
+    Token = FunctionParameters["OpenAI_Token2"];
+
+    Model = "dall-e-3";
+
+    Options = New Structure;
+    Options.Insert("prompt", "Yellow alpaca");
+    Options.Insert("amount", 1);
+    Options.Insert("size"  , "1024x1024");
+
+    Description = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetImageDescriptionStructure", Options);
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("token" , Token);
+    Options.Insert("model" , Model);
+    Options.Insert("descr" , Description);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetImages", Options);
+
+    OPI_TestDataRetrieval.WriteLogCLI(Result, "GetImages", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIImage(Result);
+
+EndProcedure
+
+Procedure CLI_OpenAI_GetModelList(FunctionParameters)
+
+    URL   = FunctionParameters["OpenAI_URL"];
+    Token = FunctionParameters["OpenAI_Token"];
+
+    Options = New Structure;
+    Options.Insert("url"   , URL);
+    Options.Insert("token" , Token);
+
+    Result = OPI_TestDataRetrieval.ExecuteTestCLI("openai", "GetModelList", Options);
+
+    OPI_TestDataRetrieval.WriteLog(Result, "GetModelList", "OpenAI");
+    OPI_TestDataRetrieval.Check_OpenAIList(Result);
 
 EndProcedure
 

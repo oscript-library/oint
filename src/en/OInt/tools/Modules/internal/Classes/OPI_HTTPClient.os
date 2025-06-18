@@ -1,4 +1,4 @@
-﻿// OneScript: ./OInt/tools/Modules/internal/Classes/OPI_HTTPClient.os
+// OneScript: ./OInt/tools/Modules/internal/Classes/OPI_HTTPClient.os
 // Lib: HTTP-client
 // CLI: none
 
@@ -309,6 +309,40 @@ Function SetProxy(Val Settings) Export
 
         Else
             Error("SetProxy: passed settings are not an object of the InternetProxy type");
+        EndIf;
+
+        Return ЭтотОбъект;
+
+    Except
+        Return Error(DetailErrorDescription(ErrorInfo()));
+    EndTry;
+
+EndFunction
+
+// Set timeout !NOCLI
+// Sets the connection timeout
+//
+// Note
+// Default timeout is 3600 seconds
+//
+// Parameters:
+// Value - Number - Connection timeout - value
+//
+// Returns:
+// DataProcessorObject.OPI_HTTPClient - This processor object
+Function SetTimeout(Val Value) Export
+
+    Try
+
+        If StopExecution() Then Return ЭтотОбъект; EndIf;
+
+        OPI_TypeConversion.GetNumber(Value);
+
+        If Value           = 0 Then
+            AddLog("SetTimeout: incorrect value passed, timeout not changed");
+        Else
+            AddLog("SetTimeout: setting value");
+            RequestTimeout = Value;
         EndIf;
 
         Return ЭтотОбъект;
@@ -796,6 +830,8 @@ Function AddMultipartFormDataFile(Val FieldName, Val FileName, Val Data, Val Dat
         If Not Multipart Then Return Error("AddMultipartFile: Multipart record not initialized"); EndIf;
 
         OPI_TypeConversion.GetBinaryData(Data);
+        OPI_TypeConversion.GetLine(FieldName);
+        OPI_TypeConversion.GetLine(FileName);
 
         AddLog("AddMultipartFile: writing the block header");
 
@@ -1305,6 +1341,9 @@ EndFunction
 
 // Return response as JSON object !NOCLI
 // Returns the response body as a collection from JSON
+//
+// Note
+// If it is not possible to obtain a collection from the body, binary data will be returned
 //
 // Parameters:
 // ToMap - Boolean - Use map instead of structure - map
@@ -1864,7 +1903,9 @@ Function ExecuteMethod(Val RedirectCount = 0, Val Forced = False)
 
     If ThisIsRedirection(Response) Then
 
-        If RedirectCount = 5 Then
+        MaximumNumberOfRedirects = 5;
+
+        If RedirectCount = MaximumNumberOfRedirects Then
             Error("ExecuteMethod: the number of redirects has been exceeded");
             Return ЭтотОбъект;
         EndIf;
@@ -2813,3 +2854,159 @@ EndProcedure
 #EndRegion
 
 // #EndIf
+
+#Region Alternate
+
+Function Инициализировать(Val URL = "") Export
+	Return Initialize(URL);
+EndFunction
+
+Function УстановитьURL(Val URL) Export
+	Return SetURL(URL);
+EndFunction
+
+Function УстановитьПараметрыURL(Val Значение) Export
+	Return SetURLParams(Значение);
+EndFunction
+
+Function УстановитьФайлОтвета(Val Значение) Export
+	Return SetResponseFile(Значение);
+EndFunction
+
+Function УстановитьТипДанных(Val Значение) Export
+	Return SetDataType(Значение);
+EndFunction
+
+Function УстановитьПрокси(Val Настройки) Export
+	Return SetProxy(Настройки);
+EndFunction
+
+Function УстановитьТаймаут(Val Значение) Export
+	Return SetTimeout(Значение);
+EndFunction
+
+Function ПолучитьЛог(Val Строкой = False) Export
+	Return GetLog(Строкой);
+EndFunction
+
+Function ИспользоватьКодировку(Val Кодировка) Export
+	Return UseEncoding(Кодировка);
+EndFunction
+
+Function ИспользоватьСжатиеGzip(Val Флаг) Export
+	Return UseGzipCompression(Флаг);
+EndFunction
+
+Function ИспользоватьПоляТелаВOAuth(Val Флаг) Export
+	Return UseBodyFiledsAtOAuth(Флаг);
+EndFunction
+
+Function ИспользоватьКодированиеURL(Val Флаг) Export
+	Return UseURLEncoding(Флаг);
+EndFunction
+
+Function РазделятьМассивыВURL(Val Флаг, Val КвадратныеСкобки = Undefined) Export
+	Return SplitArraysInURL(Флаг, КвадратныеСкобки);
+EndFunction
+
+Function УстановитьДвоичноеТело(Val Данные, Val УстанавливатьПустое = False) Export
+	Return SetBinaryBody(Данные, УстанавливатьПустое);
+EndFunction
+
+Function УстановитьСтроковоеТело(Val Данные, Val ЗаписатьBOM = False) Export
+	Return SetStringBody(Данные, ЗаписатьBOM);
+EndFunction
+
+Function УстановитьJsonТело(Val Данные) Export
+	Return SetJsonBody(Данные);
+EndFunction
+
+Function УстановитьFormТело(Val Данные) Export
+	Return SetFormBody(Данные);
+EndFunction
+
+Function НачатьЗаписьТелаMultipart(ИспользоватьФайл = True, Val Вид = "form-data") Export
+	Return StartMultipartBody(ИспользоватьФайл, Вид);
+EndFunction
+
+Function ДобавитьФайлMultipartFormData(Val ИмяПоля, Val ИмяФайла, Val Данные, Val ТипДанных = "") Export
+	Return AddMultipartFormDataFile(ИмяПоля, ИмяФайла, Данные, ТипДанных);
+EndFunction
+
+Function ДобавитьПолеMultipartFormData(Val ИмяПоля, Val Значение) Export
+	Return AddMultipartFormDataField(ИмяПоля, Значение);
+EndFunction
+
+Function ДобавитьДанныеRelated(Val Данные, Val ТипДанных, Val IDЧасти = "") Export
+	Return AddDataAsRelated(Данные, ТипДанных, IDЧасти);
+EndFunction
+
+Function УстановитьЗаголовки(Val Значение, Val ПолнаяЗамена = False) Export
+	Return SetHeaders(Значение, ПолнаяЗамена);
+EndFunction
+
+Function ДобавитьЗаголовок(Val Имя, Val Значение) Export
+	Return AddHeader(Имя, Значение);
+EndFunction
+
+Function ДобавитьBasicАвторизацию(Val Пользователь, Val Пароль) Export
+	Return AddBasicAuthorization(Пользователь, Пароль);
+EndFunction
+
+Function ДобавитьBearerАвторизацию(Val Токен) Export
+	Return AddBearerAuthorization(Токен);
+EndFunction
+
+Function ДобавитьAWS4Авторизацию(Val AccessKey, Val SecretKey, Val Region, Val Service = "s3") Export
+	Return AddAWS4Authorization(AccessKey, SecretKey, Region, Service);
+EndFunction
+
+Function ДобавитьOAuthV1Авторизацию(Val Token, Val Secret, Val ConsumerKey, Val ConsumerSecret, Val Версия) Export
+	Return AddOAuthV1Authorization(Token, Secret, ConsumerKey, ConsumerSecret, Версия);
+EndFunction
+
+Function УстановитьАлгоритмOAuthV1(Val Алгоритм, Val ХешФункция) Export
+	Return SetOAuthV1Algorithm(Алгоритм, ХешФункция);
+EndFunction
+
+Function ОбработатьЗапрос(Val Метод, Val ВыполнитьСразу = True) Export
+	Return ProcessRequest(Метод, ВыполнитьСразу);
+EndFunction
+
+Function ВыполнитьЗапрос(Принудительно = False) Export
+	Return ExecuteRequest(Принудительно);
+EndFunction
+
+Function ВернутьЗапрос(Принудительно = False) Export
+	Return ReturnRequest(Принудительно);
+EndFunction
+
+Function ВернутьСоединение(Принудительно = False) Export
+	Return ReturnConnection(Принудительно);
+EndFunction
+
+Function ВернутьОтвет(Val Принудительно = False, Val ИсключениеПриОшибке = False) Export
+	Return ReturnResponse(Принудительно, ИсключениеПриОшибке);
+EndFunction
+
+Function ВернутьОтветКакJSONКоллекцию(Val ВСоответствие = True, Val ИсключениеПриОшибке = False) Export
+	Return ReturnResponseAsJSONObject(ВСоответствие, ИсключениеПриОшибке);
+EndFunction
+
+Function ВернутьОтветКакДвоичныеДанные(Val Принудительно = False, Val ИсключениеПриОшибке = False) Export
+	Return ReturnResponseAsBinaryData(Принудительно, ИсключениеПриОшибке);
+EndFunction
+
+Function ВернутьОтветКакСтроку(Val Принудительно = False, Val ИсключениеПриОшибке = False) Export
+	Return ReturnResponseAsString(Принудительно, ИсключениеПриОшибке);
+EndFunction
+
+Function ВернутьИмяФайлаТелаОтвета(Val Принудительно = False, Val ИсключениеПриОшибке = False) Export
+	Return ReturnResponseFilename(Принудительно, ИсключениеПриОшибке);
+EndFunction
+
+Procedure КодироватьURLВURL(URL) Export
+	EncodeURLInURL(URL);
+EndProcedure
+
+#EndRegion

@@ -34,6 +34,7 @@ keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, 
  <a href="/docs/Instructions/GoogleCalendar/"><img src={require('../../static/img/APIs/GoogleCalendar.png').default} width="32" class="wp_logo"/></a>
  <a href="/docs/Instructions/GoogleDrive/"><img src={require('../../static/img/APIs/GoogleDrive.png').default} width="32" class="wp_logo"/></a>
  <a href="/docs/Instructions/GoogleSheets/"><img src={require('../../static/img/APIs/GoogleSheets.png').default} width="32" class="wp_logo"/></a>
+ <a href="/docs/Instructions/OpenAI/"><img src={require('../../static/img/APIs/OpenAI.png').default} width="32" class="wp_logo"/></a>
  <a href="/docs/Instructions/Ollama/"><img src={require('../../static/img/APIs/Ollama.png').default} width="32" class="wp_logo"/></a>
  <a href="/docs/Instructions/Slack/"><img src={require('../../static/img/APIs/Slack.png').default} width="32" class="wp_logo"/></a>
  <a href="/docs/Instructions/Airtable/"><img src={require('../../static/img/APIs/Airtable.png').default} width="32" class="wp_logo"/></a>
@@ -107,22 +108,10 @@ keywords: [1C, 1С, 1С:Предприятие, 1С:Предприятие 8.3, 
 
 <hr/>
 
-<div class="theme-admonition theme-admonition-info admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--info">
-
 ## Поддержать проект
 
-<img src={require('../../static/img/heartnstar.png').default} width='320px' align="right" class="hearthnstar"/>
+<img src={require('../../static/img/boosty.png').default}/>
 
-Если вам нравится проект OpenIntegrations и вы хотите его поддержать, то можете сделать это одним из следующих способов:
-
-+ Поставить ⭐ [этому репозиторию](https://github.com/Bayselonarrend/OpenIntegrations)
-+ Поставить `+` на статьи про ОПИ [на Инфостарт](https://infostart.ru/profile/1793672/)
-
-При желании, вы также можете помочь проекту материально через Tribute или YooMoney, нажав на один из значков ниже или по ссылкам, которые находятся в правой части страницы репозитория на GitHub
-
-<a href="https://t.me/tribute/app?startapp=dnje"><img src={require('../../static/img/tribute.png').default} width='40px' /></a>
-<a href="https://yoomoney.ru/to/4100117914332065"><img src={require('../../static/img/yoomoney.png').default} width='40px' /></a>
+Если вам нравится этот или другие мои проекты, то вы можете поддержать меня [на Boosty](https://boosty.to/bayselonarrend) (регулярно или единоразово). При подписке от 500 рублей открывается доступ в приватный Telegram-чат, где можно задать интересующие вопросы о проекте и получить помощь от меня напрямую
 
 **Спасибо за вашу поддержку!**
-
-</div>
