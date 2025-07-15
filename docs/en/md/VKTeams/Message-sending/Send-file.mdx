@@ -42,7 +42,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
     ChatID = "AoLI0egLWBSLR1Ngn2w";
     Text   = "File caption";
 
-    File     = "https://api.athenaeum.digital/test_data/document.docx"; // URL
+    File     = "https://hut.openintegrations.dev/test_data/document.docx"; // URL
     FilePath = GetTempFileName("docx"); // Path
 
     CopyFile(File, FilePath);
@@ -64,7 +64,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             oint vkteams SendFile \
              --token "***" \
              --chatid "AoLI0egLWBSLR1Ngn2w" \
-             --file "C:\Users\Administrator\AppData\Local\Temp\bdkod4q4a2a.tmp" \
+             --file "/tmp/ozbrt30c.wbh" \
              --text "File caption" \
              --filename "ImportantDocument.docx"
         ```
@@ -75,7 +75,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             oint vkteams SendFile ^
              --token "***" ^
              --chatid "AoLI0egLWBSLR1Ngn2w" ^
-             --file "C:\Users\Administrator\AppData\Local\Temp\bdkod4q4a2a.tmp" ^
+             --file "/tmp/ozbrt30c.wbh" ^
              --text "File caption" ^
              --filename "ImportantDocument.docx"
         ```

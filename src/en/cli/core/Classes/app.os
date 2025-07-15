@@ -1,14 +1,11 @@
-﻿#Use oint
-#Use "../../tools"
-#Use "../../help"
-#Use "../../data"
-#Use "../../env"
+﻿#Use "../../../oint/tools"
 
 Var Debugging;           // Flag output debug information
 Var Testing;      // Flag disconnection of sending data after processing
 
 Var Parser;            // Object parser incoming data 
 Var OPIObject;         // Object work with methods OPI
+Var Help;           // Object output reference information
 
 Var OutputFile;        // Path redirection output in file
 
@@ -24,8 +21,20 @@ Procedure MainHandler()
 	Debugging        = False;
 	Testing   = False;
 
-	Parser         = New CommandLineArgumentParser();
-	OPIObject      = New LibraryComposition();
+	CurrentDirectory = CurrentScript().Path;
+	CurrentDirectory = StrReplace(CurrentDirectory, "\", "/");
+
+	PathParts      = StrSplit(CurrentDirectory, "/");
+	PathParts.Delete(PathParts.UBound());
+	PathParts.Delete(PathParts.UBound());
+
+	AccessTemplate = StrConcat(PathParts, "/") + "/%1";
+
+	Parser         = LoadScript(StrTemplate(AccessTemplate, "env/Classes/CommandLineArgumentParser.os"));
+	OPIObject      = LoadScript(StrTemplate(AccessTemplate, "data/Classes/LibraryComposition.os"));
+
+	AttachScript(StrTemplate(AccessTemplate, "help/Classes/Help.os"), "Help");
+	Help = New Help(AccessTemplate);
 	
 	DetermineCurrentCommand();
 	FormCommand();
@@ -59,7 +68,8 @@ Procedure FormCommand()
 	EndIf;
 	
 	Command           = Parser.CommandDescription(CurrentCommand);
-	ParametersTable = OPIObject.GetComposition(CurrentCommand);
+	CurrentIndex     = OPIObject.GetIndexData(CurrentCommand);
+	ParametersTable = CurrentIndex["Composition"];
 
 	If Not ParametersTable = Undefined Then
 
@@ -106,7 +116,7 @@ EndProcedure
 
 Function GetProcessingResult(Val Command, Val Parameters)
 
-	Method     = Parameters["Method"];
+	Method     = TrimAll(Parameters["Method"]);
 	Response     = "Function Returned Empty Value";
 
 	NumberOfStandardParameters = 4;
@@ -176,7 +186,7 @@ Procedure ProcessJSONOutput(Output)
 		Or TypeOf(Output) = Type("Map")
 		Or TypeOf(Output) = Type("Array") Then
 	
-		Output = OPI_Tools.JSONString(Output, , , False);
+		Output = JSONString(Output);
 
 	EndIf;
 
@@ -255,7 +265,7 @@ EndProcedure
 Procedure ReportResult(Val Text, Val Status = "")
 
 	If Not ValueIsFilled(Status) Then
-		Status = MessageStatus.NoStatus;
+		Status = MessageStatus.WithoutStatus;
 	EndIf;
 
 	If ValueIsFilled(OutputFile) Then
@@ -317,6 +327,34 @@ Function EmptyOutput(Output)
 	
 EndFunction
 
+
+Function JSONString(Val Data)
+
+    LineBreak = JSONLineBreak.Windows;
+
+    JSONParameters = New JSONWriterSettings(LineBreak
+        , " "
+        , False
+        , JSONCharactersEscapeMode["None"]
+        , False
+        , False
+        , False
+        , False);
+
+    Try
+
+        JSONWriter = New JSONWriter;
+        JSONWriter.SetString(JSONParameters);
+
+        WriteJSON(JSONWriter, Data);
+        Return JSONWriter.Close();
+
+    Except
+        Return "NOT JSON: " + String(Data);
+    EndTry;
+
+EndFunction
+
 #EndRegion
 
 #EndRegion
@@ -334,4 +372,3 @@ Except
 	Help.DisplayExceptionMessage(Information, OutputFile);
 
 EndTry;
-

@@ -4,8 +4,9 @@ use base64::{engine::general_purpose, Engine as _};
 use crate::component::AddIn;
 use std::collections::HashMap;
 use std::net::IpAddr;
-use chrono::{NaiveDate, NaiveTime, Utc, FixedOffset};
+use chrono::{NaiveDate, NaiveTime, FixedOffset, NaiveDateTime, DateTime};
 use uuid::Uuid;
+use dateparser::parse;
 
 pub fn execute_query(
     add_in: &mut AddIn,
@@ -14,9 +15,14 @@ pub fn execute_query(
     force_result: bool,
 ) -> String {
 
-    let client = match add_in.get_connection() {
+    let client_arc = match add_in.get_connection() {
         Some(c) => c,
         None => return format_json_error("No connection initialized"),
+    };
+
+    let mut client = match client_arc.lock(){
+        Ok(c) => c,
+        Err(_) => return format_json_error("Cannot acquire client lock"),
     };
 
     // Парсинг JSON параметров
@@ -286,10 +292,10 @@ fn process_sql_value(column_name: &str, column_type: &str, row: &postgres::Row) 
                 Value::Object(map)
             })
             .unwrap_or(Value::Null),
-        "TIMESTAMP" => row.try_get::<_, Option<chrono::NaiveDateTime>>(column_name)?
+        "TIMESTAMP" => row.try_get::<_, Option<NaiveDateTime>>(column_name)?
             .map(|timestamp| Value::String(timestamp.format("%Y-%m-%dT%H:%M:%S").to_string()))
             .unwrap_or(Value::Null),
-        "TIMESTAMP WITH TIME ZONE" | "TIMESTAMPTZ" => row.try_get::<_, Option<chrono::DateTime<FixedOffset>>>(column_name)?
+        "TIMESTAMP WITH TIME ZONE" | "TIMESTAMPTZ" => row.try_get::<_, Option<DateTime<FixedOffset>>>(column_name)?
             .map(|timestamp| Value::String(timestamp.to_rfc3339())) // RFC3339 - это профиль ISO8601
             .unwrap_or(Value::Null),
         "INET" => row.try_get::<_, Option<IpAddr>>(column_name)?
@@ -328,41 +334,17 @@ fn format_json_error(error: &str) -> String {
         .to_string()
 }
 
-fn parse_date(input: &str) -> Result<chrono::NaiveDateTime, String> {
-    // Попробуем спарсить полный формат с датой, временем и часовым поясом
-    if let Ok(datetime) = chrono::DateTime::parse_from_rfc3339(input) {
-        return Ok(datetime.with_timezone(&Utc).naive_local());
-    }
-
-    // Если не получилось, попробуем спарсить только дату и время без часового пояса
-    if let Ok(naive_datetime) = chrono::NaiveDateTime::parse_from_str(input, "%Y-%m-%dT%H:%M:%S") {
-        return Ok(naive_datetime);
-    }
-
-    // Если не получилось, попробуем спарсить только дату
-    if let Ok(naive_date) = chrono::NaiveDateTime::parse_from_str(input, "%Y-%m-%d") {
-        Ok(naive_date)
-    }else{
-        Err("Invalid rfc3339 format".to_string())
-    }
+fn parse_date(input: &str) -> Result<NaiveDateTime, String> {
+    parse(input)
+        .map(|dt| dt.naive_local())
+        .map_err(|e| format!("Failed to parse date: {}", e))
 }
 
-fn parse_date_tz(input: &str) -> Result<chrono::DateTime<FixedOffset>, String> {
-
-    if let Ok(datetime) = chrono::DateTime::parse_from_rfc3339(input) {
-        return Ok(datetime);
-    }
-
-    // Если не получилось, попробуем спарсить только дату и время без часового пояса
-    if let Ok(naive_datetime) = chrono::NaiveDateTime::parse_from_str(input, "%Y-%m-%dT%H:%M:%S") {
-        return Ok(naive_datetime.and_utc().fixed_offset());
-    }
-
-    // Если не получилось, попробуем спарсить только дату
-    if let Ok(naive_date) = chrono::NaiveDateTime::parse_from_str(input, "%Y-%m-%d") {
-        Ok(naive_date.and_utc().fixed_offset())
-    }else{
-        Err("Invalid rfc3339 format".to_string())
-    }
-
+fn parse_date_tz(input: &str) -> Result<DateTime<FixedOffset>, String> {
+    DateTime::parse_from_rfc3339(input)
+        .or_else(|_| {
+            parse(input)
+                .map(|dt| dt.fixed_offset())
+                .map_err(|e| format!("Failed to parse date: {}", e))
+        })
 }

@@ -33,9 +33,9 @@ Method at API documentation: [Check if a Blob Exist](https://github.com/ollama/o
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL    = "https://api.athenaeum.digital/ollama";
-    Token  = "10KO-82..."; // Authorization - not part API Ollama
-    SHA256 = "dc5ad534b4009758f0ed63edfe2d9ff319f6274f3493cb02f8e85365346637a5";
+    URL    = "https://hut.openintegrations.dev/ollama";
+    Token  = "12We34..."; // Authorization - not part API Ollama
+    SHA256 = "31ca14a65013bba911715fed775d349cc7faf11e145bb624c248d9fe9eb7904e";
 
     AdditionalHeaders = New Map;
     AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
@@ -51,7 +51,7 @@ Method at API documentation: [Check if a Blob Exist](https://github.com/ollama/o
             # JSON data can also be passed as a path to a .json file
             
             oint ollama CheckBlob \
-             --url "https://api.athenaeum.digital/ollama" \
+             --url "https://hut.openintegrations.dev/ollama" \
              --digest "yoyoyo" \
              --headers "{'Authorization':'***'}"
         ```
@@ -62,7 +62,7 @@ Method at API documentation: [Check if a Blob Exist](https://github.com/ollama/o
             :: JSON data can also be passed as a path to a .json file
             
             oint ollama CheckBlob ^
-             --url "https://api.athenaeum.digital/ollama" ^
+             --url "https://hut.openintegrations.dev/ollama" ^
              --digest "yoyoyo" ^
              --headers "{'Authorization':'***'}"
         ```

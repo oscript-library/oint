@@ -38,10 +38,10 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    URL   = "https://api.athenaeum.digital:1122/";
-    Токен = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+    URL   = "https://hut.openintegrations.dev/localai/";
+    Токен = "12We...";
 
-    Файл = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Путь или Двоичные данные
+    Файл = "https://hut.openintegrations.dev/test_data/picture.jpg"; // URL, Путь или Двоичные данные
 
     ИмяФайла   = СтрШаблон("%1.png", Строка(Новый УникальныйИдентификатор()));
     Назначение = "assistants";
@@ -55,10 +55,10 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint openai ЗагрузитьФайл \
-              --url "https://api.athenaeum.digital:1122/" \
+              --url "https://hut.openintegrations.dev/localai/" \
               --token "***" \
-              --name "f8127662-5704-4bfe-b516-8f8446382309.png" \
-              --data "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" \
+              --name "65440d5a-d3fa-488a-aa20-a8327659a567.png" \
+              --data "https://hut.openintegrations.dev/test_data/picture.jpg" \
               --purpose "assistants"
         ```
     </TabItem>
@@ -66,10 +66,10 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint openai ЗагрузитьФайл ^
-              --url "https://api.athenaeum.digital:1122/" ^
+              --url "https://hut.openintegrations.dev/localai/" ^
               --token "***" ^
-              --name "f8127662-5704-4bfe-b516-8f8446382309.png" ^
-              --data "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" ^
+              --name "65440d5a-d3fa-488a-aa20-a8327659a567.png" ^
+              --data "https://hut.openintegrations.dev/test_data/picture.jpg" ^
               --purpose "assistants"
         ```
     </TabItem>

@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -580,7 +587,7 @@
     NewLine.Method       = "AnswerButtonEvent";
     NewLine.SearchMethod = "ANSWERBUTTONEVENT";
     NewLine.Parameter    = "--showalert";
-    NewLine.Description    = "Display the answer as an alert) (optional, def. val. - No)";
+    NewLine.Description    = "Display the answer as an alert) (optional, def. val. - False)";
     NewLine.Region     = "Message sending";
 
 
@@ -839,7 +846,7 @@
     NewLine.Method       = "BlockChatUser";
     NewLine.SearchMethod = "BLOCKCHATUSER";
     NewLine.Parameter    = "--dellast";
-    NewLine.Description    = "Delete last messages before blocking (optional, def. val. - No)";
+    NewLine.Description    = "Delete last messages before blocking (optional, def. val. - False)";
     NewLine.Region     = "Chat management";
 
 
@@ -1031,3 +1038,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_VKTeams = LoadScript(""%1/oint/core/Modules/OPI_VKTeams.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

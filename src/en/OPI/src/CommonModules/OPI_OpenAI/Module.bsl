@@ -32,6 +32,8 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
+// BSLLS:MagicNumber-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -39,9 +41,6 @@
 //@skip-check method-too-many-params
 //@skip-check constructor-function-return-section
 //@skip-check doc-comment-collection-item-type
-
-// Uncomment if OneScript is executed
-// #Use "../../tools"
 
 #Region Public
 
@@ -152,10 +151,10 @@ Function GetEmbeddings(Val URL, Val Token, Val Model, Val Text, Val AdditionalPa
 EndFunction
 
 // Get message structure
-// Receives the message structure for the request message list
+// Gets the structure of an arbitrary message for the request message list
 //
 // Parameters:
-// Role - String - Message source: system, user, developer - role
+// Role - String - Source of the message: system, user, assistant, etc.. - role
 // Text - String - Message text - text
 // Name - String - Name of participant in conversation - name
 //
@@ -172,6 +171,52 @@ Function GetMessageStructure(Val Role, Val Text, Val Name = "") Export
 
     Return FieldsStructure;
 
+EndFunction
+
+// Get user message
+// Gets the structure of a message from the user for use in a request
+//
+// Note
+// Is a shorthand for the function `GetMessageStructure`
+//
+// Parameters:
+// Text - String - Message text - text
+// Name - String - Name of participant in conversation - name
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetUserMessage(Val Text, Val Name = "") Export
+    Return GetMessageStructure("user", Text, Name);
+EndFunction
+
+// Get assistant message
+// Gets the structure of a message from the assistant for use in a request
+//
+// Note
+// Is a shorthand for the function `GetMessageStructure`
+//
+// Parameters:
+// Text - String - Message text - text
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetAssistantMessage(Val Text) Export
+    Return GetMessageStructure("assistant", Text);
+EndFunction
+
+// Get system message
+// Gets the structure of a system message for use in a request
+//
+// Note
+// Is a shorthand for the function `GetMessageStructure`
+//
+// Parameters:
+// Text - String - Message text - text
+//
+// Returns:
+// Structure Of KeyAndValue - Fields structure
+Function GetSystemMessage(Val Text) Export
+    Return GetMessageStructure("system", Text);
 EndFunction
 
 // Get image message structure
@@ -563,7 +608,7 @@ EndFunction
 // AdditionalHeaders - Map Of KeyAndValue - Additional request headers, if necessary - headers
 //
 // Returns:
-// Map Of KeyAndValue - Processing result
+// BinaryData - Processing result
 Function GenerateSpeech(Val URL
     , Val Token
     , Val Model

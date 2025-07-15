@@ -32,8 +32,8 @@ Method at API documentation: [Version](https://github.com/ollama/ollama/blob/mai
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital/ollama";
-    Token = "10KO-82..."; // Authorization - not part API Ollama
+    URL   = "https://hut.openintegrations.dev/ollama";
+    Token = "12We34..."; // Authorization - not part API Ollama
 
     AdditionalHeaders = New Map;
     AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
@@ -49,7 +49,7 @@ Method at API documentation: [Version](https://github.com/ollama/ollama/blob/mai
             # JSON data can also be passed as a path to a .json file
             
             oint ollama GetVersion \
-             --url "https://api.athenaeum.digital/ollama" \
+             --url "https://hut.openintegrations.dev/ollama" \
              --headers "{'Authorization':'***'}"
         ```
     </TabItem>
@@ -59,7 +59,7 @@ Method at API documentation: [Version](https://github.com/ollama/ollama/blob/mai
             :: JSON data can also be passed as a path to a .json file
             
             oint ollama GetVersion ^
-             --url "https://api.athenaeum.digital/ollama" ^
+             --url "https://hut.openintegrations.dev/ollama" ^
              --headers "{'Authorization':'***'}"
         ```
     </TabItem>

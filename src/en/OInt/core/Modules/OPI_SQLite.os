@@ -2,6 +2,7 @@
 // Lib: SQLite
 // CLI: sqlite
 // Keywords: sqlite
+// Depends: OPI_SQLite
 
 // MIT License
 
@@ -33,15 +34,13 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
 //@skip-check method-too-many-params
 //@skip-check constructor-function-return-section
-
-// Uncomment if OneScript is executed
-#Use "../../tools"
 
 #Region Public
 
@@ -463,6 +462,7 @@ Function GetFeatures() Export
     Features.Insert("ParameterMarker"    , "?");
     Features.Insert("DBMS"               , "sqlite");
     Features.Insert("ColumnField"        , "name");
+    Features.Insert("TransactionStart"   , "BEGIN");
 
     Return Features;
 

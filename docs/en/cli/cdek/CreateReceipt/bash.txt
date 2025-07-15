@@ -1,6 +1,6 @@
 oint cdek CreateReceipt \
  --token "***" \
- --uuids "534e846a-ed4e-4b44-bce4-e89b6e782074" \
+ --uuids "d2630c53-c33c-466b-8c63-e320fab15e46" \
  --type "tpl_russia" \
  --count 1 \
  --testapi "***"

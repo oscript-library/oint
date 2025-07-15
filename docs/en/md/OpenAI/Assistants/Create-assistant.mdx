@@ -37,8 +37,8 @@ Method at API documentation: [Create assistant](https://platform.openai.com/docs
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital:1122/";
-    Token = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+    URL   = "https://hut.openintegrations.dev/localai/";
+    Token = "12We...";
 
     Instruction = "You are a personal math tutor. When asked a question, write and run Python code to answer the question.";
     Model       = "smolvlm-256m-instruct";
@@ -53,7 +53,7 @@ Method at API documentation: [Create assistant](https://platform.openai.com/docs
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint openai CreateAssistant \
-             --url "https://api.athenaeum.digital:1122/" \
+             --url "https://hut.openintegrations.dev/localai/" \
              --token "***" \
              --model "smolvlm-256m-instruct" \
              --name "Math tutor" \
@@ -64,7 +64,7 @@ Method at API documentation: [Create assistant](https://platform.openai.com/docs
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint openai CreateAssistant ^
-             --url "https://api.athenaeum.digital:1122/" ^
+             --url "https://hut.openintegrations.dev/localai/" ^
              --token "***" ^
              --model "smolvlm-256m-instruct" ^
              --name "Math tutor" ^

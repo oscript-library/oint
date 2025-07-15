@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -88,7 +95,7 @@
     NewLine.Method       = "SendRequestWithoutBody";
     NewLine.SearchMethod = "SENDREQUESTWITHOUTBODY";
     NewLine.Parameter    = "--binary";
-    NewLine.Description    = "Disables an attempt to convert the response to JSON (optional, def. val. - No)";
+    NewLine.Description    = "Disables an attempt to convert the response to JSON (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -139,7 +146,7 @@
     NewLine.Method       = "SendRequestWithBody";
     NewLine.SearchMethod = "SENDREQUESTWITHBODY";
     NewLine.Parameter    = "--binary";
-    NewLine.Description    = "Disables an attempt to convert the response to JSON (optional, def. val. - No)";
+    NewLine.Description    = "Disables an attempt to convert the response to JSON (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -180,7 +187,7 @@
     NewLine.Method       = "CreateBucket";
     NewLine.SearchMethod = "CREATEBUCKET";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -221,7 +228,7 @@
     NewLine.Method       = "DeleteBucket";
     NewLine.SearchMethod = "DELETEBUCKET";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -262,7 +269,7 @@
     NewLine.Method       = "HeadBucket";
     NewLine.SearchMethod = "HEADBUCKET";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -323,7 +330,7 @@
     NewLine.Method       = "PutBucketEncryption";
     NewLine.SearchMethod = "PUTBUCKETENCRYPTION";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -364,7 +371,7 @@
     NewLine.Method       = "GetBucketEncryption";
     NewLine.SearchMethod = "GETBUCKETENCRYPTION";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -405,7 +412,7 @@
     NewLine.Method       = "DeleteBucketEncryption";
     NewLine.SearchMethod = "DELETEBUCKETENCRYPTION";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -456,7 +463,7 @@
     NewLine.Method       = "PutBucketTagging";
     NewLine.SearchMethod = "PUTBUCKETTAGGING";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -497,7 +504,7 @@
     NewLine.Method       = "GetBucketTagging";
     NewLine.SearchMethod = "GETBUCKETTAGGING";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -538,7 +545,7 @@
     NewLine.Method       = "DeleteBucketTagging";
     NewLine.SearchMethod = "DELETEBUCKETTAGGING";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -599,7 +606,7 @@
     NewLine.Method       = "PutBucketVersioning";
     NewLine.SearchMethod = "PUTBUCKETVERSIONING";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -640,7 +647,7 @@
     NewLine.Method       = "GetBucketVersioning";
     NewLine.SearchMethod = "GETBUCKETVERSIONING";
     NewLine.Parameter    = "--dir";
-    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - No)";
+    NewLine.Description    = "True > Directory Bucket, False > General Purpose Bucket (optional, def. val. - False)";
     NewLine.Region     = "Buckets management";
 
 
@@ -1604,3 +1611,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_S3 = LoadScript(""%1/oint/core/Modules/OPI_S3.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -228,7 +235,7 @@
     NewLine.Method       = "GetInstanceSettingsStructure";
     NewLine.SearchMethod = "GETINSTANCESETTINGSSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Account";
     NewLine.MethodDescription   = "Gets the structure template for instance settings";
 
@@ -702,7 +709,7 @@
     NewLine.Method       = "SendPoll";
     NewLine.SearchMethod = "SENDPOLL";
     NewLine.Parameter    = "--multi";
-    NewLine.Description    = "Allows to select more than one answer choice (optional, def. val. - No)";
+    NewLine.Description    = "Allows to select more than one answer choice (optional, def. val. - False)";
     NewLine.Region     = "Message sending";
 
 
@@ -917,7 +924,7 @@
     NewLine.Method       = "DeleteMessage";
     NewLine.SearchMethod = "DELETEMESSAGE";
     NewLine.Parameter    = "--sender";
-    NewLine.Description    = "Delete for sender only (optional, def. val. - No)";
+    NewLine.Description    = "Delete for sender only (optional, def. val. - False)";
     NewLine.Region     = "Message sending";
 
 
@@ -1245,3 +1252,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_GreenAPI = LoadScript(""%1/oint/core/Modules/OPI_GreenAPI.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

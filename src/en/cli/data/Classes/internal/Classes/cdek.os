@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -37,7 +44,7 @@
     NewLine.Method       = "GetToken";
     NewLine.SearchMethod = "GETTOKEN";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -68,7 +75,7 @@
     NewLine.Method       = "GetCashboxChecksByDate";
     NewLine.SearchMethod = "GETCASHBOXCHECKSBYDATE";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -99,7 +106,7 @@
     NewLine.Method       = "GetDeliveryCashRegistry";
     NewLine.SearchMethod = "GETDELIVERYCASHREGISTRY";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -130,7 +137,7 @@
     NewLine.Method       = "GetDeliveryCashTransfers";
     NewLine.SearchMethod = "GETDELIVERYCASHTRANSFERS";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -161,7 +168,7 @@
     NewLine.Method       = "GetOfficeList";
     NewLine.SearchMethod = "GETOFFICELIST";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -212,7 +219,7 @@
     NewLine.Method       = "GetRegionsList";
     NewLine.SearchMethod = "GETREGIONSLIST";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
 
 
@@ -222,7 +229,7 @@
     NewLine.Method       = "GetOfficeFilterDescription";
     NewLine.SearchMethod = "GETOFFICEFILTERDESCRIPTION";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Common methods";
     NewLine.MethodDescription   = "Gets an empty layout of the filter for getting the list of offices in the GetOfficeList function";
 
@@ -254,7 +261,7 @@
     NewLine.Method       = "CreateOrder";
     NewLine.SearchMethod = "CREATEORDER";
     NewLine.Parameter    = "--ostore";
-    NewLine.Description    = "Flag of Online store order type (optional, def. val. - No)";
+    NewLine.Description    = "Flag of Online store order type (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -264,7 +271,7 @@
     NewLine.Method       = "CreateOrder";
     NewLine.SearchMethod = "CREATEORDER";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -305,7 +312,7 @@
     NewLine.Method       = "UpdateOrder";
     NewLine.SearchMethod = "UPDATEORDER";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -336,7 +343,7 @@
     NewLine.Method       = "DeleteOrder";
     NewLine.SearchMethod = "DELETEORDER";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -367,7 +374,7 @@
     NewLine.Method       = "GetOrder";
     NewLine.SearchMethod = "GETORDER";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -398,7 +405,7 @@
     NewLine.Method       = "GetOrderByNumber";
     NewLine.SearchMethod = "GETORDERBYNUMBER";
     NewLine.Parameter    = "--internal";
-    NewLine.Description    = "Type of order number. True > number in the customer base, False > CDEK number (optional, def. val. - No)";
+    NewLine.Description    = "Type of order number. True > number in the customer base, False > CDEK number (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -408,7 +415,7 @@
     NewLine.Method       = "GetOrderByNumber";
     NewLine.SearchMethod = "GETORDERBYNUMBER";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -449,7 +456,7 @@
     NewLine.Method       = "CreateCustomerRefund";
     NewLine.SearchMethod = "CREATECUSTOMERREFUND";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -480,7 +487,7 @@
     NewLine.Method       = "CreateRefusal";
     NewLine.SearchMethod = "CREATEREFUSAL";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -531,7 +538,7 @@
     NewLine.Method       = "CreateReceipt";
     NewLine.SearchMethod = "CREATERECEIPT";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -562,7 +569,7 @@
     NewLine.Method       = "GetReceipt";
     NewLine.SearchMethod = "GETRECEIPT";
     NewLine.Parameter    = "--getfile";
-    NewLine.Description    = "True > PDF file data will be received, False > receives CDEK server response (optional, def. val. - No)";
+    NewLine.Description    = "True > PDF file data will be received, False > receives CDEK server response (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -572,7 +579,7 @@
     NewLine.Method       = "GetReceipt";
     NewLine.SearchMethod = "GETRECEIPT";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -633,7 +640,7 @@
     NewLine.Method       = "CreateBarcode";
     NewLine.SearchMethod = "CREATEBARCODE";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -664,7 +671,7 @@
     NewLine.Method       = "GetBarcode";
     NewLine.SearchMethod = "GETBARCODE";
     NewLine.Parameter    = "--getfile";
-    NewLine.Description    = "True > PDF file data will be received, False > receives CDEK server response (optional, def. val. - No)";
+    NewLine.Description    = "True > PDF file data will be received, False > receives CDEK server response (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -674,7 +681,7 @@
     NewLine.Method       = "GetBarcode";
     NewLine.SearchMethod = "GETBARCODE";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -725,7 +732,7 @@
     NewLine.Method       = "CreatePrealert";
     NewLine.SearchMethod = "CREATEPREALERT";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -756,7 +763,7 @@
     NewLine.Method       = "GetPrealert";
     NewLine.SearchMethod = "GETPREALERT";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -787,7 +794,7 @@
     NewLine.Method       = "GetPassportDataStatus";
     NewLine.SearchMethod = "GETPASSPORTDATASTATUS";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -818,7 +825,7 @@
     NewLine.Method       = "GetCashboxCheck";
     NewLine.SearchMethod = "GETCASHBOXCHECK";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -828,7 +835,7 @@
     NewLine.Method       = "GetOrderDescription";
     NewLine.SearchMethod = "GETORDERDESCRIPTION";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
     NewLine.MethodDescription   = "Gets the layout of order for the CreateOrder function";
 
@@ -839,7 +846,7 @@
     NewLine.Method       = "GetOrderDescription";
     NewLine.SearchMethod = "GETORDERDESCRIPTION";
     NewLine.Parameter    = "--required";
-    NewLine.Description    = "True > only required fields will be in the set (optional, def. val. - No)";
+    NewLine.Description    = "True > only required fields will be in the set (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -849,7 +856,7 @@
     NewLine.Method       = "GetOrderDescription";
     NewLine.SearchMethod = "GETORDERDESCRIPTION";
     NewLine.Parameter    = "--ostore";
-    NewLine.Description    = "Flag of including fields in the layout exclusively for online store orders (optional, def. val. - No)";
+    NewLine.Description    = "Flag of including fields in the layout exclusively for online store orders (optional, def. val. - False)";
     NewLine.Region     = "Orders management";
 
 
@@ -880,7 +887,7 @@
     NewLine.Method       = "GetAvailableDeliveryIntervals";
     NewLine.SearchMethod = "GETAVAILABLEDELIVERYINTERVALS";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -911,7 +918,7 @@
     NewLine.Method       = "CreateCourierInvitation";
     NewLine.SearchMethod = "CREATECOURIERINVITATION";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -942,7 +949,7 @@
     NewLine.Method       = "GetCourierInvitation";
     NewLine.SearchMethod = "GETCOURIERINVITATION";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -972,7 +979,7 @@
     NewLine.Method       = "DeleteCourierInvitation";
     NewLine.SearchMethod = "DELETECOURIERINVITATION";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -1003,7 +1010,7 @@
     NewLine.Method       = "RegisterDeliveryAppointment";
     NewLine.SearchMethod = "REGISTERDELIVERYAPPOINTMENT";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -1034,7 +1041,7 @@
     NewLine.Method       = "GetDeliveryAppointment";
     NewLine.SearchMethod = "GETDELIVERYAPPOINTMENT";
     NewLine.Parameter    = "--testapi";
-    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - No)";
+    NewLine.Description    = "Flag to use test API for requests (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -1044,7 +1051,7 @@
     NewLine.Method       = "GetCourierInvitationsDescription";
     NewLine.SearchMethod = "GETCOURIERINVITATIONSDESCRIPTION";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
     NewLine.MethodDescription   = "Gets the layout for creating a request for courier call in the CreateCourierInvitation function";
 
@@ -1055,7 +1062,7 @@
     NewLine.Method       = "GetCourierInvitationsDescription";
     NewLine.SearchMethod = "GETCOURIERINVITATIONSDESCRIPTION";
     NewLine.Parameter    = "--required";
-    NewLine.Description    = "True > only required fields will be in the set (optional, def. val. - No)";
+    NewLine.Description    = "True > only required fields will be in the set (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
 
@@ -1065,7 +1072,7 @@
     NewLine.Method       = "GetAppointmentDescription";
     NewLine.SearchMethod = "GETAPPOINTMENTDESCRIPTION";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
     NewLine.MethodDescription   = "Gets the layout to create about delivery in the RegisterDeliveryAppointment function";
 
@@ -1076,9 +1083,24 @@
     NewLine.Method       = "GetAppointmentDescription";
     NewLine.SearchMethod = "GETAPPOINTMENTDESCRIPTION";
     NewLine.Parameter    = "--required";
-    NewLine.Description    = "True > only required fields will be in the set (optional, def. val. - No)";
+    NewLine.Description    = "True > only required fields will be in the set (optional, def. val. - False)";
     NewLine.Region     = "Delivery management";
 
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_CDEK = LoadScript(""%1/oint/core/Modules/OPI_CDEK.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

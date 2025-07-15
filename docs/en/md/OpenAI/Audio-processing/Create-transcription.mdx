@@ -39,10 +39,10 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital:1122/";
-    Token = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+    URL   = "https://hut.openintegrations.dev/localai/";
+    Token = "12We...";
 
-    Audio = "C:\Users\Administrator\AppData\Local\Temp\v8_7146_1e.wav";
+    Audio = "C:\Users\bayse\AppData\Local\Temp\v8_ADA2_1e.wav";
     Model = "whisper-1";
 
     Result = OPI_OpenAI.CreateTranscription(URL, Token, Model, Audio, "audio/wav");
@@ -54,10 +54,10 @@ Parameters with Binary data type can also accept file paths on disk and URLs
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint openai CreateTranscription \
-             --url "https://api.athenaeum.digital:1122/" \
+             --url "https://hut.openintegrations.dev/localai/" \
              --token "***" \
              --model "whisper-1" \
-             --audio "C:\Users\Administrator\AppData\Local\Temp\bi04ndbxhxg.wav" \
+             --audio "/tmp/pypyif03.np5.wav" \
              --type "audio/wav"
         ```
     </TabItem>
@@ -65,10 +65,10 @@ Parameters with Binary data type can also accept file paths on disk and URLs
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint openai CreateTranscription ^
-             --url "https://api.athenaeum.digital:1122/" ^
+             --url "https://hut.openintegrations.dev/localai/" ^
              --token "***" ^
              --model "whisper-1" ^
-             --audio "C:\Users\Administrator\AppData\Local\Temp\bi04ndbxhxg.wav" ^
+             --audio "/tmp/pypyif03.np5.wav" ^
              --type "audio/wav"
         ```
     </TabItem>

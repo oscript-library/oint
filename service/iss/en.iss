@@ -1,11 +1,11 @@
 ﻿#define MyAppName "OInt"
-#define MyAppVersion "1.25.0"
+#define MyAppVersion "1.26.0"
 #define MyAppPublisher "bayselonarrend"
 #define MyAppURL "https://github.com/Bayselonarrend/OpenIntegrations"
 #define MyAppExeName "oint.bat"
-#define Repo "C:\ProgramData\Jenkins\.jenkins\workspace\Release"
+#define Repo "C:\ProgramData\Jenkins\.jenkins\workspace\OpiRelease"
 #define Engine "C:\engine"
-#define Melezh "C:\ProgramData\Jenkins\.jenkins\workspace\Release\Melezh"
+#define Melezh "C:\ProgramData\Jenkins\.jenkins\workspace\OpiRelease\Melezh"
 
 [Setup]
 DisableWelcomePage      = no
@@ -64,9 +64,9 @@ Name: desktopicon; Description: "Create a desktop shortcut";
 Type: filesandordirs; Name: "{app}"
 
 [Run]
-Filename: "{cmd}"; Parameters: "/k ""cd ""{app}/bin"" && {#MyAppExeName}"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-Filename: "{cmd}"; Parameters: "/k ""cd ""{app}/bin"" && melezh.bat"""; Description: "{cm:LaunchProgram,{#StringChange("Melezh", '&', '&&')}}"; Flags: nowait postinstall skipifsilent; Check: ShouldInstallAddon 
-Filename: "https://en.openintegrations.dev/docs/Start/CLI_version"; Flags: shellexec runasoriginaluser postinstall; Description: "Visit documentation en.openintegrations.dev"
+Filename: "{cmd}"; Parameters: "/k ""cd ""{app}/bin"" && {#MyAppExeName}"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent unchecked
+Filename: "{cmd}"; Parameters: "/k ""cd ""{app}/bin"" && melezh.bat"""; Description: "{cm:LaunchProgram,{#StringChange("Melezh", '&', '&&')}}"; Flags: nowait postinstall skipifsilent unchecked; Check: ShouldInstallAddon 
+Filename: "https://en.openintegrations.dev/docs/Start/CLI_version"; Flags: shellexec runasoriginaluser postinstall unchecked; Description: "Visit documentation en.openintegrations.dev"
 
 [Registry]
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \

@@ -42,8 +42,8 @@ Method at API documentation: [post /v1/draft/timeslot/info](https://docs.ozon.ru
 
     DateFrom  = OPI_Tools.GetCurrentDate();
     DateTo    = DateFrom + Day;
-    Draft     = "55152896";
-    Warehouse = "1020001649180000";
+    Draft     = "56559200";
+    Warehouse = "18044249781000";
 
     Result = OPI_Ozon.GetFBOTimeslots(ClientID, APIKey, DateFrom, DateTo, Draft, Warehouse);
 ```
@@ -56,9 +56,9 @@ Method at API documentation: [post /v1/draft/timeslot/info](https://docs.ozon.ru
             oint ozon GetFBOTimeslots \
              --clientid "***" \
              --apikey "***" \
-             --from "2025-06-18T20:54:10.2217195" \
-             --to "2025-06-19T20:54:10.2217195" \
-             --draft 55486827 \
+             --from "2025-07-15T17:40:49.4723572" \
+             --to "2025-07-16T17:40:49.4723572" \
+             --draft 58854565 \
              --whs 1020001649180000
         ```
     </TabItem>
@@ -68,9 +68,9 @@ Method at API documentation: [post /v1/draft/timeslot/info](https://docs.ozon.ru
             oint ozon GetFBOTimeslots ^
              --clientid "***" ^
              --apikey "***" ^
-             --from "2025-06-18T20:54:10.2217195" ^
-             --to "2025-06-19T20:54:10.2217195" ^
-             --draft 55486827 ^
+             --from "2025-07-15T17:40:49.4723572" ^
+             --to "2025-07-16T17:40:49.4723572" ^
+             --draft 58854565 ^
              --whs 1020001649180000
         ```
     </TabItem>

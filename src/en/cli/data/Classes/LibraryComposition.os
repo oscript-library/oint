@@ -2,19 +2,26 @@
 
 Var ModuleCommandMapping;
 Var Version;
-Var CompositionCache;
+Var IndexCache;
+Var AccessTemplate;
+Var PackagesDirectory;
 
 
 Procedure OnObjectCreate()
 
-    Version = "1.25.0";
+    Version = "1.26.0";
     InitializeCommonLists();
+
+    CurrentDirectory = CurrentScript().Path;
+    AccessTemplate  = CombinePath(CurrentDirectory, "internal", "Classes", "%1.os");
+
+    PackagesDirectory = StrReplace(GetSystemOptionValue("lib.system"), "\", "/");
 
 EndProcedure
 
 Procedure InitializeCommonLists() Export
 
-    CompositionCache       = New Map();
+    IndexCache       = New Map();
     ModuleCommandMapping = New Map();
     ModuleCommandMapping.Insert("tools", "Utils");
     ModuleCommandMapping.Insert("airtable", "OPI_Airtable");
@@ -26,6 +33,7 @@ Procedure InitializeCommonLists() Export
     ModuleCommandMapping.Insert("gsheets", "OPI_GoogleSheets");
     ModuleCommandMapping.Insert("google", "OPI_GoogleWorkspace");
     ModuleCommandMapping.Insert("greenapi", "OPI_GreenAPI");
+    ModuleCommandMapping.Insert("mssql", "OPI_MSSQL");
     ModuleCommandMapping.Insert("mysql", "OPI_MySQL");
     ModuleCommandMapping.Insert("neocities", "OPI_Neocities");
     ModuleCommandMapping.Insert("notion", "OPI_Notion");
@@ -59,17 +67,31 @@ Function GetCommandModuleMapping() Export
 EndFunction
 
 
-Function GetComposition(Val Command) Export
+Function GetIndexData(Val Command) Export
 
-    CurrentComposition = CompositionCache.Get(Command);
+    IndexInformation = IndexCache.Get(Command);
 
-    If CurrentComposition = Undefined Then
-        CompositionObject = New(Command);
-        CurrentComposition = CompositionObject.GetComposition();
-        CompositionCache.Insert(Command, CurrentComposition);
+    If IndexInformation = Undefined Then
+
+        Try
+            CompositionObject = LoadScript(StrTemplate(AccessTemplate, Command));
+
+            Composition            = CompositionObject.GetComposition();
+            ConnectionString = CompositionObject.GetConnectionString();
+
+            IndexInformation = New Structure;
+            IndexInformation.Insert("Composition"           , Composition);
+            IndexInformation.Insert("ConnectionString", ConnectionString);
+
+            IndexCache.Insert(Command, IndexInformation);
+
+        Except
+            Raise StrTemplate("Invalid command name: %1", Command)
+        EndTry;
+
     EndIf;
 
-    Return CurrentComposition;
+    Return IndexInformation;
 
 EndFunction
 
@@ -79,7 +101,8 @@ Function GetFullComposition() Export
 
     For Each Command In ModuleCommandMapping Do
 
-        CurrentTable = GetComposition(Command.Key);
+        IndexObject  = GetIndexData(Command.Key);
+        CurrentTable = IndexObject["Composition"];
         
         If CommonTable = Undefined Then
             CommonTable = CurrentTable;
@@ -95,22 +118,29 @@ Function GetFullComposition() Export
 
 EndFunction
 
-Function FormMethodCallString(Val PassedParameters, Val Command, Val Method) Export
 
-    Module = GetCommandModuleMapping().Get(Command);
+Function FormMethodCallString(Val PassedParameters, Val Command, Val Method, Val Dynamically = True) Export
+
+    Module             = GetCommandModuleMapping().Get(Command);
+    IndexObject      = GetIndexData(Command);
     
     If Not ValueIsFilled(Module) Then
         Return New Structure("Error,Result", True, "Command");
     EndIf;
     
-    CommandSelection      = New Structure("SearchMethod", Upper(Method));
-    MethodParameters   = GetComposition(Command).FindRows(CommandSelection);
+    CommandSelection    = New Structure("SearchMethod", Upper(Method));
+    MethodParameters = IndexObject["Composition"].FindRows(CommandSelection);
+    
+    If Dynamically Then
+       ExecutionText = StrTemplate(IndexObject["ConnectionString"], PackagesDirectory);
+    Else
+       ExecutionText = "";
+    EndIf;
     
     If Not ValueIsFilled(MethodParameters) Then
         Return New Structure("Error,Result", True, "Method");
     EndIf;
 
-    ExecutionText = "";
     CallString    = Module + "." + Method + "(";
     Counter         = 0;
 
@@ -131,11 +161,9 @@ Function FormMethodCallString(Val PassedParameters, Val Command, Val Method) Exp
                 + """;";
 
             If RequiresProcessingOfEscapeSequences(ParameterName, ParameterValue) Then
-
-                ExecutionText = ExecutionText + "
-                | OPI_Tools.ReplaceEscapeSequences(" + ParameterName + ");
-                |";
-
+                ExecutionText = ExecutionText 
+                    + Chars.LF 
+                    + "OPI_Tools.ReplaceEscapeSequences(" + ParameterName + ");";
             EndIf;
 
             CallString = CallString + ParameterName + ", ";
@@ -159,11 +187,19 @@ Function FormMethodCallString(Val PassedParameters, Val Command, Val Method) Exp
 
 EndFunction
 
-Function CompleteCompositionCache(Val Library, Val ParametersTable, Command = "") Export
-   CompositionCache.Insert(Library, ParametersTable);
-   Command = ?(ValueIsFilled(Command), Command, Library);
+Procedure CompleteCompositionCache(Val Library, Val ParametersTable, Command = "") Export
+
+   Command           = ?(ValueIsFilled(Command), Command, Library);
+   ConnectionString = "";
+
+   IndexInformation = New Structure;
+   IndexInformation.Insert("Composition"           , ParametersTable);
+   IndexInformation.Insert("ConnectionString", ConnectionString);
+
+   IndexCache.Insert(Command, IndexInformation);
    ModuleCommandMapping.Insert(Command, Library);
-EndFunction
+
+EndProcedure
 
 Function RequiresProcessingOfEscapeSequences(Val ParameterName, Val ParameterValue)
 
@@ -191,20 +227,20 @@ Function ПолучитьСоответствиеКомандМодулей() Ex
 	Return GetCommandModuleMapping();
 EndFunction
 
-Function ПолучитьСостав(Val Команда) Export
-	Return GetComposition(Команда);
+Function ПолучитьИнформациюИндекса(Val Команда) Export
+	Return GetIndexData(Команда);
 EndFunction
 
 Function ПолучитьПолныйСостав() Export
 	Return GetFullComposition();
 EndFunction
 
-Function СформироватьСтрокуВызоваМетода(Val ПереданныеПараметры, Val Команда, Val Метод) Export
-	Return FormMethodCallString(ПереданныеПараметры, Команда, Метод);
+Function СформироватьСтрокуВызоваМетода(Val ПереданныеПараметры, Val Команда, Val Метод, Val Динамически = True) Export
+	Return FormMethodCallString(ПереданныеПараметры, Команда, Метод, Динамически);
 EndFunction
 
-Function ДополнитьКэшСостава(Val Библиотека, Val ТаблицаПараметров, Команда = "") Export
-	Return CompleteCompositionCache(Библиотека, ТаблицаПараметров, Команда);
-EndFunction
+Procedure ДополнитьКэшСостава(Val Библиотека, Val ТаблицаПараметров, Команда = "") Export
+	CompleteCompositionCache(Библиотека, ТаблицаПараметров, Команда);
+EndProcedure
 
 #EndRegion

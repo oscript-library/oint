@@ -30,13 +30,11 @@
 // BSLLS:IncorrectLineBreak-off
 // BSLLS:Typo-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
-
-// Раскомментировать, если выполняется OneScript
-// #Использовать "../../tools"
 
 #Область ПрограммныйИнтерфейс
 
@@ -875,17 +873,17 @@
 //  Соответствие Из КлючИЗначение - сериализованный JSON ответа от Slack
 Функция ДобавитьВнешнийФайл(Знач Токен, Знач URL, Знач Заголовок) Экспорт
 
-    Строка_   = "Строка";
-    URL       = "https://slack.com/api/files.remote.add";
-    Заголовки = ПолучитьЗаголовокАвторизации(Токен);
-    UID       = Строка(Новый УникальныйИдентификатор());
+    Строка_    = "Строка";
+    URLЗапроса = "https://slack.com/api/files.remote.add";
+    Заголовки  = ПолучитьЗаголовокАвторизации(Токен);
+    UID        = Строка(Новый УникальныйИдентификатор());
 
     Параметры = Новый Структура;
     OPI_Инструменты.ДобавитьПоле("external_url", URL          , Строка_, Параметры);
     OPI_Инструменты.ДобавитьПоле("external_id" , UID          , Строка_, Параметры);
     OPI_Инструменты.ДобавитьПоле("title"       , Заголовок    , Строка_, Параметры);
 
-    Ответ = OPI_ЗапросыHTTP.Get(URL, Параметры, Заголовки);
+    Ответ = OPI_ЗапросыHTTP.Get(URLЗапроса, Параметры, Заголовки);
 
     Возврат Ответ;
 

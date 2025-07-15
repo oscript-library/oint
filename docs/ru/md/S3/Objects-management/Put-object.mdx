@@ -48,13 +48,13 @@ import TabItem from '@theme/TabItem';
 
     Наименование = "picture.jpg";
     Бакет        = "opi-gpbucket3";
-    Содержимое   = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Путь или Двоичные данные
+    Содержимое   = "https://hut.openintegrations.dev/test_data/picture.jpg"; // URL, Путь или Двоичные данные
 
     Результат = OPI_S3.ЗагрузитьОбъект(Наименование, Бакет, Содержимое, ОсновныеДанные);
 
     Наименование = "fileChunked.mp3";
     Бакет        = "opi-gpbucket3";
-    Содержимое   = "https://api.athenaeum.digital/test_data/song.mp3"; // URL, Путь или Двоичные данные
+    Содержимое   = "https://hut.openintegrations.dev/test_data/song.mp3"; // URL, Путь или Двоичные данные
 
     ОсновныеДанные.Вставить("ChunkSize", 5242880);
 
@@ -71,7 +71,7 @@ import TabItem from '@theme/TabItem';
             oint s3 ЗагрузитьОбъект \
               --name "pictureSmall.jpg" \
               --bucket "opi-gpbucket3" \
-              --data "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" \
+              --data "https://hut.openintegrations.dev/test_data/picture.jpg" \
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
         ```
     </TabItem>
@@ -83,7 +83,7 @@ import TabItem from '@theme/TabItem';
             oint s3 ЗагрузитьОбъект ^
               --name "pictureSmall.jpg" ^
               --bucket "opi-gpbucket3" ^
-              --data "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" ^
+              --data "https://hut.openintegrations.dev/test_data/picture.jpg" ^
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
         ```
     </TabItem>

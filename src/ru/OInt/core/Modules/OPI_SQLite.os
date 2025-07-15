@@ -2,6 +2,7 @@
 // Lib: SQLite
 // CLI: sqlite
 // Keywords: sqlite
+// Depends: OPI_SQLite
 
 // MIT License
 
@@ -33,15 +34,13 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
 //@skip-check method-too-many-params
 //@skip-check constructor-function-return-section
-
-// Раскомментировать, если выполняется OneScript
-#Использовать "../../tools"
 
 #Область ПрограммныйИнтерфейс
 
@@ -463,6 +462,7 @@
     Особенности.Вставить("МаркерПараметров"   , "?");
     Особенности.Вставить("СУБД"               , "sqlite");
     Особенности.Вставить("ПолеКолонки"        , "name");
+    Особенности.Вставить("НачалоТранзакции"   , "BEGIN");
 
     Возврат Особенности;
 

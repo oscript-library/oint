@@ -28,6 +28,7 @@
 // BSLLS:IncorrectLineBreak-off
 // BSLLS:UnusedLocalVariable-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -104,6 +105,8 @@ Procedure GetCollection(Value) Export
 
     Try
 
+        // BSLLS:ExternalAppStarting-off
+
         InitialValue = Value;
 
         If ThisIsCollection(Value) Then
@@ -153,6 +156,8 @@ Procedure GetCollection(Value) Export
             EndIf;
 
         EndIf;
+
+        // BSLLS:ExternalAppStarting-on
 
     Except
 

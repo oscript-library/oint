@@ -1,5 +1,5 @@
 oint gsheets CopySheet \
  --token "***" \
- --from "10yVQ5s01O1MOj_uELg_EqlcA_gzcCsIgYaVSuUNh0Qo" \
- --to "1Joik8kzfDnJCu-OrdUDxAAg7aR3lGwB4ce1JtlsF0Lk" \
- --sheet "902236315"
+ --from "13PLBUcAt_rPkyEb1LALon3AvImfib0TroXbM9HAwFq8" \
+ --to "1qW-3xNYXLUe0CTqJdF376-XYMmLf-Tjq0Nwtpc4rnjE" \
+ --sheet "1412159203"

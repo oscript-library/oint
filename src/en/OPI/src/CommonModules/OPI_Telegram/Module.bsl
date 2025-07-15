@@ -35,13 +35,12 @@
 // BSLLS:UsingServiceTag-off
 // BSLLS:NumberOfParams-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
+// BSLLS:MagicNumber-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
-
-// Uncomment if OneScript is executed
-// #Use "../../tools"
 
 #Region Public
 
@@ -237,7 +236,7 @@ Function ProcessTMAData(Val DataString, Val Token) Export
     Hash      = "";
     BinaryKey = GetBinaryDataFromString(KeyString);
 
-    Result = OPI_Cryptography.HMACSHA(BinaryKey, GetBinaryDataFromString(Token), "SHA256");
+    Result = OPI_Cryptography.HMAC(BinaryKey, GetBinaryDataFromString(Token), "SHA256");
 
     TValue = New ValueTable;
     TValue.Columns.Add("Key");

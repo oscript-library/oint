@@ -32,14 +32,12 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
 //@skip-check method-too-many-params
-
-// Uncomment if OneScript is executed
-// #Use "../../tools"
 
 #Region Public
 
@@ -508,7 +506,7 @@ Function AnswerButtonEvent(Val Token
 
     String_ = "String";
 
-    URL        = "/messages/answerCallbackQuery";
+    RequestURL = "/messages/answerCallbackQuery";
     Parameters = NormalizeMain(URL, Token);
 
     OPI_Tools.AddField("queryId"  , EventID , String_  , Parameters);
@@ -516,7 +514,7 @@ Function AnswerButtonEvent(Val Token
     OPI_Tools.AddField("url"      , URL     , String_  , Parameters);
     OPI_Tools.AddField("showAlert", AsAlert , "Boolean", Parameters);
 
-    Response = OPI_HTTPRequests.Get(URL, Parameters);
+    Response = OPI_HTTPRequests.Get(RequestURL, Parameters);
 
     Return Response;
 

@@ -34,6 +34,7 @@
 // BSLLS:DuplicateStringLiteral-off
 // BSLLS:MagicNumber-off
 // BSLLS:UsingHardcodeNetworkAddress-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check use-non-recommended-method
 //@skip-check module-structure-top-region
@@ -56,6 +57,7 @@ Function GetTestingSectionMapping() Export
     Sections.Insert("Twitter"        , 4);
     Sections.Insert("PostgreSQL"     , 5);
     Sections.Insert("MySQL"          , 5);
+    Sections.Insert("MSSQL"          , 5);
     Sections.Insert("SQLite"         , 5);
     Sections.Insert("RCON"           , 5);
     Sections.Insert("YandexDisk"     , 5);
@@ -96,6 +98,7 @@ Function GetTestingSectionMappingGA() Export
     Sections.Insert("Twitter"        , StandardDependencies);
     Sections.Insert("PostgreSQL"     , StandardDependencies);
     Sections.Insert("MySQL"          , StandardDependencies);
+    Sections.Insert("MSSQL"          , StandardDependencies);
     Sections.Insert("SQLite"         , StandardDependencies);
     Sections.Insert("RCON"           , StandardDependencies);
     Sections.Insert("YandexDisk"     , StandardDependencies);
@@ -155,6 +158,7 @@ Function GetTestTable() Export
     Ollama    = "Ollama";
     Http      = "HTTPClient";
     OpenAI    = "OpenAI";
+    MSSQL     = "MSSQL";
 
     TestTable = New ValueTable;
     TestTable.Columns.Add("Method");
@@ -296,6 +300,8 @@ Function GetTestTable() Export
     NewTest(TestTable, "Postgres_ORM"                         , "ORM"                             , Postgres);
     NewTest(TestTable, "MYS_CommonMethods"                    , "Common methods"                  , MySQL);
     NewTest(TestTable, "MYS_ORM"                              , "ORM"                             , MySQL);
+    NewTest(TestTable, "MSS_CommonMethods"                    , "Common methods"                  , MSSQL);
+    NewTest(TestTable, "MSS_ORM"                              , "ORM"                             , MSSQL);
     NewTest(TestTable, "GAPI_GroupManagement"                 , "Group management"                , GreenAPI);
     NewTest(TestTable, "GAPI_MessageSending"                  , "Messages sending"                , GreenAPI);
     NewTest(TestTable, "GAPI_NotificationsReceiving"          , "Notifications receiving"         , GreenAPI);
@@ -571,11 +577,15 @@ Function ExecuteTestCLI(Val Library, Val Method, Val Options, Val Record = True)
 
     If OPI_Tools.IsWindows() Then
 
-        Oint = """C:/Program Files/OneScript/bin/oint.bat""";
+        If OPI_Tools.IsOneScript() Then
+            Oint = """C:\Program Files (x86)\OInt\bin\oint.bat""";
+        Else
+            Oint = """C:\Program Files\OneScript\bin\oint.bat""";
+        EndIf;
 
     Else
 
-        Oint = "sudo oint";
+        Oint = "oint";
 
     EndIf;
 
@@ -595,7 +605,9 @@ Function ExecuteTestCLI(Val Library, Val Method, Val Options, Val Record = True)
 
     EndDo;
 
+    // BSLLS:ExternalAppStarting-off
     RunApp(LaunchString + " --out """ + ResultFile + """ --debug" , , True);
+    // BSLLS:ExternalAppStarting-on
 
     Result = ReadCLIResponse(ResultFile);
 
@@ -1119,11 +1131,34 @@ EndProcedure
 
 Procedure Check_TwitterText(Val Result, Val Text) Export
 
-    ReplyText = Result["data"]["text"];
-    ReplyText = Left(ReplyText, StrLen(Text));
-
     ExpectsThat(Result).ИмеетТип("Map").Заполнено();
-    ExpectsThat(ReplyText).Равно(Text);
+
+    Data = Result["data"];
+
+    If Data = Undefined Then
+
+        Status = Result["status"];
+        ExpectsThat(Status).Равно(429);
+
+    Else
+
+        ReplyText = Result["data"]["text"];
+        ReplyText = Left(ReplyText, StrLen(Text));
+
+        ExpectsThat(ReplyText).Равно(Text);
+
+    EndIf;
+
+EndProcedure
+
+Procedure Check_TwitterArray(Val Result) Export
+
+    If Not TypeOf(Result) = Type("Array") Then
+
+        Status = Result["status"];
+        ExpectsThat(Status).Равно(429);
+
+    EndIf;
 
 EndProcedure
 
@@ -2539,6 +2574,7 @@ Function DataFilePath()
     PossiblePaths = New Array;
     PossiblePaths.Add("./data.json");
     PossiblePaths.Add("C:\GDrive\Мой Диск\data.json");
+    PossiblePaths.Add("G:\Мой Диск\data.json");
 
     For Each PossiblePath In PossiblePaths Do
 
@@ -2558,7 +2594,6 @@ EndFunction
 Function GetCommonModule(Val Name)
 
     Module = Eval(Name);
-
     Return Module;
 EndFunction
 
@@ -2567,6 +2602,7 @@ EndFunction
 Function GetCLIFormedValue(Val Value, Val Embedded = False)
 
     CurrentType = TypeOf(Value);
+    Cover       = False;
 
     If CurrentType = Type("Number") Then
 
@@ -2577,12 +2613,13 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
         Value = OPI_Tools.NumberToString(Value);
 
         If Not Embedded Then
-            Value = """" + Value + """";
+            Cover = True;
         EndIf;
 
     ElsIf CurrentType = Type("Date") Then
 
-        Value = """" + XMLString(Value) + """";
+        Value = XMLString(Value);
+        Cover = True;
 
     ElsIf CurrentType  = Type("Structure")
         Or CurrentType = Type("Map")
@@ -2595,7 +2632,9 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
             WriterSettings = New JSONWriterSettings(JSONLineBreak.None, , False);
             JSONWriter.SetString(WriterSettings);
             WriteJSON(JSONWriter, Value);
-            Value          = """" + JSONWriter.Close() + """";
+
+            Value = JSONWriter.Close();
+            Cover = True;
 
         Else
 
@@ -2613,6 +2652,7 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
             Stream.Close();
 
             Value = TFN;
+            Cover = True;
 
         EndIf;
 
@@ -2627,7 +2667,8 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
         //@skip-check missing-temporary-file-deletion
         TFN = GetTempFileName();
         Value.Write(TFN);
-        Value = """" + TFN + """";
+        Value = TFN;
+        Cover = True;
 
         // BSLLS:MissingTemporaryFileDeletion-on
 
@@ -2635,6 +2676,14 @@ Function GetCLIFormedValue(Val Value, Val Embedded = False)
 
         Raise "Invalid type " + String(CurrentType);
 
+    EndIf;
+
+    If Not OPI_Tools.IsWindows() Then
+        Value = StrReplace(Value, """" , """'""");
+    EndIf;
+
+    If Cover Then
+        Value = """" + Value + """";
     EndIf;
 
     Return Value;
@@ -2722,10 +2771,12 @@ Function ReadCLIResponse(Val ResultFile)
 
     Try
 
+        // BSLLS:ExternalAppStarting-off
         JSONReader = New JSONReader();
         JSONReader.OpenFile(ResultFile);
-        Result     = ReadJSON(JSONReader, True);
+        Result = ReadJSON(JSONReader, True);
         JSONReader.Close();
+        // BSLLS:ExternalAppStarting-on
 
     Except
 
@@ -2757,11 +2808,13 @@ Procedure WriteParameterToFile(Val Parameter, Val Value, Val Path)
     Values = OPI_Tools.ReadJSONFile(Path);
     Values.Insert(Parameter, Value);
 
-    Record             = New JSONWriter;
+    // BSLLS:ExternalAppStarting-off
+    Record = New JSONWriter;
     JSONWriterSettings = New JSONWriterSettings(JSONLineBreak.Auto, Chars.Tab);
     Record.OpenFile(Path, , , JSONWriterSettings);
     WriteJSON(Record, Values);
     Record.Close();
+    // BSLLS:ExternalAppStarting-on
 
 EndProcedure
 
@@ -2846,6 +2899,10 @@ Procedure ProcessSpecialOptionsSecrets(Val Library, Val Option, Value)
 
         ProcessSecretsMySQL(Option, Value);
 
+    ElsIf Library = "mssql" Then
+
+        ProcessSecretsMSSQL(Option, Value);
+
     ElsIf Library = "ollama" Then
 
         ProcessSecretsMySQLOllama(Option, Value);
@@ -2889,6 +2946,22 @@ Procedure ProcessSecretsMySQL(Val Option, Value)
     If Option = "dbc" Then
 
         Value = "mysql://bayselonarrend:***@127.0.0.1:3306/";
+
+    ElsIf Option = "addr" Then
+
+        Value = "127.0.0.1";
+
+    Else
+        Return;
+    EndIf;
+
+EndProcedure
+
+Procedure ProcessSecretsMSSQL(Val Option, Value)
+
+    If Option = "dbc" Then
+
+        Value = "Server=127.0.0.1;Database=***;User Id=SA;Password=***;";
 
     ElsIf Option = "addr" Then
 
@@ -3222,6 +3295,10 @@ EndProcedure
 
 Procedure Проверка_ТвиттерТекст(Val Результат, Val Текст) Export
 	Check_TwitterText(Результат, Текст);
+EndProcedure
+
+Procedure Проверка_ТвиттерМассив(Val Результат) Export
+	Check_TwitterArray(Результат);
 EndProcedure
 
 Procedure Проверка_ВайберОк(Val Результат) Export

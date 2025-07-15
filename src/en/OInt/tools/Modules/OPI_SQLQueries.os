@@ -33,6 +33,8 @@
 // BSLLS:QueryParseError-off
 // BSLLS:AssignAliasFieldsInQuery-off
 // BSLLS:NumberOfParams-off
+// BSLLS:UsingSynchronousCalls-off
+// BSLLS:MagicNumber-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -144,7 +146,9 @@ Function EnsureTable(Val Module
     OPI_TypeConversion.GetKeyValueCollection(ColoumnsStruct, ErrorText);
     OPI_TypeConversion.GetLine(Table);
 
-    ResultStrucutre = New Structure("result", True);
+    Result_ = "result";
+
+    ResultStrucutre = New Structure(Result_, True);
 
     Connection  = CreateConnection(Module, Connection, Tls);
     ProblemStep = ProcessRecordsStart(Module, True, Connection);
@@ -157,7 +161,7 @@ Function EnsureTable(Val Module
 
         TableDescription = GetTableStructure(Module, Table, Connection, Tls);
 
-        If Not TableDescription["result"] Then
+        If Not TableDescription[Result_] Then
             Return TableDescription;
         EndIf;
 
@@ -165,68 +169,13 @@ Function EnsureTable(Val Module
 
         If Not ValueIsFilled(TableColumns) Then
             ResultStrucutre = CreateTable(Module, Table, ColoumnsStruct, Connection, Tls);
-
         Else
 
-            FoundMapping = New Map;
-            FieldName    = Module.GetFeatures()["ColumnField"];
+            Error = NormalizeTable(Module, Table, ColoumnsStruct, TableColumns, Connection, Tls);
 
-            DeleteCode = 0;
-            AddCode    = 1;
-            IgnoreCode = 2;
-
-            For Each Coloumn In TableColumns Do
-
-                ColumnName = Coloumn[FieldName];
-
-                If Not ValueIsFilled(ColumnName) Then
-                    Continue;
-                Else
-                    FoundMapping.Insert(ColumnName, DeleteCode);
-                EndIf;
-
-            EndDo;
-
-            If FoundMapping.Count() = 0 Then
-                ResponseMapping     = New Map;
-                ResponseMapping.Insert("result", "false");
-                ResponseMapping.Insert("error" , "Unsupported table schema type");
-                Return ResponseMapping;
+            If Error <> Undefined Then
+                Return Error;
             EndIf;
-
-            For Each RequiredColumn In ColoumnsStruct Do
-
-                ColumnName = RequiredColumn.Key;
-                Exist      = FoundMapping.Get(ColumnName) <> Undefined;
-                Action     = ?(Exist, IgnoreCode, AddCode);
-
-                FoundMapping.Insert(ColumnName, Action);
-
-            EndDo;
-
-            For Each SchemaPart In FoundMapping Do
-
-                ActionCode = SchemaPart.Value;
-                ColumnName = SchemaPart.Key;
-
-                If ActionCode = 0 Then
-
-                    Result = DeleteTableColumn(Module, Table, ColumnName, Connection, Tls);
-
-                ElsIf ActionCode = 1 Then
-
-                    DataType = ColoumnsStruct[ColumnName];
-                    Result   = AddTableColumn(Module, Table, ColumnName, DataType, Connection, Tls);
-
-                Else
-                    Continue;
-                EndIf;
-
-                If Not Result["result"] Then
-                    Raise Result["error"];
-                EndIf;
-
-            EndDo;
 
         EndIf;
 
@@ -237,7 +186,7 @@ Function EnsureTable(Val Module
 
         Rollback = Module.ExecuteSQLQuery("ROLLBACK;", , , Connection);
 
-        ResultStrucutre.Insert("result"  , False);
+        ResultStrucutre.Insert(Result_   , False);
         ResultStrucutre.Insert("error"   , ErrorDescription());
         ResultStrucutre.Insert("rollback", Rollback);
 
@@ -702,13 +651,31 @@ Function FormTextSelect(Val Scheme)
     Filters = Scheme["filter"];
     Sort    = Scheme["order"];
     Count   = Scheme["limit"];
+    DBMS    = Scheme["dbms"];
 
-    SQLTemplate = "SELECT %1 FROM %2
-    |%3;";
+    SQLTemplate = "SELECT %1 %2 FROM %3
+    |%4
+    |%5
+    |%6;";
 
-    OptionsBlock = ForSelectOptionsText(Filters, Sort, Count);
+    FilterText  = FormFilterText(Filters);
+    SortingText = FormSortingText(Sort);
 
-    TextSQL = StrTemplate(SQLTemplate, StrConcat(Fields, ", "), Table, OptionsBlock);
+    If DBMS       = "mssql" Then
+        TopText   = FormTopText(Count);
+        LimitText = "";
+    Else
+        TopText   = "";
+        LimitText = FormCountText(Count);
+    EndIf;
+
+    TextSQL = StrTemplate(SQLTemplate
+        , TopText
+        , StrConcat(Fields, ", ")
+        , Table
+        , FilterText
+        , SortingText
+        , LimitText);
 
     Return TextSQL;
 
@@ -923,10 +890,12 @@ Function FormTextAlterTableDrop(Val Scheme)
 
     Table = Scheme["table"];
     Name  = Scheme["name"];
+    DBMS  = Scheme["dbms"];
 
-    SQLTemplate = "ALTER TABLE %1 DROP %2";
+    SQLTemplate   = "ALTER TABLE %1 DROP %2 %3";
+    Clarification = ?(DBMS = "mssql", "COLUMN", "");
 
-    TextSQL = StrTemplate(SQLTemplate, Table, Name);
+    TextSQL = StrTemplate(SQLTemplate, Table, Clarification, Name);
 
     Return TextSQL;
 
@@ -1017,7 +986,8 @@ Function ProcessRecordsStart(Val Module, Val Transaction, Val Connection)
 
     If Transaction Then
 
-        Start = Module.ExecuteSQLQuery("BEGIN", , , Connection);
+        Text  = Module.GetFeatures()["TransactionStart"];
+        Start = Module.ExecuteSQLQuery(Text, , , Connection);
 
         If Not Start["result"] Then
             Return Start;
@@ -1082,19 +1052,74 @@ Function AddRow(Val Module, Val Table, Val Record, Val Connection)
 
 EndFunction
 
-Function ForSelectOptionsText(Val Filters, Val Sort, Val Count)
+Function NormalizeTable(Val Module
+    , Val Table
+    , Val ColoumnsStruct
+    , Val TableColumns
+    , Val Connection
+    , Val Tls)
 
-    BlockTemplate = "%1
-    |%2
-    |%3";
+    FoundMapping = New Map;
+    FieldName    = Module.GetFeatures()["ColumnField"];
 
-    FilterText  = FormFilterText(Filters);
-    SortingText = FormSortingText(Sort);
-    CountText   = FormCountText(Count);
+    DeleteCode = 0;
+    AddCode    = 1;
+    IgnoreCode = 2;
 
-    BlockText = StrTemplate(BlockTemplate, FilterText, SortingText, CountText);
+    For Each Coloumn In TableColumns Do
 
-    Return BlockText;
+        ColumnName = Coloumn[FieldName];
+
+        If Not ValueIsFilled(ColumnName) Then
+            Continue;
+        Else
+            FoundMapping.Insert(ColumnName, DeleteCode);
+        EndIf;
+
+    EndDo;
+
+    If FoundMapping.Count() = 0 Then
+        ResponseMapping     = New Map;
+        ResponseMapping.Insert("result", "false");
+        ResponseMapping.Insert("error" , "Unsupported table schema type");
+        Return ResponseMapping;
+    EndIf;
+
+    For Each RequiredColumn In ColoumnsStruct Do
+
+        ColumnName = RequiredColumn.Key;
+        Exist      = FoundMapping.Get(ColumnName) <> Undefined;
+        Action     = ?(Exist, IgnoreCode, AddCode);
+
+        FoundMapping.Insert(ColumnName, Action);
+
+    EndDo;
+
+    For Each SchemaPart In FoundMapping Do
+
+        ActionCode = SchemaPart.Value;
+        ColumnName = SchemaPart.Key;
+
+        If ActionCode = 0 Then
+
+            Result = DeleteTableColumn(Module, Table, ColumnName, Connection, Tls);
+
+        ElsIf ActionCode = 1 Then
+
+            DataType = ColoumnsStruct[ColumnName];
+            Result   = AddTableColumn(Module, Table, ColumnName, DataType, Connection, Tls);
+
+        Else
+            Continue;
+        EndIf;
+
+        If Not Result["result"] Then
+            Raise Result["error"];
+        EndIf;
+
+    EndDo;
+
+    Return Undefined;
 
 EndFunction
 
@@ -1167,6 +1192,19 @@ Function FormCountText(Val Count)
     EndIf;
 
     CountText = "LIMIT %1";
+    CountText = StrTemplate(CountText, OPI_Tools.NumberToString(Count));
+
+    Return CountText;
+
+EndFunction
+
+Function FormTopText(Val Count)
+
+    If Not ValueIsFilled(Count) Then
+        Return "";
+    EndIf;
+
+    CountText = "TOP %1";
     CountText = StrTemplate(CountText, OPI_Tools.NumberToString(Count));
 
     Return CountText;

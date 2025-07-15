@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -254,7 +261,7 @@
     NewLine.Method       = "DeleteMessage";
     NewLine.SearchMethod = "DELETEMESSAGE";
     NewLine.Parameter    = "--issheduled";
-    NewLine.Description    = "Indicator of deleting a delayed message (optional, def. val. - No)";
+    NewLine.Description    = "Indicator of deleting a delayed message (optional, def. val. - False)";
     NewLine.Region     = "Message management";
 
 
@@ -378,7 +385,7 @@
     NewLine.Method       = "GetChannelList";
     NewLine.SearchMethod = "GETCHANNELLIST";
     NewLine.Parameter    = "--notarchived";
-    NewLine.Description    = "Indicator of excluding archived channels (optional, def. val. - No)";
+    NewLine.Description    = "Indicator of excluding archived channels (optional, def. val. - False)";
     NewLine.Region     = "Channel management";
 
 
@@ -450,7 +457,7 @@
     NewLine.Method       = "CreateChannel";
     NewLine.SearchMethod = "CREATECHANNEL";
     NewLine.Parameter    = "--private";
-    NewLine.Description    = "Create channel as private (optional, def. val. - No)";
+    NewLine.Description    = "Create channel as private (optional, def. val. - False)";
     NewLine.Region     = "Channel management";
 
 
@@ -1080,3 +1087,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_Slack = LoadScript(""%1/oint/core/Modules/OPI_Slack.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

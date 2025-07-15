@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -246,7 +253,7 @@
     NewLine.Method       = "EditListCalendar";
     NewLine.SearchMethod = "EDITLISTCALENDAR";
     NewLine.Parameter    = "--hidden";
-    NewLine.Description    = "Hidden calendar (optional, def. val. - No)";
+    NewLine.Description    = "Hidden calendar (optional, def. val. - False)";
     NewLine.Region     = "Calendar list management";
 
 
@@ -256,7 +263,7 @@
     NewLine.Method       = "GetEventDescription";
     NewLine.SearchMethod = "GETEVENTDESCRIPTION";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Event management";
     NewLine.MethodDescription   = "Gets an empty layout to create the event";
 
@@ -491,3 +498,19 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+        |Context.Insert(""OPI_GoogleWorkspace"", Undefined);
+        |
+        |OPI_GoogleWorkspace = LoadScript(""%1/oint/core/Modules/OPI_GoogleWorkspace.os"", Context);
+        |Context.Insert(""OPI_GoogleWorkspace"", OPI_GoogleWorkspace);
+        |
+        |OPI_GoogleCalendar = LoadScript(""%1/oint/core/Modules/OPI_GoogleCalendar.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

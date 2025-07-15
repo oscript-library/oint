@@ -33,6 +33,7 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -40,9 +41,6 @@
 //@skip-check method-too-many-params
 //@skip-check constructor-function-return-section
 //@skip-check doc-comment-collection-item-type
-
-// Раскомментировать, если выполняется OneScript
-// #Использовать "../../tools"
 
 #Область ПрограммныйИнтерфейс
 
@@ -533,6 +531,7 @@
     Особенности.Вставить("МаркерПараметров"   , "?");
     Особенности.Вставить("СУБД"               , "mysql");
     Особенности.Вставить("ПолеКолонки"        , "COLUMN_NAME");
+    Особенности.Вставить("НачалоТранзакции"   , "BEGIN");
 
     Возврат Особенности;
 

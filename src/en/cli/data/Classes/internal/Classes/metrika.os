@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -257,7 +264,7 @@
     NewLine.Method       = "GetCounterStructure";
     NewLine.SearchMethod = "GETCOUNTERSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Counters management";
     NewLine.MethodDescription   = "Gets the structure of standard fields for counter creation";
 
@@ -268,7 +275,7 @@
     NewLine.Method       = "GetCounterFilterStructure";
     NewLine.SearchMethod = "GETCOUNTERFILTERSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Counters management";
     NewLine.MethodDescription   = "Gets the structure of filter fields to get the list of counters";
 
@@ -296,3 +303,19 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+        |Context.Insert(""OPI_YandexID"", Undefined);
+        |
+        |OPI_YandexID = LoadScript(""%1/oint/core/Modules/OPI_YandexID.os"", Context);
+        |Context.Insert(""OPI_YandexID"", OPI_YandexID);
+        |
+        |OPI_YandexMetrika = LoadScript(""%1/oint/core/Modules/OPI_YandexMetrika.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

@@ -34,8 +34,8 @@ Method at API documentation: [Pull a Model](https://github.com/ollama/ollama/blo
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital/ollama";
-    Token = "10KO-82..."; // Authorization - not part API Ollama
+    URL   = "https://hut.openintegrations.dev/ollama";
+    Token = "12We34..."; // Authorization - not part API Ollama
 
     Model = "tinyllama";
 
@@ -53,7 +53,7 @@ Method at API documentation: [Pull a Model](https://github.com/ollama/ollama/blo
             # JSON data can also be passed as a path to a .json file
             
             oint ollama PullModel \
-             --url "https://api.athenaeum.digital/ollama" \
+             --url "https://hut.openintegrations.dev/ollama" \
              --model "bayselonarrend/tinyllama:latest" \
              --headers "{'Authorization':'***'}"
         ```
@@ -64,7 +64,7 @@ Method at API documentation: [Pull a Model](https://github.com/ollama/ollama/blo
             :: JSON data can also be passed as a path to a .json file
             
             oint ollama PullModel ^
-             --url "https://api.athenaeum.digital/ollama" ^
+             --url "https://hut.openintegrations.dev/ollama" ^
              --model "bayselonarrend/tinyllama:latest" ^
              --headers "{'Authorization':'***'}"
         ```

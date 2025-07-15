@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -65,3 +72,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |Utils = LoadScript(""C:/ProgramData/Jenkins/.jenkins/workspace/OpiMain/src/en/cli/tools/Modules/Utils.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

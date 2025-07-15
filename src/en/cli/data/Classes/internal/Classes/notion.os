@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -164,7 +171,7 @@
     NewLine.Method       = "EditPageProperties";
     NewLine.SearchMethod = "EDITPAGEPROPERTIES";
     NewLine.Parameter    = "--archive";
-    NewLine.Description    = "Archive page or not (boolean) (optional, def. val. - No)";
+    NewLine.Description    = "Archive page or not (boolean) (optional, def. val. - False)";
     NewLine.Region     = "Page management";
 
 
@@ -379,7 +386,7 @@
     NewLine.Method       = "ReturnBlock";
     NewLine.SearchMethod = "RETURNBLOCK";
     NewLine.Parameter    = "--core";
-    NewLine.Description    = "True > service fields are deleted, only the block itself remains (optional, def. val. - Yes)";
+    NewLine.Description    = "True > service fields are deleted, only the block itself remains (optional, def. val. - True)";
     NewLine.Region     = "Blocks management";
 
 
@@ -459,3 +466,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_Notion = LoadScript(""%1/oint/core/Modules/OPI_Notion.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

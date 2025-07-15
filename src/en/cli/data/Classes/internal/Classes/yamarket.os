@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -131,7 +138,7 @@
     NewLine.Method       = "AddUpdateProducts";
     NewLine.SearchMethod = "ADDUPDATEPRODUCTS";
     NewLine.Parameter    = "--pmedia";
-    NewLine.Description    = "A flag of using only your own product images (optional, def. val. - No)";
+    NewLine.Description    = "A flag of using only your own product images (optional, def. val. - False)";
     NewLine.Region     = "Product management";
 
 
@@ -223,10 +230,25 @@
     NewLine.Method       = "GetProductStructure";
     NewLine.SearchMethod = "GETPRODUCTSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Product management";
     NewLine.MethodDescription   = "Gets the structure of product standard fields";
 
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_YandexMarket = LoadScript(""%1/oint/core/Modules/OPI_YandexMarket.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

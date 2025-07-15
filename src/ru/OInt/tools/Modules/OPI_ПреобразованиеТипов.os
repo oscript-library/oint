@@ -28,6 +28,7 @@
 // BSLLS:IncorrectLineBreak-off
 // BSLLS:UnusedLocalVariable-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
@@ -104,6 +105,8 @@
 
     Попытка
 
+        // BSLLS:ExternalAppStarting-off
+
         ИсходноеЗначение = Значение;
 
         Если ЭтоКоллекция(Значение) Тогда
@@ -153,6 +156,8 @@
             КонецЕсли;
 
         КонецЕсли;
+
+        // BSLLS:ExternalAppStarting-on
 
     Исключение
 

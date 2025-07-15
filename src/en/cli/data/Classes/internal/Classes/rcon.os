@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -74,3 +81,19 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+        |Context.Insert(""OPI_RCON"", Undefined);
+        |
+        |OPI_RCON = LoadScript(""%1/oint/core/Modules/OPI_RCON.os"", Context);
+        |Context.Insert(""OPI_RCON"", OPI_RCON);
+        |
+        |OPI_RCON = LoadScript(""%1/oint/core/Modules/OPI_RCON.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

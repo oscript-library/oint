@@ -1,4 +1,4 @@
-﻿    Картинка = "https://api.athenaeum.digital/test_data/picture.jpg";
+﻿    Картинка = "https://hut.openintegrations.dev/test_data/picture.jpg";
     OPI_ПреобразованиеТипов.ПолучитьДвоичныеДанные(Картинка); // Картинка - Тип: ДвоичныеДанные
 
     Адрес  = "127.0.0.1";
@@ -58,14 +58,13 @@
                    |    INSERT INTO users (name, age) VALUES ('Alice', 30);
                    |    INSERT INTO users (name, age) VALUES ('Bob', 25);
                    |    INSERT INTO users (name, age) VALUES ('Charlie', 35);
-                   |    COMMIT;
                    |END $$ LANGUAGE plpgsql;";
 
     Результат = OPI_PostgreSQL.ВыполнитьЗапросSQL(ТекстЗапроса, , , Соединение);
 
     // SQL запрос из файла
 
-    ФайлSQL = "https://api.athenaeum.digital/test_data/TEST_DATA.sql"; // Двоичные данные, URL или путь к файлу
+    ФайлSQL = "https://hut.openintegrations.dev/test_data/TEST_DATA.sql"; // Двоичные данные, URL или путь к файлу
 
     Результат = OPI_PostgreSQL.ВыполнитьЗапросSQL(ФайлSQL, , , Соединение);
 

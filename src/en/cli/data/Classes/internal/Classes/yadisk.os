@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -90,7 +97,7 @@
     NewLine.Method       = "DeleteObject";
     NewLine.SearchMethod = "DELETEOBJECT";
     NewLine.Parameter    = "--can";
-    NewLine.Description    = "To cart (optional, def. val. - Yes)";
+    NewLine.Description    = "To cart (optional, def. val. - True)";
     NewLine.Region     = "File and folder management";
 
 
@@ -131,7 +138,7 @@
     NewLine.Method       = "CreateObjectCopy";
     NewLine.SearchMethod = "CREATEOBJECTCOPY";
     NewLine.Parameter    = "--rewrite";
-    NewLine.Description    = "Overwrite if a file with the same name already exists (optional, def. val. - No)";
+    NewLine.Description    = "Overwrite if a file with the same name already exists (optional, def. val. - False)";
     NewLine.Region     = "File and folder management";
 
 
@@ -237,7 +244,7 @@
     NewLine.Method       = "GetFilesList";
     NewLine.SearchMethod = "GETFILESLIST";
     NewLine.Parameter    = "--datesort";
-    NewLine.Description    = "True > sort by date, False > alphabetically (optional, def. val. - No)";
+    NewLine.Description    = "True > sort by date, False > alphabetically (optional, def. val. - False)";
     NewLine.Region     = "File and folder management";
 
 
@@ -278,7 +285,7 @@
     NewLine.Method       = "MoveObject";
     NewLine.SearchMethod = "MOVEOBJECT";
     NewLine.Parameter    = "--rewrite";
-    NewLine.Description    = "Overwrite if a file with the same name already exists (optional, def. val. - No)";
+    NewLine.Description    = "Overwrite if a file with the same name already exists (optional, def. val. - False)";
     NewLine.Region     = "File and folder management";
 
 
@@ -319,7 +326,7 @@
     NewLine.Method       = "UploadFile";
     NewLine.SearchMethod = "UPLOADFILE";
     NewLine.Parameter    = "--rewrite";
-    NewLine.Description    = "Overwrite if a file with the same name already exists (optional, def. val. - No)";
+    NewLine.Description    = "Overwrite if a file with the same name already exists (optional, def. val. - False)";
     NewLine.Region     = "File and folder management";
 
 
@@ -542,3 +549,19 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+        |Context.Insert(""OPI_YandexID"", Undefined);
+        |
+        |OPI_YandexID = LoadScript(""%1/oint/core/Modules/OPI_YandexID.os"", Context);
+        |Context.Insert(""OPI_YandexID"", OPI_YandexID);
+        |
+        |OPI_YandexDisk = LoadScript(""%1/oint/core/Modules/OPI_YandexDisk.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

@@ -1,16 +1,11 @@
-mod methods;
+mod backend;
 
 use addin1c::{name, Variant};
 use crate::core::getset;
 use serde_json::json;
-use tiberius::{Client, Config};
-use tokio::net::TcpStream;
-use tokio_util::compat::{Compat, TokioAsyncWriteCompatExt};
 use std::sync::{Arc, Mutex};
 
-// МЕТОДЫ КОМПОНЕНТЫ -------------------------------------------------------------------------------
-
-// Синонимы
+// МЕТОДЫ КОМПОНЕНТЫ
 pub const METHODS: &[&[u16]] = &[
     name!("Connect"),
     name!("Close"),
@@ -18,7 +13,6 @@ pub const METHODS: &[&[u16]] = &[
     name!("SetTLS")
 ];
 
-// Число параметров функций компоненты
 pub fn get_params_amount(num: usize) -> usize {
     match num {
         0 => 0,
@@ -29,46 +23,35 @@ pub fn get_params_amount(num: usize) -> usize {
     }
 }
 
-// Соответствие функций Rust функциям компоненты
 pub fn cal_func(obj: &mut AddIn, num: usize, params: &mut [Variant]) -> Box<dyn getset::ValueType> {
     match num {
         0 => Box::new(obj.initialize()),
         1 => Box::new(obj.close_connection()),
         2 => {
-            let query = params[0].get_string().unwrap_or("".to_string());
-            let params_json = params[1].get_string().unwrap_or("".to_string());
+            let query = params[0].get_string().unwrap_or_default();
+            let params_json = params[1].get_string().unwrap_or_default();
             let force_result = params[2].get_bool().unwrap_or(false);
-
-            match obj.get_connection() {
-                Ok(conn) => {
-                    Box::new(methods::execute_query(conn, query, params_json, force_result))
-                },
-                Err(e) => Box::new(e),
-            }
+            Box::new(obj.execute_query(query, params_json, force_result))
         },
         3 => {
             let use_tls = params[0].get_bool().unwrap_or(false);
             let accept_invalid_certs = params[1].get_bool().unwrap_or(false);
-            let ca_cert_path = params[2].get_string().unwrap_or("".to_string());
-
+            let ca_cert_path = params[2].get_string().unwrap_or_default();
             Box::new(obj.set_tls(use_tls, accept_invalid_certs, &ca_cert_path))
         }
         _ => Box::new(false),
     }
 }
 
-// -------------------------------------------------------------------------------------------------
-
-// ПОЛЯ КОМПОНЕНТЫ ---------------------------------------------------------------------------------
-
-// Синонимы
+// ПОЛЯ КОМПОНЕНТЫ
 pub const PROPS: &[&[u16]] = &[
     name!("ConnectionString")
 ];
 
 pub struct AddIn {
     connection_string: String,
-    connection: Option<Arc<Mutex<Client<Compat<TcpStream>>>>>,
+    backend: Arc<Mutex<backend::MSSQLBackend>>,
+    initialized: bool,
     use_tls: bool,
     accept_invalid_certs: bool,
     ca_cert_path: String,
@@ -76,9 +59,10 @@ pub struct AddIn {
 
 impl AddIn {
     pub fn new() -> Self {
-        AddIn {
+        Self {
             connection_string: String::new(),
-            connection: None,
+            backend: Arc::new(Mutex::new(backend::MSSQLBackend::new())),
+            initialized: false,
             use_tls: false,
             accept_invalid_certs: false,
             ca_cert_path: String::new(),
@@ -87,43 +71,39 @@ impl AddIn {
 
     pub fn initialize(&mut self) -> String {
         if self.connection_string.is_empty() {
-            return Self::process_error("Empty connection string!");
+            return Self::error("Empty connection string!");
         }
 
-        let mut config = match Config::from_ado_string(&self.connection_string) {
-            Ok(config) => config,
-            Err(e) => return Self::process_error(&e.to_string()),
-        };
-
-        if self.use_tls {
-            config.trust_cert();
+        if self.initialized {
+            return Self::error("Client already initialized!");
         }
 
-        match tokio::runtime::Runtime::new().unwrap().block_on(async {
-            let tcp = TcpStream::connect(config.get_addr()).await?;
-            tcp.set_nodelay(true)?;
-            let compat = tcp.compat_write();
-            Client::connect(config, compat).await
-        }) {
-            Ok(client) => {
-                self.connection = Some(Arc::new(Mutex::new(client)));
-                json!({"result": true}).to_string()
-            },
-            Err(e) => Self::process_error(&e.to_string()),
+        let result = self.backend.lock().unwrap().connect(
+            self.connection_string.clone(),
+            self.use_tls,
+            self.accept_invalid_certs,
+            self.ca_cert_path.clone(),
+        );
+
+        if result.contains("\"result\":true") {
+            self.initialized = true;
         }
+
+        result
     }
 
     pub fn close_connection(&mut self) -> String {
-        if self.connection.take().is_some() {
-            json!({"result": true}).to_string()
-        } else {
-            Self::process_error("Connection is already closed")
-        }
+        self.initialized = false;
+        json!({"result": true}).to_string()
+    }
+
+    pub fn execute_query(&self, query: String, params_json: String, force_result: bool) -> String {
+        self.backend.lock().unwrap().execute_query(query, params_json, force_result)
     }
 
     pub fn set_tls(&mut self, use_tls: bool, accept_invalid_certs: bool, ca_cert_path: &str) -> String {
-        if self.connection.is_some() {
-            return Self::process_error("TLS settings can only be set before the connection is established");
+        if self.initialized {
+            return Self::error("TLS settings can only be set before the connection is established");
         }
 
         self.use_tls = use_tls;
@@ -133,17 +113,14 @@ impl AddIn {
         json!({"result": true}).to_string()
     }
 
-    fn get_connection(&mut self) -> Result<Arc<Mutex<Client<Compat<TcpStream>>>>, String> {
-        self.connection.clone().ok_or_else(|| "No active connection".to_string())
-    }
-
-    fn process_error(e: &str) -> String {
+    fn error(message: &str) -> String {
         json!({
             "result": false,
-            "error": e
+            "error": message
         }).to_string()
     }
 
+    // SERVICE METHODS
     pub fn get_field_ptr(&self, index: usize) -> *const dyn getset::ValueType {
         match index {
             0 => &self.connection_string as &dyn getset::ValueType as *const _,
@@ -154,15 +131,4 @@ impl AddIn {
     pub fn get_field_ptr_mut(&mut self, index: usize) -> *mut dyn getset::ValueType {
         self.get_field_ptr(index) as *mut _
     }
-}
-
-// -------------------------------------------------------------------------------------------------
-
-pub fn format_json_error<E: ToString>(error: E) -> String {
-    let error_message = error.to_string();
-    let json_obj = json!({
-        "result": false,
-        "error": error_message,
-    });
-    json_obj.to_string()
 }

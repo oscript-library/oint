@@ -34,8 +34,8 @@ Method at API documentation: [Create a Model](https://github.com/ollama/ollama/b
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital/ollama";
-    Token = "10KO-82..."; // Authorization - not part API Ollama
+    URL   = "https://hut.openintegrations.dev/ollama";
+    Token = "12We34..."; // Authorization - not part API Ollama
 
     Model = "mario";
 
@@ -55,7 +55,7 @@ Method at API documentation: [Create a Model](https://github.com/ollama/ollama/b
             # JSON data can also be passed as a path to a .json file
             
             oint ollama CreateModel \
-             --url "https://api.athenaeum.digital/ollama" \
+             --url "https://hut.openintegrations.dev/ollama" \
              --model "mario" \
              --settings "{'from':'tinyllama','system':'You are Mario from Super Mario Bros.'}" \
              --headers "{'Authorization':'***'}"
@@ -67,7 +67,7 @@ Method at API documentation: [Create a Model](https://github.com/ollama/ollama/b
             :: JSON data can also be passed as a path to a .json file
             
             oint ollama CreateModel ^
-             --url "https://api.athenaeum.digital/ollama" ^
+             --url "https://hut.openintegrations.dev/ollama" ^
              --model "mario" ^
              --settings "{'from':'tinyllama','system':'You are Mario from Super Mario Bros.'}" ^
              --headers "{'Authorization':'***'}"

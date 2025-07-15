@@ -1,6 +1,6 @@
 oint cdek ПолучитьШтрихкод \
   --token "***" \
-  --uuid "971428aa-829d-4529-8986-2fac3b2931f5" \
+  --uuid "be95af48-5ad2-4770-a0b8-c9ee3e4cf80e" \
   --getfile true \
   --testapi "***" \
-  --out "C:\Users\Administrator\AppData\Local\Temp\xo04hyljled.pdf"
+  --out "/tmp/bg135bni.m0k.pdf"

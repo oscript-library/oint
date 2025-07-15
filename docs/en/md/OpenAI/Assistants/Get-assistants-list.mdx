@@ -35,8 +35,8 @@ Method at API documentation: [List assistants](https://platform.openai.com/docs/
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital:1122/";
-    Token = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+    URL   = "https://hut.openintegrations.dev/localai/";
+    Token = "12We...";
 
     Count                = 2;
     AdditionalParameters = New Structure("after,order", "asst_2", "desc");
@@ -52,7 +52,7 @@ Method at API documentation: [List assistants](https://platform.openai.com/docs/
             # JSON data can also be passed as a path to a .json file
             
             oint openai GetAssistantsList \
-             --url "https://api.athenaeum.digital:1122/" \
+             --url "https://hut.openintegrations.dev/localai/" \
              --token "***" \
              --limit 2 \
              --options "{'after':'asst_2','order':'desc'}"
@@ -64,7 +64,7 @@ Method at API documentation: [List assistants](https://platform.openai.com/docs/
             :: JSON data can also be passed as a path to a .json file
             
             oint openai GetAssistantsList ^
-             --url "https://api.athenaeum.digital:1122/" ^
+             --url "https://hut.openintegrations.dev/localai/" ^
              --token "***" ^
              --limit 2 ^
              --options "{'after':'asst_2','order':'desc'}"

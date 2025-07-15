@@ -1,12 +1,14 @@
 pipeline {
-    agent any
+	agent {
+		label 'windows'
+	}
     stages {
 
         stage('Release') {
             steps {
                     powershell encoding: 'UTF-8', script:'Remove-Item -Path "./Melezh" -Recurse -Force'
                     bat 'oscript ./ci/os/releasemaker.os'
-                    archiveArtifacts artifacts: '1.25.0/*'
+                    archiveArtifacts artifacts: '1.26.0/*'
             }
         }
     }

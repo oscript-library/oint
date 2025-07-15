@@ -35,10 +35,10 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital/ollama";
-    Token = "10KO-82..."; // Authorization - not part API Ollama
+    URL   = "https://hut.openintegrations.dev/ollama";
+    Token = "12We34..."; // Authorization - not part API Ollama
 
-    Image = "https://api.athenaeum.digital/test_data/picture.jpg"; // URL, Path or Binary Data
+    Image = "https://hut.openintegrations.dev/test_data/picture.jpg"; // URL, Path or Binary Data
 
     AdditionalHeaders = New Map;
     AdditionalHeaders.Insert("Authorization", StrTemplate("Bearer %1", Token));
@@ -54,8 +54,8 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             # JSON data can also be passed as a path to a .json file
             
             oint ollama PushBlob \
-             --url "https://api.athenaeum.digital/ollama" \
-             --data "C:\Users\Administrator\AppData\Local\Temp\3qpsnmcegt4.tmp" \
+             --url "https://hut.openintegrations.dev/ollama" \
+             --data "/tmp/em0pzhgb.x34" \
              --headers "{'Authorization':'***'}"
         ```
     </TabItem>
@@ -65,8 +65,8 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             :: JSON data can also be passed as a path to a .json file
             
             oint ollama PushBlob ^
-             --url "https://api.athenaeum.digital/ollama" ^
-             --data "C:\Users\Administrator\AppData\Local\Temp\3qpsnmcegt4.tmp" ^
+             --url "https://hut.openintegrations.dev/ollama" ^
+             --data "/tmp/em0pzhgb.x34" ^
              --headers "{'Authorization':'***'}"
         ```
     </TabItem>

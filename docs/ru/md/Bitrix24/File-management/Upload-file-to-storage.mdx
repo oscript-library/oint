@@ -41,8 +41,8 @@ import TabItem from '@theme/TabItem';
     Наименование2 = "Картинка2.jpg";
     Наименование  = "Картинка1.jpg";
 
-    Картинка2 = "https://api.athenaeum.digital/test_data/picture.jpg";  // Локальный путь, URL или Двоичные данные
-    Картинка  = "https://api.athenaeum.digital/test_data/picture2.jpg"; // Локальный путь, URL или Двоичные данные
+    Картинка2 = "https://hut.openintegrations.dev/test_data/picture.jpg";  // Локальный путь, URL или Двоичные данные
+    Картинка  = "https://hut.openintegrations.dev/test_data/picture2.jpg"; // Локальный путь, URL или Двоичные данные
 
     IDПриемника = 3;
 
@@ -51,7 +51,7 @@ import TabItem from '@theme/TabItem';
     Результат = OPI_Bitrix24.ЗагрузитьФайлВХранилище(URL, Наименование2, Картинка2, IDПриемника);
 
     URL   = "b24-ar17wx.bitrix24.by";
-    Токен = "e0165368006e9f06006b12e400000001000...";
+    Токен = "11ae5d68006e9f06006b12e400000001000...";
 
     Результат = OPI_Bitrix24.ЗагрузитьФайлВХранилище(URL, Наименование, Картинка, IDПриемника, , Токен);
 ```
@@ -64,7 +64,7 @@ import TabItem from '@theme/TabItem';
             oint bitrix24 ЗагрузитьФайлВХранилище \
               --url "b24-ar17wx.bitrix24.by" \
               --title "Картинка1.jpg" \
-              --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg" \
+              --file "https://hut.openintegrations.dev/test_data/picture2.jpg" \
               --storageid 3 \
               --token "***"
         ```
@@ -75,7 +75,7 @@ import TabItem from '@theme/TabItem';
             oint bitrix24 ЗагрузитьФайлВХранилище ^
               --url "b24-ar17wx.bitrix24.by" ^
               --title "Картинка1.jpg" ^
-              --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg" ^
+              --file "https://hut.openintegrations.dev/test_data/picture2.jpg" ^
               --storageid 3 ^
               --token "***"
         ```

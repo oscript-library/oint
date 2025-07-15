@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -110,7 +117,7 @@
     NewLine.Method       = "UploadFiles";
     NewLine.SearchMethod = "UPLOADFILES";
     NewLine.Parameter    = "--singly";
-    NewLine.Description    = "True > sends files in separate requests (optional, def. val. - No)";
+    NewLine.Description    = "True > sends files in separate requests (optional, def. val. - False)";
     NewLine.Region     = "File management";
 
 
@@ -189,3 +196,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_Neocities = LoadScript(""%1/oint/core/Modules/OPI_Neocities.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

@@ -33,8 +33,8 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    Token     = "ya29.a0AW4XtxgOTUonqiJAYqYtxcBh8MI1VxhOH0B9hCii3RQaZlp1PVWulwBqV-y7CkKAad7Ofs4NlHXhJ3-Qe1lj4xEd-ubK_QpjEkbdCVoUW...";
-    Image     = "https://api.athenaeum.digital/test_data/picture.jpg";
+    Token     = "ya29.a0AS3H6Nw6rTG3pFXv17ZLXkvuvtNl_DHHXbxe2yDRIB09Sq-BA7xPQj9V7OKAaAiHRZAsVqI0UD6026Q_3gklXjU-kam0kzFCe2adXI3lS...";
+    Image     = "https://hut.openintegrations.dev/test_data/picture.jpg";
     Directory = "191iyaa6-2BCNRPOF0F8mQ0TuNWPNesdM";
 
     Description = OPI_GoogleDrive.GetFileDescription();
@@ -52,7 +52,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             
             oint gdrive UploadFile \
              --token "***" \
-             --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" \
+             --file "https://hut.openintegrations.dev/test_data/picture.jpg" \
              --props "{'MIME':'image/jpeg','Name':'New file.jpg','Description':'This is a new file','Parent':'11Mo30odYPEtBBU_0OndFx5dz1kP7tu-Y'}"
         ```
     </TabItem>
@@ -63,7 +63,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
             
             oint gdrive UploadFile ^
              --token "***" ^
-             --file "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg" ^
+             --file "https://hut.openintegrations.dev/test_data/picture.jpg" ^
              --props "{'MIME':'image/jpeg','Name':'New file.jpg','Description':'This is a new file','Parent':'11Mo30odYPEtBBU_0OndFx5dz1kP7tu-Y'}"
         ```
     </TabItem>

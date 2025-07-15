@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -37,7 +44,7 @@
     NewLine.Method       = "ProcessRequest";
     NewLine.SearchMethod = "PROCESSREQUEST";
     NewLine.Parameter    = "--string";
-    NewLine.Description    = "An attribute of receiving the response as a string (optional, def. val. - Yes)";
+    NewLine.Description    = "An attribute of receiving the response as a string (optional, def. val. - True)";
     NewLine.Region     = "Client methods";
 
 
@@ -74,3 +81,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_TCP = LoadScript(""%1/oint/core/Modules/OPI_TCP.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

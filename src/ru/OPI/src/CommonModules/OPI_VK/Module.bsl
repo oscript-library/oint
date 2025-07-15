@@ -35,15 +35,14 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:UnusedLocalVariable-off
+// BSLLS:UsingSynchronousCalls-off
+// BSLLS:MagicNumber-off
 
 //@skip-check method-too-many-params
 //@skip-check wrong-string-literal-content
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
-
-// Раскомментировать, если выполняется OneScript
-// #Использовать "../../tools"
 
 #Область ПрограммныйИнтерфейс
 

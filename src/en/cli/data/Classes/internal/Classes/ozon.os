@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -930,7 +937,7 @@
     NewLine.Method       = "GetProductStructure";
     NewLine.SearchMethod = "GETPRODUCTSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Uploading and updating products";
     NewLine.MethodDescription   = "Gets the structure of product standard fields";
 
@@ -941,7 +948,7 @@
     NewLine.Method       = "GetSimplifiedProductStructure";
     NewLine.SearchMethod = "GETSIMPLIFIEDPRODUCTSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Uploading and updating products";
     NewLine.MethodDescription   = "Gets the structure for creating a product based on Ozon ID in the CreateProductByOzonID function()";
 
@@ -952,7 +959,7 @@
     NewLine.Method       = "GetAttributesUpdateStructure";
     NewLine.SearchMethod = "GETATTRIBUTESUPDATESTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Uploading and updating products";
     NewLine.MethodDescription   = "Gets the structure for updating product characteristics in the UpdateProductsAttributes function()";
 
@@ -963,7 +970,7 @@
     NewLine.Method       = "GetProductsFilterStructure";
     NewLine.SearchMethod = "GETPRODUCTSFILTERSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Uploading and updating products";
     NewLine.MethodDescription   = "Gets the structure for selecting the list of products";
 
@@ -1345,7 +1352,7 @@
     NewLine.Method       = "GetProductStocksStructure";
     NewLine.SearchMethod = "GETPRODUCTSTOCKSSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Prices and stocks";
     NewLine.MethodDescription   = "Gets the data structure for udpating product stocks in the UpdateProductsStocks function";
 
@@ -1356,7 +1363,7 @@
     NewLine.Method       = "GetProductPriceStructure";
     NewLine.SearchMethod = "GETPRODUCTPRICESTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Prices and stocks";
     NewLine.MethodDescription   = "Gets the product price structure for the UpdateProductsPrices function";
 
@@ -1614,7 +1621,7 @@
     NewLine.Method       = "GetFBOShipmentsList";
     NewLine.SearchMethod = "GETFBOSHIPMENTSLIST";
     NewLine.Parameter    = "--trlt";
-    NewLine.Description    = "If Cyrillic to Latin address transliteration is enabled > True (optional, def. val. - No)";
+    NewLine.Description    = "If Cyrillic to Latin address transliteration is enabled > True (optional, def. val. - False)";
     NewLine.Region     = "Fbo scheme";
 
 
@@ -1777,7 +1784,7 @@
     NewLine.Method       = "GetShipmentAdditionalFields";
     NewLine.SearchMethod = "GETSHIPMENTADDITIONALFIELDS";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Fbo scheme";
     NewLine.MethodDescription   = "Returns the structure of inclusion of additional response fields for the GetFBOShipmentsList method";
 
@@ -1788,10 +1795,25 @@
     NewLine.Method       = "GetShipmentsFilterStructure";
     NewLine.SearchMethod = "GETSHIPMENTSFILTERSTRUCTURE";
     NewLine.Parameter    = "--empty";
-    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - No)";
+    NewLine.Description    = "True > structure with empty valuse, False > field descriptions at values (optional, def. val. - False)";
     NewLine.Region     = "Fbo scheme";
     NewLine.MethodDescription   = "Returns the filter structure for the GetFBOShipmentsList method";
 
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_Ozon = LoadScript(""%1/oint/core/Modules/OPI_Ozon.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

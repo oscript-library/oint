@@ -32,14 +32,12 @@
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
 // BSLLS:LineLength-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
 //@skip-check method-too-many-params
-
-// Раскомментировать, если выполняется OneScript
-#Использовать "../../tools"
 
 #Область ПрограммныйИнтерфейс
 
@@ -508,15 +506,15 @@
 
     Строка_ = "Строка";
 
-    URL       = "/messages/answerCallbackQuery";
-    Параметры = НормализоватьОснову(URL, Токен);
+    URLЗапроса = "/messages/answerCallbackQuery";
+    Параметры  = НормализоватьОснову(URL, Токен);
 
     OPI_Инструменты.ДобавитьПоле("queryId"  , IDСобытия         , Строка_ , Параметры);
     OPI_Инструменты.ДобавитьПоле("text"     , Текст             , Строка_ , Параметры);
     OPI_Инструменты.ДобавитьПоле("url"      , URL               , Строка_ , Параметры);
     OPI_Инструменты.ДобавитьПоле("showAlert", ЭтоПредупреждение , "Булево", Параметры);
 
-    Ответ = OPI_ЗапросыHTTP.Get(URL, Параметры);
+    Ответ = OPI_ЗапросыHTTP.Get(URLЗапроса, Параметры);
 
     Возврат Ответ;
 

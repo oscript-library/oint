@@ -10,11 +10,11 @@
 
     // With TLS
 
-    Address = "api.athenaeum.digital";
+    Address = "127.0.0.1";
     Port    = "5433";
 
     ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
-    TLSSettings      = OPI_PostgreSQL.GetTlsSettings(False);
+    TLSSettings      = OPI_PostgreSQL.GetTlsSettings(True);
 
     Result = OPI_PostgreSQL.CreateConnection(ConnectionString, TLSSettings);
 

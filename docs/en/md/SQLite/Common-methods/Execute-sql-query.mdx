@@ -41,7 +41,7 @@ When performing multiple requests within a single connection, it is better to co
 ```bsl title="1C:Enterprise/OneScript code example"
     TFN = GetTempFileName("sqlite");
 
-    Image = "https://api.athenaeum.digital/test_data/picture.jpg";
+    Image = "https://hut.openintegrations.dev/test_data/picture.jpg";
     OPI_TypeConversion.GetBinaryData(Image); // Image - Type: BinaryData
 
     Connection = OPI_SQLite.CreateConnection(TFN);
@@ -100,7 +100,12 @@ When performing multiple requests within a single connection, it is better to co
 
     // With extension
 
-    Extension  = "https://api.athenaeum.digital/test_data/uuid.dll"; // URL, Path or Binary Data
+    If OPI_Tools.IsWindows() Then
+        Extension = "https://hut.openintegrations.dev/test_data/uuid.dll"; // URL, Path or Binary Data
+    Else
+        Extension = "https://hut.openintegrations.dev/test_data/uuid.so"; // URL, Path or Binary Data
+    EndIf;
+
     EntryPoint = "sqlite3_uuid_init";
 
     ExtensionMap = New Map;
@@ -122,8 +127,8 @@ When performing multiple requests within a single connection, it is better to co
             
             oint sqlite ExecuteSQLQuery \
              --sql "SELECT uuid4();" \
-             --db "C:\Users\Administrator\AppData\Local\Temp\ez2hdqkekat.sqlite" \
-             --exts "{'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/uuid.dll':'sqlite3_uuid_init'}"
+             --db "/tmp/mrrp0ffl.uya.sqlite" \
+             --exts "{'https://hut.openintegrations.dev/test_data/uuid.so':'sqlite3_uuid_init'}"
         ```
     </TabItem>
   
@@ -133,8 +138,8 @@ When performing multiple requests within a single connection, it is better to co
             
             oint sqlite ExecuteSQLQuery ^
              --sql "SELECT uuid4();" ^
-             --db "C:\Users\Administrator\AppData\Local\Temp\ez2hdqkekat.sqlite" ^
-             --exts "{'https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/uuid.dll':'sqlite3_uuid_init'}"
+             --db "/tmp/mrrp0ffl.uya.sqlite" ^
+             --exts "{'https://hut.openintegrations.dev/test_data/uuid.so':'sqlite3_uuid_init'}"
         ```
     </TabItem>
 </Tabs>

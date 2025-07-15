@@ -25,7 +25,7 @@ import TabItem from '@theme/TabItem';
   | AdditionalHeaders | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
 
   
-  Returns:  Map Of KeyAndValue - Processing result
+  Returns:  BinaryData - Processing result
 
 <br/>
 
@@ -41,8 +41,8 @@ The audio file format of the response can be changed by adding `response_format`
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    URL   = "https://api.athenaeum.digital:1122/";
-    Token = "sk-or-vv-c5884ebe9f13fb143194bb07ecb...";
+    URL   = "https://hut.openintegrations.dev/localai/";
+    Token = "12We...";
 
     Text  = "Attack ships on fire off the shoulder of Orion bright as magnesium";
     Model = "tts-1";
@@ -60,7 +60,7 @@ The audio file format of the response can be changed by adding `response_format`
             # JSON data can also be passed as a path to a .json file
             
             oint openai GenerateSpeech \
-             --url "https://api.athenaeum.digital:1122/" \
+             --url "https://hut.openintegrations.dev/localai/" \
              --token "***" \
              --model "tts-1" \
              --input "Attack ships on fire off the shoulder of Orion bright as magnesium" \
@@ -73,7 +73,7 @@ The audio file format of the response can be changed by adding `response_format`
             :: JSON data can also be passed as a path to a .json file
             
             oint openai GenerateSpeech ^
-             --url "https://api.athenaeum.digital:1122/" ^
+             --url "https://hut.openintegrations.dev/localai/" ^
              --token "***" ^
              --model "tts-1" ^
              --input "Attack ships on fire off the shoulder of Orion bright as magnesium" ^

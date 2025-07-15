@@ -1,4 +1,11 @@
-﻿Function GetComposition() Export
+﻿
+Var CompositionTable;
+
+Function GetComposition() Export
+
+    If CompositionTable <> Undefined Then
+        Return CompositionTable;
+    EndIf;
 
     CompositionTable = New ValueTable();
     CompositionTable.Columns.Add("Library");
@@ -27,7 +34,7 @@
     NewLine.Method       = "FormCodeRetrievalLink";
     NewLine.SearchMethod = "FORMCODERETRIEVALLINK";
     NewLine.Parameter    = "--calendar";
-    NewLine.Description    = "Calendar methods permission (optional, def. val. - Yes)";
+    NewLine.Description    = "Calendar methods permission (optional, def. val. - True)";
     NewLine.Region     = "Public";
 
 
@@ -37,7 +44,7 @@
     NewLine.Method       = "FormCodeRetrievalLink";
     NewLine.SearchMethod = "FORMCODERETRIEVALLINK";
     NewLine.Parameter    = "--drive";
-    NewLine.Description    = "Drive methods permission (optional, def. val. - Yes)";
+    NewLine.Description    = "Drive methods permission (optional, def. val. - True)";
     NewLine.Region     = "Public";
 
 
@@ -47,7 +54,7 @@
     NewLine.Method       = "FormCodeRetrievalLink";
     NewLine.SearchMethod = "FORMCODERETRIEVALLINK";
     NewLine.Parameter    = "--sheets";
-    NewLine.Description    = "Sheets methods permission (optional, def. val. - Yes)";
+    NewLine.Description    = "Sheets methods permission (optional, def. val. - True)";
     NewLine.Region     = "Public";
 
 
@@ -146,3 +153,18 @@
     Return CompositionTable;
 EndFunction
 
+
+Function GetConnectionString() Export
+
+
+    Return "
+        |Context = New Structure;
+
+        |
+
+        |
+        |OPI_GoogleWorkspace = LoadScript(""%1/oint/core/Modules/OPI_GoogleWorkspace.os"", Context);
+        |" + Chars.LF;
+
+
+EndFunction 

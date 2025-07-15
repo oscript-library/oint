@@ -34,6 +34,7 @@
 // BSLLS:DuplicateStringLiteral-off
 // BSLLS:MagicNumber-off
 // BSLLS:UsingHardcodeNetworkAddress-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check use-non-recommended-method
 //@skip-check module-structure-top-region
@@ -58,7 +59,7 @@
         Компонента = ПодключитьКомпонентуНаСервере(ИмяКомпоненты, Класс, Ошибка);
 
         Если ЗначениеЗаполнено(Ошибка) Тогда
-            СформироватьИсключениеКомпоненты();
+            СформироватьИсключениеКомпоненты(Ошибка);
         КонецЕсли;
 
     КонецЕсли;
@@ -163,7 +164,7 @@
 
 КонецФункции
 
-Процедура СформироватьИсключениеКомпоненты()
+Процедура СформироватьИсключениеКомпоненты(Знач Ошибка)
 
     Текст = "Не удалось инициализировать внешнюю компоненту. Возможно, она несовместима с вашей операционной системой.";
 
@@ -182,7 +183,11 @@
     Текст = Текст
         + Символы.ПС
         + Символы.ПС
-        + "Подробнее: https://openintegrations.dev/docs/Start/Component-requirements";
+        + "Подробнее: https://openintegrations.dev/docs/Start/Component-requirements"
+        + Символы.ПС
+        + Символы.ПС
+        + "Системная информация:"
+        + Ошибка;
 
     ВызватьИсключение Текст;
 

@@ -36,8 +36,8 @@ import TabItem from '@theme/TabItem';
     Параметры = ПолучитьПараметрыАвторизацииТвиттер();
     Текст     = "Тестовый твитт" + Строка(Новый УникальныйИдентификатор);
 
-    Видео  = "https://api.athenaeum.digital/test_data/video.mp4"; // URL, Двоичные или Путь к файлу
-    Видео2 = "https://api.athenaeum.digital/test_data/video.mp4"; // URL, Двоичные или Путь к файлу
+    Видео  = "https://hut.openintegrations.dev/test_data/video.mp4"; // URL, Двоичные или Путь к файлу
+    Видео2 = "https://hut.openintegrations.dev/test_data/video.mp4"; // URL, Двоичные или Путь к файлу
 
     МассивВидео = Новый Массив;
     МассивВидео.Добавить(Видео);
@@ -57,9 +57,9 @@ import TabItem from '@theme/TabItem';
             # JSON данные также могут быть переданы как путь к файлу .json
             
             oint twitter СоздатьТвитВидео \
-              --text "Тестовый твиттaca21608-a805-4d59-b8ae-e6deb2d71db3" \
-              --videos "C:\Users\Administrator\AppData\Local\Temp\smteh3kkel1.tmp" \
-              --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+              --text "Тестовый твиттc73fe9a1-4df1-4b33-a223-735afc374f71" \
+              --videos "/tmp/45kcvteo.kbz" \
+              --auth "{'redirect_uri':'https://hut.openintegrations.dev/melezh/6ad91cc8b','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
   
@@ -68,9 +68,9 @@ import TabItem from '@theme/TabItem';
             :: JSON данные также могут быть переданы как путь к файлу .json
             
             oint twitter СоздатьТвитВидео ^
-              --text "Тестовый твиттaca21608-a805-4d59-b8ae-e6deb2d71db3" ^
-              --videos "C:\Users\Administrator\AppData\Local\Temp\smteh3kkel1.tmp" ^
-              --auth "{'redirect_uri':'https://api.athenaeum.digital/opi/hs/twitter','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
+              --text "Тестовый твиттc73fe9a1-4df1-4b33-a223-735afc374f71" ^
+              --videos "/tmp/45kcvteo.kbz" ^
+              --auth "{'redirect_uri':'https://hut.openintegrations.dev/melezh/6ad91cc8b','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
 </Tabs>

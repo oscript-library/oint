@@ -2,6 +2,7 @@
 // Lib: Yandex Disk
 // CLI: yadisk
 // Keywords: yandexdisk, yandex.disk, yandex disk, yandex drive, yadisk, ya disk
+// Depends: OPI_YandexID
 
 // MIT License
 
@@ -31,14 +32,12 @@
 // BSLLS:IncorrectLineBreak-off
 // BSLLS:NumberOfOptionalParams-off
 // BSLLS:UsingServiceTag-off
+// BSLLS:UsingSynchronousCalls-off
 
 //@skip-check method-too-many-params
 //@skip-check module-structure-top-region
 //@skip-check module-structure-method-in-regions
 //@skip-check wrong-string-literal-content
-
-// Раскомментировать, если выполняется OneScript
-// #Использовать "../../tools"
 
 #Область ПрограммныйИнтерфейс
 
