@@ -1,6 +1,4 @@
-:: JSON данные также могут быть переданы как путь к файлу .json
-
 oint bitrix24 НайтиПользователей ^
-  --url "b24-ar17wx.bitrix24.by" ^
-  --filter "{'UF_DEPARTMENT_NAME':'Битрикс'}" ^
+  --url ""b24-ar17wx.bitrix24.by"" ^
+  --filter ""/tmp/ak3xim0w.hre.json"" ^
   --token "***"

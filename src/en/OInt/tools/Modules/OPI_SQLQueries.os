@@ -353,6 +353,51 @@ Function GetRecordsFilterStrucutre(Val Clear = False) Export
 
 EndFunction
 
+Function ExecuteQueryWithProcessing(Connector, Val QueryText, Val ForceResult, Val Parameters) Export
+
+    QueryKey = InitializeQuery(Connector, QueryText, ForceResult);
+
+    If Not QueryKey["result"] Then
+        Return QueryKey;
+    Else
+        QueryKey = QueryKey["key"];
+    EndIf;
+
+    Adding = SetQueryParams(Connector, QueryKey, Parameters);
+
+    If Not Adding["result"] Then
+        Return Adding;
+    EndIf;
+
+    Result = Connector.Execute(QueryKey);
+    Result = ProcessQueryResult(Connector, QueryKey, Result);
+
+    Return Result;
+
+EndFunction
+
+Function ProcessParameters(Val Parameters, Val TypesStructure) Export
+
+    If Not ValueIsFilled(Parameters) Then
+        Return New Array;
+    EndIf;
+
+    OPI_TypeConversion.GetArray(Parameters);
+
+    For N = 0 To Parameters.UBound() Do
+
+        CurrentParameter = Parameters[N];
+
+        CurrentParameter = ProcessParameter(CurrentParameter, TypesStructure);
+
+        Parameters[N] = CurrentParameter;
+
+    EndDo;
+
+    Return Parameters;
+
+EndFunction
+
 #EndRegion
 
 #Region Private
@@ -578,7 +623,7 @@ Function FormSQLText(Val Scheme)
 
     SchemeType = "";
 
-    If Not OPI_Tools.CollectionFieldExist(Scheme, "type", SchemeType) Then
+    If Not OPI_Tools.CollectionFieldExists(Scheme, "type", SchemeType) Then
         Raise ErrorText;
     EndIf;
 
@@ -936,44 +981,186 @@ EndFunction
 
 Function ProcessRecords(Val Module, Val Table, Val DataArray, Val Transaction, Val Connection)
 
-    ErrorsArray     = New Array;
-    CollectionError = "Invalid data";
-    Counter         = 0;
-    SuccessCount    = 0;
+    If OPI_AddIns.FileTransferRequired() Then
+        Result = AddRecordsBatch(Module, Table, DataArray, Transaction, Connection);
+    Else
+        Result = AddRecordsSeparately(Module, Table, DataArray, Transaction, Connection);
+    EndIf;
+
+    Return Result;
+
+EndFunction
+
+Function AddRecordsSeparately(Val Module, Val Table, Val DataArray, Val Transaction, Val Connection)
+
+    ErrorsArray  = New Array;
+    Counter      = 0;
+    SuccessCount = 0;
 
     For Each Record In DataArray Do
 
         Counter = Counter + 1;
 
-        Try
-            OPI_TypeConversion.GetKeyValueCollection(Record, CollectionError);
-        Except
-
-            ErrorsArray.Add(New Structure("row,error", Counter, CollectionError));
-
+        If Not CheckRecordCorrectness(Record, ErrorsArray, Counter) Then
             If Transaction Then
                 Break;
             Else
                 Continue;
             EndIf;
-
-        EndTry;
+        EndIf;
 
         Result = AddRow(Module, Table, Record, Connection);
 
         If Result["result"] Then
-
             SuccessCount = SuccessCount + 1;
-
         Else
 
             ErrorsArray.Add(New Structure("row,error", Counter, Result["error"]));
+
+            If Transaction Then
+                Break;
+            EndIf;
 
         EndIf;
 
     EndDo;
 
     Result = New Structure("ErrorsArray,SuccessCount", ErrorsArray, SuccessCount);
+
+    Return Result;
+
+EndFunction
+
+Function AddRecordsBatch(Val Module, Val Table, Val DataArray, Val Transaction, Val Connection)
+
+    BlanksArray = New Array;
+    ErrorsArray = New Array;
+
+    // BSLLS:MissingTemporaryFileDeletion-off
+
+    //@skip-check missing-temporary-file-deletion
+    BlanksPath = GetTempFileName();
+    //@skip-check missing-temporary-file-deletion
+    KeysPath = GetTempFileName();
+
+    // BSLLS:MissingTemporaryFileDeletion-on
+
+    Counter      = 0;
+    SuccessCount = 0;
+
+    For Each Record In DataArray Do
+
+        Counter = Counter + 1;
+
+        If Not CheckRecordCorrectness(Record, ErrorsArray, Counter) Then
+            If Transaction Then
+                Break;
+            Else
+                Continue;
+            EndIf;
+        EndIf;
+
+        Result = AddRow(Module, Table, Record, Connection, False);
+        BlanksArray.Add(Result);
+
+    EndDo;
+
+    Try
+
+        OPI_Tools.WriteJSONFile(BlanksPath, BlanksArray);
+
+        Initialization = Connection.BatchQuery(BlanksPath, KeysPath);
+        Initialization = OPI_Tools.JsonToStructure(Initialization);
+
+        OPI_Tools.RemoveFileWithTry(BlanksPath, "Failed to delete query package file after installation");
+
+        If Not Initialization["result"] Then
+            Raise Initialization["error"];
+        EndIf;
+
+        Keys = OPI_Tools.ReadJSONFile(KeysPath, True);
+
+        OPI_Tools.RemoveFileWithTry(KeysPath, "Failed to delete key file after initialization");
+
+    Except
+
+        Error = StrTemplate("Batch query error: %1", ErrorDescription());
+        ErrorsArray.Add(New Structure("row,error", -1, Error));
+
+        Return New Structure("ErrorsArray,SuccessCount", ErrorsArray, 0);
+
+    EndTry;
+
+    For Each QueryKey In Keys Do
+
+        Result = Connection.Execute(QueryKey);
+        Result = ProcessQueryResult(Connection, QueryKey, Result);
+
+        If Result["result"] Then
+            SuccessCount = SuccessCount + 1;
+        Else
+
+            ErrorsArray.Add(New Structure("row,error", Counter, Result["error"]));
+
+            If Transaction Then
+                Break;
+            EndIf;
+
+        EndIf;
+
+    EndDo;
+
+    Result = New Structure("ErrorsArray,SuccessCount", ErrorsArray, SuccessCount);
+
+    Return Result;
+
+EndFunction
+
+Function CheckRecordCorrectness(Record, ErrorsArray, Val Counter)
+
+    CollectionError = "Invalid data";
+    Correct         = True;
+
+    Try
+        OPI_TypeConversion.GetKeyValueCollection(Record, CollectionError);
+    Except
+        ErrorsArray.Add(New Structure("row,error", Counter, CollectionError));
+        Correct = False;
+    EndTry;
+
+    Return Correct;
+
+EndFunction
+
+Function AddRow(Val Module, Val Table, Val Record, Val Connection, Val ExecuteNow = True)
+
+    FieldArray  = New Array;
+    ValuesArray = New Array;
+
+    Scheme = NewSQLScheme("INSERT", Module);
+    SetTableName(Scheme, Table);
+
+    SplitDataCollection(Record, FieldArray, ValuesArray);
+
+    For Each Field In FieldArray Do
+        AddField(Scheme, Field);
+    EndDo;
+
+    Request = FormSQLText(Scheme);
+
+    If ExecuteNow Then
+        Result = Module.ExecuteSQLQuery(Request, ValuesArray, , Connection);
+    Else
+
+        Parameters = ProcessParameters(ValuesArray, Module.GetTypesStructure());
+
+        Result = New Map;
+        Result.Insert("text"        , Request);
+        Result.Insert("params"      , Parameters);
+        Result.Insert("force_result", False);
+
+    EndIf;
+
     Return Result;
 
 EndFunction
@@ -1030,28 +1217,6 @@ Function ProcessRecordsEnd(Val ProcessedStructure, Val Module, Val Transaction, 
 
 EndFunction
 
-Function AddRow(Val Module, Val Table, Val Record, Val Connection)
-
-    FieldArray  = New Array;
-    ValuesArray = New Array;
-
-    Scheme = NewSQLScheme("INSERT", Module);
-    SetTableName(Scheme, Table);
-
-    SplitDataCollection(Record, FieldArray, ValuesArray);
-
-    For Each Field In FieldArray Do
-        AddField(Scheme, Field);
-    EndDo;
-
-    Request = FormSQLText(Scheme);
-
-    Result = Module.ExecuteSQLQuery(Request, ValuesArray, , Connection);
-
-    Return Result;
-
-EndFunction
-
 Function NormalizeTable(Val Module
     , Val Table
     , Val ColoumnsStruct
@@ -1088,8 +1253,8 @@ Function NormalizeTable(Val Module
     For Each RequiredColumn In ColoumnsStruct Do
 
         ColumnName = RequiredColumn.Key;
-        Exist      = FoundMapping.Get(ColumnName) <> Undefined;
-        Action     = ?(Exist, IgnoreCode, AddCode);
+        Exists     = FoundMapping.Get(ColumnName) <> Undefined;
+        Action     = ?(Exists, IgnoreCode, AddCode);
 
         FoundMapping.Insert(ColumnName, Action);
 
@@ -1251,10 +1416,10 @@ Procedure FillFilters(Scheme, Val Filters)
 
         AddFilter(Scheme
             , Filter["field"]
-            , ?(OPI_Tools.CollectionFieldExist(Filter, "type"), Filter["type"], "=")
+            , ?(OPI_Tools.CollectionFieldExists(Filter, "type"), Filter["type"], "=")
             , Filter["value"]
-            , ?(OPI_Tools.CollectionFieldExist(Filter, "union"), Filter["union"], "AND")
-            , ?(OPI_Tools.CollectionFieldExist(Filter, "raw"), Filter["raw"], False));
+            , ?(OPI_Tools.CollectionFieldExists(Filter, "union"), Filter["union"], "AND")
+            , ?(OPI_Tools.CollectionFieldExists(Filter, "raw"), Filter["raw"], False));
 
     EndDo;
 
@@ -1412,6 +1577,252 @@ EndProcedure
 
 #EndRegion
 
+#Region ParamsProcessing
+
+Function InitializeQuery(Val Connector, Val QueryText, Val ForceResult)
+
+    If OPI_AddIns.FileTransferRequired() And StrLen(QueryText) > 1000 Then
+
+        // BSLLS:MissingTemporaryFileDeletion-off
+
+        //@skip-check missing-temporary-file-deletion
+        TFN = GetTempFileName();
+
+        // BSLLS:MissingTemporaryFileDeletion-on
+
+        TextBD = GetBinaryDataFromString(QueryText);
+        TextBD.Write(TFN);
+
+        QueryKey = Connector.InitQuery(TFN, ForceResult, True);
+
+        OPI_Tools.RemoveFileWithTry(TFN, "Failed to delete query file after execution");
+
+    Else
+        QueryKey = Connector.InitQuery(QueryText, ForceResult, False);
+    EndIf;
+
+    QueryKey = OPI_Tools.JSONToStructure(QueryKey);
+
+    Return QueryKey;
+
+EndFunction
+
+Function SetQueryParams(Val Connector, Val QueryKey, Val Parameters)
+
+    If OPI_AddIns.FileTransferRequired() And ValueIsFilled(Parameters) Then
+
+        // BSLLS:MissingTemporaryFileDeletion-off
+
+        //@skip-check missing-temporary-file-deletion
+        TFN = GetTempFileName();
+
+        // BSLLS:MissingTemporaryFileDeletion-on
+
+        Try
+            OPI_Tools.WriteJSONFile(TFN, Parameters);
+        Except
+            ErrInfo = ErrorDescription();
+            Raise StrTemplate("JSON parameter array validation error: %1", ErrInfo);
+        EndTry;
+
+        Adding = Connector.SetParamsFromFile(QueryKey, TFN);
+
+        OPI_Tools.RemoveFileWithTry(TFN, "Failed to delete query parameters file after execution");
+
+    Else
+        Parameters_ = OPI_Tools.JSONString(Parameters);
+        Adding      = Connector.SetParamsFromString(QueryKey, Parameters_);
+    EndIf;
+
+    Adding = OPI_Tools.JsonToStructure(Adding);
+
+    Return Adding;
+
+EndFunction
+
+Function ProcessQueryResult(Val Connector, Val QueryKey, Val ExecutionResult)
+
+    ExecutionResult = OPI_Tools.JsonToStructure(ExecutionResult);
+
+    If Not ExecutionResult["result"] Then
+
+        Return ExecutionResult;
+
+    ElsIf ExecutionResult["data"] = False Then
+
+        ExecutionResult.Delete("data");
+        Return ExecutionResult;
+
+    Else
+
+        If OPI_AddIns.FileTransferRequired() Then
+
+            // BSLLS:MissingTemporaryFileDeletion-off
+
+            //@skip-check missing-temporary-file-deletion
+            TFN = GetTempFileName();
+
+            // BSLLS:MissingTemporaryFileDeletion-on
+
+            Result = Connector.GetResultAsFile(QueryKey, TFN);
+            Result = OPI_Tools.JsonToStructure(Result);
+
+            If Result["result"] Then
+                Result = OPI_Tools.ReadJSONFile(TFN, True);
+            EndIf;
+
+            OPI_Tools.RemoveFileWithTry(TFN, "Failed to delete result file after execution");
+
+
+        Else
+            Result = Connector.GetResultAsString(QueryKey);
+            Result = OPI_Tools.JsonToStructure(Result);
+        EndIf;
+
+        Return Result;
+
+    EndIf;
+
+EndFunction
+
+Function ProcessParameter(CurrentParameter, TypesStructure, AsObject = True)
+
+    CurrentType = DefineParameterType(CurrentParameter);
+    CurrentKey  = TypesStructure.Get(CurrentType);
+
+    If CurrentType = "BinaryData" Then
+
+        CurrentParameter = Base64String(CurrentParameter);
+
+    ElsIf CurrentType = "UUID" Then
+
+        CurrentParameter = String(CurrentParameter);
+
+    ElsIf CurrentType = "Date" Then
+
+        CurrentParameter = OPI_Tools.DateRFC3339(CurrentParameter);
+
+    ElsIf OPI_Tools.ThisIsCollection(CurrentParameter) Then
+
+        ProcessCollectionParameter(CurrentType, TypesStructure, CurrentParameter, CurrentKey);
+
+    ElsIf CurrentType = "Whole" Or CurrentType = "Float" Then
+
+        OPI_TypeConversion.GetNumber(CurrentParameter);
+
+    ElsIf CurrentType = "Boolean" Then
+
+        OPI_TypeConversion.GetBoolean(CurrentParameter);
+
+        If TypesStructure.Get("BoolAsNumber") Then
+            CurrentParameter = ?(CurrentParameter, 1, 0);
+        EndIf;
+
+    Else
+
+        OPI_TypeConversion.GetLine(CurrentParameter);
+
+    EndIf;
+
+    If AsObject Then
+        CurrentParameter = New Structure(CurrentKey, CurrentParameter);
+    EndIf;
+
+    Return CurrentParameter;
+
+EndFunction
+
+Function ProcessBlob(Val Value)
+
+    If TypeOf(Value) = Type("BinaryData") Then
+        Value        = Base64String(Value);
+    Else
+
+        DataFile = New File(String(Value));
+
+        If DataFile.Exists() Then
+
+            CurrentData = New BinaryData(String(Value));
+            Value       = Base64String(CurrentData);
+
+        EndIf;
+
+    EndIf;
+
+    Return Value;
+
+EndFunction
+
+Function DefineParameterType(Val CurrentParameter)
+
+    CurrentType = TypeOf(CurrentParameter);
+
+    SimpleComparison = New Array;
+    SimpleComparison.Add("BinaryData");
+    SimpleComparison.Add("UUID");
+    SimpleComparison.Add("Structure");
+    SimpleComparison.Add("Map");
+    SimpleComparison.Add("Array");
+    SimpleComparison.Add("Boolean");
+    SimpleComparison.Add("Date");
+    SimpleComparison.Add("String");
+
+    If CurrentType                     = Type("Number") Then
+        Return ?(Int(CurrentParameter) = CurrentParameter, "Whole", "Float");
+    Else
+
+        For Each TypeName In SimpleComparison Do
+
+            If CurrentType = Type(TypeName) Then
+                Return TypeName;
+            EndIf;
+
+        EndDo;
+
+    EndIf;
+
+    Raise StrTemplate("Parameter type not supported: %1", String(CurrentType));
+
+EndFunction
+
+Procedure ProcessCollectionParameter(Val CurrentType, Val TypesStructure, CurrentParameter, CurrentKey)
+
+    CollectionsTypes = TypesStructure.Get("Collections");
+    BinaryType       = TypesStructure.Get("BinaryData");
+    TypeString       = TypesStructure.Get("String");
+
+    If CurrentType = "Structure" Or CurrentType = "Map" Then
+
+        For Each ParamElement In CurrentParameter Do
+
+            CurrentKey   = Upper(ParamElement.Key);
+            CurrentValue = ParamElement.Value;
+
+            If CollectionsTypes.FindByValue(CurrentKey) <> Undefined Then
+                CurrentParameter = CurrentValue;
+
+            ElsIf CurrentKey     = BinaryType Then
+                CurrentParameter = ProcessBlob(CurrentValue)
+
+            Else
+                CurrentParameter = ProcessParameter(CurrentValue, TypesStructure, False);
+            EndIf;
+
+            Break;
+
+        EndDo;
+
+    Else
+
+        OPI_TypeConversion.GetLine(CurrentParameter);
+        CurrentKey = TypeString;
+
+    EndIf;
+
+EndProcedure
+
+#EndRegion
+
 #EndRegion
 
 #Region Alternate
@@ -1470,6 +1881,14 @@ EndFunction
 
 Function ПолучитьСтруктуруФильтраЗаписей(Val Пустая = False) Export
 	Return GetRecordsFilterStrucutre(Пустая);
+EndFunction
+
+Function ВыполнитьЗапросСОбработкой(Коннектор, Val ТекстЗапроса, Val ФорсироватьРезультат, Val Параметры) Export
+	Return ExecuteQueryWithProcessing(Коннектор, ТекстЗапроса, ФорсироватьРезультат, Параметры);
+EndFunction
+
+Function ОбработатьПараметры(Val Параметры, Val СтруктураТипов) Export
+	Return ProcessParameters(Параметры, СтруктураТипов);
 EndFunction
 
 Procedure ДобавитьКолонку(Схема, Val Имя, Val Тип) Export

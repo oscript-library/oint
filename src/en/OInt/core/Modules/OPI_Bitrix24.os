@@ -2175,7 +2175,7 @@ EndFunction
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
-Function GetAppSotrage(Val URL, Val Token = "") Export
+Function GetAppStorage(Val URL, Val Token = "") Export
 
     Parameters = NormalizeAuth(URL, Token, "disk.storage.getforapp");
     Response   = OPI_HTTPRequests.PostWithBody(URL, Parameters);
@@ -2781,7 +2781,7 @@ EndFunction
 //
 // Returns:
 // Map Of KeyAndValue - serialized JSON of answer from Bitrix24 API
-Function MakeCopyFile(Val URL, Val FileID, Val FolderID, Val Token = "") Export
+Function MakeFileCopy(Val URL, Val FileID, Val FolderID, Val Token = "") Export
 
     Parameters = NormalizeAuth(URL, Token, "disk.file.copyto");
 
@@ -5538,7 +5538,7 @@ Function ПолучитьСписокХранилищ(Val URL, Val Токен = 
 EndFunction
 
 Function ПолучитьХранилищеПриложения(Val URL, Val Токен = "") Export
-	Return GetAppSotrage(URL, Токен);
+	Return GetAppStorage(URL, Токен);
 EndFunction
 
 Function ПолучитьХранилище(Val URL, Val IDХранилища, Val Токен = "") Export
@@ -5630,7 +5630,7 @@ Function ВосстановитьФайл(Val URL, Val IDФайла, Val Ток�
 EndFunction
 
 Function СкопироватьФайл(Val URL, Val IDФайла, Val IDКаталога, Val Токен = "") Export
-	Return MakeCopyFile(URL, IDФайла, IDКаталога, Токен);
+	Return MakeFileCopy(URL, IDФайла, IDКаталога, Токен);
 EndFunction
 
 Function ПереместитьФайлВКаталог(Val URL, Val IDФайла, Val IDКаталога, Val Токен = "") Export

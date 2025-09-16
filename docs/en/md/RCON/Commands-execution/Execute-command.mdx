@@ -49,29 +49,17 @@ When passing connection parameters, a new connection will be created and closed 
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint rcon ExecuteCommand \
-             --url "127.0.0.1:25575" \
-             --pass "***" \
-             --wtout 20 \
-             --rtout 20 \
              --exec "list" \
-             --conn "{'url':'127.0.0.1:25575','password':'***','read_timeout':20,'write_timeout':20}"
+             --conn "{'url':'127.0.0.1:25575','password':'***','read_timeout':'20','write_timeout':'20'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint rcon ExecuteCommand ^
-             --url "127.0.0.1:25575" ^
-             --pass "***" ^
-             --wtout 20 ^
-             --rtout 20 ^
              --exec "list" ^
-             --conn "{'url':'127.0.0.1:25575','password':'***','read_timeout':20,'write_timeout':20}"
+             --conn "{'url':'127.0.0.1:25575','password':'***','read_timeout':'20','write_timeout':'20'}"
         ```
     </TabItem>
 </Tabs>
@@ -79,7 +67,7 @@ When passing connection parameters, a new connection will be created and closed 
 
 ```json title="Result"
 {
- "data": "There are 0/20 players online:",
+ "data": "There are 0 of a max of 20 players online: ",
  "result": true
 }
 ```

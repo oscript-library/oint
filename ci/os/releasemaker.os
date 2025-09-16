@@ -12,7 +12,7 @@
 Процедура НачалоРаботы()
 	
 	Репозиторий = "https://github.com/Bayselonarrend/OpenIntegrations";
-	Версия   = "1.26.0";
+	Версия   = "1.27.0";
 	Режим    = "CONFIG";
 
 	//Локальные данные
@@ -21,7 +21,7 @@
 	ОСкрипт           = "C:\Program Files\OneScript\";
 	ПутьДвижка        = "/mnt/c/engine/linux/";
 
-	ПутьКРепозиторию  = "C:\ProgramData\Jenkins\.jenkins\workspace\OpiRelease";
+	ПутьКРепозиторию  = "C:\ProgramData\Jenkins\.jenkins\workspace\OpiBuild\OpiRelease";
 	//ПутьКРепозиторию  = "C:\Repos\OPI";
 	ПутьВыгрузки      = ПутьКРепозиторию + "\" + Версия + "\";
 	ПутьMelezh        = ПутьКРепозиторию + "\Melezh";
@@ -58,9 +58,9 @@
 	СтруктураАнг.Вставить("ПутьISS" , ПутьКРепозиторию + "\service\iss\en.iss");
 	СтруктураАнг.Вставить("Описание", "OInt CLI - CLI toolkit for integrating with APIs of popular online services");
 	СтруктураАнг.Вставить("Префикс" , "en");
- 
-	МассивЛокализаций.Добавить(СтруктураРус);
+
 	МассивЛокализаций.Добавить(СтруктураАнг); 
+	МассивЛокализаций.Добавить(СтруктураРус);
 
 	КаталогВыгрузки = Новый Файл(ПутьВыгрузки);
 	Если КаталогВыгрузки.Существует() Тогда 

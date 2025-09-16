@@ -1,11 +1,11 @@
-﻿ {
+﻿{
  "entity": {
-  "uuid": "a93fd1b1-55b3-4033-a52a-d2df7bb6b469",
+  "uuid": "d21e50df-430b-4b25-a3e1-4059d93047f5",
   "type": 1,
   "is_return": false,
   "is_reverse": false,
-  "cdek_number": "1106094897",
-  "number": "3d2378de-8718-4041-b89a-33e6058810c8",
+  "cdek_number": "1106608109",
+  "number": "40c825ee-ce1a-4499-a600-38e4760ba342",
   "tariff_code": 139,
   "comment": "New order",
   "items_cost_currency": "RUB",
@@ -25,6 +25,11 @@
    "company": "Тестирование Интеграции ИМ",
    "name": "Petrov Petr",
    "contragent_type": "LEGAL_ENTITY",
+   "phones": [
+    {
+     "number": "79529287654"
+    }
+   ],
    "passport_requirements_satisfied": false
   },
   "seller": {
@@ -45,7 +50,6 @@
    "city_uuid": "7e8f36ba-d937-4ce4-8d53-e44177db6469",
    "city": "Москва",
    "fias_guid": "0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
-   "kladr_code": "7700000000000",
    "country_code": "RU",
    "country": "Россия",
    "region": "Москва",
@@ -71,16 +75,6 @@
   },
   "services": [
    {
-    "code": "INSURANCE",
-    "parameter": "600.00",
-    "sum": 4.5,
-    "total_sum": 5.4,
-    "discount_percent": 0,
-    "discount_sum": 0,
-    "vat_rate": 20,
-    "vat_sum": 0.9
-   },
-   {
     "code": "SECURE_PACKAGE_A2",
     "parameter": "10",
     "sum": 500,
@@ -89,12 +83,22 @@
     "discount_sum": 0,
     "vat_rate": 20,
     "vat_sum": 100
+   },
+   {
+    "code": "INSURANCE",
+    "parameter": "600.00",
+    "sum": 4.5,
+    "total_sum": 5.4,
+    "discount_percent": 0,
+    "discount_sum": 0,
+    "vat_rate": 20,
+    "vat_sum": 0.9
    }
   ],
   "packages": [
    {
     "number": "bar-001",
-    "barcode": "000000536893",
+    "barcode": "000001220077",
     "weight": 4000,
     "length": 10,
     "width": 10,
@@ -120,25 +124,28 @@
       "cost": 300
      }
     ],
-    "package_id": "9c103199-2372-4807-9682-184e10288b38"
+    "package_id": "73b7b733-8933-4898-8d2b-56ca66226b0a"
    }
   ],
   "statuses": [
    {
-    "code": "ACCEPTED",
-    "name": "Принят",
-    "date_time": "2024-10-21T21:27:08+03:00",
-    "city": "Офис СДЭК"
-   },
-   {
     "code": "CREATED",
     "name": "Создан",
-    "date_time": "2024-10-21T21:26:59+03:00",
-    "city": "Офис СДЭК"
+    "date_time": "2025-09-15T23:06:31+00:00",
+    "city": "Офис СДЭК",
+    "deleted": false
+   },
+   {
+    "code": "ACCEPTED",
+    "name": "Принят",
+    "date_time": "2025-09-15T23:06:30+00:00",
+    "city": "Офис СДЭК",
+    "deleted": false
    }
   ],
   "is_client_return": false,
   "delivery_mode": "1",
+  "has_reverse_order": false,
   "delivery_detail": {
    "delivery_sum": 1315,
    "total_sum": 2183.4,
@@ -152,9 +159,9 @@
  },
  "requests": [
   {
-   "request_uuid": "8c00117e-f6f9-462c-8479-b3ad0ec25bfa",
+   "request_uuid": "d830291a-dfb8-419f-a9e3-804887a475fe",
    "type": "CREATE",
-   "date_time": "2024-10-21T21:27:08+03:00",
+   "date_time": "2025-09-15T23:06:31+00:00",
    "state": "SUCCESSFUL"
   }
  ],

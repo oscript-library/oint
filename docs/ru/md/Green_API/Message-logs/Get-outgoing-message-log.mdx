@@ -46,8 +46,6 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint greenapi ПолучитьЖурналИсходящихСообщений \
               --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}"
         ```
@@ -55,8 +53,6 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint greenapi ПолучитьЖурналИсходящихСообщений ^
               --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}"
         ```
@@ -68,8 +64,96 @@ import TabItem from '@theme/TabItem';
 [
  {
   "type": "outgoing",
-  "idMessage": "BAE5EBEA6D4D06DE",
-  "timestamp": 1742245249,
+  "idMessage": "BAE5B9C58F44CF29",
+  "timestamp": 1758001056,
+  "typeMessage": "deletedMessage",
+  "chatId": "120363410406221140@g.us",
+  "deletedMessageData": {
+   "stanzaId": "BAE50B8C1591899E"
+  },
+  "statusMessage": "sent",
+  "sendByApi": true
+ },
+ {
+  "type": "outgoing",
+  "idMessage": "BAE5A25544FA2D6E",
+  "timestamp": 1758001049,
+  "typeMessage": "extendedTextMessage",
+  "chatId": "120363410406221140@g.us",
+  "textMessage": "Новое сообщение",
+  "extendedTextMessage": {
+   "text": "Новое сообщение",
+   "description": "",
+   "title": "",
+   "previewType": "None",
+   "jpegThumbnail": "",
+   "forwardingScore": 1,
+   "isForwarded": true
+  },
+  "statusMessage": "sent",
+  "sendByApi": true,
+  "deletedMessageId": "",
+  "editedMessageId": "",
+  "isEdited": false,
+  "isDeleted": false
+ },
+ {
+  "type": "outgoing",
+  "idMessage": "BAE5711B46123629",
+  "timestamp": 1758001048,
+  "typeMessage": "contactMessage",
+  "chatId": "120363410406221140@g.us",
+  "contact": {
+   "displayName": "Велосипед",
+   "vcard": "BEGIN:VCARD\nVERSION:3.0\nN:;;;\nFN:Велосипед\nORG:Велосипед\nTEL;type=CELL;type=VOICE;waid=79001234568:+79001234568\nEND:VCARD",
+   "forwardingScore": 0,
+   "isForwarded": false
+  },
+  "quotedMessage": {
+   "stanzaId": "BAE5C6AED44668D0",
+   "participant": "1234567890@c.us",
+   "typeMessage": "contactMessage",
+   "contact": {
+    "displayName": "Артем Евпаторийский Петрович",
+    "vcard": "BEGIN:VCARD\nVERSION:3.0\nN:Петрович;Артем;Евпаторийский;\nFN:Артем Евпаторийский Петрович\nORG:Велосипед\nTEL;type=CELL;type=VOICE;waid=79001234568:+79001234568\nEND:VCARD",
+    "forwardingScore": 0,
+    "isForwarded": false
+   },
+   "deletedMessageId": "",
+   "editedMessageId": "",
+   "isEdited": false,
+   "isDeleted": false
+  },
+  "statusMessage": "sent",
+  "sendByApi": true,
+  "deletedMessageId": "",
+  "editedMessageId": "",
+  "isEdited": false,
+  "isDeleted": false
+ },
+ {
+  "type": "outgoing",
+  "idMessage": "BAE5C6AED44668D0",
+  "timestamp": 1758001046,
+  "typeMessage": "contactMessage",
+  "chatId": "120363410406221140@g.us",
+  "contact": {
+   "displayName": "Артем Евпаторийский Петрович",
+   "vcard": "BEGIN:VCARD\nVERSION:3.0\nN:Петрович;Артем;Евпаторийский;\nFN:Артем Евпаторийский Петрович\nORG:Велосипед\nTEL;type=CELL;type=VOICE;waid=79001234568:+79001234568\nEND:VCARD",
+   "forwardingScore": 0,
+   "isForwarded": false
+  },
+  "statusMessage": "sent",
+  "sendByApi": true,
+  "deletedMessageId": "",
+  "editedMessageId": "",
+  "isEdited": false,
+  "isDeleted": false
+ },
+ {
+  "type": "outgoing",
+  "idMessage": "BAE5875440171C2D",
+  "timestamp": 1758001034,
   "typeMessage": "locationMessage",
   "chatId": "120363410406221140@g.us",
   "location": {
@@ -82,7 +166,7 @@ import TabItem from '@theme/TabItem';
    "isForwarded": false
   },
   "quotedMessage": {
-   "stanzaId": "BAE58FFB313AA023",
+   "stanzaId": "BAE520724EF83FEF",
    "participant": "1234567890@c.us",
    "typeMessage": "locationMessage",
    "location": {
@@ -99,7 +183,7 @@ import TabItem from '@theme/TabItem';
    "isEdited": false,
    "isDeleted": false
   },
-  "statusMessage": "",
+  "statusMessage": "sent",
   "sendByApi": true,
   "deletedMessageId": "",
   "editedMessageId": "",
@@ -108,8 +192,8 @@ import TabItem from '@theme/TabItem';
  },
  {
   "type": "outgoing",
-  "idMessage": "BAE58FFB313AA023",
-  "timestamp": 1742245248,
+  "idMessage": "BAE520724EF83FEF",
+  "timestamp": 1758001030,
   "typeMessage": "locationMessage",
   "chatId": "120363410406221140@g.us",
   "location": {
@@ -121,95 +205,7 @@ import TabItem from '@theme/TabItem';
    "forwardingScore": 0,
    "isForwarded": false
   },
-  "statusMessage": "",
-  "sendByApi": true,
-  "deletedMessageId": "",
-  "editedMessageId": "",
-  "isEdited": false,
-  "isDeleted": false
- },
- {
-  "type": "outgoing",
-  "idMessage": "BAE512B3BFFA7917",
-  "timestamp": 1742245247,
-  "typeMessage": "pollMessage",
-  "chatId": "120363410406221140@g.us",
-  "pollMessageData": {
-   "name": "Какой ваш любимый цвет?",
-   "options": [
-    {
-     "optionName": "Красный"
-    },
-    {
-     "optionName": "Желтый"
-    },
-    {
-     "optionName": "Зеленый"
-    }
-   ],
-   "multipleAnswers": true
-  },
-  "quotedMessage": {
-   "stanzaId": "BAE542644B2506C8",
-   "participant": "1234567890@c.us",
-   "type": "",
-   "typeMessage": "",
-   "deletedMessageId": "",
-   "editedMessageId": "",
-   "isEdited": false,
-   "isDeleted": false
-  },
-  "statusMessage": "",
-  "sendByApi": true,
-  "deletedMessageId": "",
-  "editedMessageId": "",
-  "isEdited": false,
-  "isDeleted": false
- },
- {
-  "type": "outgoing",
-  "idMessage": "BAE5A80DFF9CA202",
-  "timestamp": 1742245246,
-  "typeMessage": "imageMessage",
-  "chatId": "120363410406221140@g.us",
-  "downloadUrl": "https://do-media-7105.fra1.digitaloceanspaces.com/7105187566/9f73aa98-b6e5-400b-a709-f13444090936.jpg",
-  "caption": "Описание файла",
-  "fileName": "9f73aa98-b6e5-400b-a709-f13444090936.jpg",
-  "jpegThumbnail": "",
-  "mimeType": "image/jpeg",
-  "isAnimated": false,
-  "isForwarded": false,
-  "forwardingScore": 0,
   "statusMessage": "sent",
-  "sendByApi": true,
-  "editedMessageId": "",
-  "deletedMessageId": "",
-  "videoNote": false,
-  "isEdited": false,
-  "isDeleted": false
- },
- {
-  "type": "outgoing",
-  "idMessage": "BAE542644B2506C8",
-  "timestamp": 1742245246,
-  "typeMessage": "pollMessage",
-  "chatId": "120363410406221140@g.us",
-  "pollMessageData": {
-   "name": "Какой ваш любимый цвет?",
-   "options": [
-    {
-     "optionName": "Красный"
-    },
-    {
-     "optionName": "Желтый"
-    },
-    {
-     "optionName": "Зеленый"
-    }
-   ],
-   "multipleAnswers": false
-  },
-  "statusMessage": "",
   "sendByApi": true,
   "deletedMessageId": "",
   "editedMessageId": "",

@@ -1,8 +1,8 @@
-﻿    {
+﻿{
  "object": "page",
- "id": "11982aa7-fc4e-817a-a22e-c303e89630e4",
- "created_time": "2024-10-08T17:43:00Z",
- "last_edited_time": "2024-10-08T17:43:00Z",
+ "id": "27082aa7-fc4e-81e6-b5ed-d89bb8d9f424",
+ "created_time": "2025-09-16T04:45:00Z",
+ "last_edited_time": "2025-09-16T04:45:00Z",
  "created_by": {
   "object": "user",
   "id": "8b07422e-eeea-40d1-8d5e-c784211825b0"
@@ -15,41 +15,61 @@
  "icon": null,
  "parent": {
   "type": "database_id",
-  "database_id": "11982aa7-fc4e-817b-8882-f2ec929e9249"
+  "database_id": "27082aa7-fc4e-81b7-8fe3-d87406684e60"
  },
  "archived": false,
  "in_trash": false,
+ "is_locked": false,
  "properties": {
-  "Картинка": {
-   "id": "GwHP",
-   "type": "files",
-   "files": [
-    {
-     "name": "Лого",
-     "type": "external",
-     "external": {
-      "url": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg"
-     }
-    }
-   ]
-  },
   "Активен": {
-   "id": "I%5Cit",
+   "id": "%3ARN%3C",
    "type": "checkbox",
    "checkbox": true
   },
-  "Номер": {
-   "id": "LYhy",
-   "type": "number",
-   "number": 1
+  "Статус": {
+   "id": "KX%3C%5C",
+   "type": "select",
+   "select": {
+    "id": "cb8e4300-45ba-4e21-99bc-61a11aeb6827",
+    "name": "Новый",
+    "color": "green"
+   }
+  },
+  "Описание": {
+   "id": "LFcP",
+   "type": "rich_text",
+   "rich_text": [
+    {
+     "type": "text",
+     "text": {
+      "content": "Наш первый клиент",
+      "link": null
+     },
+     "annotations": {
+      "bold": false,
+      "italic": false,
+      "strikethrough": false,
+      "underline": false,
+      "code": false,
+      "color": "default"
+     },
+     "plain_text": "Наш первый клиент",
+     "href": null
+    }
+   ]
+  },
+  "Пользователь": {
+   "id": "NOMv",
+   "type": "people",
+   "people": []
   },
   "Телефон": {
-   "id": "N%3A%60j",
+   "id": "S%7CNg",
    "type": "phone_number",
    "phone_number": "88005553535"
   },
   "Почта": {
-   "id": "_GzL",
+   "id": "dxl%3D",
    "type": "rich_text",
    "rich_text": [
     {
@@ -71,51 +91,32 @@
     }
    ]
   },
-  "Пользователь": {
-   "id": "fqnB",
-   "type": "people",
-   "people": []
+  "Картинка": {
+   "id": "vggN",
+   "type": "files",
+   "files": [
+    {
+     "name": "Лого",
+     "type": "external",
+     "external": {
+      "url": "https://hut.openintegrations.dev/test_data/picture.jpg"
+     }
+    }
+   ]
   },
-  "Статус": {
-   "id": "k_dl",
-   "type": "select",
-   "select": {
-    "id": "6d76ff5e-d6d1-4266-b808-5372ec81a8da",
-    "name": "Новый",
-    "color": "green"
-   }
+  "Номер": {
+   "id": "y%3D%5E%3F",
+   "type": "number",
+   "number": 1
   },
   "Дата создания": {
-   "id": "lFrr",
+   "id": "yjVM",
    "type": "date",
    "date": {
-    "start": "2024-10-08T11:43:00+03:00",
+    "start": "2025-09-16T04:45:00+00:00",
     "end": null,
     "time_zone": null
    }
-  },
-  "Описание": {
-   "id": "zAM%7D",
-   "type": "rich_text",
-   "rich_text": [
-    {
-     "type": "text",
-     "text": {
-      "content": "Наш первый клиент",
-      "link": null
-     },
-     "annotations": {
-      "bold": false,
-      "italic": false,
-      "strikethrough": false,
-      "underline": false,
-      "code": false,
-      "color": "default"
-     },
-     "plain_text": "Наш первый клиент",
-     "href": null
-    }
-   ]
   },
   "Имя": {
    "id": "title",
@@ -141,7 +142,7 @@
    ]
   }
  },
- "url": "https://www.notion.so/11982aa7fc4e817aa22ec303e89630e4",
+ "url": "https://www.notion.so/27082aa7fc4e81e6b5edd89bb8d9f424",
  "public_url": null,
- "request_id": "a0eef4c4-d384-4f73-89d9-5fbb2a90d644"
+ "request_id": "1aa0f3d7-de2c-43f8-8dac-013f98c8456e"
 }

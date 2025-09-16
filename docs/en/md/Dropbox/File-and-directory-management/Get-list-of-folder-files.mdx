@@ -30,10 +30,10 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-  Path = "/New";
-  Token = "sl.B6AQWp9MlZlz4iaf41whVKxX9-MXeCiQhPRe4YIRxFmZ3zHsdjmOAatzgaWVhqmlIOvDD6WIUQ...";
-  
-  Result = OPI_Dropbox.GetListOfFolderFiles(Token, Path, True);
+    Path  = "/New";
+    Token = "sl.u.AF88oedfesNyjwSMicgy8chz5qoyzhIL9QJaQ33qBUP68HZSWpbN8zjGUogqfgum38x7s7hDvDAaHpBUKlvORdx_m1HgDAU4jtG36Nc1SZ_pfItomDC9RrAqft69McMOGcaAQmzJYRNFIEFZVC5sZE4TMkcHlIdPh2o5GqQWIiAIR48A2tq6mPE8-4pHzLnG9XV76t_OVoMSRDaLVA6sTkdxKsIlx5v26ETqmamROxqNScVKh7NusJiGcjKVXvnYy8UmxESQpb23HRwRDVwpy9Om0_nT_DlgUaR8n6afzwPrLuHW0q4i7nNJBeJSEBrK_4o7Lj60Mwql-tpKZs7ektfTxIGD6EtJC7dr-1R3RFahZl0CLZKtqVwNT7vfYB58jAC7ecBLxVGGu2O-7Cij7cDvvKC1Knfh4TvBdOeVNVyQn0yg6b60C9AVoApAPISbytTDYf3yqyQ4ZwzYHM7rh0zma01aCouKzWR9rNgduDe7bzDR_T9a8p87HR-0Z4ZokYbCXvrJoR9_HvSjsxxqGZDMLm3PlQFMKhF9hloel-pIdZFO5vp0nMcDWYdXhpoone-hIJPss0_kV5TpjzkQ_tBA2I1i1RSyWPtIr8QadJ9ZPR1Yt5ikoLkGRAK0MQJMO9Z6ZkcF0cxgt0A0P2F1KGzZk5BAqqIGnr_ZIzMKtRqiNHnGsZsenk8dTas2BccrmMhdRj03Ob7v2Rvwu_Nsc2MpwBp6IWE...";
+
+    Result = OPI_Dropbox.GetListOfFolderFiles(Token, Path, True);
 ```
  
 
@@ -43,7 +43,8 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint dropbox GetListOfFolderFiles \
              --token "***" \
-             --path "/New"
+             --path "/New" \
+             --detail true
         ```
     </TabItem>
   
@@ -51,7 +52,8 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint dropbox GetListOfFolderFiles ^
              --token "***" ^
-             --path "/New"
+             --path "/New" ^
+             --detail true
         ```
     </TabItem>
 </Tabs>
@@ -67,8 +69,8 @@ import TabItem from '@theme/TabItem';
    "path_display": "/New/Dogs.mp3",
    "id": "id:kJU6-a-pT48AAAAAAAAACA",
    "client_modified": "2024-05-15T16:58:30Z",
-   "server_modified": "2024-10-09T06:18:27Z",
-   "rev": "6240538d38b44bd841553",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e3369dbd841553",
    "size": 9229352,
    "is_downloadable": true,
    "content_hash": "376f728ef041d9cef08406f16debc12de89d83130e69c66a817fd834d2d82dc2"
@@ -80,8 +82,112 @@ import TabItem from '@theme/TabItem';
    "path_display": "/New/url_doc (1).docx",
    "id": "id:kJU6-a-pT48AAAAAAAALvg",
    "client_modified": "2024-07-15T17:40:28Z",
-   "server_modified": "2024-10-09T06:18:27Z",
-   "rev": "6240538d38b45bd841553",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e3369ebd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (2).docx",
+   "path_lower": "/new/url_doc (2).docx",
+   "path_display": "/New/url_doc (2).docx",
+   "id": "id:kJU6-a-pT48AAAAAAAA24g",
+   "client_modified": "2025-02-05T10:19:29Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e3369fbd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (3).docx",
+   "path_lower": "/new/url_doc (3).docx",
+   "path_display": "/New/url_doc (3).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABDNA",
+   "client_modified": "2025-05-04T21:27:07Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a0bd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (4).docx",
+   "path_lower": "/new/url_doc (4).docx",
+   "path_display": "/New/url_doc (4).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABJpA",
+   "client_modified": "2025-07-01T17:39:19Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a1bd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (5).docx",
+   "path_lower": "/new/url_doc (5).docx",
+   "path_display": "/New/url_doc (5).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABSFA",
+   "client_modified": "2025-08-17T10:03:28Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a2bd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (6).docx",
+   "path_lower": "/new/url_doc (6).docx",
+   "path_display": "/New/url_doc (6).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABSTA",
+   "client_modified": "2025-08-31T15:14:04Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a3bd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (7).docx",
+   "path_lower": "/new/url_doc (7).docx",
+   "path_display": "/New/url_doc (7).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABSaA",
+   "client_modified": "2025-08-31T16:29:58Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a4bd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (8).docx",
+   "path_lower": "/new/url_doc (8).docx",
+   "path_display": "/New/url_doc (8).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABShA",
+   "client_modified": "2025-08-31T20:43:05Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a5bd841553",
+   "size": 24069,
+   "is_downloadable": true,
+   "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
+  },
+  {
+   ".tag": "file",
+   "name": "url_doc (9).docx",
+   "path_lower": "/new/url_doc (9).docx",
+   "path_display": "/New/url_doc (9).docx",
+   "id": "id:kJU6-a-pT48AAAAAAABUqg",
+   "client_modified": "2025-09-08T13:28:43Z",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a6bd841553",
    "size": 24069,
    "is_downloadable": true,
    "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
@@ -93,14 +199,14 @@ import TabItem from '@theme/TabItem';
    "path_display": "/New/mydoc.docx",
    "id": "id:kJU6-a-pT48AAAAAAAAABw",
    "client_modified": "2024-05-14T16:49:41Z",
-   "server_modified": "2024-10-09T06:18:27Z",
-   "rev": "6240538d38b46bd841553",
+   "server_modified": "2025-09-15T22:43:02Z",
+   "rev": "63edeb9e336a7bd841553",
    "size": 24069,
    "is_downloadable": true,
    "content_hash": "8d63c5989ceec1a90f3fde2ffaa76efcd2c050191e6b55a1761e4e352590bd8c"
   }
  ],
- "cursor": "AAFjPjioXCUm-cvSmWhTXvwp-AUzcBlNDHgvyydaqo7QT6jkyTA4MLAzBdmSgdT0fsc_ssKPYWcv_tzh1hMAoOwuN09jJ9FS88bbx5mR6D4wXUd5v05GKJ_h52Nv88UOMiXah5SPwISriNOY3Vcez_oKLPyWrJ5pAuY1emSszhyeI7KLukeysjS8d79KvyQzi99nJ8smVQIQATrr2n0ioDwE",
+ "cursor": "AASWSEOgQsNzojhPv9yu9z9_8lNeV4b1g0w5qA_p0bDmP7K6tq7ZLCayqXLQ0aa0s7Y-keU8E4Hps2WsELM6ATBx5IB7RgHviIHwAWXZ44oV-FfVdtwad1zgRkVTAfFcTTgiMv0EV0f0EquHL2ptxoY2MnXMTlnUaLk0vAp6UudggIzLZGZpQKyxBYuI-Fo-XTTjeUtPmPhUVAPMLeX3YenJ",
  "has_more": false
 }
 ```

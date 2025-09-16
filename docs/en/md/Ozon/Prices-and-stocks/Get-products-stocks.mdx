@@ -52,8 +52,6 @@ Method at API documentation: [post /v4/product/info/stocks](https://docs.ozon.ru
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint ozon GetProductsStocks \
              --clientid "***" \
              --apikey "***" \
@@ -63,8 +61,6 @@ Method at API documentation: [post /v4/product/info/stocks](https://docs.ozon.ru
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint ozon GetProductsStocks ^
              --clientid "***" ^
              --apikey "***" ^
@@ -76,10 +72,8 @@ Method at API documentation: [post /v4/product/info/stocks](https://docs.ozon.ru
 
 ```json title="Result"
 {
- "result": {
-  "items": [],
-  "total": 0,
-  "last_id": ""
- }
+ "items": [],
+ "total": 0,
+ "cursor": ""
 }
 ```

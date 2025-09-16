@@ -1,7 +1,7 @@
 ﻿    Parameters = GetVKParameters();
 
-    Item1 = "11508997";
-    Item2 = "11508999";
+    Item1 = "11831702";
+    Item2 = "11831703";
 
     ProductsArray = New Array;
     ProductsArray.Add(Item1);

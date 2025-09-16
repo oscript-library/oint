@@ -1,0 +1,75 @@
+﻿---
+sidebar_position: 1
+description: Create Connection  and other functions to work with FTP in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, FTP]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Create Connection 
+ Creates an FTP connection with the specified settings
+
+
+
+`Function CreateConnection(Val FTPSettings, Val Proxy = Undefined, Val Tls = Undefined) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | FTPSettings | - | Structure Of KeyAndValue | &#x2714; | FTP settings. See GetConnectionSettings |
+  | Proxy | - | Structure Of KeyAndValue | &#x2716; | Proxy settings, if required. See GetProxySettings |
+  | Tls | - | Structure Of KeyAndValue | &#x2716; | TLS settings, if necessary. See GetTlsSettings |
+
+  
+  Returns:  Arbitrary - Client object or map with error information
+
+<br/>
+
+
+:::caution
+**NOCLI:** this method is not available in CLI version
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Host     = "172.33.0.10";
+    Port     = "21";
+    Login    = "bayselonarrend";
+    Password = "12we...";
+
+    UseProxy = True;
+    FTPS     = True;
+
+    ProxySettings = Undefined;
+    TLSSettings   = Undefined; // FTPS
+
+    FTPSettings = OPI_FTP.GetConnectionSettings(Host, Port, Login, Password);
+
+    If UseProxy Then
+
+        ProxyType = "http"; // http, socks5, socks4
+
+        ProxyAddress  = "127.0.0.1";
+        ProxyPort     = "8071";
+        ProxyLogin    = "proxyuser";
+        ProxyPassword = "12we...";
+
+        ProxySettings = OPI_FTP.GetProxySettings(ProxyAddress, ProxyPort, ProxyType, ProxyLogin, ProxyPassword);
+
+    EndIf;
+
+    If FTPS Then
+        TLSSettings = OPI_FTP.GetTLSSettings(True);
+    EndIf;
+
+    Result = OPI_FTP.CreateConnection(FTPSettings, ProxySettings, TLSSettings);
+```
+ 
+
+
+
+```json title="Result"
+"AddIn.OPI_FTP.Main"
+```

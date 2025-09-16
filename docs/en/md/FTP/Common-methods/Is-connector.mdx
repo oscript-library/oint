@@ -1,0 +1,75 @@
+﻿---
+sidebar_position: 11
+description: Is connector  and other functions to work with FTP in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, FTP]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Is connector 
+ Checks that the value is an AddIn object for working with FTP
+
+
+
+`Function IsConnector(Val Value) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Value | - | Arbitrary | &#x2714; | Value to check |
+
+  
+  Returns:  Boolean - Is connector
+
+<br/>
+
+
+:::caution
+**NOCLI:** this method is not available in CLI version
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Host     = "172.33.0.10";
+    Port     = "21";
+    Login    = "bayselonarrend";
+    Password = "12we...";
+
+    UseProxy = True;
+    FTPS     = True;
+
+    ProxySettings = Undefined;
+    TLSSettings   = Undefined; // FTPS
+
+    FTPSettings = OPI_FTP.GetConnectionSettings(Host, Port, Login, Password);
+
+    If UseProxy Then
+
+        ProxyType = "http"; // http, socks5, socks4
+
+        ProxyAddress  = "127.0.0.1";
+        ProxyPort     = "8071";
+        ProxyLogin    = "proxyuser";
+        ProxyPassword = "12we...";
+
+        ProxySettings = OPI_FTP.GetProxySettings(ProxyAddress, ProxyPort, ProxyType, ProxyLogin, ProxyPassword);
+
+    EndIf;
+
+    If FTPS Then
+        TLSSettings = OPI_FTP.GetTLSSettings(True);
+    EndIf;
+
+    Connection = OPI_FTP.CreateConnection(FTPSettings, ProxySettings, TLSSettings);
+
+    Result = OPI_FTP.IsConnector(Connection);
+```
+ 
+
+
+
+```json title="Result"
+true
+```

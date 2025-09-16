@@ -46,7 +46,7 @@ import TabItem from '@theme/TabItem';
     Пароль = "12we...";
     База   = "test_data";
 
-    НастройкиTLS      = OPI_MSSQL.ПолучитьНастройкиTls(Истина);
+    НастройкиTLS      = OPI_MSSQL.ПолучитьНастройкиTLS(Истина);
     СтрокаПодключения = OPI_MSSQL.СформироватьСтрокуПодключения(Адрес, База, Логин, Пароль);
     Соединение        = OPI_MSSQL.ОткрытьСоединение(СтрокаПодключения, НастройкиTLS);
 
@@ -108,23 +108,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint mssql ВыполнитьЗапросSQL \
-              --sql "SELECT FirstName, LastName, BirthDate, IsEmployed, Salary, CreatedAt, Age, RowGuid, Data FROM test_table;" \
+              --sql ""https://hut.openintegrations.dev/test_data/TEST_DATA2.sql"" \
               --dbc "Server=127.0.0.1;Database=***;User Id=SA;Password=***;" \
-              --tls "{'use_tls':true,'accept_invalid_certs':true}"
+              --tls ""/tmp/gae152d0.q45.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint mssql ВыполнитьЗапросSQL ^
-              --sql "SELECT FirstName, LastName, BirthDate, IsEmployed, Salary, CreatedAt, Age, RowGuid, Data FROM test_table;" ^
+              --sql ""https://hut.openintegrations.dev/test_data/TEST_DATA2.sql"" ^
               --dbc "Server=127.0.0.1;Database=***;User Id=SA;Password=***;" ^
-              --tls "{'use_tls':true,'accept_invalid_certs':true}"
+              --tls ""/tmp/gae152d0.q45.json""
         ```
     </TabItem>
 </Tabs>
@@ -135,15 +131,15 @@ import TabItem from '@theme/TabItem';
  "data": [
   {
    "Age": 20,
-   "BirthDate": "2025-07-13",
-   "CreatedAt": "2025-07-13T10:08:30",
+   "BirthDate": "2025-09-16",
+   "CreatedAt": "2025-09-16T04:29:32",
    "Data": {
     "BYTES": "Base64"
    },
    "FirstName": "Vitaly",
    "IsEmployed": 1,
    "LastName": "Alpaca",
-   "RowGuid": "294c7714-7c70-413b-a605-8f2f7ce4d4dd",
+   "RowGuid": "05d0eac1-1961-41a6-a1e8-94e6c8350091",
    "Salary": 10.3
   }
  ],

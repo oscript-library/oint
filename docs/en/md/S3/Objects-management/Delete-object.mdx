@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function DeleteObject(Val Name, Val Bucket, Val BasicData, Val Version = Undefined, Val Headers = Undefined) Export`
+`Function DeleteObject(Val Name, Val Bucket, Val BasicData, Val Version = Undefined, Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
   | Version | --ver | String | &#x2716; | Token for deleting a specific version of an object |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -42,10 +43,11 @@ Method at AWS documentation: [DeleteObject](https://docs.aws.amazon.com/AmazonS3
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "picture.jpg";
-    Bucket = "opi-gpbucket3";
+    Name = "picture.jpg";
 
-    Result = OPI_S3.DeleteObject(Name, Bucket, BasicData);
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
+    Result = OPI_S3.DeleteObject(Name, Bucket, BasicData, , , Directory);
 ```
  
 
@@ -53,23 +55,21 @@ Method at AWS documentation: [DeleteObject](https://docs.aws.amazon.com/AmazonS3
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 DeleteObject \
              --name "picture.jpg" \
-             --bucket "opi-gpbucket3" \
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --bucket "opi-dirbucket3" \
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 DeleteObject ^
              --name "picture.jpg" ^
-             --bucket "opi-gpbucket3" ^
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --bucket "opi-dirbucket3" ^
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -81,15 +81,15 @@ Method at AWS documentation: [DeleteObject](https://docs.aws.amazon.com/AmazonS3
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Type": "text/plain; charset=utf-8",
-  "Date": "Fri, 22 Nov 2024 10:12:37 GMT",
+  "Date": "Mon, 15 Sep 2025 23:18:39 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "e602da57d0c30b8c7034fcfe129917205f80f7bab979408e71da5d1441c85e79",
-  "X-Amz-Request-Id": "180A42B643EF6E92",
+  "X-Amz-Request-Id": "186597F7A964060A",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Type": "text/plain; charset=utf-8"
  }
 }
 ```

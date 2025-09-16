@@ -1,7 +1,5 @@
-:: JSON данные также могут быть переданы как путь к файлу .json
-
 oint sqlite ОбновитьЗаписи ^
   --table "test" ^
   --values "{'name':'Vitaly A.','salary':'999999'}" ^
-  --filter "[{'field':'name','type':'=','value':'Vitaly','union':'AND','raw':false}]" ^
-  --db "/tmp/usskxkle.34q.sqlite"
+  --filter "{'field':'name','type':'=','value':'Vitaly','union':'AND','raw':false}" ^
+  --db "/tmp/44h0mspf.2k0.sqlite"

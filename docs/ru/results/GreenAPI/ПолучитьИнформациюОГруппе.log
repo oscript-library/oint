@@ -1,16 +1,24 @@
-﻿    {
- "groupId": "120363415498405217@g.us",
+﻿{
+ "groupId": "120363420432033166@g.us",
  "owner": "***",
  "subject": "New group",
- "creation": 1742245206,
+ "creation": 1758000949,
+ "subjectTime": 1758000949,
+ "subjectOwner": "375447830891@c.us",
+ "groupInviteLink": "https://chat.whatsapp.com/JgbOlefB56wBCprM8SBhUI",
+ "ephemeralExpiration": 0,
+ "allowParticipantsEditGroupSettings": true,
+ "allowParticipantsSendMessages": true,
+ "allowParticipantsAddMembers": false,
+ "isCommunity": false,
+ "isCommunityAnnounce": false,
+ "size": 1,
  "participants": [
   {
    "id": "***",
+   "lid": "78714469634134@lid",
    "isAdmin": true,
    "isSuperAdmin": true
   }
- ],
- "subjectTime": null,
- "groupInviteLink": "https://chat.whatsapp.com/Gz1jaU9vNtvG3a5d9wijLb",
- "isMessageAllowed": true
+ ]
 }

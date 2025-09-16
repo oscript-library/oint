@@ -36,15 +36,15 @@ Method at API documentation: [task.checklistitem.add](https://dev.1c-bitrix.ru/r
 
 ```bsl title="1C:Enterprise/OneScript code example"
     URL    = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    TaskID = "6416";
+    TaskID = "7884";
 
     Text = "Checklist element";
 
     Result = OPI_Bitrix24.AddTasksChecklistElement(URL, TaskID, Text, True);
 
     URL    = "b24-ar17wx.bitrix24.by";
-    Token  = "11ae5d68006e9f06006b12e400000001000...";
-    TaskID = "6418";
+    Token  = "75d8c668006e9f06006b12e400000001000...";
+    TaskID = "7886";
 
     Result = OPI_Bitrix24.AddTasksChecklistElement(URL, TaskID, Text, , Token);
 ```
@@ -55,9 +55,9 @@ Method at API documentation: [task.checklistitem.add](https://dev.1c-bitrix.ru/r
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 AddTasksChecklistElement \
-             --url "b24-ar17wx.bitrix24.by" \
-             --task "7308" \
-             --text "Checklist element" \
+             --url ""b24-ar17wx.bitrix24.by"" \
+             --task ""7992"" \
+             --text ""Checklist element"" \
              --token "***"
         ```
     </TabItem>
@@ -65,9 +65,9 @@ Method at API documentation: [task.checklistitem.add](https://dev.1c-bitrix.ru/r
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 AddTasksChecklistElement ^
-             --url "b24-ar17wx.bitrix24.by" ^
-             --task "7308" ^
-             --text "Checklist element" ^
+             --url ""b24-ar17wx.bitrix24.by"" ^
+             --task ""7992"" ^
+             --text ""Checklist element"" ^
              --token "***"
         ```
     </TabItem>
@@ -76,15 +76,15 @@ Method at API documentation: [task.checklistitem.add](https://dev.1c-bitrix.ru/r
 
 ```json title="Result"
 {
- "result": 1460,
+ "result": 5582,
  "time": {
-  "start": 1728454786.04734,
-  "finish": 1728454786.13143,
-  "duration": 0.0840880870819092,
-  "processing": 0.0545477867126465,
-  "date_start": "2024-10-09T09:19:46+03:00",
-  "date_finish": "2024-10-09T09:19:46+03:00",
-  "operating_reset_at": 1728455386,
+  "start": 1757976399.7606,
+  "finish": 1757976399.82011,
+  "duration": 0.0595138072967529,
+  "processing": 0.0345680713653564,
+  "date_start": "2025-09-15T22:46:39+00:00",
+  "date_finish": "2025-09-15T22:46:39+00:00",
+  "operating_reset_at": 1757976999,
   "operating": 0
  }
 }

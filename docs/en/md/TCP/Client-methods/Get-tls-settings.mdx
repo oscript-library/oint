@@ -32,15 +32,31 @@ Tls settings can only be set when a connection is created: explicitly, by using 
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    Result = OPI_TCP.GetTlsSettings(True);
+    Result = OPI_TCP.GetTLSSettings(True);
 ```
  
 
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint tcp GetTLSSettings \
+             --trust true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint tcp GetTLSSettings ^
+             --trust true
+        ```
+    </TabItem>
+</Tabs>
 
 
 ```json title="Result"
 {
  "use_tls": true,
- "accept_invalid_certs": false
+ "accept_invalid_certs": true
 }
 ```

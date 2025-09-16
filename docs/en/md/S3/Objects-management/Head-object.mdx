@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function HeadObject(Val Name, Val Bucket, Val BasicData, Val Version = Undefined, Val Headers = Undefined) Export`
+`Function HeadObject(Val Name, Val Bucket, Val BasicData, Val Version = Undefined, Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
   | Version | --ver | String | &#x2716; | Token for receiving a specific version of an object |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -44,10 +45,11 @@ Method at AWS documentation: [GetObjectAttributes](https://docs.aws.amazon.com/A
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "picture.jpg";
-    Bucket = "opi-gpbucket3";
+    Name = "picture.jpg";
 
-    Result = OPI_S3.HeadObject(Name, Bucket, BasicData);
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
+    Result = OPI_S3.HeadObject(Name, Bucket, BasicData, , , Directory);
 ```
  
 
@@ -55,22 +57,18 @@ Method at AWS documentation: [GetObjectAttributes](https://docs.aws.amazon.com/A
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 HeadObject \
-             --name "picture.jpg" \
-             --bucket "opi-gpbucket3" \
+             --name "pictureU.jpg" \
+             --bucket "newbucket2" \
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 HeadObject ^
-             --name "picture.jpg" ^
-             --bucket "opi-gpbucket3" ^
+             --name "pictureU.jpg" ^
+             --bucket "newbucket2" ^
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
         ```
     </TabItem>
@@ -83,18 +81,18 @@ Method at AWS documentation: [GetObjectAttributes](https://docs.aws.amazon.com/A
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "2114023",
-  "Content-Type": "binary/octet-stream",
-  "Date": "Fri, 22 Nov 2024 10:12:24 GMT",
-  "Etag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
-  "Last-Modified": "Fri, 22 Nov 2024 10:12:02 GMT",
+  "Date": "Mon, 15 Sep 2025 23:16:54 GMT",
+  "ETag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "93c576aa54c960b355da9e2934476635fe3243f5df9dbb4db8b7c0d94bec7cd1",
-  "X-Amz-Request-Id": "180A42B32D61F286",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "057275ee0636b36a8256f409a6ff665de46bfaa1f0d5faf2d1b4f312e55c34fa",
+  "X-Amz-Request-Id": "186597DF1D6F6A87",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "2114023",
+  "Content-Type": "application/octet-stream",
+  "Last-Modified": "Mon, 15 Sep 2025 23:15:38 GMT"
  }
 }
 ```

@@ -29,12 +29,12 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-  Parameters = GetVKParameters();
-  
-  Product = "9372711";
-  Selection = "125";
-  
-  Result = OPI_VK.RemoveProductFromSelection(Product, Selection, Parameters);
+    Parameters = GetVKParameters();
+
+    Product   = "11831701";
+    Selection = "142";
+
+    Result = OPI_VK.RemoveProductFromSelection(Product, Selection, Parameters);
 ```
  
 
@@ -42,23 +42,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint vk RemoveProductFromSelection \
-             --sel 144 \
-             --item 11508184 \
-             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+             --item "11838523" \
+             --sel "147" \
+             --auth ""/tmp/riut31oq.esu.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint vk RemoveProductFromSelection ^
-             --sel 144 ^
-             --item 11508184 ^
-             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+             --item "11838523" ^
+             --sel "147" ^
+             --auth ""/tmp/riut31oq.esu.json""
         ```
     </TabItem>
 </Tabs>

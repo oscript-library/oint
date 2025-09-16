@@ -45,8 +45,17 @@ Without specifying the `ForcifyResult` flag, result data is returned only for qu
     Password = "12we...";
     Base     = "test_data";
 
-    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
-    Connection       = OPI_PostgreSQL.CreateConnection(ConnectionString);
+    TLS = True;
+    Port = 5432;
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+
+    If TLS Then
+        TLSSettings = OPI_PostgreSQL.GetTLSSettings(True);
+    Else
+        TLSSettings = Undefined;
+    EndIf;
+
+    Connection = OPI_PostgreSQL.CreateConnection(ConnectionString, TLSSettings);
 
     // CREATE
 
@@ -116,16 +125,18 @@ Without specifying the `ForcifyResult` flag, result data is returned only for qu
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint postgres ExecuteSQLQuery \
-             --sql "https://hut.openintegrations.dev/test_data/TEST_DATA.sql" \
-             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+             --sql ""https://hut.openintegrations.dev/test_data/TEST_DATA.sql"" \
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+             --tls ""/tmp/5ipwpn4a.lmj.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint postgres ExecuteSQLQuery ^
-             --sql "https://hut.openintegrations.dev/test_data/TEST_DATA.sql" ^
-             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+             --sql ""https://hut.openintegrations.dev/test_data/TEST_DATA.sql"" ^
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" ^
+             --tls ""/tmp/5ipwpn4a.lmj.json""
         ```
     </TabItem>
 </Tabs>
@@ -136,7 +147,7 @@ Without specifying the `ForcifyResult` flag, result data is returned only for qu
  "data": [
   {
    "age": 25,
-   "created_at": "2025-06-16",
+   "created_at": "2025-09-15",
    "data": {
     "BYTEA": "Base64"
    },

@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function FinishPartsUpload(Val Name, Val Bucket, Val BasicData, Val UploadID, Val TagsArray, Val Headers = Undefined) Export`
+`Function FinishPartsUpload(Val Name, Val Bucket, Val BasicData, Val UploadID, Val TagsArray, Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -22,6 +22,7 @@ import TabItem from '@theme/TabItem';
   | UploadID | --upload | String | &#x2714; | Upload ID. See InitPartsUpload |
   | TagsArray | --tags | Array Of String | &#x2714; | An array of tags (Etag) from the uploads responses of each part |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -45,13 +46,14 @@ This is a service method. A `PutObject` method is intended for the common scenar
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "fileChunked.mp3";
-    Bucket = "opi-gpbucket3";
+    Name = "fileChunked.mp3";
 
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
     Entity = "https://hut.openintegrations.dev/test_data/song.mp3"; // URL, Path or Binary Data
     Entity = OPI_HTTPRequests.Get(Entity);
 
-    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData, , Directory);
 
     UploadID   = Result["response"]["InitiateMultipartUploadResult"]["UploadId"];
     TotalSize  = Entity.Size();
@@ -72,8 +74,13 @@ This is a service method. A `PutObject` method is intended for the common scenar
             Break;
         EndIf;
 
-        Result = OPI_S3.UploadObjectPart(Name, Bucket, BasicData, UploadID, PartNumber,
-            CurrentData);
+        Result = OPI_S3.UploadObjectPart(Name
+            , Bucket
+            , BasicData
+            , UploadID
+            , PartNumber
+            , CurrentData
+            , Directory);
 
         BytesRead = SourceStream.CurrentPosition();
 
@@ -86,7 +93,7 @@ This is a service method. A `PutObject` method is intended for the common scenar
 
     EndDo;
 
-    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray);
+    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray, , Directory);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
  
@@ -95,27 +102,25 @@ This is a service method. A `PutObject` method is intended for the common scenar
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 FinishPartsUpload \
              --name "fileChunked.mp3" \
-             --bucket "opi-gpbucket3" \
+             --bucket "opi-dirbucket3" \
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
-             --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLmQ4Y2IxYWEyLTRiZjUtNGNhNC04NTA1LTc2OWQ3ZTA3ZDhiNQ" \
-             --tags "['\"'"566e2d464b39b91eb8b5d89fb9f1a318\"'"','\"'"adb76a9a9ff8226ed08fb6f343102908\"'"']"
+             --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjU1OTcwZTVkLTkyOGQtNGFhMi05ZGM5LWM4ZjBkMzZjNTVmNw" \
+             --tags "['\"'"566e2d464b39b91eb8b5d89fb9f1a318\"'"','\"'"adb76a9a9ff8226ed08fb6f343102908\"'"']" \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 FinishPartsUpload ^
              --name "fileChunked.mp3" ^
-             --bucket "opi-gpbucket3" ^
+             --bucket "opi-dirbucket3" ^
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
-             --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLmQ4Y2IxYWEyLTRiZjUtNGNhNC04NTA1LTc2OWQ3ZTA3ZDhiNQ" ^
-             --tags "['\"'"566e2d464b39b91eb8b5d89fb9f1a318\"'"','\"'"adb76a9a9ff8226ed08fb6f343102908\"'"']"
+             --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjU1OTcwZTVkLTkyOGQtNGFhMi05ZGM5LWM4ZjBkMzZjNTVmNw" ^
+             --tags "['\"'"566e2d464b39b91eb8b5d89fb9f1a318\"'"','\"'"adb76a9a9ff8226ed08fb6f343102908\"'"']" ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -126,25 +131,25 @@ This is a service method. A `PutObject` method is intended for the common scenar
  "status": 200,
  "response": {
   "CompleteMultipartUploadResult": {
-   "Location": "https://opi-gpbucket3.storage-155.s3hoster.by/fileChunked.mp3",
-   "Bucket": "opi-gpbucket3",
+   "Location": "https://storage-155.s3hoster.by/opi-dirbucket3/fileChunked.mp3",
+   "Bucket": "opi-dirbucket3",
    "Key": "fileChunked.mp3",
    "ETag": "\"22c09aeeb42144b375de8a4c1a1bb573-2\""
   }
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "345",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 10:12:23 GMT",
-  "Etag": "\"22c09aeeb42144b375de8a4c1a1bb573-2\"",
+  "Date": "Mon, 15 Sep 2025 23:16:44 GMT",
+  "ETag": "\"22c09aeeb42144b375de8a4c1a1bb573-2\"",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "93c576aa54c960b355da9e2934476635fe3243f5df9dbb4db8b7c0d94bec7cd1",
-  "X-Amz-Request-Id": "180A42B31F29A49F",
+  "X-Amz-Request-Id": "186597DCBCDC40F0",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "347",
+  "Content-Type": "application/xml"
  }
 }
 ```

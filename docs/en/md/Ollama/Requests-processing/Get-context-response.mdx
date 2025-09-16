@@ -68,24 +68,22 @@ Method at API documentation: [Generate a chat completion](https://github.com/oll
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint ollama GetContextResponse \
-             --url "https://hut.openintegrations.dev/ollama" \
-             --model "tinyllama" \
-             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a comprehensive enterprise resource planning (ERP) system developed by the Russian company 1-Central. It has various modules for accounting, inventory management, manufacturing, logistics, and marketing. The system includes features like customer relationship management (CRM), e-commerce, supply chain management (SCM), production planning, and order and delivery management. It is widely used in industries such as manufacturing, retail, wholesale, and service sectors. 1C:Enterprise\u0027s software is sold and supported by the company, and is available for purchase on its website.'},{'role':'user','content':'When the first version was released?'}]" \
+             --url ""https://hut.openintegrations.dev/ollama"" \
+             --model ""tinyllama"" \
+             --msgs ""[{'role':'user','content':'Hello!'}]"" \
+             --options ""/tmp/jslyarye.ngt.json"" \
              --headers "{'Authorization':'***'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint ollama GetContextResponse ^
-             --url "https://hut.openintegrations.dev/ollama" ^
-             --model "tinyllama" ^
-             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a comprehensive enterprise resource planning (ERP) system developed by the Russian company 1-Central. It has various modules for accounting, inventory management, manufacturing, logistics, and marketing. The system includes features like customer relationship management (CRM), e-commerce, supply chain management (SCM), production planning, and order and delivery management. It is widely used in industries such as manufacturing, retail, wholesale, and service sectors. 1C:Enterprise\u0027s software is sold and supported by the company, and is available for purchase on its website.'},{'role':'user','content':'When the first version was released?'}]" ^
+             --url ""https://hut.openintegrations.dev/ollama"" ^
+             --model ""tinyllama"" ^
+             --msgs ""[{'role':'user','content':'Hello!'}]"" ^
+             --options ""/tmp/jslyarye.ngt.json"" ^
              --headers "{'Authorization':'***'}"
         ```
     </TabItem>
@@ -95,18 +93,18 @@ Method at API documentation: [Generate a chat completion](https://github.com/oll
 ```json title="Result"
 {
  "model": "tinyllama",
- "created_at": "2025-05-01T06:46:43.0816524Z",
+ "created_at": "2025-09-16T00:16:33.602488485Z",
  "message": {
   "role": "assistant",
-  "content": "1C:Enterprise has been around since 2004. The first release, which is called Version 3, was released in 2005, and it brought some significant changes to the system that have remained constant through the years. The latest version, 6, was released in 2019 and is still in active development. Some of the most notable features in recent versions include:\n\n- Improved interface for users, with a more modern design and streamlined navigation\n- Enhanced reporting functionality to provide more detailed insights into business performance and key areas for improvement\n- Integration with popular accounting software such as Xero and Sage\n- Support for multilingual environments, with options for French, German, Spanish, Italian, Japanese, and Korean.\n\nOverall, 1C:Enterprise has remained a reliable and stable ERP solution for businesses for many years, and new updates and features are released regularly to keep the system up to date and relevant in today's market."
+  "content": "Yes, the first version of 1C:Enterprise was released in 2005. However, the platform has undergone several major versions since then, each bringing new features and improvements to the software. The latest version available as of writing is 14, which was released in April 2021. The upgrade process involves downloading and installing updates that enhance functionality, fix bugs, and improve performance, as well as adding new features and capabilities based on customer feedback and market trends."
  },
  "done_reason": "stop",
  "done": true,
- "total_duration": 48411004700,
- "load_duration": 14000500,
- "prompt_eval_count": 194,
- "prompt_eval_duration": 13206002400,
- "eval_count": 216,
- "eval_duration": 35186999300
+ "total_duration": 14043467332,
+ "load_duration": 16572316,
+ "prompt_eval_count": 233,
+ "prompt_eval_duration": 5708390784,
+ "eval_count": 106,
+ "eval_duration": 8311980284
 }
 ```

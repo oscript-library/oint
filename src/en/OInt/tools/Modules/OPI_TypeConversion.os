@@ -53,7 +53,7 @@ Procedure GetBinaryData(Value, Val Force = False, Val TryB64 = True) Export
         ElsIf ThisIsCollection(Value) Then
 
             Value = OPI_Tools.JSONString(Value);
-            Value = ПолучитьДвоичныеДанныеИзСтроки(Value);
+            Value = GetBinaryDataFromString(Value);
 
         Else
             GetLine(Value);
@@ -64,7 +64,7 @@ Procedure GetBinaryData(Value, Val Force = False, Val TryB64 = True) Export
 
         If Force Then
             GetLine(Value);
-            Value = ПолучитьДвоичныеДанныеИзСтроки(Value);
+            Value = GetBinaryDataFromString(Value);
         Else
             Raise "Error getting binary data from parameter: " + ErrorDescription();
         EndIf;
@@ -89,7 +89,7 @@ Procedure GetBinaryOrStream(Value) Export
 
     File = New File(ValueES);
 
-    If File.Exist() Then
+    If File.Exists() Then
         Value = New FileStream(ValueES, FileOpenMode.Open);
     Else
         GetBinaryData(Value);
@@ -97,7 +97,7 @@ Procedure GetBinaryOrStream(Value) Export
 
 EndProcedure
 
-Procedure GetCollection(Value) Export
+Procedure GetCollection(Value, ByNetwork = True) Export
 
     If Value = Undefined Then
         Return;
@@ -114,7 +114,7 @@ Procedure GetCollection(Value) Export
         Else
 
             If TypeOf(Value) = Type("BinaryData") Then
-                Value        = ПолучитьСтрокуИзДвоичныхДанных(Value);
+                Value        = GetStringFromBinaryData(Value);
             Else
                 Value        = OPI_Tools.NumberToString(Value);
             EndIf;
@@ -125,28 +125,25 @@ Procedure GetCollection(Value) Export
             File       = New File(ValueES);
             JSONReader = New JSONReader;
 
-            If File.Exist() Then
+            If File.Exists() Then
 
                 JSONReader.OpenFile(ValueES);
+                Value = ReadJSON(JSONReader, True, Undefined, JSONDateFormat.ISO);
+                JSONReader.Close();
 
-            ElsIf StrStartsWith(TrimL(ValueES), "http://")
-                Or StrStartsWith(TrimL(ValueES), "https://") Then
 
-                TFN = GetTempFileName();
-                CopyFile(ValueES, TFN);
-                JSONReader.OpenFile(TFN);
-                JSONReader.Read();
+            ElsIf ByNetwork And (StrStartsWith(TrimL(ValueES), "http://")
+                Or StrStartsWith(TrimL(ValueES), "https://")) Then
 
-                DeleteFiles(TFN);
+                Value = OPI_HTTPRequests.Get(ValueES);
 
             Else
 
                 JSONReader.SetString(TrimAll(Value));
+                Value = ReadJSON(JSONReader, True, Undefined, JSONDateFormat.ISO);
+                JSONReader.Close();
 
             EndIf;
-
-            Value = ReadJSON(JSONReader, True, Undefined, JSONDateFormat.ISO);
-            JSONReader.Close();
 
             If (Not ThisIsCollection(Value)) Or Not ValueIsFilled(Value) Then
 
@@ -238,7 +235,7 @@ Procedure GetLine(Value, Val FromSource = False) Export
 
             File = New File(ValueES);
 
-            If File.Exist() Then
+            If File.Exists() Then
 
                 TextReader = New TextReader(ValueES);
                 Value      = TextReader.Read();
@@ -258,7 +255,7 @@ Procedure GetLine(Value, Val FromSource = False) Export
 
         ElsIf TypeOf(Value) = Type("BinaryData") Then
 
-            Value = ПолучитьСтрокуИзДвоичныхДанных(Value);
+            Value = GetStringFromBinaryData(Value);
 
         ElsIf ThisIsCollection(Value) Then
 
@@ -364,7 +361,7 @@ Procedure GetFileOnDisk(Value, Val Extension = "tmp") Export
     ValueAsString   = OPI_Tools.NumberToString(Value);
     ValueFile       = New File(ValueAsString);
 
-    If ValueFile.Exist() Then
+    If ValueFile.Exists() Then
 
         ReturnStructure.Insert("Path", ValueFile.FullName);
 
@@ -417,7 +414,7 @@ Procedure ConvertSourceToValue(Value, TryB64)
 
     File = New File(ValueES);
 
-    If File.Exist() Then
+    If File.Exists() Then
 
         Value = New BinaryData(ValueES);
 
@@ -450,8 +447,8 @@ Procedure ПолучитьДвоичныеИлиПоток(Значение) Exp
 	GetBinaryOrStream(Значение);
 EndProcedure
 
-Procedure ПолучитьКоллекцию(Значение) Export
-	GetCollection(Значение);
+Procedure ПолучитьКоллекцию(Значение, ПоСети = True) Export
+	GetCollection(Значение, ПоСети);
 EndProcedure
 
 Procedure ПолучитьКоллекциюКлючИЗначение(Значение, Val СообщениеОшибки = "Указанное значение не является подходящей коллекцией!") Export

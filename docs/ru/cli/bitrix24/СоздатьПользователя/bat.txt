@@ -1,6 +1,4 @@
-:: JSON данные также могут быть переданы как путь к файлу .json
-
 oint bitrix24 СоздатьПользователя ^
-  --url "b24-ar17wx.bitrix24.by" ^
-  --fields "{'EMAIL':'77142232-7272-40c5-89fd-c04bdb2841ef@exepmple.org','NAME':'Виталий','LAST_NAME':'Альпака','PERSONAL_MOBILE':'88003553535','UF_DEPARTMENT':1}" ^
+  --url ""b24-ar17wx.bitrix24.by"" ^
+  --fields ""/tmp/qk1hzdl3.atm.json"" ^
   --token "***"

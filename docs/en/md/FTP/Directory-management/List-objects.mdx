@@ -1,0 +1,130 @@
+﻿---
+sidebar_position: 1
+description: List objects and other functions to work with FTP in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, FTP]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# List objects
+ Gets information about the contents of a directory at the specified path
+
+
+
+`Function ListObjects(Val Connection, Val Path = "", Val Recursively = False) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Connection | --conn | Arbitrary | &#x2714; | Existing connection or connection configuration |
+  | Path | --path | String | &#x2716; | Path to search directory |
+  | Recursively | --rcv | Boolean | &#x2716; | Get information about objects in nested directories |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+FTP Command: `LIST`
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Host     = "172.33.0.10";
+    Port     = "21";
+    Login    = "bayselonarrend";
+    Password = "12we...";
+
+    UseProxy = True;
+    FTPS     = True;
+
+    ProxySettings = Undefined;
+    TLSSettings   = Undefined; // FTPS
+
+    FTPSettings = OPI_FTP.GetConnectionSettings(Host, Port, Login, Password);
+
+    If UseProxy Then
+
+        ProxyType = "http"; // http, socks5, socks4
+
+        ProxyAddress  = "127.0.0.1";
+        ProxyPort     = "8071";
+        ProxyLogin    = "proxyuser";
+        ProxyPassword = "12we...";
+
+        ProxySettings = OPI_FTP.GetProxySettings(ProxyAddress, ProxyPort, ProxyType, ProxyLogin, ProxyPassword);
+
+    EndIf;
+
+    If FTPS Then
+        TLSSettings = OPI_FTP.GetTLSSettings(True);
+    EndIf;
+
+    Connection = OPI_FTP.CreateConnection(FTPSettings, ProxySettings, TLSSettings);
+
+    If OPI_FTP.IsConnector(Connection) Then
+        Result = OPI_FTP.ListObjects(Connection, "", True);
+    Else
+        Result = Connection; // Error of connection
+    EndIf;
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ftp ListObjects \
+             --conn "{'set':{'advanced_resolve':true,'domain':'172.33.0.11','login':'bayselonarrend','passive':true,'password':'***','port':'21','read_timeout':'120','write_timeout':'120'},'tls':{'accept_invalid_certs':true,'ca_cert_path':null,'use_tls':true},'proxy':{'login':'proxyuser','password':'***','port':'1080','proxy_type':'socks5','server':'127.0.0.1'}}" \
+             --path "." \
+             --rcv true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ftp ListObjects ^
+             --conn "{'set':{'advanced_resolve':true,'domain':'172.33.0.11','login':'bayselonarrend','passive':true,'password':'***','port':'21','read_timeout':'120','write_timeout':'120'},'tls':{'accept_invalid_certs':true,'ca_cert_path':null,'use_tls':true},'proxy':{'login':'proxyuser','password':'***','port':'1080','proxy_type':'socks5','server':'127.0.0.1'}}" ^
+             --path "." ^
+             --rcv true
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": true,
+ "data": [
+  {
+   "is_directory": true,
+   "is_symlink": false,
+   "list_string": "drwxr-sr-x    3 1000     1000         4096 Sep 15 21:46 new_dir",
+   "modified": "2025-09-15T21:46:00+00:00",
+   "name": "new_dir",
+   "size": 4096,
+   "symlink_path": "",
+   "path": "new_dir",
+   "objects": [
+    {
+     "is_directory": true,
+     "is_symlink": false,
+     "list_string": "drwxr-sr-x    2 1000     1000         4096 Sep 15 21:46 another_one",
+     "modified": "2025-09-15T21:46:00+00:00",
+     "name": "another_one",
+     "size": 4096,
+     "symlink_path": "",
+     "path": "new_dir/another_one",
+     "objects": []
+    }
+   ]
+  }
+ ],
+ "close_connection": {
+  "result": true
+ }
+}
+```

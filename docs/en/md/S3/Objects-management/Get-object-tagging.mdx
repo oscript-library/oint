@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function GetObjectTagging(Val Name, Val Bucket, Val BasicData, Val Version = "", Val Headers = Undefined) Export`
+`Function GetObjectTagging(Val Name, Val Bucket, Val BasicData, Val Version = "", Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
   | Version | --ver | String | &#x2716; | Token for retrieving data of a specific version of an object |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -42,10 +43,11 @@ Method at AWS documentation: [GetObjectTagging](https://docs.aws.amazon.com/Amaz
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "picture.jpg";
-    Bucket = "opi-gpbucket3";
+    Name = "picture.jpg";
 
-    Result = OPI_S3.GetObjectTagging(Name, Bucket, BasicData);
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
+    Result = OPI_S3.GetObjectTagging(Name, Bucket, BasicData, , , Directory);
 ```
  
 
@@ -53,31 +55,21 @@ Method at AWS documentation: [GetObjectTagging](https://docs.aws.amazon.com/Amaz
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 GetObjectTagging \
-             --url "storage-155.s3hoster.by" \
-             --access "BRN5RKJE67YCVDZRRQVI" \
-             --secret "***" \
-             --region "BTC" \
              --name "picture.jpg" \
-             --bucket "opi-gpbucket3" \
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --bucket "opi-dirbucket3" \
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 GetObjectTagging ^
-             --url "storage-155.s3hoster.by" ^
-             --access "BRN5RKJE67YCVDZRRQVI" ^
-             --secret "***" ^
-             --region "BTC" ^
              --name "picture.jpg" ^
-             --bucket "opi-gpbucket3" ^
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --bucket "opi-dirbucket3" ^
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -104,16 +96,16 @@ Method at AWS documentation: [GetObjectTagging](https://docs.aws.amazon.com/Amaz
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "180",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 10:12:24 GMT",
+  "Date": "Mon, 15 Sep 2025 23:17:13 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "93c576aa54c960b355da9e2934476635fe3243f5df9dbb4db8b7c0d94bec7cd1",
-  "X-Amz-Request-Id": "180A42B33D6917E9",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "057275ee0636b36a8256f409a6ff665de46bfaa1f0d5faf2d1b4f312e55c34fa",
+  "X-Amz-Request-Id": "186597E3A7333D77",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "180",
+  "Content-Type": "application/xml"
  }
 }
 ```

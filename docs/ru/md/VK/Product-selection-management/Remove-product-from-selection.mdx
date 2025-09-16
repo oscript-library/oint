@@ -31,8 +31,8 @@ import TabItem from '@theme/TabItem';
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Параметры = ПолучитьПараметрыВК();
 
-    Товар    = "11508989";
-    Подборка = "146";
+    Товар    = "11831701";
+    Подборка = "142";
 
     Результат = OPI_VK.УдалитьТоварИзПодборки(Товар, Подборка, Параметры);
 ```
@@ -42,23 +42,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk УдалитьТоварИзПодборки \
-              --sel 145 \
-              --item 11508809 \
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --item "11839322" \
+              --sel "141" \
+              --auth ""/tmp/owcf535h.tdl.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk УдалитьТоварИзПодборки ^
-              --sel 145 ^
-              --item 11508809 ^
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --item "11839322" ^
+              --sel "141" ^
+              --auth ""/tmp/owcf535h.tdl.json""
         ```
     </TabItem>
 </Tabs>

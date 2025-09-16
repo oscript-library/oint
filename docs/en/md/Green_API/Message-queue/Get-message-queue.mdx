@@ -45,8 +45,6 @@ Method at API documentation: [ShowMessagesQueue](https://green-api.com/docs/api/
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint greenapi GetMessageQueue \
              --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}"
         ```
@@ -54,8 +52,6 @@ Method at API documentation: [ShowMessagesQueue](https://green-api.com/docs/api/
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint greenapi GetMessageQueue ^
              --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}"
         ```
@@ -64,16 +60,5 @@ Method at API documentation: [ShowMessagesQueue](https://green-api.com/docs/api/
 
 
 ```json title="Result"
-[
- {
-  "messageID": "BAE58D3A8D0E8319",
-  "type": "editMessage",
-  "body": {
-   "chatId": "120363410406221140@g.us",
-   "idMessage": "BAE56825B1C0FC63",
-   "message": "New message text",
-   "linkPreview": true
-  }
- }
-]
+{}
 ```

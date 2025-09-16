@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Функция ПолучитьОбъект(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач Версия = "", Знач Заголовки = Неопределено, Знач ПутьСохранения = "") Экспорт`
+`Функция ПолучитьОбъект(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач Версия = "", Знач Заголовки = Неопределено, Знач ПутьСохранения = "", Знач Каталог = Ложь) Экспорт`
 
   | Параметр | CLI опция | Тип | Обяз. | Назначение |
   |-|-|-|-|-|
@@ -22,6 +22,7 @@ import TabItem from '@theme/TabItem';
   | Версия | --ver | Строка | &#x2716; | Токен для получения конкретной версии объекта |
   | Заголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Дополнительные заголовки запроса, если необходимо |
   | ПутьСохранения | --out | Строка | &#x2716; | Путь для прямой записи файла на диск |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
 
   
   Возвращаемое значение:   ДвоичныеДанные, Строка - содержимое объекта или путь к файлу, если указан путь сохранения
@@ -46,9 +47,10 @@ import TabItem from '@theme/TabItem';
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
 
     Наименование = "picture.jpg";
-    Бакет        = "opi-gpbucket3";
 
-    Результат = OPI_S3.ПолучитьОбъект(Наименование, Бакет, ОсновныеДанные);
+    Каталог = Истина; // Формирование URL в path-style
+    Бакет = "opi-dirbucket3";
+    Результат = OPI_S3.ПолучитьОбъект(Наименование, Бакет, ОсновныеДанные, , , , Каталог);
 
     ВременныйФайл = ПолучитьИмяВременногоФайла();
     ОсновныеДанные.Вставить("ChunkSize", 200000);
@@ -61,23 +63,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьОбъект \
               --name "bigfile.exe" \
               --bucket "newbucket2" \
-              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':200000}"
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':'200000'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьОбъект ^
               --name "bigfile.exe" ^
               --bucket "newbucket2" ^
-              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':200000}"
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':'200000'}"
         ```
     </TabItem>
 </Tabs>

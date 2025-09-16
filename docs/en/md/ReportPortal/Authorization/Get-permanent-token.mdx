@@ -1,0 +1,74 @@
+﻿---
+sidebar_position: 2
+description: Get permanent token and other functions to work with ReportPortal in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, ReportPortal]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Get permanent token
+ Creates a permanent ReportPortal user token
+
+
+
+`Function GetPermanentToken(Val URL, Val Token, Val UserID, Val KeyName) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | ReportPortal server URL |
+  | Token | --token | String | &#x2714; | Access token |
+  | UserID | --user | String | &#x2714; | User ID |
+  | KeyName | --name | String | &#x2714; | Token name |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from ReportPortal
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL     = "tests.openintegrations.dev";
+    Token   = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJzdXBlcmFkbWluIiwic2NvcGVzIjpbInVpIl0sImV4cCI6MTc1Nzk0OTAwNiwiaWF0IjoxNzU3ODYyNjA2LCJqdGkiOiIzOWY1OWNkMS00OG...";
+    UserID  = "1";
+    KeyName = "test_key";
+
+    Result = OPI_ReportPortal.GetPermanentToken(URL, Token, UserID, KeyName);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint rportal GetPermanentToken \
+             --url "tests.openintegrations.dev" \
+             --token "***" \
+             --user 1 \
+             --name "test_key"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint rportal GetPermanentToken ^
+             --url "tests.openintegrations.dev" ^
+             --token "***" ^
+             --user 1 ^
+             --name "test_key"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "id": 45,
+ "name": "test_key",
+ "user_id": 1,
+ "created_at": "2025-09-16T00:28:15.588460336Z",
+ "api_key": "test-key_NR1hfTaxR4WJhXfS1p8H92V7P0CM8l57sW4SzZMJ7jqTDAbX2LK29WMujWyhgoei"
+}
+```

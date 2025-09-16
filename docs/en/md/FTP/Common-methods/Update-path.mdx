@@ -1,0 +1,107 @@
+﻿---
+sidebar_position: 10
+description: Update path and other functions to work with FTP in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, FTP]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Update path
+ Changes the object's path to the specified one
+
+
+
+`Function UpdatePath(Val Connection, Val Path, Val NewPath) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | Connection | --conn | Arbitrary | &#x2714; | Existing connection or connection configuration |
+  | Path | --old | String | &#x2714; | Current path to object |
+  | NewPath | --new | String | &#x2714; | New path to object |
+
+  
+  Returns:  Map Of KeyAndValue - Processing result
+
+<br/>
+
+:::tip
+The ability to move an object from one directory to another by changing the path depends on the server settings
+
+FTP Command: `RNFR + RNTO`
+:::
+<br/>
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    Host     = "172.33.0.10";
+    Port     = "21";
+    Login    = "bayselonarrend";
+    Password = "12we...";
+
+    UseProxy = True;
+    FTPS     = True;
+
+    ProxySettings = Undefined;
+    TLSSettings   = Undefined; // FTPS
+
+    FTPSettings = OPI_FTP.GetConnectionSettings(Host, Port, Login, Password);
+
+    If UseProxy Then
+
+        ProxyType = "http"; // http, socks5, socks4
+
+        ProxyAddress  = "127.0.0.1";
+        ProxyPort     = "8071";
+        ProxyLogin    = "proxyuser";
+        ProxyPassword = "12we...";
+
+        ProxySettings = OPI_FTP.GetProxySettings(ProxyAddress, ProxyPort, ProxyType, ProxyLogin, ProxyPassword);
+
+    EndIf;
+
+    If FTPS Then
+        TLSSettings = OPI_FTP.GetTLSSettings(True);
+    EndIf;
+
+    Connection = OPI_FTP.CreateConnection(FTPSettings, ProxySettings, TLSSettings);
+
+    If OPI_FTP.IsConnector(Connection) Then
+        Result = OPI_FTP.UpdatePath(Connection, "new_dir/big.bin", "new_dir/giant.bin");
+    Else
+        Result = Connection; // Error of connection
+    EndIf;
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint ftp UpdatePath \
+             --conn "{'set':{'advanced_resolve':true,'domain':'172.33.0.11','login':'bayselonarrend','passive':true,'password':'***','port':'21','read_timeout':'120','write_timeout':'120'},'tls':{'accept_invalid_certs':true,'ca_cert_path':null,'use_tls':true},'proxy':{'login':'proxyuser','password':'***','port':'1080','proxy_type':'socks5','server':'127.0.0.1'}}" \
+             --old "new_dir/giant.bin" \
+             --new "new_dir/big.bin"
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint ftp UpdatePath ^
+             --conn "{'set':{'advanced_resolve':true,'domain':'172.33.0.11','login':'bayselonarrend','passive':true,'password':'***','port':'21','read_timeout':'120','write_timeout':'120'},'tls':{'accept_invalid_certs':true,'ca_cert_path':null,'use_tls':true},'proxy':{'login':'proxyuser','password':'***','port':'1080','proxy_type':'socks5','server':'127.0.0.1'}}" ^
+             --old "new_dir/giant.bin" ^
+             --new "new_dir/big.bin"
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "result": true,
+ "close_connection": {
+  "result": true
+ }
+}
+```

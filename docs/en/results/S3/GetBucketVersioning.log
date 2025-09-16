@@ -1,4 +1,4 @@
-﻿ {
+﻿{
  "status": 200,
  "response": {
   "VersioningConfiguration": {
@@ -7,15 +7,15 @@
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "123",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 10:11:57 GMT",
+  "Date": "Mon, 15 Sep 2025 23:11:48 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "0757065d17b69556603743b9ea63f04bc7b9f349245bbff6b0ba901258e9c169",
-  "X-Amz-Request-Id": "180A42AD1B46C1FC",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "e602da57d0c30b8c7034fcfe129917205f80f7bab979408e71da5d1441c85e79",
+  "X-Amz-Request-Id": "18659797ED0E3404",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "123",
+  "Content-Type": "application/xml"
  }
 }

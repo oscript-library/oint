@@ -52,7 +52,7 @@ import TabItem from '@theme/TabItem';
     Результат = OPI_Bitrix24.СоздатьЗадачу(URL, СтруктураЗадачи);
 
     URL   = "b24-ar17wx.bitrix24.by";
-    Токен = "11ae5d68006e9f06006b12e400000001000...";
+    Токен = "75d8c668006e9f06006b12e400000001000...";
 
     Результат = OPI_Bitrix24.СоздатьЗадачу(URL, СтруктураЗадачи, Токен);
 ```
@@ -62,22 +62,18 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint bitrix24 СоздатьЗадачу \
-              --url "b24-ar17wx.bitrix24.by" \
-              --fields "{'TITLE':'Новая задача','DESCRIPTION':'Новое описание задачи','PRIORITY':'2','DEADLINE':'2025-07-16T19:23:58.4361435Z','RESPONSIBLE_ID':1}" \
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --fields ""/tmp/epw2qrt5.uln.json"" \
               --token "***"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint bitrix24 СоздатьЗадачу ^
-              --url "b24-ar17wx.bitrix24.by" ^
-              --fields "{'TITLE':'Новая задача','DESCRIPTION':'Новое описание задачи','PRIORITY':'2','DEADLINE':'2025-07-16T19:23:58.4361435Z','RESPONSIBLE_ID':1}" ^
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --fields ""/tmp/epw2qrt5.uln.json"" ^
               --token "***"
         ```
     </TabItem>
@@ -88,7 +84,7 @@ import TabItem from '@theme/TabItem';
 {
  "result": {
   "task": {
-   "id": "2378",
+   "id": "8012",
    "parentId": null,
    "title": "Новая задача",
    "description": "Новое описание задачи",
@@ -98,20 +94,22 @@ import TabItem from '@theme/TabItem';
    "notViewed": "N",
    "replicate": "N",
    "stageId": "0",
+   "sprintId": null,
+   "backlogId": null,
    "createdBy": "1",
-   "createdDate": "2024-10-08T20:48:35+03:00",
+   "createdDate": "2025-09-16T04:55:14+00:00",
    "responsibleId": "1",
    "changedBy": "1",
-   "changedDate": "2024-10-08T20:48:35+03:00",
+   "changedDate": "2025-09-16T04:55:14+00:00",
    "statusChangedBy": null,
    "closedBy": null,
    "closedDate": null,
-   "activityDate": "2024-10-08T20:48:35+03:00",
+   "activityDate": "2025-09-16T04:55:14+00:00",
    "dateStart": null,
-   "deadline": "2024-10-09T23:48:00+03:00",
+   "deadline": "2025-09-17T04:55:00+00:00",
    "startDatePlan": null,
    "endDatePlan": null,
-   "guid": "{037d66b0-f11d-4d50-bf02-0491fe52bea7}",
+   "guid": "{e3041118-e463-42b2-967b-6c9dd658fbde}",
    "xmlId": null,
    "commentsCount": null,
    "serviceCommentsCount": null,
@@ -126,7 +124,7 @@ import TabItem from '@theme/TabItem';
    "forumTopicId": null,
    "forumId": null,
    "siteId": "s1",
-   "subordinate": "N",
+   "subordinate": "Y",
    "exchangeModified": null,
    "exchangeId": null,
    "outlookVersion": "1",
@@ -139,7 +137,7 @@ import TabItem from '@theme/TabItem';
    "flowId": null,
    "descriptionInBbcode": "Y",
    "status": "2",
-   "statusChangedDate": "2024-10-08T20:48:35+03:00",
+   "statusChangedDate": "2025-09-16T04:55:14+00:00",
    "durationPlan": null,
    "durationType": "days",
    "favorite": "N",
@@ -184,6 +182,7 @@ import TabItem from '@theme/TabItem';
     "addFavorite": true,
     "deleteFavorite": false,
     "rate": true,
+    "take": false,
     "edit.originator": false,
     "checklist.reorder": true,
     "elapsedtime.add": true,
@@ -209,7 +208,8 @@ import TabItem from '@theme/TabItem';
      "isImportant": false,
      "completedCount": 0,
      "members": [],
-     "attachments": []
+     "attachments": [],
+     "nodeId": null
     },
     "action": [],
     "descendants": []
@@ -218,14 +218,14 @@ import TabItem from '@theme/TabItem';
   }
  },
  "time": {
-  "start": 1728409715.35686,
-  "finish": 1728409715.50661,
-  "duration": 0.149749994277954,
-  "processing": 0.121814012527466,
-  "date_start": "2024-10-08T20:48:35+03:00",
-  "date_finish": "2024-10-08T20:48:35+03:00",
-  "operating_reset_at": 1728410315,
-  "operating": 0.121784925460815
+  "start": 1757998514.80791,
+  "finish": 1757998514.99151,
+  "duration": 0.183600187301636,
+  "processing": 0.157555103302002,
+  "date_start": "2025-09-16T04:55:14+00:00",
+  "date_finish": "2025-09-16T04:55:14+00:00",
+  "operating_reset_at": 1757999114,
+  "operating": 0.157538890838623
  }
 }
 ```

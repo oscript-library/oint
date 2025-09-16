@@ -79,8 +79,8 @@ Method at API documentation: [Create chat completion](https://platform.openai.co
             oint openai GetResponse \
              --url "https://hut.openintegrations.dev/localai/" \
              --token "***" \
-             --model "smolvlm-256m-instruct" \
-             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a full-stack, low-code platform'},{'role':'user','content':'When the first version was released?'}]"
+             --model "moondream2-20250414" \
+             --msgs "[{'role':'user','content':[{'type':'input_image','file_id':'file-10'},{'type':'input_text','text':'What is in this image?'}]}]"
         ```
     </TabItem>
   
@@ -89,8 +89,8 @@ Method at API documentation: [Create chat completion](https://platform.openai.co
             oint openai GetResponse ^
              --url "https://hut.openintegrations.dev/localai/" ^
              --token "***" ^
-             --model "smolvlm-256m-instruct" ^
-             --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is a full-stack, low-code platform'},{'role':'user','content':'When the first version was released?'}]"
+             --model "moondream2-20250414" ^
+             --msgs "[{'role':'user','content':[{'type':'input_image','file_id':'file-10'},{'type':'input_text','text':'What is in this image?'}]}]"
         ```
     </TabItem>
 </Tabs>
@@ -98,9 +98,9 @@ Method at API documentation: [Create chat completion](https://platform.openai.co
 
 ```json title="Result"
 {
- "created": 1750098805,
+ "created": 1757982186,
  "object": "chat.completion",
- "id": "39a36b68-de88-476a-a746-d379d12d30b7",
+ "id": "151c60ea-3bf0-4240-86cc-8e03f28f5585",
  "model": "smolvlm-256m-instruct",
  "choices": [
   {
@@ -108,7 +108,7 @@ Method at API documentation: [Create chat completion](https://platform.openai.co
    "finish_reason": "stop",
    "message": {
     "role": "assistant",
-    "content": "2015"
+    "content": "2007"
    }
   }
  ],

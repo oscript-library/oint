@@ -29,8 +29,8 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Токен         = "ya29.a0AS3H6Nw6rTG3pFXv17ZLXkvuvtNl_DHHXbxe2yDRIB09Sq-BA7xPQj9V7OKAaAiHRZAsVqI0UD6026Q_3gklXjU-kam0kzFCe2adXI3lS...";
-    Идентификатор = "1EXU3VzYWlZfoXu71DWUirbJeN7AAfpkg";
+    Токен         = "ya29.a0AQQ_BDTgQbn9c5rXhPK3FCakms_7oKkdIWE1CCQFnSPftb2RxvloVqnYOcnsAKhXrD0Gq8Tz2Kgn5IBXG5E25uksZfvvTtXob-jFcuj_9LZYs9La4HrcFk766...";
+    Идентификатор = "1lZ0YvekgaZiJuZay2g2BiCAkRVrCjmNW";
     Комментарий   = "Текст комментария";
 
     Результат = OPI_GoogleDrive.СоздатьКомментарий(Токен, Идентификатор, Комментарий);
@@ -43,7 +43,7 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint gdrive СоздатьКомментарий \
               --token "***" \
-              --object "1TziaVAnvXJBG3qDpbF-hdXKVBR7G5XJj" \
+              --object "13YOnqT_zPO0N60PooriQcAmWiKJPEB0H" \
               --text "Текст комментария"
         ```
     </TabItem>
@@ -52,7 +52,7 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint gdrive СоздатьКомментарий ^
               --token "***" ^
-              --object "1TziaVAnvXJBG3qDpbF-hdXKVBR7G5XJj" ^
+              --object "13YOnqT_zPO0N60PooriQcAmWiKJPEB0H" ^
               --text "Текст комментария"
         ```
     </TabItem>
@@ -61,19 +61,19 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Результат"
 {
- "id": "AAABW19Pq0I",
- "kind": "drive#comment",
- "createdTime": "2024-10-08T17:42:33.807Z",
- "modifiedTime": "2024-10-08T17:42:33.807Z",
  "replies": [],
  "author": {
   "displayName": "Антон Титовец",
   "kind": "drive#user",
   "me": true,
-  "photoLink": "//lh3.googleusercontent.com/a/ACg8ocKYttNv2CZ-cTTuE90Zmht_PwnGc0YnjM1IUllXsTVORfZFVPU=s50-c-k-no"
+  "photoLink": "//lh3.googleusercontent.com/a/ACg8ocJnbqA6yq1Q0s-yU0hen8H6NFa_chOdcC2wpT9q-BJj0q7MyPU=s50-c-k-no"
  },
- "deleted": false,
+ "kind": "drive#comment",
+ "id": "AAABq2QzJ6g",
+ "createdTime": "2025-09-16T04:43:10.678Z",
+ "modifiedTime": "2025-09-16T04:43:10.678Z",
  "htmlContent": "Текст комментария",
- "content": "Текст комментария"
+ "content": "Текст комментария",
+ "deleted": false
 }
 ```

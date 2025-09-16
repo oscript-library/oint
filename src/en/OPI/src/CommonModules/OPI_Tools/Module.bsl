@@ -258,13 +258,13 @@ Function JSONString(Val Data
 
 EndFunction
 
-Function ReadJSONFile(Val Path) Export
+Function ReadJSONFile(Val Path, Val ToMap = False) Export
 
     // BSLLS:ExternalAppStarting-off
 
     JSONReader = New JSONReader;
     JSONReader.OpenFile(Path);
-    Values     = ReadJSON(JSONReader);
+    Values     = ReadJSON(JSONReader, ToMap);
 
     // BSLLS:ExternalAppStarting-on
 
@@ -273,6 +273,19 @@ Function ReadJSONFile(Val Path) Export
     Return Values;
 
 EndFunction
+
+Procedure WriteJSONFile(Val Path, Val Data) Export
+
+    JSONWriter = New JSONWriter();
+
+    // BSLLS:ExternalAppStarting-off
+    JSONWriter.OpenFile(Path, , False);
+    // BSLLS:ExternalAppStarting-on
+
+    WriteJSON(JSONWriter, Data);
+    JSONWriter.Close();
+
+EndProcedure
 
 #EndRegion
 
@@ -624,7 +637,12 @@ Function CopyCollection(Val Collection) Export
         Collection_ = ?(IsStructure, New Structure, New Map);
 
         For Each CollectionField In Collection Do
-            Collection_.Insert(CollectionField.Key, CollectionField.Value);
+
+            CurrentValue = CollectionField.Value;
+            CurrentValue = ?(ThisIsCollection(CurrentValue), CopyCollection(CurrentValue), CurrentValue);
+
+            Collection_.Insert(CollectionField.Key, CurrentValue);
+
         EndDo;
 
     ElsIf IsArray Then
@@ -632,7 +650,10 @@ Function CopyCollection(Val Collection) Export
         Collection_ = New Array;
 
         For Each CollectionItem In Collection Do
-            Collection_.Add(CollectionItem);
+
+            CurrentValue = ?(ThisIsCollection(CollectionItem), CopyCollection(CollectionItem), CollectionItem);
+            Collection_.Add(CurrentValue);
+
         EndDo;
 
     Else
@@ -837,6 +858,17 @@ Procedure StreamToStart(CurrentStream) Export
 
 EndProcedure
 
+Procedure RemoveFileWithTry(Val Path, Val MessageText) Export
+
+    Try
+        DeleteFiles(Path);
+    Except
+        //@skip-check use-non-recommended-method
+        Message(MessageText);
+    EndTry;
+
+EndProcedure
+
 Function NumberToString(Val Value) Export
 
     If TypeOf(Value) = Type("Number") Then
@@ -984,6 +1016,15 @@ Function ThisIsCollection(Val Value, Val KeyValue = False) Export
         Or ValeType  = Type("Structure")
         Or ValeType  = Type("Map");
 
+EndFunction
+
+Function OPIVersion() Export
+    Return "1.27.0";
+EndFunction
+
+Function OPILanguage() Export
+    CurrentOPILanguage = "en";
+    Return CurrentOPILanguage;
 EndFunction
 
 #EndRegion

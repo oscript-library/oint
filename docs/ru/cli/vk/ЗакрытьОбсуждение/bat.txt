@@ -1,6 +1,4 @@
-:: JSON данные также могут быть переданы как путь к файлу .json
-
 oint vk ЗакрытьОбсуждение ^
-  --topic 53987843 ^
-  --remove false ^
-  --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+  --topic "54110014" ^
+  --remove "false" ^
+  --auth ""/tmp/lb31bomf.rbz.json""

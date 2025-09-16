@@ -38,15 +38,10 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Токен = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTA5Njg4MjEsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFwaS12ZXJzaW9uOjEuMSIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
-    UUID  = "cebfc351-2cd2-4add-828d-1682c3ee4193";
+    Токен = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTc4NjI0MDMsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJzb2xpZC1hZGRyZ...";
+    UUID  = "f3702734-c8c7-4b9d-aa44-f0c7a6ad5199";
 
     Результат = OPI_CDEK.ПолучитьКвитанцию(Токен, UUID, , Истина); // Ответ сервера с ссылкой
-
-    ИВФ = ПолучитьИмяВременногоФайла("pdf");
-
-    Результат = OPI_CDEK.ПолучитьКвитанцию(Токен, UUID, Истина, Истина); // PDF
-    Результат.Записать(ИВФ);
 ```
     
 
@@ -56,8 +51,10 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint cdek ПолучитьКвитанцию \
               --token "***" \
-              --uuid "84b34e58-7f32-4666-9050-804edd72af42" \
-              --testapi "***"
+              --uuid "8a8df3b2-2b6d-4afa-ab62-ef25645c7acd" \
+              --getfile "True" \
+              --testapi "***" \
+              --out "/tmp/bvggi3eg.21d.pdf"
         ```
     </TabItem>
   
@@ -65,8 +62,10 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint cdek ПолучитьКвитанцию ^
               --token "***" ^
-              --uuid "84b34e58-7f32-4666-9050-804edd72af42" ^
-              --testapi "***"
+              --uuid "8a8df3b2-2b6d-4afa-ab62-ef25645c7acd" ^
+              --getfile "True" ^
+              --testapi "***" ^
+              --out "/tmp/bvggi3eg.21d.pdf"
         ```
     </TabItem>
 </Tabs>
@@ -75,38 +74,38 @@ import TabItem from '@theme/TabItem';
 ```json title="Результат"
 {
  "entity": {
-  "uuid": "72753031-57df-40c5-8453-790e984f7a0f",
+  "uuid": "23b9016d-33a9-41f1-b0b3-553b6c96c3f9",
   "orders": [
    {
-    "order_uuid": "f1647903-ff8f-4460-bfb2-0df32616250c"
+    "order_uuid": "8611de5b-a1b1-49f6-8518-b1aa85e26752"
    }
   ],
   "copy_count": 1,
   "type": "tpl_russia",
-  "url": "https://api.edu.cdek.ru/v2/print/orders/72753031-57df-40c5-8453-790e984f7a0f.pdf",
+  "url": "https://api.edu.cdek.ru/v2/print/orders/23b9016d-33a9-41f1-b0b3-553b6c96c3f9.pdf",
   "statuses": [
    {
     "code": "ACCEPTED",
     "name": "Принят",
-    "date_time": "2024-10-21T20:41:43+03:00"
+    "date_time": "2025-09-16T05:18:55+00:00"
    },
    {
     "code": "PROCESSING",
     "name": "Формируется",
-    "date_time": "2024-10-21T20:41:43+03:00"
+    "date_time": "2025-09-16T05:18:55+00:00"
    },
    {
     "code": "READY",
     "name": "Сформирован",
-    "date_time": "2024-10-21T20:41:44+03:00"
+    "date_time": "2025-09-16T05:18:57+00:00"
    }
   ]
  },
  "requests": [
   {
-   "request_uuid": "a3ac101e-b1cf-4cb9-8f2c-a2f702e8761b",
+   "request_uuid": "cb691646-b67b-4434-a53d-810dd6180773",
    "type": "CREATE",
-   "date_time": "2024-10-21T20:41:43+03:00",
+   "date_time": "2025-09-16T05:18:55+00:00",
    "state": "SUCCESSFUL"
   }
  ],

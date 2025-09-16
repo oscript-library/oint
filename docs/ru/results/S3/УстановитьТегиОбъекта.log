@@ -1,17 +1,17 @@
-﻿    {
+﻿{
  "status": 200,
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "0",
-  "Content-Type": "text/plain; charset=utf-8",
-  "Date": "Fri, 22 Nov 2024 09:35:15 GMT",
+  "Date": "Tue, 16 Sep 2025 05:32:35 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "0757065d17b69556603743b9ea63f04bc7b9f349245bbff6b0ba901258e9c169",
-  "X-Amz-Request-Id": "180A40AC5C021A54",
+  "X-Amz-Request-Id": "1865AC5EB5BC9B90",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "0",
+  "Content-Type": "text/plain; charset=utf-8"
  }
 }

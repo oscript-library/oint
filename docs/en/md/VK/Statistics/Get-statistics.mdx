@@ -43,23 +43,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint vk GetStatistics \
-             --datefrom "2025-07-15T00:00:00" \
-             --dateto "2025-07-15T23:59:59" \
-             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+             --datefrom ""2025-09-15T00:00:00"" \
+             --dateto ""2025-09-15T23:59:59"" \
+             --auth ""/tmp/wnqhhjg0.vdr.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint vk GetStatistics ^
-             --datefrom "2025-07-15T00:00:00" ^
-             --dateto "2025-07-15T23:59:59" ^
-             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+             --datefrom ""2025-09-15T00:00:00"" ^
+             --dateto ""2025-09-15T23:59:59"" ^
+             --auth ""/tmp/wnqhhjg0.vdr.json""
         ```
     </TabItem>
 </Tabs>
@@ -70,11 +66,11 @@ import TabItem from '@theme/TabItem';
  "response": [
   {
    "activity": {
-    "comments": 1,
-    "likes": 1
+    "comments": 8,
+    "likes": 8
    },
-   "period_from": 1728432000,
-   "period_to": 1728518399,
+   "period_from": 1757894400,
+   "period_to": 1757980799,
    "reach": {
     "age": [
      {
@@ -87,11 +83,11 @@ import TabItem from '@theme/TabItem';
      },
      {
       "value": "21-24",
-      "count": 1
+      "count": 0
      },
      {
       "value": "24-27",
-      "count": 0
+      "count": 1
      },
      {
       "value": "27-30",
@@ -175,11 +171,11 @@ import TabItem from '@theme/TabItem';
      },
      {
       "value": "m;21-24",
-      "count": 1
+      "count": 0
      },
      {
       "value": "m;24-27",
-      "count": 0
+      "count": 1
      },
      {
       "value": "m;27-30",
@@ -203,10 +199,10 @@ import TabItem from '@theme/TabItem';
     "cities": [],
     "countries": [
      {
-      "code": "RU",
+      "code": "IN",
       "count": 1,
-      "name": "Россия",
-      "value": 1
+      "name": "Индия",
+      "value": 80
      }
     ],
     "mobile_views": 0,

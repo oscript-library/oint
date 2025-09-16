@@ -1,11 +1,11 @@
-﻿ {
+﻿{
  "kind": "calendar#event",
- "etag": "\"3456908680754000\"",
- "id": "7rfbn0fb8nai4i7v4l435tgl1c",
+ "etag": "\"3515950794970398\"",
+ "id": "mevv7hielimqt2v59r2nt6fh6k",
  "status": "cancelled",
- "htmlLink": "https://www.google.com/calendar/event?eid=N3JmYm4wZmI4bmFpNGk3djRsNDM1dGdsMWMgNjA2MTNkNTNjNDY3MGFiZGNlZWMzZTc2OTNjYTQ3NWIwZTg4ZGMxNjc4ZGI3MjEwNTIxMzU2YjQ5NDBhNjE0OEBn",
- "created": "2024-10-09T06:12:19Z",
- "updated": "2024-10-09T06:12:20.377Z",
+ "htmlLink": "https://www.google.com/calendar/event?eid=bWV2djdoaWVsaW1xdDJ2NTlyMm50NmZoNmsgNzNjMzZlYjFhYjBkZDM0YzNjMmYyOThhZjhmZGFjNjg3MTU0YWExOWEzMTZiMjk3Yjc1YmI5ZDc2YzY4ZWUzOUBn",
+ "created": "2025-09-15T22:29:54Z",
+ "updated": "2025-09-15T22:29:57.485Z",
  "summary": "New event",
  "description": "New event description",
  "location": "InOffice",
@@ -16,26 +16,26 @@
   "email": "bayselonarrend@gmail.com"
  },
  "start": {
-  "dateTime": "2024-10-09T12:12:19+03:00",
+  "dateTime": "2025-09-15T22:29:51+00:00",
   "timeZone": "Europe/Moscow"
  },
  "end": {
-  "dateTime": "2024-10-09T13:12:19+03:00",
+  "dateTime": "2025-09-15T23:29:51+00:00",
   "timeZone": "Europe/Moscow"
  },
- "iCalUID": "7rfbn0fb8nai4i7v4l435tgl1c@google.com",
+ "iCalUID": "mevv7hielimqt2v59r2nt6fh6k@google.com",
  "sequence": 0,
  "reminders": {
   "useDefault": true
  },
  "attachments": [
   {
-   "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture.jpg",
+   "fileUrl": "https://hut.openintegrations.dev/test_data/picture.jpg",
    "title": "Image1",
    "iconLink": ""
   },
   {
-   "fileUrl": "https://github.com/Bayselonarrend/OpenIntegrations/raw/main/service/test_data/picture2.jpg",
+   "fileUrl": "https://hut.openintegrations.dev/test_data/picture2.jpg",
    "title": "Image2",
    "iconLink": ""
   }

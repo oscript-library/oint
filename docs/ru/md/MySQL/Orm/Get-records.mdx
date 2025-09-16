@@ -38,7 +38,15 @@ import TabItem from '@theme/TabItem';
     Пароль = "12we...";
     База   = "testbase1";
 
-    СтрокаПодключения = OPI_MySQL.СформироватьСтрокуПодключения(Адрес, База, Логин, Пароль);
+    TLS = Истина;
+    Порт = 3306;
+    СтрокаПодключения = OPI_MySQL.СформироватьСтрокуПодключения(Адрес, База, Логин, Пароль, Порт);
+
+    Если TLS Тогда
+        НастройкиTLS = OPI_MySQL.ПолучитьНастройкиTLS(Истина);
+    Иначе
+        НастройкиTLS = Неопределено;
+    КонецЕсли;
 
     // Все записи без отборов
 
@@ -48,11 +56,11 @@ import TabItem from '@theme/TabItem';
     // которое будет закрыто после выполнения функции.
     // В случае выполнения нескольких операций желательно использовать одно соединение,
     // заранее созданное функцией ОткрытьСоединение()
-    Результат = OPI_MySQL.ПолучитьЗаписи(Таблица, , , , , СтрокаПодключения);
+    Результат = OPI_MySQL.ПолучитьЗаписи(Таблица, , , , , СтрокаПодключения, НастройкиTLS);
 
     // Отборы, выбранные поля, количество и сортировка
 
-    СтрокаПодключения = OPI_MySQL.СформироватьСтрокуПодключения(Адрес, "test_data", Логин, Пароль);
+    СтрокаПодключения = OPI_MySQL.СформироватьСтрокуПодключения(Адрес, "test_data", Логин, Пароль, Порт);
 
     Таблица = "test_data";
 
@@ -84,7 +92,7 @@ import TabItem from '@theme/TabItem';
     Сортировка = Новый Структура("ip_address", "DESC");
     Количество = 5;
 
-    Результат = OPI_MySQL.ПолучитьЗаписи(Таблица, Поля, Фильтры, Сортировка, Количество, СтрокаПодключения);
+    Результат = OPI_MySQL.ПолучитьЗаписи(Таблица, Поля, Фильтры, Сортировка, Количество, СтрокаПодключения, НастройкиTLS);
 ```
     
 
@@ -93,16 +101,18 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint mysql ПолучитьЗаписи \
-              --table "testtable" \
-              --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/"
+              --table ""testtable"" \
+              --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" \
+              --tls ""/tmp/keqjja4t.eso.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint mysql ПолучитьЗаписи ^
-              --table "testtable" ^
-              --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/"
+              --table ""testtable"" ^
+              --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" ^
+              --tls ""/tmp/keqjja4t.eso.json""
         ```
     </TabItem>
 </Tabs>
@@ -114,8 +124,8 @@ import TabItem from '@theme/TabItem';
   {
    "bigint_field": 9223372036854775807,
    "char_field": "AAAAA",
-   "date_field": "2025-04-06T03:00:00+03:00",
-   "datetime_field": "2025-04-06T03:23:50+03:00",
+   "date_field": "2025-09-16T00:00:00+00:00",
+   "datetime_field": "2025-09-16T04:27:17+00:00",
    "double_field": 100.51212310791,
    "float_field": 100.5,
    "int_field": -2147483647,
@@ -128,8 +138,8 @@ import TabItem from '@theme/TabItem';
    "set_field": "one",
    "smallint_field": -32767,
    "text_field": "Some text",
-   "time_field": "1970-01-01T03:23:50+03:00",
-   "timestamp_field": "2025-04-06T03:23:50+03:00",
+   "time_field": "1970-01-01T04:27:17+00:00",
+   "timestamp_field": "2025-09-16T04:27:17+00:00",
    "tinyint_field": 127,
    "tinytext_field": "Some tiny text",
    "uint_field": 4294967295,

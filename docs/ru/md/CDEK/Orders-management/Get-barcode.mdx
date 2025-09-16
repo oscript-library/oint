@@ -38,15 +38,10 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Токен = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTA5Njg4MjEsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFwaS12ZXJzaW9uOjEuMSIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
-    UUID  = "450a1f56-df1d-4eb9-9645-cf1acebf2f26";
+    Токен = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTc4NjI0MDMsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJzb2xpZC1hZGRyZ...";
+    UUID  = "61ca58da-457c-4d7c-9ef9-3925d203a3c2";
 
     Результат = OPI_CDEK.ПолучитьШтрихкод(Токен, UUID, , Истина); // Ответ сервера с ссылкой
-
-    ИВФ = ПолучитьИмяВременногоФайла("pdf");
-
-    Результат = OPI_CDEK.ПолучитьШтрихкод(Токен, UUID, Истина, Истина); // PDF
-    Результат.Записать(ИВФ);
 ```
     
 
@@ -56,10 +51,10 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint cdek ПолучитьШтрихкод \
               --token "***" \
-              --uuid "be95af48-5ad2-4770-a0b8-c9ee3e4cf80e" \
-              --getfile true \
+              --uuid "b99f911a-9abf-4493-8e51-0793063d6a94" \
+              --getfile "True" \
               --testapi "***" \
-              --out "/tmp/bg135bni.m0k.pdf"
+              --out "/tmp/5z4v25xx.idl.pdf"
         ```
     </TabItem>
   
@@ -67,10 +62,10 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint cdek ПолучитьШтрихкод ^
               --token "***" ^
-              --uuid "be95af48-5ad2-4770-a0b8-c9ee3e4cf80e" ^
-              --getfile true ^
+              --uuid "b99f911a-9abf-4493-8e51-0793063d6a94" ^
+              --getfile "True" ^
               --testapi "***" ^
-              --out "/tmp/bg135bni.m0k.pdf"
+              --out "/tmp/5z4v25xx.idl.pdf"
         ```
     </TabItem>
 </Tabs>
@@ -79,39 +74,39 @@ import TabItem from '@theme/TabItem';
 ```json title="Результат"
 {
  "entity": {
-  "uuid": "72753031-aae5-495d-b063-ddffc813948d",
+  "uuid": "ed3d7af0-3683-4a04-9ed6-f2037882b881",
   "orders": [
    {
-    "order_uuid": "f1647903-ff8f-4460-bfb2-0df32616250c"
+    "order_uuid": "8611de5b-a1b1-49f6-8518-b1aa85e26752"
    }
   ],
   "copy_count": 1,
   "format": "A5",
-  "url": "https://api.edu.cdek.ru/v2/print/barcodes/72753031-aae5-495d-b063-ddffc813948d.pdf",
+  "url": "https://api.edu.cdek.ru/v2/print/barcodes/ed3d7af0-3683-4a04-9ed6-f2037882b881.pdf",
   "lang": "RUS",
   "statuses": [
    {
     "code": "ACCEPTED",
     "name": "Принят",
-    "date_time": "2024-10-21T20:41:43+03:00"
+    "date_time": "2025-09-16T05:18:58+00:00"
    },
    {
     "code": "PROCESSING",
     "name": "Формируется",
-    "date_time": "2024-10-21T20:41:43+03:00"
+    "date_time": "2025-09-16T05:18:58+00:00"
    },
    {
     "code": "READY",
     "name": "Сформирован",
-    "date_time": "2024-10-21T20:41:44+03:00"
+    "date_time": "2025-09-16T05:18:59+00:00"
    }
   ]
  },
  "requests": [
   {
-   "request_uuid": "30ff788c-f19e-4b1d-900a-b141de4efbbe",
+   "request_uuid": "b93822df-bfa6-4572-9403-2633de2eae06",
    "type": "CREATE",
-   "date_time": "2024-10-21T20:41:43+03:00",
+   "date_time": "2025-09-16T05:18:58+00:00",
    "state": "SUCCESSFUL"
   }
  ],

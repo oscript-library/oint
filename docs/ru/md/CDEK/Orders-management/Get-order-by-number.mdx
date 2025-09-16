@@ -34,9 +34,9 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Токен = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTA5Njg4MjEsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFwaS12ZXJzaW9uOjEuMSIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
+    Токен = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTc4NjI0MDMsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJzb2xpZC1hZGRyZ...";
 
-    НомерЗаказа = "6ac5fa00-e000-43da-8258-1b70caacb40d";
+    НомерЗаказа = "6ceca026-2bd5-495a-9ffd-964d2ad18f8c";
     Результат   = OPI_CDEK.ПолучитьЗаказПоНомеру(Токен, НомерЗаказа, Истина, Истина);
 ```
     
@@ -47,7 +47,7 @@ import TabItem from '@theme/TabItem';
         ```bash
             oint cdek ПолучитьЗаказПоНомеру \
               --token "***" \
-              --number "6ec5f221-6620-4885-8f12-bc0fbca2e305" \
+              --number "d81e9cb3-806a-4664-8321-10ddc3a06aec" \
               --internal true \
               --testapi "***"
         ```
@@ -57,7 +57,7 @@ import TabItem from '@theme/TabItem';
         ```batch
             oint cdek ПолучитьЗаказПоНомеру ^
               --token "***" ^
-              --number "6ec5f221-6620-4885-8f12-bc0fbca2e305" ^
+              --number "d81e9cb3-806a-4664-8321-10ddc3a06aec" ^
               --internal true ^
               --testapi "***"
         ```
@@ -68,12 +68,12 @@ import TabItem from '@theme/TabItem';
 ```json title="Результат"
 {
  "entity": {
-  "uuid": "f1647903-ff8f-4460-bfb2-0df32616250c",
+  "uuid": "8611de5b-a1b1-49f6-8518-b1aa85e26752",
   "type": 1,
   "is_return": false,
   "is_reverse": false,
-  "cdek_number": "1106094895",
-  "number": "849fe48e-2108-4864-9ad4-085b2b0be131",
+  "cdek_number": "1106608129",
+  "number": "d81e9cb3-806a-4664-8321-10ddc3a06aec",
   "tariff_code": 139,
   "comment": "Новый заказ",
   "items_cost_currency": "RUB",
@@ -93,6 +93,11 @@ import TabItem from '@theme/TabItem';
    "company": "Тестирование Интеграции ИМ",
    "name": "Петров Петр",
    "contragent_type": "LEGAL_ENTITY",
+   "phones": [
+    {
+     "number": "79529287654"
+    }
+   ],
    "passport_requirements_satisfied": false
   },
   "seller": {
@@ -113,7 +118,6 @@ import TabItem from '@theme/TabItem';
    "city_uuid": "7e8f36ba-d937-4ce4-8d53-e44177db6469",
    "city": "Москва",
    "fias_guid": "0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
-   "kladr_code": "7700000000000",
    "country_code": "RU",
    "country": "Россия",
    "region": "Москва",
@@ -162,7 +166,7 @@ import TabItem from '@theme/TabItem';
   "packages": [
    {
     "number": "bar-001",
-    "barcode": "000000536891",
+    "barcode": "000001220097",
     "weight": 4000,
     "length": 10,
     "width": 10,
@@ -188,33 +192,29 @@ import TabItem from '@theme/TabItem';
       "cost": 300
      }
     ],
-    "package_id": "ee6390c4-c059-4765-9cfb-597be1f4547f"
+    "package_id": "fc63aaa4-e6de-44d5-9eeb-c8c7dafde747"
    }
   ],
   "statuses": [
    {
-    "code": "ACCEPTED",
-    "name": "Принят",
-    "date_time": "2024-10-21T20:41:21+03:00",
-    "city": "Офис СДЭК"
-   },
-   {
     "code": "CREATED",
     "name": "Создан",
-    "date_time": "2024-10-21T20:41:12+03:00",
-    "city": "Офис СДЭК"
+    "date_time": "2025-09-16T05:18:27+00:00",
+    "city": "Офис СДЭК",
+    "deleted": false
+   },
+   {
+    "code": "ACCEPTED",
+    "name": "Принят",
+    "date_time": "2025-09-16T05:18:26+00:00",
+    "city": "Офис СДЭК",
+    "deleted": false
    }
   ],
   "is_client_return": false,
   "delivery_mode": "1",
+  "has_reverse_order": false,
   "delivery_detail": {
    "delivery_sum": 1315,
-   "total_sum": 2183.4,
-   "payment_info": [],
-   "delivery_vat_rate": 20,
-   "delivery_vat_sum": 263,
-   "delivery_discount_percent": 0,
-   "delivery_discount_sum": 0
-  },
 ...
 ```

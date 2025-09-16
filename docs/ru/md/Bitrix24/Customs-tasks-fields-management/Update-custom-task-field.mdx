@@ -44,7 +44,7 @@ import TabItem from '@theme/TabItem';
     Результат = OPI_Bitrix24.ИзменитьПользовательскоеПолеЗадачи(URL, IDПоля, , Заголовок);
 
     URL   = "b24-ar17wx.bitrix24.by";
-    Токен = "11ae5d68006e9f06006b12e400000001000...";
+    Токен = "75d8c668006e9f06006b12e400000001000...";
 
     IDПоля     = "257";
     ВнешнийКод = "NEW_TEXT_FIELD";
@@ -59,18 +59,22 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 ИзменитьПользовательскоеПолеЗадачи \
-              --url "https://b24-ar17wx.bitrix24.by/rest/1/***" \
-              --fieldid 259 \
-              --title "Новый заголовок"
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --fieldid "261" \
+              --externalid ""NEW_TEXT_FIELD"" \
+              --label ""/tmp/g3at4a4t.4db.json"" \
+              --token "***"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 ИзменитьПользовательскоеПолеЗадачи ^
-              --url "https://b24-ar17wx.bitrix24.by/rest/1/***" ^
-              --fieldid 259 ^
-              --title "Новый заголовок"
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --fieldid "261" ^
+              --externalid ""NEW_TEXT_FIELD"" ^
+              --label ""/tmp/g3at4a4t.4db.json"" ^
+              --token "***"
         ```
     </TabItem>
 </Tabs>

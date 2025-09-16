@@ -39,7 +39,7 @@ Method at API documentation: [GetMessage](https://green-api.com/docs/api/journal
     ApiTokenInstance = "425010d90e114aa6b78f0969e...";
 
     ChatID    = "120363410406221140@g.us";
-    MessageID = "BAE56D4A351AAABD";
+    MessageID = "BAE5EA3FDF4B5C98";
 
     AccessParameters = OPI_GreenAPI.FormAccessParameters(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
     Result           = OPI_GreenAPI.GetMessage(AccessParameters, ChatID, MessageID);
@@ -50,23 +50,19 @@ Method at API documentation: [GetMessage](https://green-api.com/docs/api/journal
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint greenapi GetMessage \
              --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" \
              --chat "120363410406221140@g.us" \
-             --msg "BAE5C5FA375FA242"
+             --msg "BAE5BB1508D0BC37"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint greenapi GetMessage ^
              --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" ^
              --chat "120363410406221140@g.us" ^
-             --msg "BAE5C5FA375FA242"
+             --msg "BAE5BB1508D0BC37"
         ```
     </TabItem>
 </Tabs>
@@ -75,8 +71,8 @@ Method at API documentation: [GetMessage](https://green-api.com/docs/api/journal
 ```json title="Result"
 {
  "type": "outgoing",
- "idMessage": "BAE56825B1C0FC63",
- "timestamp": 1742274622,
+ "idMessage": "BAE5BB1508D0BC37",
+ "timestamp": 1757978474,
  "typeMessage": "extendedTextMessage",
  "chatId": "120363410406221140@g.us",
  "textMessage": "New message",
@@ -89,11 +85,11 @@ Method at API documentation: [GetMessage](https://green-api.com/docs/api/journal
   "forwardingScore": 0,
   "isForwarded": false
  },
- "statusMessage": "",
+ "statusMessage": "sent",
  "sendByApi": true,
- "deletedMessageId": "BAE588DA94C72DC2",
+ "deletedMessageId": "",
  "editedMessageId": "",
  "isEdited": false,
- "isDeleted": true
+ "isDeleted": false
 }
 ```

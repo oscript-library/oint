@@ -48,12 +48,17 @@ pipeline {
 		}
       	stage('Build OInt from source and decrypt secret data'){
          		steps{
-            		powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.26.0.ospx; del oint-1.26.0.ospx'
+            		powershell encoding: 'UTF-8', script:'cd ./src/ru/OInt; opm build; opm install oint-1.27.0.ospx; del oint-1.27.0.ospx'
             		withCredentials([string(credentialsId: 'gpgkey', variable: 'GPGKEY')]) {
               			bat encoding: 'UTF-8', script:'gpg --quiet --batch --yes --decrypt --passphrase="%GPGKEY%" --output ./data.json ./data.json.gpg'
             		}
          		}
       	}
+		stage('Create ReportPortal launch'){
+				steps{
+					bat encoding: 'UTF-8', script:'chcp 65001 & oscript ./ci/os/rp_start.os'
+				}
+		}
 
 		stage('Testing-Telegram') {
 			steps {			
@@ -206,6 +211,19 @@ pipeline {
 			}
 			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
 				runCommand('1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_Тесты.os" "Твиттер_Твиты"')
+			}
+			}
+		}
+		stage('Testing-FTP') {
+			steps {			
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+				runCommand('1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_Тесты.os" "FT_РаботаСДиректориями"')
+			}
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+				runCommand('1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_Тесты.os" "FT_РаботаСФайлами"')
+			}
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+				runCommand('1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_Тесты.os" "FT_ОсновныеМетоды"')
 			}
 			}
 		}
@@ -652,11 +670,21 @@ pipeline {
 			}
 			}
 		}
+		stage('Testing-ReportPortal') {
+			steps {			
+			catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {   
+				runCommand('1testrunner -run "./src/ru/OInt/tests/Modules/internal/OPI_Тесты.os" "RPortal_Авторизация"')
+			}
+			}
+		}
 
 	}
 	post{
 		always{
 			script {
+				catchError() {   
+				    runCommand('oscript ./ci/os/rp_stop.os "ru"')
+			    }
 				withCredentials([string(credentialsId: 'gpgkey', variable: 'GPGKEY')]) {
 					bat encoding: 'UTF-8', script:'del "./data.json.gpg"'
 					bat encoding: 'UTF-8', script:'gpg --batch --symmetric --cipher-algo AES256 --passphrase="%GPGKEY%" ./data.json'
@@ -669,7 +697,7 @@ pipeline {
 					bat "git add ."
 					bat 'git commit -m "Test data update (Jenkins)"'
 					bat "git push origin HEAD:main"
-				}
+				}	
 			}
 		}
 	}

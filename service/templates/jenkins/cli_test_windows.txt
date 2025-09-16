@@ -13,6 +13,7 @@ pipeline {
 	stages {
 		stage('Decrypt Data') {
             steps {
+                powershell encoding: 'UTF-8', script:'cd ./src/%1/OInt; opm build; opm install oint-1.27.0.ospx; del oint-1.27.0.ospx'
                 withCredentials([string(credentialsId: 'gpgkey', variable: 'GPGKEY')]) {
                     bat encoding: 'UTF-8', script:'gpg --quiet --batch --yes --decrypt --passphrase="%%GPGKEY%%" --output ./data.json ./data.json.gpg'
                 }
@@ -79,7 +80,7 @@ pipeline {
         stage('Download Installer') {
             steps {
                 powershell encoding: 'UTF-8', script: '''
-                    $url = "https://jenkins.openintegrations.dev/job/OpiRelease/lastSuccessfulBuild/artifact/1.26.0/oint_1.26.0_installer_%1.exe "
+                    $url = "https://jenkins.openintegrations.dev/job/OpiBuild/job/OpiRelease/lastSuccessfulBuild/artifact/1.27.0/oint_1.27.0_installer_%1.exe "
                     $output = "$env:USERPROFILE\\Downloads\\oint_installer.exe"
                     Invoke-WebRequest -Uri $url -OutFile $output
                     Write-Host "Инсталлер скачан в: $output"
@@ -125,6 +126,11 @@ pipeline {
                 '''
             }
         }
+        stage('Create ReportPortal launch'){
+				steps{
+					bat encoding: 'UTF-8', script:'chcp 65001 & oscript ./ci/os/rp_start.os "CLI"'
+				}
+		}
 
 %2
 
@@ -132,6 +138,9 @@ pipeline {
 	post{
 		always{
 			script {
+                catchError() {   
+				    runCommand('oscript ./ci/os/rp_stop.os "%1"')
+			    }
 				withCredentials([string(credentialsId: 'gpgkey', variable: 'GPGKEY')]) {
 					bat encoding: 'UTF-8', script:'del "./data.json.gpg"'
 					bat encoding: 'UTF-8', script:'gpg --batch --symmetric --cipher-algo AES256 --passphrase="%%GPGKEY%%" ./data.json'

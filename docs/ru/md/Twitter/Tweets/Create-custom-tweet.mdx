@@ -54,22 +54,18 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint twitter СоздатьПроизвольныйТвит \
-              --text "Тестовый твиттa3879eea-f342-4ba1-ba68-7f52f6d90187" \
-              --media "['1945196033979400192','1945196045744365568']" \
+              --text "Тестовый твиттbe1e222c-27c5-48fc-8f83-9fcdde581587" \
+              --media "['1967669484329603072','1967669497491230721']" \
               --auth "{'redirect_uri':'https://hut.openintegrations.dev/melezh/6ad91cc8b','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint twitter СоздатьПроизвольныйТвит ^
-              --text "Тестовый твиттa3879eea-f342-4ba1-ba68-7f52f6d90187" ^
-              --media "['1945196033979400192','1945196045744365568']" ^
+              --text "Тестовый твиттbe1e222c-27c5-48fc-8f83-9fcdde581587" ^
+              --media "['1967669484329603072','1967669497491230721']" ^
               --auth "{'redirect_uri':'https://hut.openintegrations.dev/melezh/6ad91cc8b','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
@@ -78,12 +74,9 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Результат"
 {
- "data": {
-  "edit_history_tweet_ids": [
-   "1843703511571182018"
-  ],
-  "id": "1843703511571182018",
-  "text": "Тестовый твиттd33e634d-1e04-444a-b6be-f8a6f1babec0"
- }
+ "title": "Too Many Requests",
+ "detail": "Too Many Requests",
+ "type": "about:blank",
+ "status": 429
 }
 ```

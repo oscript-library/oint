@@ -68,24 +68,22 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint ollama ПолучитьОтветВКонтексте \
-              --url "https://hut.openintegrations.dev/ollama" \
-              --model "tinyllama" \
-              --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is an open-source accounting software designed for small and medium-sized businesses (SMBs) in Russia, Belarus, Ukraine, Kazakhstan, and Kyrgyzstan. It provides a variety of financial, inventory, accounting, purchasing, and payroll management features and can be installed on-premise or in the cloud for remote access.\n\n1C:Enterprise is known for its robust reporting capabilities, easy integration with third-party applications, and customizable templates for invoicing and journal entries. It is also compatible with leading accounting and financial software solutions like QuickBooks, Xero, and Sage Intacct, making it a popular choice among SMBs looking to streamline their finance processes.'},{'role':'user','content':'When the first version was released?'}]" \
+              --url ""https://hut.openintegrations.dev/ollama"" \
+              --model ""tinyllama"" \
+              --msgs ""[{'role':'user','content':'Hello!'}]"" \
+              --options ""/tmp/f5jrnmds.wl4.json"" \
               --headers "{'Authorization':'***'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint ollama ПолучитьОтветВКонтексте ^
-              --url "https://hut.openintegrations.dev/ollama" ^
-              --model "tinyllama" ^
-              --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is an open-source accounting software designed for small and medium-sized businesses (SMBs) in Russia, Belarus, Ukraine, Kazakhstan, and Kyrgyzstan. It provides a variety of financial, inventory, accounting, purchasing, and payroll management features and can be installed on-premise or in the cloud for remote access.\n\n1C:Enterprise is known for its robust reporting capabilities, easy integration with third-party applications, and customizable templates for invoicing and journal entries. It is also compatible with leading accounting and financial software solutions like QuickBooks, Xero, and Sage Intacct, making it a popular choice among SMBs looking to streamline their finance processes.'},{'role':'user','content':'When the first version was released?'}]" ^
+              --url ""https://hut.openintegrations.dev/ollama"" ^
+              --model ""tinyllama"" ^
+              --msgs ""[{'role':'user','content':'Hello!'}]"" ^
+              --options ""/tmp/f5jrnmds.wl4.json"" ^
               --headers "{'Authorization':'***'}"
         ```
     </TabItem>
@@ -95,18 +93,18 @@ import TabItem from '@theme/TabItem';
 ```json title="Результат"
 {
  "model": "tinyllama",
- "created_at": "2025-04-14T20:16:54.5071968Z",
+ "created_at": "2025-09-16T05:41:54.998231091Z",
  "message": {
   "role": "assistant",
-  "content": "The first version of 1C:Enterprise was released in 2001. However, the latest version (version 21) was released in 2021. The company has continued to make minor updates and upgrades to the software over time, including bug fixes and improvements."
+  "content": "The first version of 1C:Enterprise was released in November 2004. However, the current stable version is 2018-Q3, which has been available for several years now and underwent a significant update in March 2017."
  },
  "done_reason": "stop",
  "done": true,
- "total_duration": 21319004300,
- "load_duration": 16999000,
- "prompt_eval_count": 172,
- "prompt_eval_duration": 11457001500,
- "eval_count": 64,
- "eval_duration": 9843003800
+ "total_duration": 12802952525,
+ "load_duration": 18559012,
+ "prompt_eval_count": 211,
+ "prompt_eval_duration": 7904935778,
+ "eval_count": 60,
+ "eval_duration": 4871800232
 }
 ```

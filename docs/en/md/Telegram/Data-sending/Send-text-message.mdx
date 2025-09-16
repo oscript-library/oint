@@ -58,9 +58,8 @@ Method at API documentation: [sendMessage](https://core.telegram.org/bots/api#se
         ```bash
             oint telegram SendTextMessage \
              --token "***" \
-             --chat "@testsichee" \
-             --text "Text %%F0%%9F%%A5%%9D and emoji \(10%%\)" \
-             --parsemode "MarkdownV2"
+             --chat "-1001971186208*11655" \
+             --text "Строковое значение"
         ```
     </TabItem>
   
@@ -68,9 +67,8 @@ Method at API documentation: [sendMessage](https://core.telegram.org/bots/api#se
         ```batch
             oint telegram SendTextMessage ^
              --token "***" ^
-             --chat "@testsichee" ^
-             --text "Text %%F0%%9F%%A5%%9D and emoji \(10%%\)" ^
-             --parsemode "MarkdownV2"
+             --chat "-1001971186208*11655" ^
+             --text "Строковое значение"
         ```
     </TabItem>
 </Tabs>
@@ -80,7 +78,7 @@ Method at API documentation: [sendMessage](https://core.telegram.org/bots/api#se
 {
  "ok": true,
  "result": {
-  "message_id": 8302,
+  "message_id": 16463,
   "from": {
    "id": 6129457865,
    "is_bot": true,
@@ -90,12 +88,28 @@ Method at API documentation: [sendMessage](https://core.telegram.org/bots/api#se
   "chat": {
    "id": 461699897,
    "first_name": "Anton",
-   "last_name": "Titowets",
-   "username": "JKIee",
+   "last_name": "Titovets",
+   "username": "bayselonarrend",
    "type": "private"
   },
-  "date": 1728453289,
-  "text": "Строковое значение"
+  "date": 1757971358,
+  "text": "Строковое значение",
+  "reply_markup": {
+   "inline_keyboard": [
+    [
+     {
+      "text": "Button1",
+      "callback_data": "Button1"
+     }
+    ],
+    [
+     {
+      "text": "Button2",
+      "callback_data": "Button2"
+     }
+    ]
+   ]
+  }
  }
 }
 ```

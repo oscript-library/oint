@@ -43,13 +43,13 @@ Method at API documentation: [calendar.section.update](https://apidocs.bitrix24.
     CalendarsStructure.Insert("description", "This calendar has been changed");
 
     URL        = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    CalendarID = "852";
+    CalendarID = "1322";
 
     Result = OPI_Bitrix24.UpdateCalendar(URL, CalendarID, CalendarsStructure);
 
     URL        = "b24-ar17wx.bitrix24.by";
-    Token      = "11ae5d68006e9f06006b12e400000001000...";
-    CalendarID = "854";
+    Token      = "75d8c668006e9f06006b12e400000001000...";
+    CalendarID = "1324";
 
     Result = OPI_Bitrix24.UpdateCalendar(URL, CalendarID, CalendarsStructure, Token);
 ```
@@ -59,24 +59,20 @@ Method at API documentation: [calendar.section.update](https://apidocs.bitrix24.
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint bitrix24 UpdateCalendar \
-             --url "b24-ar17wx.bitrix24.by" \
-             --calendar 1098 \
-             --fields "{'type':'user','ownerId':1,'name':'New calendar name','description':'This calendar has been changed'}" \
+             --url ""b24-ar17wx.bitrix24.by"" \
+             --calendar "1364" \
+             --fields ""/tmp/ki1nvlgy.ux5.json"" \
              --token "***"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint bitrix24 UpdateCalendar ^
-             --url "b24-ar17wx.bitrix24.by" ^
-             --calendar 1098 ^
-             --fields "{'type':'user','ownerId':1,'name':'New calendar name','description':'This calendar has been changed'}" ^
+             --url ""b24-ar17wx.bitrix24.by"" ^
+             --calendar "1364" ^
+             --fields ""/tmp/ki1nvlgy.ux5.json"" ^
              --token "***"
         ```
     </TabItem>
@@ -85,15 +81,15 @@ Method at API documentation: [calendar.section.update](https://apidocs.bitrix24.
 
 ```json title="Result"
 {
- "result": 80,
+ "result": 1364,
  "time": {
-  "start": 1737396243.58751,
-  "finish": 1737396243.63005,
-  "duration": 0.0425360202789307,
-  "processing": 0.0164361000061035,
-  "date_start": "2025-01-20T21:04:03+03:00",
-  "date_finish": "2025-01-20T21:04:03+03:00",
-  "operating_reset_at": 1737396843,
+  "start": 1757977107.03015,
+  "finish": 1757977107.06781,
+  "duration": 0.0376620292663574,
+  "processing": 0.0151371955871582,
+  "date_start": "2025-09-15T22:58:27+00:00",
+  "date_finish": "2025-09-15T22:58:27+00:00",
+  "operating_reset_at": 1757977707,
   "operating": 0
  }
 }

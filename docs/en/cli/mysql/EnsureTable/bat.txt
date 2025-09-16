@@ -1,7 +1,5 @@
-:: JSON data can also be passed as a path to a .json file
-
 oint mysql EnsureTable ^
- --table "testtable" ^
- --cols "{'smallint_field':'SMALLINT','double_field':'DOUBLE','bigint_field':'BIGINT','custom_field':'TEXT'}" ^
+ --table ""test_new"" ^
+ --cols ""/tmp/ibigveh5.fws.json"" ^
  --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" ^
- --tls "{'use_tls':true,'accept_invalid_certs':true}"
+ --tls ""/tmp/zgvnh5sv.2gg.json""

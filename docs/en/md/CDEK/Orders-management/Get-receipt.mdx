@@ -38,15 +38,10 @@ Method at API documentation: [Receiving order receipt](https://api-docs.cdek.ru/
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTA5Njg4MjEsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFwaS12ZXJzaW9uOjEuMSIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
-    UUID  = "cebfc351-2cd2-4add-828d-1682c3ee4193";
+    Token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTc4NjI0MDMsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJzb2xpZC1hZGRyZ...";
+    UUID  = "f3702734-c8c7-4b9d-aa44-f0c7a6ad5199";
 
     Result = OPI_CDEK.GetReceipt(Token, UUID, , True); // Server response with a URL
-
-    TFN = GetTempFileName("pdf");
-
-    Result = OPI_CDEK.GetReceipt(Token, UUID, True, True); // PDF
-    Result.Write(TFN);
 ```
  
 
@@ -75,38 +70,38 @@ Method at API documentation: [Receiving order receipt](https://api-docs.cdek.ru/
 ```json title="Result"
 {
  "entity": {
-  "uuid": "72753031-318f-4249-ab65-4c7e08244c6d",
+  "uuid": "fc3f751b-3394-4755-9955-9349e96822bb",
   "orders": [
    {
-    "order_uuid": "a93fd1b1-55b3-4033-a52a-d2df7bb6b469"
+    "order_uuid": "d21e50df-430b-4b25-a3e1-4059d93047f5"
    }
   ],
   "copy_count": 1,
   "type": "tpl_russia",
-  "url": "https://api.edu.cdek.ru/v2/print/orders/72753031-318f-4249-ab65-4c7e08244c6d.pdf",
+  "url": "https://api.edu.cdek.ru/v2/print/orders/fc3f751b-3394-4755-9955-9349e96822bb.pdf",
   "statuses": [
    {
     "code": "ACCEPTED",
     "name": "Принят",
-    "date_time": "2024-10-21T21:27:30+03:00"
+    "date_time": "2025-09-15T23:07:00+00:00"
    },
    {
     "code": "PROCESSING",
     "name": "Формируется",
-    "date_time": "2024-10-21T21:27:30+03:00"
+    "date_time": "2025-09-15T23:07:00+00:00"
    },
    {
     "code": "READY",
     "name": "Сформирован",
-    "date_time": "2024-10-21T21:27:31+03:00"
+    "date_time": "2025-09-15T23:07:01+00:00"
    }
   ]
  },
  "requests": [
   {
-   "request_uuid": "8f0331c9-6bbc-4ec9-9357-ecc9af47342b",
+   "request_uuid": "664aab57-68be-4cc2-be3b-01359f37c44c",
    "type": "CREATE",
-   "date_time": "2024-10-21T21:27:30+03:00",
+   "date_time": "2025-09-15T23:07:00+00:00",
    "state": "SUCCESSFUL"
   }
  ],

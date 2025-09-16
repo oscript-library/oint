@@ -1,9 +1,9 @@
-﻿    {
+﻿{
  "result": {
   "view": "month",
   "CalendarSelCont": false,
   "SPCalendarSelCont": false,
-  "meetSection": false,
+  "meetSection": "14",
   "crmSection": false,
   "showDeclined": true,
   "denyBusyInvitation": false,
@@ -33,13 +33,13 @@
   "timezoneDefaultName": ""
  },
  "time": {
-  "start": 1737292093.70988,
-  "finish": 1737292093.74214,
-  "duration": 0.0322551727294922,
-  "processing": 0.00413203239440918,
-  "date_start": "2025-01-19T16:08:13+03:00",
-  "date_finish": "2025-01-19T16:08:13+03:00",
-  "operating_reset_at": 1737292693,
+  "start": 1757999367.42888,
+  "finish": 1757999367.45518,
+  "duration": 0.0263009071350098,
+  "processing": 0.00204300880432129,
+  "date_start": "2025-09-16T05:09:27+00:00",
+  "date_finish": "2025-09-16T05:09:27+00:00",
+  "operating_reset_at": 1757999967,
   "operating": 0
  }
 }

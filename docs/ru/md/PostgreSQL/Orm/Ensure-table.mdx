@@ -39,11 +39,19 @@ import TabItem from '@theme/TabItem';
     Адрес  = "127.0.0.1";
     Логин  = "bayselonarrend";
     Пароль = "12we...";
+    База   = "testbase1";
 
-    База    = "testbase1";
+    TLS = Истина;
+    Порт = 5432;
+    СтрокаПодключения = OPI_PostgreSQL.СформироватьСтрокуПодключения(Адрес, База, Логин, Пароль, Порт);
+
+    Если TLS Тогда
+        НастройкиTLS = OPI_PostgreSQL.ПолучитьНастройкиTLS(Истина);
+    Иначе
+        НастройкиTLS = Неопределено;
+    КонецЕсли;
+
     Таблица = "testtable";
-
-    СтрокаПодключения = OPI_PostgreSQL.СформироватьСтрокуПодключения(Адрес, База, Логин, Пароль);
 
     СтруктураКолонок = Новый Структура;
     СтруктураКолонок.Вставить("smallint_field" , "SMALLINT");
@@ -51,7 +59,7 @@ import TabItem from '@theme/TabItem';
     СтруктураКолонок.Вставить("bigint_field"   , "BIGINT");
     СтруктураКолонок.Вставить("custom_field"   , "TEXT");
 
-    Результат = OPI_PostgreSQL.ГарантироватьТаблицу(Таблица, СтруктураКолонок, СтрокаПодключения);
+    Результат = OPI_PostgreSQL.ГарантироватьТаблицу(Таблица, СтруктураКолонок, СтрокаПодключения, НастройкиTLS);
 ```
     
 
@@ -59,23 +67,21 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint postgres ГарантироватьТаблицу \
-              --table "test_new" \
-              --cols "{'smallint_field':'SMALLINT','uuid_field':'uuid','bigint_field':'BIGINT','custom_field':'TEXT'}" \
-              --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+              --table ""test_new"" \
+              --cols ""/tmp/245ceavd.nau.json"" \
+              --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+              --tls ""/tmp/dv1hemxj.u3e.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint postgres ГарантироватьТаблицу ^
-              --table "test_new" ^
-              --cols "{'smallint_field':'SMALLINT','uuid_field':'uuid','bigint_field':'BIGINT','custom_field':'TEXT'}" ^
-              --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+              --table ""test_new"" ^
+              --cols ""/tmp/245ceavd.nau.json"" ^
+              --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" ^
+              --tls ""/tmp/dv1hemxj.u3e.json""
         ```
     </TabItem>
 </Tabs>

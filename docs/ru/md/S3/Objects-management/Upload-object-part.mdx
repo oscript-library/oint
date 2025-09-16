@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Функция ЗагрузитьЧастьОбъекта(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач IDЗагрузки, Знач НомерЧасти, Знач Данные) Экспорт`
+`Функция ЗагрузитьЧастьОбъекта(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач IDЗагрузки, Знач НомерЧасти, Знач Данные, Знач Каталог = Ложь) Экспорт`
 
   | Параметр | CLI опция | Тип | Обяз. | Назначение |
   |-|-|-|-|-|
@@ -22,6 +22,7 @@ import TabItem from '@theme/TabItem';
   | IDЗагрузки | --upload | Строка | &#x2714; | ID загрузки по частям. См. ИнициализироватьЗагрузкуЧастями |
   | НомерЧасти | --part | Число, Строка | &#x2714; | Порядковый номер части объекта от 1 до 10000 |
   | Данные | --content | ДвоичныеДанные, Строка | &#x2714; | Данные части для загрузки |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
 
   
   Возвращаемое значение:   Структура Из КлючИЗначение - сериализованный JSON ответа от хранилища
@@ -48,12 +49,13 @@ import TabItem from '@theme/TabItem';
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
 
     Наименование = "fileChunked.mp3";
-    Бакет        = "opi-gpbucket3";
 
+    Каталог = Истина; // Формирование URL в path-style
+    Бакет = "opi-dirbucket3";
     Содержимое = "https://hut.openintegrations.dev/test_data/song.mp3"; // URL, Путь или Двоичные данные
     Содержимое = OPI_ЗапросыHTTP.Get(Содержимое);
 
-    Результат = OPI_S3.ИнициализироватьЗагрузкуЧастями(Наименование, Бакет, ОсновныеДанные);
+    Результат = OPI_S3.ИнициализироватьЗагрузкуЧастями(Наименование, Бакет, ОсновныеДанные, , Каталог);
 
     IDЗагрузки    = Результат["response"]["InitiateMultipartUploadResult"]["UploadId"];
     ОбщийРазмер   = Содержимое.Размер();
@@ -74,8 +76,13 @@ import TabItem from '@theme/TabItem';
             Прервать;
         КонецЕсли;
 
-        Результат = OPI_S3.ЗагрузитьЧастьОбъекта(Наименование, Бакет, ОсновныеДанные, IDЗагрузки, НомерЧасти,
-            ТекущиеДанные);
+        Результат = OPI_S3.ЗагрузитьЧастьОбъекта(Наименование
+            , Бакет
+            , ОсновныеДанные
+            , IDЗагрузки
+            , НомерЧасти
+            , ТекущиеДанные
+            , Каталог);
 
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -90,7 +97,7 @@ import TabItem from '@theme/TabItem';
 
     КонецЦикла;
 
-    Результат = OPI_S3.ЗавершитьЗагрузкуЧастями(Наименование, Бакет, ОсновныеДанные, IDЗагрузки, МассивТегов);
+    Результат = OPI_S3.ЗавершитьЗагрузкуЧастями(Наименование, Бакет, ОсновныеДанные, IDЗагрузки, МассивТегов, , Каталог);
 ```
     
 
@@ -104,9 +111,9 @@ import TabItem from '@theme/TabItem';
               --name "fileChunked.mp3" \
               --bucket "opi-gpbucket3" \
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
-              --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLmY5YWNlZDI4LTYxODktNDVjZC05ZGZkLTBhN2RiNjM1MTk3Yg" \
-              --part 2 \
-              --content "/tmp/l3ohhz4c.x3b"
+              --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjE1MTUxYTA3LTQwY2EtNGJjMy04YTE0LTI2Yzg1ZjVjYzIyMQ" \
+              --part "2" \
+              --content "/tmp/lpug2o0o.uiq"
         ```
     </TabItem>
   
@@ -118,9 +125,9 @@ import TabItem from '@theme/TabItem';
               --name "fileChunked.mp3" ^
               --bucket "opi-gpbucket3" ^
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
-              --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLmY5YWNlZDI4LTYxODktNDVjZC05ZGZkLTBhN2RiNjM1MTk3Yg" ^
-              --part 2 ^
-              --content "/tmp/l3ohhz4c.x3b"
+              --upload "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjE1MTUxYTA3LTQwY2EtNGJjMy04YTE0LTI2Yzg1ZjVjYzIyMQ" ^
+              --part "2" ^
+              --content "/tmp/lpug2o0o.uiq"
         ```
     </TabItem>
 </Tabs>
@@ -132,17 +139,17 @@ import TabItem from '@theme/TabItem';
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "0",
-  "Content-Type": "text/plain; charset=utf-8",
-  "Date": "Fri, 22 Nov 2024 09:35:11 GMT",
-  "Etag": "\"566e2d464b39b91eb8b5d89fb9f1a318\"",
+  "Date": "Tue, 16 Sep 2025 05:31:43 GMT",
+  "ETag": "\"adb76a9a9ff8226ed08fb6f343102908\"",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "057275ee0636b36a8256f409a6ff665de46bfaa1f0d5faf2d1b4f312e55c34fa",
-  "X-Amz-Request-Id": "180A40AB2385B158",
+  "X-Amz-Request-Id": "1865AC3DF4EE3619",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "0",
+  "Content-Type": "text/plain; charset=utf-8"
  }
 }
 ```

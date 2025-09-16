@@ -1,4 +1,6 @@
 oint cdek ПолучитьКвитанцию \
   --token "***" \
-  --uuid "84b34e58-7f32-4666-9050-804edd72af42" \
-  --testapi "***"
+  --uuid "8a8df3b2-2b6d-4afa-ab62-ef25645c7acd" \
+  --getfile "True" \
+  --testapi "***" \
+  --out "/tmp/bvggi3eg.21d.pdf"

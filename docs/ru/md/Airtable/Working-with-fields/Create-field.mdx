@@ -31,8 +31,8 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Токен   = "patNn4BXW66Yx3pdj.5b93c53cab554a8387de02d...";
-    База    = "app4XRXnjhsxGaERx";
-    Таблица = "tblDt5eujvrMRX7pq";
+    База    = "appaKLx2yhnY45n6b";
+    Таблица = "tblwLZErQh3D39If3";
     Имя     = Строка(Новый УникальныйИдентификатор);
 
     Поле      = OPI_Airtable.ПолучитьПолеНомера(Имя);
@@ -44,27 +44,21 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint airtable СоздатьПоле \
               --token "***" \
-              --base "appZn0KvfLL5O9dXR" \
-              --table "tblqZoCYuMU5S9FQA" \
-              --title "3063d2d5-519a-4c46-92d1-e8e66e02a24f" \
-              --fielddata "{'name':'3063d2d5-519a-4c46-92d1-e8e66e02a24f','type':'number','options':{'precision':0}}"
+              --base "appmj04pElJrZ8Hau" \
+              --table "tbl0IXpbtJjA7XiXo" \
+              --fielddata "{'name':'309c53d2-db5e-4598-9176-c5ba9226023a','type':'number','options':{'precision':'0'}}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint airtable СоздатьПоле ^
               --token "***" ^
-              --base "appZn0KvfLL5O9dXR" ^
-              --table "tblqZoCYuMU5S9FQA" ^
-              --title "3063d2d5-519a-4c46-92d1-e8e66e02a24f" ^
-              --fielddata "{'name':'3063d2d5-519a-4c46-92d1-e8e66e02a24f','type':'number','options':{'precision':0}}"
+              --base "appmj04pElJrZ8Hau" ^
+              --table "tbl0IXpbtJjA7XiXo" ^
+              --fielddata "{'name':'309c53d2-db5e-4598-9176-c5ba9226023a','type':'number','options':{'precision':'0'}}"
         ```
     </TabItem>
 </Tabs>
@@ -76,7 +70,7 @@ import TabItem from '@theme/TabItem';
  "options": {
   "precision": 0
  },
- "id": "fldVcZeSTEx69J6u2",
- "name": "55cedfa3-76e5-4d08-923e-99da5f14c9aa"
+ "id": "fld16uzvjg8yK4jfX",
+ "name": "309c53d2-db5e-4598-9176-c5ba9226023a"
 }
 ```

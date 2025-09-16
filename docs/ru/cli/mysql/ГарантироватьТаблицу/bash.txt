@@ -1,7 +1,5 @@
-# JSON данные также могут быть переданы как путь к файлу .json
-
 oint mysql ГарантироватьТаблицу \
-  --table "testtable" \
-  --cols "{'smallint_field':'SMALLINT','double_field':'DOUBLE','bigint_field':'BIGINT','custom_field':'TEXT'}" \
+  --table ""test_new"" \
+  --cols ""/tmp/u1rc2yq4.jw5.json"" \
   --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" \
-  --tls "{'use_tls':true,'accept_invalid_certs':true}"
+  --tls ""/tmp/0gh2fmch.was.json""

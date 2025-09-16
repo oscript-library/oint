@@ -57,7 +57,7 @@ Method at API documentation: [calendar.section.add](https://apidocs.bitrix24.ru/
     CalendarsStructure.Insert("description", "My other new calendar");
 
     URL   = "b24-ar17wx.bitrix24.by";
-    Token = "11ae5d68006e9f06006b12e400000001000...";
+    Token = "75d8c668006e9f06006b12e400000001000...";
 
     Result = OPI_Bitrix24.CreateCalendar(URL, CalendarsStructure, Token);
 ```
@@ -67,22 +67,18 @@ Method at API documentation: [calendar.section.add](https://apidocs.bitrix24.ru/
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint bitrix24 CreateCalendar \
-             --url "b24-ar17wx.bitrix24.by" \
-             --fields "{'type':'user','ownerId':1,'name':'Another calendar','description':'My other new calendar','color':'#FFFFFF','text_color':'#000000','export':{'ALLOW':'True','SET':'all'}}" \
+             --url ""b24-ar17wx.bitrix24.by"" \
+             --fields ""/tmp/ppwprhtw.wqu.json"" \
              --token "***"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint bitrix24 CreateCalendar ^
-             --url "b24-ar17wx.bitrix24.by" ^
-             --fields "{'type':'user','ownerId':1,'name':'Another calendar','description':'My other new calendar','color':'#FFFFFF','text_color':'#000000','export':{'ALLOW':'True','SET':'all'}}" ^
+             --url ""b24-ar17wx.bitrix24.by"" ^
+             --fields ""/tmp/ppwprhtw.wqu.json"" ^
              --token "***"
         ```
     </TabItem>
@@ -91,15 +87,15 @@ Method at API documentation: [calendar.section.add](https://apidocs.bitrix24.ru/
 
 ```json title="Result"
 {
- "result": 80,
+ "result": 1364,
  "time": {
-  "start": 1737396240.60307,
-  "finish": 1737396240.65016,
-  "duration": 0.0470879077911377,
-  "processing": 0.0163719654083252,
-  "date_start": "2025-01-20T21:04:00+03:00",
-  "date_finish": "2025-01-20T21:04:00+03:00",
-  "operating_reset_at": 1737396840,
+  "start": 1757977102.28303,
+  "finish": 1757977102.32224,
+  "duration": 0.0392129421234131,
+  "processing": 0.0164370536804199,
+  "date_start": "2025-09-15T22:58:22+00:00",
+  "date_finish": "2025-09-15T22:58:22+00:00",
+  "operating_reset_at": 1757977702,
   "operating": 0
  }
 }

@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function InitPartsUpload(Val Name, Val Bucket, Val BasicData, Val Headers = Undefined) Export`
+`Function InitPartsUpload(Val Name, Val Bucket, Val BasicData, Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -20,6 +20,7 @@ import TabItem from '@theme/TabItem';
   | Bucket | --bucket | String | &#x2714; | Name of the bucket to put the object |
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -43,13 +44,14 @@ This is a service method. A `PutObject` method is intended for the common scenar
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "fileChunked.mp3";
-    Bucket = "opi-gpbucket3";
+    Name = "fileChunked.mp3";
 
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
     Entity = "https://hut.openintegrations.dev/test_data/song.mp3"; // URL, Path or Binary Data
     Entity = OPI_HTTPRequests.Get(Entity);
 
-    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData);
+    Result = OPI_S3.InitPartsUpload(Name, Bucket, BasicData, , Directory);
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     UploadID   = Result["response"]["InitiateMultipartUploadResult"]["UploadId"];
@@ -71,8 +73,13 @@ This is a service method. A `PutObject` method is intended for the common scenar
             Break;
         EndIf;
 
-        Result = OPI_S3.UploadObjectPart(Name, Bucket, BasicData, UploadID, PartNumber,
-            CurrentData);
+        Result = OPI_S3.UploadObjectPart(Name
+            , Bucket
+            , BasicData
+            , UploadID
+            , PartNumber
+            , CurrentData
+            , Directory);
 
         BytesRead = SourceStream.CurrentPosition();
 
@@ -85,7 +92,7 @@ This is a service method. A `PutObject` method is intended for the common scenar
 
     EndDo;
 
-    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray);
+    Result = OPI_S3.FinishPartsUpload(Name, Bucket, BasicData, UploadID, TagsArray, , Directory);
 ```
  
 
@@ -93,23 +100,21 @@ This is a service method. A `PutObject` method is intended for the common scenar
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 InitPartsUpload \
              --name "fileChunked.mp3" \
-             --bucket "opi-gpbucket3" \
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --bucket "opi-dirbucket3" \
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 InitPartsUpload ^
              --name "fileChunked.mp3" ^
-             --bucket "opi-gpbucket3" ^
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --bucket "opi-dirbucket3" ^
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -120,23 +125,23 @@ This is a service method. A `PutObject` method is intended for the common scenar
  "status": 200,
  "response": {
   "InitiateMultipartUploadResult": {
-   "Bucket": "opi-gpbucket3",
+   "Bucket": "opi-dirbucket3",
    "Key": "fileChunked.mp3",
-   "UploadId": "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjAyMTdkMzc2LWExZGItNGQzZC1iZTZlLWI5MTk3NDQxYmM4MA"
+   "UploadId": "MDk2NGE5MDUtNDcxZS00ZDljLTkzYjMtODM5ZDM4NGMyMWVhLjg2ZmI0MjM4LTNiYTAtNDE3My1iNGRmLTA0NmQ1YmM3OGJmZQ"
   }
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "325",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 10:12:14 GMT",
+  "Date": "Mon, 15 Sep 2025 23:16:02 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "0757065d17b69556603743b9ea63f04bc7b9f349245bbff6b0ba901258e9c169",
-  "X-Amz-Request-Id": "180A42B102AC0011",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "e602da57d0c30b8c7034fcfe129917205f80f7bab979408e71da5d1441c85e79",
+  "X-Amz-Request-Id": "186597D2FEC7C465",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "326",
+  "Content-Type": "application/xml"
  }
 }
 ```

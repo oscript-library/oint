@@ -133,9 +133,11 @@ Function RefreshToken(Val Parameters = "") Export
 
 EndFunction
 
-// !NOCLI
+// Handle incoming request after authorization !NOCLI
 // Method for insertion into an http service, the address of which is specified in redirect_uri
-// Calls the token acquisition method, as for obtaining a token from the code received
+//
+// Note
+// Calls the token acquisition method, as for obtaining a token from the code received^^
 // on redirect_uri after authorization via the browser is only 30 seconds
 //
 // Parameters:
@@ -143,7 +145,7 @@ EndFunction
 //
 // Returns:
 // HTTPResponse, Arbitrary, BinaryData - Result of reading the JSON response from the server
-Function HandleIncomingRequestAfterAuthorization(Request) Export // Service
+Function HandleIncomingRequestAfterAuthorization(Request) Export
 
     Code          = Request.RequestParameters["code"];
     TokenResponse = GetToken(Code);
@@ -405,7 +407,7 @@ Function UploadMediaInParts(Val File, Val Type, Val RequestType, Val URL, Parame
     Size    = File.Size();
 
     ChunkSize    = Count * Unit * Unit;
-    ArrayReading = РазделитьДвоичныеДанные(File, ChunkSize);
+    ArrayReading = SplitBinaryData(File, ChunkSize);
 
     Fields = New Structure;
     Fields.Insert(Command         , "INIT");
@@ -613,7 +615,7 @@ Function Post(Val URL, Val Fields, Val SecretData, Val JSON = False, Val IsV2 = 
 
     Else
 
-        ActionWithAttachment = OPI_Tools.CollectionFieldExist(Fields, "media");
+        ActionWithAttachment = OPI_Tools.CollectionFieldExists(Fields, "media");
 
         HttpClient.AddOauthV1Authorization(Token, Secret, UsersKey, UsersSecret, Version)
             .SetOAuthV1Algorithm("HMAC", "SHA1")

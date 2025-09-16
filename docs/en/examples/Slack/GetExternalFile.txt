@@ -1,4 +1,4 @@
 ﻿    Token  = "xoxb-6965308400114-696804637...";
-    FileID = "F093ABK4XKN";
+    FileID = "F09F59A55B8";
 
     Result = OPI_Slack.GetExternalFile(Token, FileID);

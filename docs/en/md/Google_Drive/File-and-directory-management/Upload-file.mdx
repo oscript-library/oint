@@ -33,7 +33,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    Token     = "ya29.a0AS3H6Nw6rTG3pFXv17ZLXkvuvtNl_DHHXbxe2yDRIB09Sq-BA7xPQj9V7OKAaAiHRZAsVqI0UD6026Q_3gklXjU-kam0kzFCe2adXI3lS...";
+    Token     = "ya29.a0AQQ_BDTgQbn9c5rXhPK3FCakms_7oKkdIWE1CCQFnSPftb2RxvloVqnYOcnsAKhXrD0Gq8Tz2Kgn5IBXG5E25uksZfvvTtXob-jFcuj_9LZYs9La4HrcFk766...";
     Image     = "https://hut.openintegrations.dev/test_data/picture.jpg";
     Directory = "191iyaa6-2BCNRPOF0F8mQ0TuNWPNesdM";
 
@@ -48,8 +48,6 @@ Parameters with Binary data type can also accept file paths on disk and URLs
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint gdrive UploadFile \
              --token "***" \
              --file "https://hut.openintegrations.dev/test_data/picture.jpg" \
@@ -59,8 +57,6 @@ Parameters with Binary data type can also accept file paths on disk and URLs
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint gdrive UploadFile ^
              --token "***" ^
              --file "https://hut.openintegrations.dev/test_data/picture.jpg" ^
@@ -73,7 +69,7 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 ```json title="Result"
 {
  "kind": "drive#file",
- "id": "1iscrZRfSVq4khO1E3n-uSbfSFDTZfYdE",
+ "id": "1VjQsxYw-ZdGKimR0Hski7DttKwfFbah6",
  "name": "New file.jpg",
  "mimeType": "image/jpeg"
 }

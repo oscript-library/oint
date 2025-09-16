@@ -38,7 +38,7 @@ import TabItem from '@theme/TabItem';
     Password = "12we...";
     Base     = "testbase1";
 
-    TLSSettings      = OPI_MSSQL.GetTlsSettings(True);
+    TLSSettings      = OPI_MSSQL.GetTLSSettings(True);
     ConnectionString = OPI_MSSQL.GenerateConnectionString(Address, Base, Login, Password);
 
     // All records without filters
@@ -93,23 +93,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint mssql GetRecords \
-             --table "testtable" \
+             --table ""testtable"" \
              --dbc "Server=127.0.0.1;Database=***;User Id=SA;Password=***;" \
-             --tls "{'use_tls':true,'accept_invalid_certs':true}"
+             --tls ""/tmp/jvporhvz.rsb.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint mssql GetRecords ^
-             --table "testtable" ^
+             --table ""testtable"" ^
              --dbc "Server=127.0.0.1;Database=***;User Id=SA;Password=***;" ^
-             --tls "{'use_tls':true,'accept_invalid_certs':true}"
+             --tls ""/tmp/jvporhvz.rsb.json""
         ```
     </TabItem>
 </Tabs>
@@ -121,18 +117,18 @@ import TabItem from '@theme/TabItem';
   {
    "bigint_field": 20000000000,
    "bit_field": 1,
-   "date_field": "2025-07-14",
-   "datetime_field": "2025-07-14T11:12:57",
-   "dto_field": "2025-07-14T01:12:57.073372100+00:00",
+   "date_field": "2025-09-15",
+   "datetime_field": "2025-09-15T22:18:58",
+   "dto_field": "2025-09-15T17:18:58.282963200+00:00",
    "float24_field": 10.1234569549561,
    "float53_field": 10.1234567891235,
    "int_field": 200000,
    "numeric_field": 5.333,
    "nvarchar_field": "Some text",
    "smallint_field": 2000,
-   "time_field": "11:12:57",
+   "time_field": "22:18:58",
    "tinyint_field": 5,
-   "uid_field": "68c5ab79-8481-4983-ab04-45558c8f1baa",
+   "uid_field": "dc9e060c-f71a-4fd6-a5fd-338cbee1faec",
    "varbinary_field": {
     "BYTES": "/9j/4VTBRX..."
    },

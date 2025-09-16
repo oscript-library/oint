@@ -145,11 +145,6 @@ Function ExecuteSQLQuery(Val QueryText
     , Val Connection = ""
     , Val Tls = "") Export
 
-    OPI_TypeConversion.GetLine(QueryText, True);
-    OPI_TypeConversion.GetBoolean(ForceResult);
-
-    Parameters_ = ProcessParameters(Parameters);
-
     If IsConnector(Connection) Then
         CloseConnection = False;
         Connector       = Connection;
@@ -162,13 +157,15 @@ Function ExecuteSQLQuery(Val QueryText
         Return Connector;
     EndIf;
 
-    Result = Connector.Execute(QueryText, Parameters_, ForceResult);
+    OPI_TypeConversion.GetLine(QueryText, True);
+    OPI_TypeConversion.GetBoolean(ForceResult);
+
+    Parameters_ = OPI_SQLQueries.ProcessParameters(Parameters, GetTypesStructure());
+    Result      = OPI_SQLQueries.ExecuteQueryWithProcessing(Connector, QueryText, ForceResult, Parameters_);
 
     If CloseConnection Then
         CloseConnection(Connector);
     EndIf;
-
-    Result = OPI_Tools.JsonToStructure(Result);
 
     Return Result;
 
@@ -574,135 +571,20 @@ Function GetFeatures() Export
 
 EndFunction
 
-#EndRegion
+Function GetTypesStructure() Export
 
-#Region Private
+    TypesStructure = New Map;
+    TypesStructure.Insert("BinaryData"   , "BYTES");
+    TypesStructure.Insert("UUID"         , "UUID");
+    TypesStructure.Insert("Boolean"      , "BIT");
+    TypesStructure.Insert("Float"        , "DECIMAL");
+    TypesStructure.Insert("Whole"        , "INT");
+    TypesStructure.Insert("Date"         , "DATETIMEOFFSET");
+    TypesStructure.Insert("String"       , "NVARCHAR");
+    TypesStructure.Insert("Collections"  , New ValueList);
+    TypesStructure.Insert("BoolAsNumber" , False);
 
-Function ProcessParameters(Val Parameters)
-
-    If Not ValueIsFilled(Parameters) Then
-        Return "[]";
-    EndIf;
-
-    OPI_TypeConversion.GetArray(Parameters);
-
-    For N = 0 To Parameters.UBound() Do
-
-        CurrentParameter = Parameters[N];
-
-        CurrentParameter = ProcessParameter(CurrentParameter);
-
-        Parameters[N] = CurrentParameter;
-
-    EndDo;
-
-    Parameters_ = OPI_Tools.JSONString(Parameters, , False);
-
-    If StrStartsWith(Parameters_, "NOT JSON") Then
-        Raise "JSON parameter array validation error!";
-    EndIf;
-
-    Return Parameters_;
-
-EndFunction
-
-Function ProcessParameter(CurrentParameter, AsObject = True)
-
-    CurrentType = TypeOf(CurrentParameter);
-    CurrentKey  = "";
-
-    If CurrentType = Type("BinaryData") Then
-
-        CurrentParameter = Base64String(CurrentParameter);
-        CurrentKey       = "BYTES";
-
-    ElsIf CurrentType = Type("UUID") Then
-
-        CurrentParameter = String(CurrentParameter);
-        CurrentKey       = "UUID";
-
-    ElsIf CurrentType = Type("Boolean") Then
-
-        CurrentKey = "BIT";
-
-    ElsIf CurrentType = Type("Number") Then
-
-        CurrentKey = ?(Int(CurrentParameter) = CurrentParameter, "DECIMAL", "INT");
-
-    ElsIf CurrentType = Type("Date") Then
-
-        CurrentParameter = OPI_Tools.DateRFC3339(CurrentParameter);
-        CurrentKey       = "DATETIMEOFFSET";
-
-    Else
-
-        ProcessCollectionParameter(CurrentType, CurrentParameter, CurrentKey);
-
-    EndIf;
-
-    If AsObject Then
-        CurrentParameter = New Structure(CurrentKey, CurrentParameter);
-    EndIf;
-
-    Return CurrentParameter;
-
-EndFunction
-
-Procedure ProcessCollectionParameter(Val CurrentType, CurrentParameter, CurrentKey)
-
-    If CurrentType = Type("Structure") Or CurrentType = Type("Map") Then
-
-        If OPI_Tools.CollectionFieldExist(CurrentParameter, "BYTES") Then
-
-            CurrentParameter = ProcessBlobStructure(CurrentParameter);
-            CurrentKey       = "BYTES";
-
-        Else
-
-            For Each ParamElement In CurrentParameter Do
-
-                CurrentKey   = Upper(ParamElement.Key);
-                CurrentValue = ParamElement.Value;
-
-                CurrentParameter = ProcessParameter(CurrentValue, False);
-
-                Break;
-
-            EndDo;
-
-        EndIf;
-
-    Else
-
-        OPI_TypeConversion.GetLine(CurrentParameter);
-        CurrentKey = "NVARCHAR";
-
-    EndIf;
-
-EndProcedure
-
-Function ProcessBlobStructure(Val Value)
-
-    Bytea_ = "BYTES";
-
-    DataValue = Value[Bytea_];
-
-    If TypeOf(DataValue) = Type("BinaryData") Then
-        Value            = Base64String(DataValue);
-    Else
-
-        DataFile = New File(String(DataValue));
-
-        If DataFile.Exist() Then
-
-            CurrentData = New BinaryData(String(DataValue));
-            Value       = Base64String(CurrentData);
-
-        EndIf;
-
-    EndIf;
-
-    Return Value;
+    Return TypesStructure;
 
 EndFunction
 
@@ -792,6 +674,10 @@ EndFunction
 
 Function ПолучитьОсобенности() Export
 	Return GetFeatures();
+EndFunction
+
+Function ПолучитьСтруктуруТипов() Export
+	Return GetTypesStructure();
 EndFunction
 
 #EndRegion

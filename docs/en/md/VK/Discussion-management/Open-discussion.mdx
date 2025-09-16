@@ -29,7 +29,7 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="1C:Enterprise/OneScript code example"
     Parameters   = GetVKParameters();
-    DiscussionID = "53987952";
+    DiscussionID = "54106885";
     Result       = OPI_VK.OpenDiscussion(DiscussionID, Parameters);
 ```
  
@@ -38,21 +38,17 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint vk OpenDiscussion \
-             --topic 53987412 \
-             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+             --topic "54109758" \
+             --auth ""/tmp/aanhmxui.53c.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint vk OpenDiscussion ^
-             --topic 53987412 ^
-             --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+             --topic "54109758" ^
+             --auth ""/tmp/aanhmxui.53c.json""
         ```
     </TabItem>
 </Tabs>

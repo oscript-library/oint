@@ -34,13 +34,13 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
 
 ```bsl title="1C:Enterprise/OneScript code example"
     URL    = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    TaskID = "6416";
+    TaskID = "7884";
 
     Result = OPI_Bitrix24.ApproveTask(URL, TaskID);
 
     URL    = "b24-ar17wx.bitrix24.by";
-    Token  = "11ae5d68006e9f06006b12e400000001000...";
-    TaskID = "6418";
+    Token  = "75d8c668006e9f06006b12e400000001000...";
+    TaskID = "7886";
 
     Result = OPI_Bitrix24.ApproveTask(URL, TaskID, Token);
 ```
@@ -51,8 +51,8 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 ApproveTask \
-             --url "b24-ar17wx.bitrix24.by" \
-             --task "7308" \
+             --url ""b24-ar17wx.bitrix24.by"" \
+             --task ""7992"" \
              --token "***"
         ```
     </TabItem>
@@ -60,8 +60,8 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 ApproveTask ^
-             --url "b24-ar17wx.bitrix24.by" ^
-             --task "7308" ^
+             --url ""b24-ar17wx.bitrix24.by"" ^
+             --task ""7992"" ^
              --token "***"
         ```
     </TabItem>
@@ -72,7 +72,7 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
 {
  "result": {
   "task": {
-   "id": "2398",
+   "id": "7992",
    "title": "Another task title",
    "description": "Another task description",
    "descriptionInBbcode": "Y",
@@ -82,11 +82,11 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
    "statusComplete": "2",
    "multitask": "N",
    "stageId": "0",
-   "responsibleId": "602",
-   "responsibleName": "Oleg",
-   "responsibleLastName": "Lama",
+   "responsibleId": "2664",
+   "responsibleName": "Олег",
+   "responsibleLastName": "Лама",
    "responsibleSecondName": null,
-   "responsibleLogin": "c97e7aef-e5c1-4971-94a8-853cff3f0e5e@exepmple.org",
+   "responsibleLogin": "6e6e9864-e2db-4e38-8d15-a51dd8c32d69@exepmple.org",
    "responsibleWorkPosition": null,
    "responsiblePhoto": null,
    "dateStart": null,
@@ -94,10 +94,10 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
    "timeEstimate": "0",
    "timeSpentInLogs": null,
    "replicate": "N",
-   "deadline": "2024-10-10T12:19:00+03:00",
-   "deadlineOrig": "10.10.2024 12:19:00",
-   "startDatePlan": "2024-10-09T09:19:28+03:00",
-   "endDatePlan": "2024-10-10T00:00:00+03:00",
+   "deadline": "2025-09-16T22:44:00+00:00",
+   "deadlineOrig": "17.09.2025 01:44:00",
+   "startDatePlan": "2025-09-15T22:44:50+00:00",
+   "endDatePlan": "2025-09-16T21:00:00+00:00",
    "createdBy": "1",
    "createdByName": "Антон",
    "createdByLastName": "Титовец",
@@ -105,14 +105,14 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
    "createdByLogin": "VKuser657846756",
    "createdByWorkPosition": null,
    "createdByPhoto": "30",
-   "createdDate": "2024-10-09T09:19:28+03:00",
+   "createdDate": "2025-09-15T22:44:50+00:00",
    "changedBy": "1",
-   "changedDate": "2024-10-09T09:19:39+03:00",
+   "changedDate": "2025-09-15T22:45:45+00:00",
    "statusChangedBy": "1",
    "closedBy": "1",
-   "closedDate": "2024-10-09T09:19:39+03:00",
-   "activityDate": "2024-10-09T09:19:39+03:00",
-   "guid": "{51464df0-4e32-4fbe-9e9c-5d7081eb0ffb}",
+   "closedDate": "2025-09-15T22:45:45+00:00",
+   "activityDate": "2025-09-15T22:45:45+00:00",
+   "guid": "{51ce5c5a-b35c-4e91-90a2-e14e6e9e30e7}",
    "xmlId": null,
    "mark": null,
    "allowChangeDeadline": "N",
@@ -120,17 +120,17 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
    "matchWorkTime": "N",
    "taskControl": "N",
    "addInReport": "N",
-   "forumTopicId": "1664",
+   "forumTopicId": "5200",
    "parentId": null,
    "commentsCount": "2",
    "serviceCommentsCount": "2",
    "forumId": "11",
    "siteId": "s1",
-   "subordinate": "N",
+   "subordinate": "Y",
    "exchangeModified": null,
    "exchangeId": null,
    "outlookVersion": "6",
-   "viewedDate": "2024-10-09T09:19:40+03:00",
+   "viewedDate": "2025-09-15T22:45:45+00:00",
    "deadlineCounted": "0",
    "forkedByTemplateId": null,
    "sorting": null,
@@ -148,7 +148,7 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
    "ufTaskWebdavFiles": false,
    "ufMailMessage": null,
    "status": "5",
-   "statusChangedDate": "2024-10-09T09:19:39+03:00",
+   "statusChangedDate": "2025-09-15T22:45:45+00:00",
    "durationPlan": null,
    "durationType": "days",
    "favorite": "N",
@@ -168,9 +168,9 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
     "workPosition": null
    },
    "responsible": {
-    "id": "602",
-    "name": "Oleg Lama",
-    "link": "/company/personal/user/602/",
+    "id": "2664",
+    "name": "Олег Лама",
+    "link": "/company/personal/user/2664/",
     "icon": "/bitrix/images/tasks/default_avatar.png",
     "workPosition": null
    },
@@ -196,6 +196,7 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
     "addFavorite": true,
     "deleteFavorite": false,
     "rate": true,
+    "take": false,
     "edit.originator": false,
     "checklist.reorder": true,
     "elapsedtime.add": true,
@@ -218,6 +219,5 @@ Method at API documentation: [tasks.task.approve](https://dev.1c-bitrix.ru/rest_
      "sortIndex": null,
      "displaySortIndex": "",
      "isComplete": false,
-     "isImportant": false,
 ...
 ```

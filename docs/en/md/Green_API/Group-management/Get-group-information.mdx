@@ -37,7 +37,7 @@ Method at API documentation: [GetGroupData](https://green-api.com/docs/api/group
     IdInstance       = "71051...";
     ApiTokenInstance = "425010d90e114aa6b78f0969e...";
 
-    GroupID = "120363403350015904@g.us";
+    GroupID = "120363420916383280@g.us";
 
     AccessParameters = OPI_GreenAPI.FormAccessParameters(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
     Result           = OPI_GreenAPI.GetGroupInformation(AccessParameters, GroupID);
@@ -48,21 +48,17 @@ Method at API documentation: [GetGroupData](https://green-api.com/docs/api/group
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint greenapi GetGroupInformation \
              --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" \
-             --group "120363420313935292@g.us"
+             --group "120363420481416535@g.us"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint greenapi GetGroupInformation ^
              --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" ^
-             --group "120363420313935292@g.us"
+             --group "120363420481416535@g.us"
         ```
     </TabItem>
 </Tabs>
@@ -70,19 +66,27 @@ Method at API documentation: [GetGroupData](https://green-api.com/docs/api/group
 
 ```json title="Result"
 {
- "groupId": "120363398678792739@g.us",
+ "groupId": "120363420481416535@g.us",
  "owner": "***",
  "subject": "New group",
- "creation": 1742274598,
+ "creation": 1757978420,
+ "subjectTime": 1757978420,
+ "subjectOwner": "375447830891@c.us",
+ "groupInviteLink": "https://chat.whatsapp.com/H5ACpF5Dvt94OtMvyztRlT",
+ "ephemeralExpiration": 0,
+ "allowParticipantsEditGroupSettings": true,
+ "allowParticipantsSendMessages": true,
+ "allowParticipantsAddMembers": false,
+ "isCommunity": false,
+ "isCommunityAnnounce": false,
+ "size": 1,
  "participants": [
   {
    "id": "***",
+   "lid": "78714469634134@lid",
    "isAdmin": true,
    "isSuperAdmin": true
   }
- ],
- "subjectTime": null,
- "groupInviteLink": "https://chat.whatsapp.com/EXbJgldhJQDDrpS6XP8Yrq",
- "isMessageAllowed": true
+ ]
 }
 ```

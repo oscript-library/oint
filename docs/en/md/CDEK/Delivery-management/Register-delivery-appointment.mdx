@@ -33,8 +33,8 @@ Method at API documentation: [Registration of delivery appointment](https://api-
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    Token     = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTA5Njg4MjEsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFwaS12ZXJzaW9uOjEuMSIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJjb250cmFnZW50L...";
-    OrderUUID = "51b0bcf9-520f-4ae1-8e11-06a19905acbc";
+    Token     = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJsb2NhdGlvbjphbGwiLCJvcmRlcjphbGwiLCJwYXltZW50OmFsbCJdLCJleHAiOjE3NTc4NjI0MDMsImF1dGhvcml0aWVzIjpbInNoYXJkLWlkOnJ1LTAxIiwiY2xpZW50LWNpdHk60J3QvtCy0L7RgdC40LHQuNGA0YHQuiwg0J3QvtCy0L7RgdC40LHQuNGA0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwiLCJhY2NvdW50LWxhbmc6cnVzIiwiY29udHJhY3Q60JjQnC3QoNCkLdCT0JvQky0yMiIsImFjY291bnQtdXVpZDplOTI1YmQwZi0wNWE2LTRjNTYtYjczNy00Yjk5YzE0ZjY2OWEiLCJhcGktdmVyc2lvbjoxLjEiLCJjbGllbnQtaWQtZWM1OmVkNzVlY2Y0LTMwZWQtNDE1My1hZmU5LWViODBiYjUxMmYyMiIsImNvbnRyYWN0LWlkOmRlNDJjYjcxLTZjOGMtNGNmNS04MjIyLWNmYjY2MDQ0ZThkZiIsImNsaWVudC1pZC1lYzQ6MTQzNDgyMzEiLCJzb2xpZC1hZGRyZ...";
+    OrderUUID = "f5f74cc6-4d34-48f8-b89f-4625d8f44a53";
 
     Day          = 60 * 60 * 24;
     CurrentDate  = BegOfDay(OPI_Tools.GetCurrentDate());
@@ -76,22 +76,18 @@ Method at API documentation: [Registration of delivery appointment](https://api-
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint cdek RegisterDeliveryAppointment \
              --token "***" \
-             --appt "{'cdek_number':'1106207236','order_uuid':'21ceabf6-953e-43b3-9cef-318c783fcdd4','date':'2025-07-29','time_from':'10:00','time_to':'17:00','comment':'Group office','to_location':{'code':'270','fias_guid':'0c5b2444-70a0-4932-980c-b4dc0d3f02b5','postal_code':'109004','longitude':37.6204,'latitude':55.754,'country_code':'RU','region':'Novosibirsk','sub_region':'Novosibirsk','city':'Novosibirsk','kladr_code':'7700000000000','address':'st. Bluchera, 33'}}" \
+             --appt "{'cdek_number':'1106207236','order_uuid':'dbb9225f-576e-40c7-9571-bc0f9781a388','date':'2025-09-29','time_from':'10:00','time_to':'17:00','comment':'Group office','to_location':{'code':'270','fias_guid':'0c5b2444-70a0-4932-980c-b4dc0d3f02b5','postal_code':'109004','longitude':'37.6204','latitude':'55.754','country_code':'RU','region':'Novosibirsk','sub_region':'Novosibirsk','city':'Novosibirsk','kladr_code':'7700000000000','address':'st. Bluchera, 33'}}" \
              --testapi "***"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint cdek RegisterDeliveryAppointment ^
              --token "***" ^
-             --appt "{'cdek_number':'1106207236','order_uuid':'21ceabf6-953e-43b3-9cef-318c783fcdd4','date':'2025-07-29','time_from':'10:00','time_to':'17:00','comment':'Group office','to_location':{'code':'270','fias_guid':'0c5b2444-70a0-4932-980c-b4dc0d3f02b5','postal_code':'109004','longitude':37.6204,'latitude':55.754,'country_code':'RU','region':'Novosibirsk','sub_region':'Novosibirsk','city':'Novosibirsk','kladr_code':'7700000000000','address':'st. Bluchera, 33'}}" ^
+             --appt "{'cdek_number':'1106207236','order_uuid':'dbb9225f-576e-40c7-9571-bc0f9781a388','date':'2025-09-29','time_from':'10:00','time_to':'17:00','comment':'Group office','to_location':{'code':'270','fias_guid':'0c5b2444-70a0-4932-980c-b4dc0d3f02b5','postal_code':'109004','longitude':'37.6204','latitude':'55.754','country_code':'RU','region':'Novosibirsk','sub_region':'Novosibirsk','city':'Novosibirsk','kladr_code':'7700000000000','address':'st. Bluchera, 33'}}" ^
              --testapi "***"
         ```
     </TabItem>
@@ -101,13 +97,13 @@ Method at API documentation: [Registration of delivery appointment](https://api-
 ```json title="Result"
 {
  "entity": {
-  "uuid": "72753031-4031-40bd-88e4-8e0b920aa014"
+  "uuid": "01506868-8818-4d44-870e-a25931cc900a"
  },
  "requests": [
   {
-   "request_uuid": "b250e29b-f5cb-4054-8f74-998ba95e11d6",
+   "request_uuid": "b547a628-d3c8-4f52-92ae-e7890736783a",
    "type": "CREATE",
-   "date_time": "2024-10-21T21:28:17+03:00",
+   "date_time": "2025-09-15T23:08:21+00:00",
    "state": "ACCEPTED"
   }
  ],

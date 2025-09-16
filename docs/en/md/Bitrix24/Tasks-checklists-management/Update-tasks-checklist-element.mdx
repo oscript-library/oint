@@ -36,17 +36,17 @@ Method at API documentation: [task.checklistitem.update](https://dev.1c-bitrix.r
 
 ```bsl title="1C:Enterprise/OneScript code example"
     URL       = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    TaskID    = "6416";
-    ElementID = "4558";
+    TaskID    = "7884";
+    ElementID = "5498";
 
     Text = "New elements text";
 
     Result = OPI_Bitrix24.UpdateTasksChecklistElement(URL, TaskID, ElementID, Text);
 
     URL       = "b24-ar17wx.bitrix24.by";
-    Token     = "11ae5d68006e9f06006b12e400000001000...";
-    TaskID    = "6418";
-    ElementID = "4562";
+    Token     = "75d8c668006e9f06006b12e400000001000...";
+    TaskID    = "7886";
+    ElementID = "5502";
 
     Result = OPI_Bitrix24.UpdateTasksChecklistElement(URL, TaskID, ElementID, Text, Token);
 ```
@@ -57,10 +57,10 @@ Method at API documentation: [task.checklistitem.update](https://dev.1c-bitrix.r
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 UpdateTasksChecklistElement \
-             --url "b24-ar17wx.bitrix24.by" \
-             --task "7308" \
-             --element 5056 \
-             --text "New elements text" \
+             --url ""b24-ar17wx.bitrix24.by"" \
+             --task ""7992"" \
+             --element "5582" \
+             --text ""New elements text"" \
              --token "***"
         ```
     </TabItem>
@@ -68,10 +68,10 @@ Method at API documentation: [task.checklistitem.update](https://dev.1c-bitrix.r
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 UpdateTasksChecklistElement ^
-             --url "b24-ar17wx.bitrix24.by" ^
-             --task "7308" ^
-             --element 5056 ^
-             --text "New elements text" ^
+             --url ""b24-ar17wx.bitrix24.by"" ^
+             --task ""7992"" ^
+             --element "5582" ^
+             --text ""New elements text"" ^
              --token "***"
         ```
     </TabItem>
@@ -82,13 +82,13 @@ Method at API documentation: [task.checklistitem.update](https://dev.1c-bitrix.r
 {
  "result": null,
  "time": {
-  "start": 1728454786.34816,
-  "finish": 1728454786.41181,
-  "duration": 0.0636470317840576,
-  "processing": 0.0358831882476807,
-  "date_start": "2024-10-09T09:19:46+03:00",
-  "date_finish": "2024-10-09T09:19:46+03:00",
-  "operating_reset_at": 1728455386,
+  "start": 1757976404.19367,
+  "finish": 1757976404.23995,
+  "duration": 0.0462870597839356,
+  "processing": 0.0232110023498535,
+  "date_start": "2025-09-15T22:46:44+00:00",
+  "date_finish": "2025-09-15T22:46:44+00:00",
+  "operating_reset_at": 1757977004,
   "operating": 0
  }
 }

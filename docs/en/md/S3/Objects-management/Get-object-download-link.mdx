@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function GetObjectDownloadLink(Val Name, Val Bucket, Val BasicData, Val Expire = 3600, Val Headers = Undefined) Export`
+`Function GetObjectDownloadLink(Val Name, Val Bucket, Val BasicData, Val Expire = 3600, Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
   | Expire | --expires | String, Number | &#x2716; | Link lifetime in seconds. 604800 max. |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  String - URL for object retrieving
@@ -44,10 +45,11 @@ Process at AWS documentation: [Download and upload objects with presigned URLs](
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "picture.jpg";
-    Bucket = "opi-gpbucket3";
+    Name = "picture.jpg";
 
-    Result = OPI_S3.GetObjectDownloadLink(Name, Bucket, BasicData, 7200);
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
+    Result = OPI_S3.GetObjectDownloadLink(Name, Bucket, BasicData, 7200, , Directory);
 ```
  
 
@@ -55,30 +57,28 @@ Process at AWS documentation: [Download and upload objects with presigned URLs](
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 GetObjectDownloadLink \
              --name "picture.jpg" \
-             --bucket "opi-gpbucket3" \
+             --bucket "opi-dirbucket3" \
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
-             --expires 7200
+             --expires 7200 \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 GetObjectDownloadLink ^
              --name "picture.jpg" ^
-             --bucket "opi-gpbucket3" ^
+             --bucket "opi-dirbucket3" ^
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
-             --expires 7200
+             --expires 7200 ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
 
 
 ```json title="Result"
-"opi-gpbucket3.storage-155.s3hoster.by/picture.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=BRN5RKJE67YCVDZRRQVI%2F20241129%2FBTC%2Fs3%2Faws4_request&X-Amz-Date=20241129T083519Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=03283ce0413f4fae0885198e996961e721559fef61b2c0c1da9b39a00a338ef4"
+"storage-155.s3hoster.by/opi-dirbucket3/picture.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=BRN5RKJE67YCVDZRRQVI%2F20250915%2FBTC%2Fs3%2Faws4_request&X-Amz-Date=20250915T231834Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=a86f9514bf798f56b497ad3124733d51c4a4ab942a0007330e558606ea63d1a1"
 ```

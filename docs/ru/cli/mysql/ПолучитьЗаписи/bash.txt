@@ -1,3 +1,4 @@
 oint mysql ПолучитьЗаписи \
-  --table "testtable" \
-  --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/"
+  --table ""testtable"" \
+  --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" \
+  --tls ""/tmp/keqjja4t.eso.json""

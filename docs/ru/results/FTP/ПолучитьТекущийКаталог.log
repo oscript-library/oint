@@ -1,0 +1,7 @@
+﻿{
+ "path": "/ftp/bayselonarrend",
+ "result": true,
+ "close_connection": {
+  "result": true
+ }
+}

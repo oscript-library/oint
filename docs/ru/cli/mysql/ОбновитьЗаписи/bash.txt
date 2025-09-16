@@ -1,7 +1,6 @@
-# JSON данные также могут быть переданы как путь к файлу .json
-
 oint mysql ОбновитьЗаписи \
-  --table "testtable" \
-  --values "{'varchar_field':{'VARCHAR':'Another varchar'}}" \
+  --table ""test_data"" \
+  --values ""/tmp/okxqhpvk.ew2.json"" \
+  --filter ""/tmp/bul0ns0n.4gu.json"" \
   --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" \
-  --tls "{'use_tls':true,'accept_invalid_certs':true}"
+  --tls ""/tmp/jtvsidfl.4sg.json""

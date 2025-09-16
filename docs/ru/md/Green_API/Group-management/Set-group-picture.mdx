@@ -41,7 +41,7 @@ import TabItem from '@theme/TabItem';
     ApiTokenInstance = "425010d90e114aa6b78f0969e...";
 
     Картинка = "https://hut.openintegrations.dev/test_data/picture.jpg"; // URL, Путь или Двоичные данные
-    IDГруппы = "120363403350015904@g.us";
+    IDГруппы = "120363420916383280@g.us";
 
     ПараметрыДоступа = OPI_GreenAPI.СформироватьПараметрыДоступа(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
     Результат        = OPI_GreenAPI.УстановитьКартинкуГруппы(ПараметрыДоступа, IDГруппы, Картинка);
@@ -52,22 +52,18 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint greenapi УстановитьКартинкуГруппы \
               --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" \
-              --group "120363418877679122@g.us" \
+              --group "120363420432033166@g.us" \
               --picture "https://hut.openintegrations.dev/test_data/picture.jpg"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint greenapi УстановитьКартинкуГруппы ^
               --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" ^
-              --group "120363418877679122@g.us" ^
+              --group "120363420432033166@g.us" ^
               --picture "https://hut.openintegrations.dev/test_data/picture.jpg"
         ```
     </TabItem>
@@ -76,8 +72,8 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Результат"
 {
- "reason": null,
- "urlAvatar": null,
+ "reason": "",
+ "urlAvatar": "https://pps.whatsapp.net/v/t61.24694-24/527847260_2566814426998786_6471013262585074351_n.jpg?ccb=11-4&oh=01_Q5Aa2gFdLoDl7Y6XPuw2DzaKkscKd41-TUdfxKIZ6aysW_i9KA&oe=68D6254A&_nc_sid=5e03e0&_nc_cat=110",
  "setGroupPicture": true
 }
 ```

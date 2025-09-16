@@ -258,13 +258,13 @@
 
 КонецФункции
 
-Функция ПрочитатьJSONФайл(Знач Путь) Экспорт
+Функция ПрочитатьJSONФайл(Знач Путь, Знач ВСоответствие = Ложь) Экспорт
 
     // BSLLS:ExternalAppStarting-off
 
     ЧтениеJSON = Новый ЧтениеJSON;
     ЧтениеJSON.ОткрытьФайл(Путь);
-    Значения   = ПрочитатьJSON(ЧтениеJSON);
+    Значения   = ПрочитатьJSON(ЧтениеJSON, ВСоответствие);
 
     // BSLLS:ExternalAppStarting-on
 
@@ -273,6 +273,19 @@
     Возврат Значения;
 
 КонецФункции
+
+Процедура ЗаписатьJSONФайл(Знач Путь, Знач Данные) Экспорт
+
+    ЗаписьJSON = Новый ЗаписьJSON();
+
+    // BSLLS:ExternalAppStarting-off
+    ЗаписьJSON.ОткрытьФайл(Путь, , Ложь);
+    // BSLLS:ExternalAppStarting-on
+
+    ЗаписатьJSON(ЗаписьJSON, Данные);
+    ЗаписьJSON.Закрыть();
+
+КонецПроцедуры
 
 #КонецОбласти
 
@@ -624,7 +637,12 @@
         Коллекция_ = ?(ЭтоСтруктура, Новый Структура, Новый Соответствие);
 
         Для Каждого ПолеКоллекции Из Коллекция Цикл
-            Коллекция_.Вставить(ПолеКоллекции.Ключ, ПолеКоллекции.Значение);
+
+            ТекущееЗначение = ПолеКоллекции.Значение;
+            ТекущееЗначение = ?(ЭтоКоллекция(ТекущееЗначение), КопироватьКоллекцию(ТекущееЗначение), ТекущееЗначение);
+
+            Коллекция_.Вставить(ПолеКоллекции.Ключ, ТекущееЗначение);
+
         КонецЦикла;
 
     ИначеЕсли ЭтоМассив Тогда
@@ -632,7 +650,10 @@
         Коллекция_ = Новый Массив;
 
         Для Каждого ЭлементКоллекции Из Коллекция Цикл
-            Коллекция_.Добавить(ЭлементКоллекции);
+
+            ТекущееЗначение = ?(ЭтоКоллекция(ЭлементКоллекции), КопироватьКоллекцию(ЭлементКоллекции), ЭлементКоллекции);
+            Коллекция_.Добавить(ТекущееЗначение);
+
         КонецЦикла;
 
     Иначе
@@ -837,6 +858,17 @@
 
 КонецПроцедуры
 
+Процедура УдалитьФайлВПопытке(Знач Путь, Знач ТекстСообщения) Экспорт
+
+    Попытка
+        УдалитьФайлы(Путь);
+    Исключение
+        //@skip-check use-non-recommended-method
+        Сообщить(ТекстСообщения);
+    КонецПопытки;
+
+КонецПроцедуры
+
 Функция ЧислоВСтроку(Знач Значение) Экспорт
 
     Если ТипЗнч(Значение) = Тип("Число") Тогда
@@ -984,6 +1016,15 @@
         Или ТипЗначения  = Тип("Структура")
         Или ТипЗначения  = Тип("Соответствие");
 
+КонецФункции
+
+Функция ВерсияОПИ() Экспорт
+    Возврат "1.27.0";
+КонецФункции
+
+Функция ЯзыкОПИ() Экспорт
+    ТекущийЯзыкОПИ = "ru";
+    Возврат ТекущийЯзыкОПИ;
 КонецФункции
 
 #КонецОбласти
@@ -1181,9 +1222,13 @@ Function JSONString(Val Data, Val Escaping = "None", Val LineBreaks = True, Val 
 	Return JSONСтрокой(Data, Escaping, LineBreaks, DoubleQuotes);
 EndFunction
 
-Function ReadJSONFile(Val Path) Export
-	Return ПрочитатьJSONФайл(Path);
+Function ReadJSONFile(Val Path, Val ToMap = False) Export
+	Return ПрочитатьJSONФайл(Path, ToMap);
 EndFunction
+
+Procedure WriteJSONFile(Val Path, Val Data) Export
+	ЗаписатьJSONФайл(Path, Data);
+EndProcedure
 
 Function ProcessXML(XML) Export
 	Return ОбработатьXML(XML);
@@ -1209,7 +1254,7 @@ Procedure ValueToArray(Value) Export
 	ЗначениеВМассив(Value);
 EndProcedure
 
-Function CollectionFieldExist(Val Collection, Val Field, FieldValue = Undefined) Export
+Function CollectionFieldExists(Val Collection, Val Field, FieldValue = Undefined) Export
 	Return ПолеКоллекцииСуществует(Collection, Field, FieldValue);
 EndFunction
 
@@ -1261,6 +1306,10 @@ Procedure StreamToStart(CurrentStream) Export
 	ПотокВНачало(CurrentStream);
 EndProcedure
 
+Procedure RemoveFileWithTry(Val Path, Val MessageText) Export
+	УдалитьФайлВПопытке(Path, MessageText);
+EndProcedure
+
 Function NumberToString(Val Value) Export
 	Return ЧислоВСтроку(Value);
 EndFunction
@@ -1299,6 +1348,14 @@ EndFunction
 
 Function ThisIsCollection(Val Value, Val KeyValue = False) Export
 	Return ЭтоКоллекция(Value, KeyValue);
+EndFunction
+
+Function OPIVersion() Export
+	Return ВерсияОПИ();
+EndFunction
+
+Function OPILanguage() Export
+	Return ЯзыкОПИ();
 EndFunction
 
 Procedure WriteOnCurrentLine(Val Text, Val Color = "", Val ToStart = False) Export

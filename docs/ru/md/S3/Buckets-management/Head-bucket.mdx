@@ -18,7 +18,7 @@ import TabItem from '@theme/TabItem';
   |-|-|-|-|-|
   | Наименование | --name | Строка | &#x2714; | Наименование бакета |
   | ОсновныеДанные | --basic | Структура Из КлючИЗначение | &#x2714; | Основные данные запроса. См. ПолучитьСтруктуруДанных |
-  | Каталог | --dir | Булево | &#x2716; | Истина > Directory Bucket, Ложь > General Purpose Bucket |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
   | IDАккаунта | --account | Строка | &#x2716; | ID аккаунта для проверки, что бакет принадлежит ему |
   | Заголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Дополнительные заголовки запроса, если необходимо |
 
@@ -41,11 +41,12 @@ import TabItem from '@theme/TabItem';
     Region    = "BTC";
 
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
-    Наименование   = "opi-dirbucket3";
 
-    Результат = OPI_S3.ПроверитьДоступностьБакета(Наименование, ОсновныеДанные);
+    Каталог = Истина; // Формирование URL в path-style
+    Наименование = "opi-dirbucket3";
+    Результат = OPI_S3.ПроверитьДоступностьБакета(Наименование, ОсновныеДанные, Каталог);
 
-    Результат = OPI_S3.ПроверитьДоступностьБакета(Наименование, ОсновныеДанные, , "1234");
+    Результат = OPI_S3.ПроверитьДоступностьБакета(Наименование, ОсновныеДанные, Каталог, "1234");
 ```
     
 
@@ -53,22 +54,20 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПроверитьДоступностьБакета \
               --name "opi-dirbucket3" \
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+              --dir true \
               --account "1234"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПроверитьДоступностьБакета ^
               --name "opi-dirbucket3" ^
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+              --dir true ^
               --account "1234"
         ```
     </TabItem>
@@ -81,16 +80,16 @@ import TabItem from '@theme/TabItem';
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "0",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 09:34:49 GMT",
+  "Date": "Tue, 16 Sep 2025 05:23:15 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "057275ee0636b36a8256f409a6ff665de46bfaa1f0d5faf2d1b4f312e55c34fa",
-  "X-Amz-Request-Id": "180A40A63FA4FA10",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "93c576aa54c960b355da9e2934476635fe3243f5df9dbb4db8b7c0d94bec7cd1",
+  "X-Amz-Request-Id": "1865ABDD072619F7",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "0",
+  "Content-Type": "application/xml"
  }
 }
 ```

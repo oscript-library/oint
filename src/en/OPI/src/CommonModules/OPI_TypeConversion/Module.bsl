@@ -97,7 +97,7 @@ Procedure GetBinaryOrStream(Value) Export
 
 EndProcedure
 
-Procedure GetCollection(Value) Export
+Procedure GetCollection(Value, ByNetwork = True) Export
 
     If Value = Undefined Then
         Return;
@@ -128,25 +128,22 @@ Procedure GetCollection(Value) Export
             If File.Exists() Then
 
                 JSONReader.OpenFile(ValueES);
+                Value = ReadJSON(JSONReader, True, Undefined, JSONDateFormat.ISO);
+                JSONReader.Close();
 
-            ElsIf StrStartsWith(TrimL(ValueES), "http://")
-                Or StrStartsWith(TrimL(ValueES), "https://") Then
 
-                TFN = GetTempFileName();
-                FileCopy(ValueES, TFN);
-                JSONReader.OpenFile(TFN);
-                JSONReader.Read();
+            ElsIf ByNetwork And (StrStartsWith(TrimL(ValueES), "http://")
+                Or StrStartsWith(TrimL(ValueES), "https://")) Then
 
-                DeleteFiles(TFN);
+                Value = OPI_HTTPRequests.Get(ValueES);
 
             Else
 
                 JSONReader.SetString(TrimAll(Value));
+                Value = ReadJSON(JSONReader, True, Undefined, JSONDateFormat.ISO);
+                JSONReader.Close();
 
             EndIf;
-
-            Value = ReadJSON(JSONReader, True, Undefined, JSONDateFormat.ISO);
-            JSONReader.Close();
 
             If (Not ThisIsCollection(Value)) Or Not ValueIsFilled(Value) Then
 

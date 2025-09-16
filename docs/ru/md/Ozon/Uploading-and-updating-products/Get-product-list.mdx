@@ -53,23 +53,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint ozon ПолучитьСписокТоваров \
               --clientid "***" \
               --apikey "***" \
-              --filter "{'visibility':'ALL','offer_id':['143210609']}"
+              --filter "{'visibility':'ALL','offer_id':['143210609','1432106010']}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint ozon ПолучитьСписокТоваров ^
               --clientid "***" ^
               --apikey "***" ^
-              --filter "{'visibility':'ALL','offer_id':['143210609']}"
+              --filter "{'visibility':'ALL','offer_id':['143210609','1432106010']}"
         ```
     </TabItem>
 </Tabs>
@@ -80,16 +76,26 @@ import TabItem from '@theme/TabItem';
  "result": {
   "items": [
    {
-    "product_id": 1215208579,
+    "product_id": 2719894740,
     "offer_id": "143210609",
-    "is_fbo_visible": false,
-    "is_fbs_visible": false,
+    "has_fbo_stocks": false,
+    "has_fbs_stocks": false,
     "archived": false,
-    "is_discounted": false
+    "is_discounted": false,
+    "quants": []
+   },
+   {
+    "product_id": 2719895056,
+    "offer_id": "1432106010",
+    "has_fbo_stocks": false,
+    "has_fbs_stocks": false,
+    "archived": false,
+    "is_discounted": false,
+    "quants": []
    }
   ],
-  "total": 1,
-  "last_id": "WzEyMTUyMDg1NzksMTIxNTIwODU3OV0="
+  "total": 2,
+  "last_id": "WzI3MTk4OTUwNTYsMjcxOTg5NTA1Nl0="
  }
 }
 ```

@@ -31,8 +31,8 @@ import TabItem from '@theme/TabItem';
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Параметры = ПолучитьПараметрыВК();
 
-    Товар    = "11508989";
-    Подборка = "146";
+    Товар    = "11831701";
+    Подборка = "142";
 
     Результат = OPI_VK.ДобавитьТоварВПодборку(Товар, Подборка, Параметры);
 ```
@@ -42,23 +42,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk ДобавитьТоварВПодборку \
-              --sel 145 \
-              --items 11508809 \
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --items "11839322" \
+              --sel "141" \
+              --auth ""/tmp/afkjqnsq.24e.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk ДобавитьТоварВПодборку ^
-              --sel 145 ^
-              --items 11508809 ^
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --items "11839322" ^
+              --sel "141" ^
+              --auth ""/tmp/afkjqnsq.24e.json""
         ```
     </TabItem>
 </Tabs>

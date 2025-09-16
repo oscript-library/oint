@@ -38,7 +38,15 @@ import TabItem from '@theme/TabItem';
     Password = "12we...";
     Base     = "testbase1";
 
-    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
+    TLS = True;
+    Port = 5432;
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+
+    If TLS Then
+        TLSSettings = OPI_PostgreSQL.GetTLSSettings(True);
+    Else
+        TLSSettings = Undefined;
+    EndIf;
 
     // All records without filters
 
@@ -48,11 +56,11 @@ import TabItem from '@theme/TabItem';
     // which will be closed after the function is executed.
     // If several operations are performed, it is desirable to use one connection,
     // previously created by the CreateConnection function()
-    Result = OPI_PostgreSQL.GetRecords(Table, , , , , ConnectionString);
+    Result = OPI_PostgreSQL.GetRecords(Table, , , , , ConnectionString, TLSSettings);
 
     // Filter, selected fields, limit and sorting
 
-    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, "test_data", Login, Password);
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, "test_data", Login, Password, Port);
 
     Table = "test_data";
 
@@ -84,7 +92,13 @@ import TabItem from '@theme/TabItem';
     Sort  = New Structure("ip_address", "DESC");
     Count = 5;
 
-    Result = OPI_PostgreSQL.GetRecords(Table, Fields, Filters, Sort, Count, ConnectionString);
+    Result = OPI_PostgreSQL.GetRecords(Table
+        , Fields
+        , Filters
+        , Sort
+        , Count
+        , ConnectionString
+        , TLSSettings);
 ```
  
 
@@ -93,16 +107,18 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint postgres GetRecords \
-             --table "testtable" \
-             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+             --table ""testtable"" \
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+             --tls ""/tmp/cfleng4k.so1.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint postgres GetRecords ^
-             --table "testtable" ^
-             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+             --table ""testtable"" ^
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" ^
+             --tls ""/tmp/cfleng4k.so1.json""
         ```
     </TabItem>
 </Tabs>
@@ -120,7 +136,7 @@ import TabItem from '@theme/TabItem';
    },
    "char_field": "A",
    "charn_field": "AAA",
-   "date_field": "2025-06-16",
+   "date_field": "2025-09-15",
    "dp_field": 1.0002,
    "int_field": 100,
    "ip_field": "127.0.0.1",
@@ -140,10 +156,10 @@ import TabItem from '@theme/TabItem';
    "smallint_field": 5,
    "smallserial_field": 6,
    "text_field": "Some text",
-   "time_field": "20:52:18",
-   "ts_field": "2025-06-16T20:52:18",
-   "tswtz_field": "2025-06-16T18:52:18.280447+03:00",
-   "uuid_field": "0cf29094-a9d4-45ce-a133-39392dc2c588",
+   "time_field": "22:10:42",
+   "ts_field": "2025-09-15T22:10:42",
+   "tswtz_field": "2025-09-15T17:10:42.738452+00:00",
+   "uuid_field": "bd502198-c3e3-4c9e-8ef2-77fa2e8f52df",
    "varchar_field": "Some varchar"
   }
  ],

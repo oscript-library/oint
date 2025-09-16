@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function PutObject(Val Name, Val Bucket, Val Entity, Val BasicData, Val Headers = Undefined) Export`
+`Function PutObject(Val Name, Val Bucket, Val Entity, Val BasicData, Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | Entity | --data | String, BinaryData | &#x2714; | File path or binary data of the object |
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -46,19 +47,19 @@ Parameters with Binary data type can also accept file paths on disk and URLs
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
     Name   = "picture.jpg";
-    Bucket = "opi-gpbucket3";
     Entity = "https://hut.openintegrations.dev/test_data/picture.jpg"; // URL, Path or Binary Data
 
-    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData);
+    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData, , Directory);
 
     Name   = "fileChunked.mp3";
-    Bucket = "opi-gpbucket3";
     Entity = "https://hut.openintegrations.dev/test_data/song.mp3"; // URL, Path or Binary Data
 
-    BasicData.Insert("ChunkSize", 5242880);
+    BasicData.Insert("ChunkSize", 5242880); // Size parts for upload in multiple of requests
 
-    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData);
+    Result = OPI_S3.PutObject(Name, Bucket, Entity, BasicData, , Directory);
 ```
  
 
@@ -66,25 +67,23 @@ Parameters with Binary data type can also accept file paths on disk and URLs
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 PutObject \
-             --name "pictureSmall.jpg" \
-             --bucket "opi-gpbucket3" \
-             --data "https://hut.openintegrations.dev/test_data/picture.jpg" \
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --name "fileChunked.mp3" \
+             --bucket "opi-dirbucket3" \
+             --data "https://hut.openintegrations.dev/test_data/song.mp3" \
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':'5242880'}" \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 PutObject ^
-             --name "pictureSmall.jpg" ^
-             --bucket "opi-gpbucket3" ^
-             --data "https://hut.openintegrations.dev/test_data/picture.jpg" ^
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+             --name "fileChunked.mp3" ^
+             --bucket "opi-dirbucket3" ^
+             --data "https://hut.openintegrations.dev/test_data/song.mp3" ^
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':'5242880'}" ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -96,17 +95,17 @@ Parameters with Binary data type can also accept file paths on disk and URLs
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "0",
-  "Content-Type": "text/plain; charset=utf-8",
-  "Date": "Fri, 22 Nov 2024 10:12:02 GMT",
-  "Etag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
+  "Date": "Mon, 15 Sep 2025 23:15:38 GMT",
+  "ETag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "e602da57d0c30b8c7034fcfe129917205f80f7bab979408e71da5d1441c85e79",
-  "X-Amz-Request-Id": "180A42ADF0E73AFC",
+  "X-Amz-Request-Id": "186597CD86D92FBE",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "0",
+  "Content-Type": "text/plain; charset=utf-8"
  }
 }
 ```

@@ -1,7 +1,5 @@
-# JSON данные также могут быть переданы как путь к файлу .json
-
 oint bitrix24 ИзменитьПользователя \
-  --url "b24-ar17wx.bitrix24.by" \
-  --userid 2412 \
-  --fields "{'EMAIL':'d0604cd2-3481-41b8-bf26-39879ee690af@exepmple.org','NAME':'Олег','LAST_NAME':'Лама','UF_DEPARTMENT':7}" \
+  --url ""b24-ar17wx.bitrix24.by"" \
+  --userid "2676" \
+  --fields ""/tmp/kichupwf.gj5.json"" \
   --token "***"

@@ -1,5 +1,5 @@
-﻿    Токен              = "ya29.a0AS3H6Nw6rTG3pFXv17ZLXkvuvtNl_DHHXbxe2yDRIB09Sq-BA7xPQj9V7OKAaAiHRZAsVqI0UD6026Q_3gklXjU-kam0kzFCe2adXI3lS...";
-    Календарь          = "b4cd7b78fa45f2448bc045fe33639a9322a4851ff48d6eaa6dfbc2f95a6410d5@group.calendar.google.com";
+﻿    Токен              = "ya29.a0AQQ_BDTgQbn9c5rXhPK3FCakms_7oKkdIWE1CCQFnSPftb2RxvloVqnYOcnsAKhXrD0Gq8Tz2Kgn5IBXG5E25uksZfvvTtXob-jFcuj_9LZYs9La4HrcFk766...";
+    Календарь          = "a9168079abee0b7314a77e16ec7ada0ae393cdd389a6f4a8d3f4501aa958f8e9@group.calendar.google.com";
     ОсновнойЦвет       = "#000000";
     ДополнительныйЦвет = "#ffd800";
     Скрытый            = Ложь;

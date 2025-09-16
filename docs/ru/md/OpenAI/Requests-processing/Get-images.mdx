@@ -48,25 +48,21 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint openai ПолучитьКартинки \
               --url "https://bothub.chat/api/v2/openai/" \
               --token "***" \
               --model "dall-e-3" \
-              --descr "{'prompt':'Yellow alpaca','n':1,'size':'1024x1024'}"
+              --descr "{'prompt':'Yellow alpaca','n':'1','size':'1024x1024'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint openai ПолучитьКартинки ^
               --url "https://bothub.chat/api/v2/openai/" ^
               --token "***" ^
               --model "dall-e-3" ^
-              --descr "{'prompt':'Yellow alpaca','n':1,'size':'1024x1024'}"
+              --descr "{'prompt':'Yellow alpaca','n':'1','size':'1024x1024'}"
         ```
     </TabItem>
 </Tabs>
@@ -74,11 +70,11 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Результат"
 {
- "created": 1749756865,
+ "created": 1757970996,
  "data": [
   {
-   "revised_prompt": "Imagine a sunny meadow with lush green grass. In the heart of this vibrant landscape, stands a yellow alpaca with its woolly fur, shining brightly under the sunlight. Its features are comically endearing with a long neck, a small rounded head, and large, expressive eyes. It is peacefully grazing, unperturbed by the world around it, epitomizing the tranquility of the idyllic meadow. The gentle breeze flutters its fur, adding an element of charisma to this adorable creature. The picture is a beautiful blend of vibrant colors, and a sense of calmness.",
-   "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-Dy8ARyqBtu507OGoMBxfUU0S/user-n4L5wc2dF1fH9APAG2dE3Rw9/img-oEeMH1QJWSvtVlmG3yc1KOqx.png?st=2025-06-12T18%3A34%3A25Z&se=2025-06-12T20%3A34%3A25Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-12T11%3A41%3A33Z&ske=2025-06-13T11%3A41%3A33Z&sks=b&skv=2024-08-04&sig=%2BjegkXiCFSi3l80vNiH1IOij4nQ%2BD%2Bd%2BNitOmxISJ1c%3D"
+   "revised_prompt": "Imagine a vibrant, fluffy yellow alpaca. It stands proudly in a peaceful, rural setting. Behind the alpaca, a landscape unfolds filled with green, gently rolling hills and a clear, blue sky with sparse, soft white clouds. The sun is beginning its descent, casting a warm, golden light over the scene.",
+   "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-vf0VrTZ44yHusk7vPGBYcYgW/user-HMyGZPKt7HooVlzCBP2dP9we/img-R2sGhVYu0lMVrlygM2KTZYHs.png?st=2025-09-15T20%3A16%3A36Z&se=2025-09-15T22%3A16%3A36Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=77e5a8ec-6bd1-4477-8afc-16703a64f029&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-15T21%3A16%3A36Z&ske=2025-09-16T21%3A16%3A36Z&sks=b&skv=2024-08-04&sig=Sg8J9wDlNhiyW3ZWyU0GLfcrDlY3Y1ubW37CD3cZ0OM%3D"
   }
  ]
 }

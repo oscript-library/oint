@@ -40,7 +40,8 @@ import TabItem from '@theme/TabItem';
     IDЧата = "120363410406221140@g.us";
 
     ПараметрыДоступа = OPI_GreenAPI.СформироватьПараметрыДоступа(ApiUrl, MediaUrl, IdInstance, ApiTokenInstance);
-    Результат        = OPI_GreenAPI.АрхивироватьЧат(ПараметрыДоступа, IDЧата);
+
+    Результат = OPI_GreenAPI.АрхивироватьЧат(ПараметрыДоступа, IDЧата);
 ```
     
 
@@ -48,8 +49,6 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint greenapi АрхивироватьЧат \
               --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" \
               --chat "120363410406221140@g.us"
@@ -58,8 +57,6 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint greenapi АрхивироватьЧат ^
               --access "{'apiUrl':'***','mediaUrl':'https://7105.media.greenapi.com','idInstance':'7105187566','apiTokenInstance':'***'}" ^
               --chat "120363410406221140@g.us"
@@ -69,5 +66,5 @@ import TabItem from '@theme/TabItem';
 
 
 ```json title="Результат"
-null
+{}
 ```

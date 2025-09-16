@@ -39,20 +39,16 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint twitter СоздатьТекстовыйТвит \
-              --text "Тестовый твиттd00fe079-22cc-43dd-bd26-8d9e94dad15f" \
+              --text "Тестовый твитт5f14cb4b-e98c-47ab-beb3-c32debf73c5e" \
               --auth "{'redirect_uri':'https://hut.openintegrations.dev/melezh/6ad91cc8b','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint twitter СоздатьТекстовыйТвит ^
-              --text "Тестовый твиттd00fe079-22cc-43dd-bd26-8d9e94dad15f" ^
+              --text "Тестовый твитт5f14cb4b-e98c-47ab-beb3-c32debf73c5e" ^
               --auth "{'redirect_uri':'https://hut.openintegrations.dev/melezh/6ad91cc8b','client_id':'***','client_secret':'***','access_token':'***','refresh_token':'***','oauth_token':'***','oauth_token_secret':'***','oauth_consumer_key':'***','oauth_consumer_secret':'***'}"
         ```
     </TabItem>
@@ -61,12 +57,9 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Результат"
 {
- "data": {
-  "edit_history_tweet_ids": [
-   "1843702311643721803"
-  ],
-  "text": "Тестовый твиттc6e90c85-c8f1-42e2-93d6-417465165081",
-  "id": "1843702311643721803"
- }
+ "title": "Too Many Requests",
+ "detail": "Too Many Requests",
+ "type": "about:blank",
+ "status": 429
 }
 ```

@@ -1,11 +1,12 @@
 mod methods;
+mod dataset;
 
 use addin1c::{name, Variant};
 use std::sync::{Mutex, Arc};
 use crate::core::getset;
 use rusqlite::{Connection, OpenFlags};
 use serde_json::json;
-
+use crate::component::dataset::Datasets;
 // МЕТОДЫ КОМПОНЕНТЫ -------------------------------------------------------------------------------
 
 // Синонимы
@@ -13,7 +14,14 @@ pub const METHODS: &[&[u16]] = &[
     name!("Connect"),
     name!("Close"),
     name!("Execute"),
-    name!("LoadExtension")
+    name!("LoadExtension"),
+    name!("InitQuery"),
+    name!("GetResultAsFile"),
+    name!("GetResultAsString"),
+    name!("SetParamsFromFile"),
+    name!("SetParamsFromString"),
+    name!("RemoveQueryDataset"),
+    name!("BatchQuery")
 
 ];
 
@@ -22,8 +30,15 @@ pub fn get_params_amount(num: usize) -> usize {
     match num {
         0 => 0,
         1 => 0,
-        2 => 3,
+        2 => 1,
         3 => 2,
+        4 => 3,
+        5 => 2,
+        6 => 1,
+        7 => 2,
+        8 => 2,
+        9 => 1,
+        10 => 2,
         _ => 0,
     }
 }
@@ -37,18 +52,91 @@ pub fn cal_func(obj: &mut AddIn, num: usize, params: &mut [Variant]) -> Box<dyn 
         0 => Box::new(obj.initialize()),
         1 => Box::new(obj.close_connection()),
         2 => {
-
-            let query = params[0].get_string().unwrap_or("".to_string());
-            let params_json = params[1].get_string().unwrap_or("".to_string());
-            let force_result = params[2].get_bool().unwrap_or(false);
-
-            Box::new(methods::execute_query(obj, query, params_json, force_result))
+            let key = params[0].get_string().unwrap_or("".to_string());
+            Box::new(methods::execute_query(obj, &key))
         },
         3 => {
             let path = params[0].get_string().unwrap_or("".to_string());
             let point = params[1].get_string().unwrap_or("".to_string());
 
             Box::new(methods::load_extension(obj, path, point))
+        },
+        4 => {
+
+            let text = params[0].get_string().unwrap_or("".to_string());
+            let force = params[1].get_bool().unwrap_or(false);
+            let from_file = params[2].get_bool().unwrap_or(false);
+
+            let result = match obj.datasets.init_query(&text, force, from_file){
+                Ok(key) => json!({"result": true, "key": key}).to_string(),
+                Err(e) => format_json_error(&e)
+            };
+
+            Box::new(result)
+        },
+
+        5 => {
+            let key = params[0].get_string().unwrap_or("".to_string());
+            let filepath = params[1].get_string().unwrap_or("".to_string());
+
+            let result = match obj.datasets.result_as_file(&key, &filepath){
+                Ok(_) => json!({"result": true}).to_string(),
+                Err(e) => format_json_error(&e)
+            };
+
+            Box::new(result)
+        },
+
+        6 => {
+            let key = params[0].get_string().unwrap_or("".to_string());
+
+            let result = obj.datasets.result_as_string(&key)
+                .unwrap_or_else(|e| format_json_error(&e));
+
+            Box::new(result)
+
+        },
+
+        7 => {
+            let key = params[0].get_string().unwrap_or("".to_string());
+            let filepath = params[1].get_string().unwrap_or("".to_string());
+
+            let result = match obj.datasets.params_from_file(&key, &filepath){
+                Ok(_) => json!({"result": true}).to_string(),
+                Err(e) => format_json_error(&e)
+            };
+
+            Box::new(result)
+        },
+
+        8 => {
+            let key = params[0].get_string().unwrap_or("".to_string());
+            let json = params[1].get_string().unwrap_or("".to_string());
+
+            let result = match obj.datasets.params_from_string(&key, &json){
+                Ok(_) => json!({"result": true}).to_string(),
+                Err(e) => format_json_error(&e)
+            };
+
+            Box::new(result)
+
+        },
+
+        9 => {
+            let key = params[0].get_string().unwrap_or("".to_string());
+            obj.datasets.remove(&key);
+            Box::new(json!({"result": true}).to_string())
+        },
+        10 => {
+            let input = params[0].get_string().unwrap_or("".to_string());
+            let output = params[1].get_string().unwrap_or("".to_string());
+
+            let result = match obj.datasets.batch_query_init(&input, &output){
+                Ok(_) => json!({"result": true}).to_string(),
+                Err(e) => format_json_error(&e)
+            };
+
+            Box::new(result)
         },
         _ => Box::new(false), // Неверный номер команды
     }
@@ -68,6 +156,7 @@ pub const PROPS: &[&[u16]] = &[
 pub struct AddIn {
     connection_string: String,
     connection: Option<Arc<Mutex<Connection>>>,
+    datasets: Datasets,
 }
 
 impl AddIn {
@@ -76,6 +165,7 @@ impl AddIn {
         AddIn {
             connection_string: String::new(),
             connection: None,
+            datasets: Datasets::new(),
         }
     }
 
@@ -159,6 +249,11 @@ impl AddIn {
     pub fn get_field_ptr_mut(&mut self, index: usize) -> *mut dyn getset::ValueType { self.get_field_ptr(index) as *mut _ }
 }
 // -------------------------------------------------------------------------------------------------
+
+
+pub fn format_json_error(error: &str) -> String {
+    json!({"result": false, "error": error}).to_string()
+}
 
 // УНИЧТОЖЕНИЕ ОБЪЕКТА -----------------------------------------------------------------------------
 

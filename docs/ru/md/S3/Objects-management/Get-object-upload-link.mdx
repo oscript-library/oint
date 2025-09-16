@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Функция ПолучитьСсылкуЗагрузкиОбъекта(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач ВремяЖизни = 3600, Знач Заголовки = Неопределено) Экспорт`
+`Функция ПолучитьСсылкуЗагрузкиОбъекта(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач ВремяЖизни = 3600, Знач Заголовки = Неопределено, Знач Каталог = Ложь) Экспорт`
 
   | Параметр | CLI опция | Тип | Обяз. | Назначение |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | ОсновныеДанные | --basic | Структура Из КлючИЗначение | &#x2714; | Основные данные запроса. См. ПолучитьСтруктуруДанных |
   | ВремяЖизни | --expires | Строка, Число | &#x2716; | Время жизни ссылки в секундах. 604800 максимум |
   | Заголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Дополнительные заголовки запроса, если необходимо |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
 
   
   Возвращаемое значение:   Строка - URL для получения объекта
@@ -45,9 +46,11 @@ import TabItem from '@theme/TabItem';
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
 
     Наименование = "pictureU.jpg";
-    Бакет        = "newbucket2";
 
-    Результат = OPI_S3.ПолучитьСсылкуЗагрузкиОбъекта(Наименование, Бакет, ОсновныеДанные, 7200);
+    Каталог = Истина; // Формирование URL в path-style
+    Бакет = "newbucket2";
+
+    Результат = OPI_S3.ПолучитьСсылкуЗагрузкиОбъекта(Наименование, Бакет, ОсновныеДанные, 7200, , Каталог);
 ```
     
 
@@ -55,30 +58,28 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьСсылкуЗагрузкиОбъекта \
               --name "pictureU.jpg" \
               --bucket "newbucket2" \
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
-              --expires 7200
+              --expires 7200 \
+              --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьСсылкуЗагрузкиОбъекта ^
               --name "pictureU.jpg" ^
               --bucket "newbucket2" ^
               --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
-              --expires 7200
+              --expires 7200 ^
+              --dir true
         ```
     </TabItem>
 </Tabs>
 
 
 ```json title="Результат"
-"newbucket2.storage-155.s3hoster.by/pictureU.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=BRN5RKJE67YCVDZRRQVI%2F20241201%2FBTC%2Fs3%2Faws4_request&X-Amz-Date=20241201T115128Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=094ef0d31c9624f29d592881ca7154bab5ebaa0ca238f8eb494ff16fbbfc18a5"
+"storage-155.s3hoster.by/newbucket2/pictureU.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=BRN5RKJE67YCVDZRRQVI%2F20250916%2FBTC%2Fs3%2Faws4_request&X-Amz-Date=20250916T053412Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=b99a7682a2fb7e089db94934e01d5e00af4952e2ab4d94abaf738e3dce6eeba2"
 ```

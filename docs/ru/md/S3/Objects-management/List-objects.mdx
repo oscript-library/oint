@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Функция ПолучитьСписокОбъектов(Знач Бакет, Знач ОсновныеДанные, Знач Префикс = "", Знач ТокенСтраницы = "", Знач Заголовки = Неопределено) Экспорт`
+`Функция ПолучитьСписокОбъектов(Знач Бакет, Знач ОсновныеДанные, Знач Префикс = "", Знач ТокенСтраницы = "", Знач Заголовки = Неопределено, Знач Каталог = Ложь) Экспорт`
 
   | Параметр | CLI опция | Тип | Обяз. | Назначение |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | Префикс | --prefix | Строка | &#x2716; | Отбор по префиксу, если необходимо |
   | ТокенСтраницы | --ctoken | Строка | &#x2716; | Токен страницы, если используется пагинация |
   | Заголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Дополнительные заголовки запроса, если необходимо |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
 
   
   Возвращаемое значение:   Структура Из КлючИЗначение - сериализованный JSON ответа от хранилища
@@ -42,8 +43,9 @@ import TabItem from '@theme/TabItem';
 
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
 
-    Бакет     = "opi-gpbucket3";
-    Результат = OPI_S3.ПолучитьСписокОбъектов(Бакет, ОсновныеДанные);
+    Каталог = Истина; // Формирование URL в path-style
+    Бакет = "opi-dirbucket3";
+    Результат = OPI_S3.ПолучитьСписокОбъектов(Бакет, ОсновныеДанные, , , , Каталог);
 ```
     
 
@@ -51,29 +53,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьСписокОбъектов \
-              --url "storage-155.s3hoster.by" \
-              --access "BRN5RKJE67YCVDZRRQVI" \
-              --secret "***" \
-              --region "BTC" \
-              --bucket "opi-gpbucket3" \
-              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+              --bucket "opi-dirbucket3" \
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+              --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьСписокОбъектов ^
-              --url "storage-155.s3hoster.by" ^
-              --access "BRN5RKJE67YCVDZRRQVI" ^
-              --secret "***" ^
-              --region "BTC" ^
-              --bucket "opi-gpbucket3" ^
-              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+              --bucket "opi-dirbucket3" ^
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+              --dir true
         ```
     </TabItem>
 </Tabs>
@@ -84,14 +76,14 @@ import TabItem from '@theme/TabItem';
  "status": 200,
  "response": {
   "ListBucketResult": {
-   "Name": "opi-gpbucket3",
+   "Name": "opi-dirbucket3",
    "Prefix": {},
    "KeyCount": "1",
    "MaxKeys": "250",
    "IsTruncated": "false",
    "Contents": {
     "Key": "picture.jpg",
-    "LastModified": "2024-11-22T09:34:54.938Z",
+    "LastModified": "2025-09-16T05:28:55.457Z",
     "ETag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
     "Size": "2114023",
     "StorageClass": "STANDARD"
@@ -100,16 +92,16 @@ import TabItem from '@theme/TabItem';
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "451",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 09:35:15 GMT",
+  "Date": "Tue, 16 Sep 2025 05:32:50 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "e602da57d0c30b8c7034fcfe129917205f80f7bab979408e71da5d1441c85e79",
-  "X-Amz-Request-Id": "180A40AC66778378",
+  "X-Amz-Request-Id": "1865AC62D30C8BDB",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "452",
+  "Content-Type": "application/xml"
  }
 }
 ```

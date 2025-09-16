@@ -35,7 +35,7 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     URL            = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    IDПользователя = "2164";
+    IDПользователя = "2626";
     Почта          = Строка(Новый УникальныйИдентификатор) + "@exepmple.org";
 
     // Полную структуру можно получить функцией ПолучитьСтурктуруПользователя
@@ -47,8 +47,8 @@ import TabItem from '@theme/TabItem';
     Результат = OPI_Bitrix24.ИзменитьПользователя(URL, IDПользователя, СтруктураПользователя);
 
     URL            = "b24-ar17wx.bitrix24.by";
-    Токен          = "11ae5d68006e9f06006b12e400000001000...";
-    IDПользователя = "2166";
+    Токен          = "75d8c668006e9f06006b12e400000001000...";
+    IDПользователя = "2628";
     Почта          = Строка(Новый УникальныйИдентификатор) + "@exepmple.org";
 
     СтруктураПользователя = Новый Структура;
@@ -65,24 +65,20 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint bitrix24 ИзменитьПользователя \
-              --url "b24-ar17wx.bitrix24.by" \
-              --userid 2412 \
-              --fields "{'EMAIL':'d0604cd2-3481-41b8-bf26-39879ee690af@exepmple.org','NAME':'Олег','LAST_NAME':'Лама','UF_DEPARTMENT':7}" \
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --userid "2676" \
+              --fields ""/tmp/kichupwf.gj5.json"" \
               --token "***"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint bitrix24 ИзменитьПользователя ^
-              --url "b24-ar17wx.bitrix24.by" ^
-              --userid 2412 ^
-              --fields "{'EMAIL':'d0604cd2-3481-41b8-bf26-39879ee690af@exepmple.org','NAME':'Олег','LAST_NAME':'Лама','UF_DEPARTMENT':7}" ^
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --userid "2676" ^
+              --fields ""/tmp/kichupwf.gj5.json"" ^
               --token "***"
         ```
     </TabItem>
@@ -93,14 +89,14 @@ import TabItem from '@theme/TabItem';
 {
  "result": true,
  "time": {
-  "start": 1728409877.3911,
-  "finish": 1728409877.68765,
-  "duration": 0.296542167663574,
-  "processing": 0.271466016769409,
-  "date_start": "2024-10-08T20:51:17+03:00",
-  "date_finish": "2024-10-08T20:51:17+03:00",
-  "operating_reset_at": 1728410477,
-  "operating": 0.271438837051392
+  "start": 1757999218.1956,
+  "finish": 1757999218.50478,
+  "duration": 0.309187889099121,
+  "processing": 0.279401063919067,
+  "date_start": "2025-09-16T05:06:58+00:00",
+  "date_finish": "2025-09-16T05:06:58+00:00",
+  "operating_reset_at": 1757999818,
+  "operating": 0.279376983642578
  }
 }
 ```

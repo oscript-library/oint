@@ -34,7 +34,15 @@ import TabItem from '@theme/TabItem';
     Password = "12we...";
     Base     = "testbase1";
 
-    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password);
+    TLS = True;
+    Port = 3306;
+    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+
+    If TLS Then
+        TLSSettings = OPI_MySQL.GetTLSSettings(True);
+    Else
+        TLSSettings = Undefined;
+    EndIf;
 
     Table = "testtable";
 
@@ -42,7 +50,7 @@ import TabItem from '@theme/TabItem';
     // which will be closed after the function is executed.
     // If several operations are performed, it is desirable to use one connection,
     // previously created by the CreateConnection function()
-    Result = OPI_MySQL.GetTableInformation(Table, ConnectionString);
+    Result = OPI_MySQL.GetTableInformation(Table, ConnectionString, TLSSettings);
 ```
  
 
@@ -50,23 +58,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint mysql GetTableInformation \
-             --table "testtable" \
+             --table ""test_new"" \
              --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" \
-             --tls "{'use_tls':true,'accept_invalid_certs':true}"
+             --tls ""/tmp/4npzw32h.ms0.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint mysql GetTableInformation ^
-             --table "testtable" ^
+             --table ""test_new"" ^
              --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" ^
-             --tls "{'use_tls':true,'accept_invalid_certs':true}"
+             --tls ""/tmp/4npzw32h.ms0.json""
         ```
     </TabItem>
 </Tabs>
@@ -75,105 +79,6 @@ import TabItem from '@theme/TabItem';
 ```json title="Result"
 {
  "data": [
-  {
-   "CHARACTER_MAXIMUM_LENGTH": 5,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "char_field",
-   "DATA_TYPE": {
-    "BYTES": "Y2hhcg=="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": 255,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "varchar_field",
-   "DATA_TYPE": {
-    "BYTES": "dmFyY2hhcg=="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": 255,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "tinytext_field",
-   "DATA_TYPE": {
-    "BYTES": "dGlueXRleHQ="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": 65535,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "text_field",
-   "DATA_TYPE": {
-    "BYTES": "dGV4dA=="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": 16777215,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "mediumtext_field",
-   "DATA_TYPE": {
-    "BYTES": "bWVkaXVtdGV4dA=="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": 4294967295,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "longtext_field",
-   "DATA_TYPE": {
-    "BYTES": "bG9uZ3RleHQ="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": null,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "tinyint_field",
-   "DATA_TYPE": {
-    "BYTES": "dGlueWludA=="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": null,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "smallint_field",
-   "DATA_TYPE": {
-    "BYTES": "c21hbGxpbnQ="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": null,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "mediumint_field",
-   "DATA_TYPE": {
-    "BYTES": "bWVkaXVtaW50"
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": null,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "int_field",
-   "DATA_TYPE": {
-    "BYTES": "aW50"
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": null,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "uint_field",
-   "DATA_TYPE": {
-    "BYTES": "aW50"
-   },
-   "IS_NULLABLE": "YES"
-  },
   {
    "CHARACTER_MAXIMUM_LENGTH": null,
    "COLUMN_DEFAULT": null,
@@ -184,20 +89,11 @@ import TabItem from '@theme/TabItem';
    "IS_NULLABLE": "YES"
   },
   {
-   "CHARACTER_MAXIMUM_LENGTH": null,
+   "CHARACTER_MAXIMUM_LENGTH": 5,
    "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "float_field",
+   "COLUMN_NAME": "char_field",
    "DATA_TYPE": {
-    "BYTES": "ZmxvYXQ="
-   },
-   "IS_NULLABLE": "YES"
-  },
-  {
-   "CHARACTER_MAXIMUM_LENGTH": null,
-   "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "double_field",
-   "DATA_TYPE": {
-    "BYTES": "ZG91Ymxl"
+    "BYTES": "Y2hhcg=="
    },
    "IS_NULLABLE": "YES"
   },
@@ -213,6 +109,105 @@ import TabItem from '@theme/TabItem';
   {
    "CHARACTER_MAXIMUM_LENGTH": null,
    "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "datetime_field",
+   "DATA_TYPE": {
+    "BYTES": "ZGF0ZXRpbWU="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "double_field",
+   "DATA_TYPE": {
+    "BYTES": "ZG91Ymxl"
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "float_field",
+   "DATA_TYPE": {
+    "BYTES": "ZmxvYXQ="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "int_field",
+   "DATA_TYPE": {
+    "BYTES": "aW50"
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "longtext_field",
+   "DATA_TYPE": {
+    "BYTES": "bG9uZ3RleHQ="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": 16777215,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "mediumblob_field",
+   "DATA_TYPE": {
+    "BYTES": "bWVkaXVtYmxvYg=="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "mediumint_field",
+   "DATA_TYPE": {
+    "BYTES": "bWVkaXVtaW50"
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": 16777215,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "mediumtext_field",
+   "DATA_TYPE": {
+    "BYTES": "bWVkaXVtdGV4dA=="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": 13,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "set_field",
+   "DATA_TYPE": {
+    "BYTES": "c2V0"
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "smallint_field",
+   "DATA_TYPE": {
+    "BYTES": "c21hbGxpbnQ="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": 65535,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "text_field",
+   "DATA_TYPE": {
+    "BYTES": "dGV4dA=="
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
    "COLUMN_NAME": "time_field",
    "DATA_TYPE": {
     "BYTES": "dGltZQ=="
@@ -222,6 +217,15 @@ import TabItem from '@theme/TabItem';
   {
    "CHARACTER_MAXIMUM_LENGTH": null,
    "COLUMN_DEFAULT": null,
-   "COLUMN_NAME": "datetime_field",
+   "COLUMN_NAME": "timestamp_field",
+   "DATA_TYPE": {
+    "BYTES": "dGltZXN0YW1w"
+   },
+   "IS_NULLABLE": "YES"
+  },
+  {
+   "CHARACTER_MAXIMUM_LENGTH": null,
+   "COLUMN_DEFAULT": null,
+   "COLUMN_NAME": "tinyint_field",
 ...
 ```

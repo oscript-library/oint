@@ -42,7 +42,7 @@ Method at API documentation: [im.user.list.get ](https://dev.1c-bitrix.ru/learni
     Result = OPI_Bitrix24.GetUsers(URL, ArrayOfUsers);
 
     URL     = "b24-ar17wx.bitrix24.by";
-    Token   = "11ae5d68006e9f06006b12e400000001000...";
+    Token   = "75d8c668006e9f06006b12e400000001000...";
     UserIDs = 10;
 
     Result = OPI_Bitrix24.GetUsers(URL, UserIDs, Token);
@@ -54,8 +54,8 @@ Method at API documentation: [im.user.list.get ](https://dev.1c-bitrix.ru/learni
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 GetUsers \
-             --url "b24-ar17wx.bitrix24.by" \
-             --users "[1,10]" \
+             --url ""b24-ar17wx.bitrix24.by"" \
+             --users "10" \
              --token "***"
         ```
     </TabItem>
@@ -63,8 +63,8 @@ Method at API documentation: [im.user.list.get ](https://dev.1c-bitrix.ru/learni
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 GetUsers ^
-             --url "b24-ar17wx.bitrix24.by" ^
-             --users "[1,10]" ^
+             --url ""b24-ar17wx.bitrix24.by"" ^
+             --users "10" ^
              --token "***"
         ```
     </TabItem>
@@ -83,6 +83,7 @@ Method at API documentation: [im.user.list.get ](https://dev.1c-bitrix.ru/learni
    "work_position": null,
    "color": "#ab7761",
    "avatar": "",
+   "avatar_hr": "https://b24-ar17wx.bitrix24.by/bitrix/js/im/images/blank.gif",
    "gender": "M",
    "birthday": "",
    "extranet": false,
@@ -92,24 +93,28 @@ Method at API documentation: [im.user.list.get ](https://dev.1c-bitrix.ru/learni
    "external_auth_id": "socservices",
    "status": "online",
    "idle": false,
-   "last_activity_date": "2024-07-13T21:36:23+03:00",
+   "last_activity_date": "2024-07-13T18:36:23+00:00",
    "mobile_last_date": false,
+   "desktop_last_date": false,
    "absent": false,
    "departments": [
     1,
-    264
+    640,
+    2670
    ],
-   "phones": false
+   "phones": false,
+   "bot_data": null,
+   "type": "user"
   }
  },
  "time": {
-  "start": 1728454841.79577,
-  "finish": 1728454841.82182,
-  "duration": 0.0260539054870605,
-  "processing": 0.00196313858032227,
-  "date_start": "2024-10-09T09:20:41+03:00",
-  "date_finish": "2024-10-09T09:20:41+03:00",
-  "operating_reset_at": 1728455441,
+  "start": 1757976735.5252,
+  "finish": 1757976735.55103,
+  "duration": 0.0258328914642334,
+  "processing": 0.0020451545715332,
+  "date_start": "2025-09-15T22:52:15+00:00",
+  "date_finish": "2025-09-15T22:52:15+00:00",
+  "operating_reset_at": 1757977335,
   "operating": 0
  }
 }

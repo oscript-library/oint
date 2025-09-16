@@ -1,19 +1,14 @@
 use postgres::types::{ToSql};
 use serde_json::{Value, json, Map};
 use base64::{engine::general_purpose, Engine as _};
-use crate::component::AddIn;
+use crate::component::{format_json_error, AddIn};
 use std::collections::HashMap;
 use std::net::IpAddr;
 use chrono::{NaiveDate, NaiveTime, FixedOffset, NaiveDateTime, DateTime};
 use uuid::Uuid;
 use dateparser::parse;
 
-pub fn execute_query(
-    add_in: &mut AddIn,
-    query: String,
-    params_json: String,
-    force_result: bool,
-) -> String {
+pub fn execute_query(add_in: &mut AddIn, key: &str) -> String {
 
     let client_arc = match add_in.get_connection() {
         Some(c) => c,
@@ -25,11 +20,14 @@ pub fn execute_query(
         Err(_) => return format_json_error("Cannot acquire client lock"),
     };
 
-    // Парсинг JSON параметров
-    let params: Vec<Value> = match serde_json::from_str(&params_json) {
-        Ok(params) => params,
-        Err(e) => return format_json_error(&e.to_string()),
+    let query = match add_in.datasets.get_query(key){
+        Some(q) => q,
+        None => return format_json_error(format!("No query found by key: {}", key).as_str()),
     };
+
+    let params = query.params;
+    let text = query.text;
+    let force_result = query.force_result;
 
     let params_ref = match process_params(&params){
         Ok(params) => params,
@@ -38,22 +36,25 @@ pub fn execute_query(
 
     let params_unboxed: Vec<_> = params_ref.iter().map(AsRef::as_ref).collect();
 
-    if query.trim_start().to_uppercase().starts_with("SELECT") || force_result {
-        match client.query(&query, &params_unboxed) {
+    if text.trim_start().to_uppercase().starts_with("SELECT") || force_result {
+        match client.query(&text, &params_unboxed) {
             Ok(rows) => {
-                rows_to_json(rows)
+
+                let processed_rows = rows_to_json(rows);
+                add_in.datasets.set_results(key, processed_rows);
+                json!({"result": true, "data": true}).to_string()
+
             }
             Err(e) => format_json_error(&e.to_string()),
         }
     } else {
-        match client.execute(&query, &params_unboxed.as_slice()) {
-            Ok(_) => json!({"result": true}).to_string(),
+        match client.execute(&text, &params_unboxed.as_slice()) {
+            Ok(_) => json!({"result": true, "data": false}).to_string(),
             Err(e) => format_json_error(&e.to_string()),
         }
     }
 }
 
-/// Конвертирует JSON-параметры в Postgres-совместимые типы
 fn process_params(params: &Vec<Value>) -> Result<Vec<Box<dyn ToSql + Sync>>, String> {
     let mut result = Vec::new();
     for param in params {
@@ -212,7 +213,7 @@ fn process_object(object: &Map<String, Value>) -> Result<Box<dyn ToSql + Sync>, 
     }
 }
 
-fn rows_to_json(rows: Vec<postgres::Row>) -> String {
+fn rows_to_json(rows: Vec<postgres::Row>) ->  Vec<Value> {
     let mut result = Vec::new();
 
     for row in rows {
@@ -230,8 +231,7 @@ fn rows_to_json(rows: Vec<postgres::Row>) -> String {
 
         result.push(Value::Object(row_map));
     };
-
-    json!({ "result": true, "data": result }).to_string()
+    result
 }
 
 fn process_sql_value(column_name: &str, column_type: &str, row: &postgres::Row) -> Result<Value, postgres::Error> {
@@ -326,13 +326,6 @@ fn process_sql_value(column_name: &str, column_type: &str, row: &postgres::Row) 
     Ok(value)
 }
 
-fn format_json_error(error: &str) -> String {
-    json!({
-        "result": false,
-        "error": error
-    })
-        .to_string()
-}
 
 fn parse_date(input: &str) -> Result<NaiveDateTime, String> {
     parse(input)

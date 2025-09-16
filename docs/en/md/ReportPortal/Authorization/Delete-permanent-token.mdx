@@ -1,0 +1,70 @@
+﻿---
+sidebar_position: 3
+description: Delete permanent token and other functions to work with ReportPortal in the Open Integration Package, a free open-source integration library for 1C:Enterprise 8, OneScript and CLI
+keywords: [1C, 1С, 1С:Enterprise, 1С:Enterprise 8.3, API, Integration, Services, Exchange, OneScript, CLI, ReportPortal]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Delete permanent token
+ Deletes a previously created user token
+
+
+
+`Function DeletePermanentToken(Val URL, Val Token, Val UserID, Val KeyID) Export`
+
+  | Parameter | CLI option | Type | Required | Description |
+  |-|-|-|-|-|
+  | URL | --url | String | &#x2714; | ReportPortal server URL |
+  | Token | --token | String | &#x2714; | Access token |
+  | UserID | --user | String | &#x2714; | User ID |
+  | KeyID | --id | String | &#x2714; | Token ID |
+
+  
+  Returns:  Map Of KeyAndValue - serialized JSON response from ReportPortal
+
+<br/>
+
+
+
+
+```bsl title="1C:Enterprise/OneScript code example"
+    URL    = "tests.openintegrations.dev";
+    Token  = "test-key_pwP_FUimTR--WLN3HQa7Q7T9MVO...";
+    UserID = "1";
+    KeyID  = "3...";
+
+    Result = OPI_ReportPortal.DeletePermanentToken(URL, Token, UserID, KeyID);
+```
+ 
+
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint rportal DeletePermanentToken \
+             --url "tests.openintegrations.dev" \
+             --token "***" \
+             --user 1 \
+             --id 45
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint rportal DeletePermanentToken ^
+             --url "tests.openintegrations.dev" ^
+             --token "***" ^
+             --user 1 ^
+             --id 45
+        ```
+    </TabItem>
+</Tabs>
+
+
+```json title="Result"
+{
+ "message": "Api key with ID = '45' was successfully deleted."
+}
+```

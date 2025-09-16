@@ -31,8 +31,8 @@ import TabItem from '@theme/TabItem';
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Параметры = ПолучитьПараметрыВК();
 
-    Товар1 = "11508997";
-    Товар2 = "11508999";
+    Товар1 = "11831702";
+    Товар2 = "11831703";
 
     МассивТоваров = Новый Массив;
     МассивТоваров.Добавить(Товар1);
@@ -46,21 +46,17 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk СгруппироватьТовары \
-              --items "[11508814,11508815]" \
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --items ""[11839323,11839324]"" \
+              --auth ""/tmp/lmfmsqcg.i0s.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk СгруппироватьТовары ^
-              --items "[11508814,11508815]" ^
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --items ""[11839323,11839324]"" ^
+              --auth ""/tmp/lmfmsqcg.i0s.json""
         ```
     </TabItem>
 </Tabs>
@@ -69,7 +65,7 @@ import TabItem from '@theme/TabItem';
 ```json title="Результат"
 {
  "response": {
-  "item_group_id": 11251
+  "item_group_id": 489460
  }
 }
 ```

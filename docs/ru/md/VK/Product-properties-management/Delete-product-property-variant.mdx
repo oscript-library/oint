@@ -30,13 +30,9 @@ import TabItem from '@theme/TabItem';
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     Параметры = ПолучитьПараметрыВК();
 
-    Вариант = "7116";
+    Вариант = "7949";
 
     Результат = OPI_VK.УдалитьВариантСвойстваТовара(Вариант, Параметры);
-
-    OPI_ПолучениеДанныхТестов.Проверка_ВКИстина(Результат);
-
-    OPI_Инструменты.Пауза(5);
 ```
     
 
@@ -44,21 +40,17 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk УдалитьВариантСвойстваТовара \
-              --option 7111 \
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --option "7994" \
+              --auth ""/tmp/3unsocup.2od.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint vk УдалитьВариантСвойстваТовара ^
-              --option 7111 ^
-              --auth "{'access_token':'***','owner_id':'-218861756','app_id':'51694790','group_id':'218861756'}"
+              --option "7994" ^
+              --auth ""/tmp/3unsocup.2od.json""
         ```
     </TabItem>
 </Tabs>

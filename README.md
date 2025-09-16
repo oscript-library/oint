@@ -57,6 +57,7 @@
   <a href="https://openintegrations.dev/docs/Instructions/Airtable/"><img src="media/Airtable.png?6" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/Dropbox/"><img src="media/Dropbox.png?6" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/Neocities/"><img src="media/Neocities.png?6" width="40"></a>
+   <a href="https://openintegrations.dev/docs/Instructions/FTP/"><img src="media/FTP.png?6" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/TCP/"><img src="media/TCP.png?6" width="40"></a>
    <a href="https://openintegrations.dev/docs/Instructions/HTTP/"><img src="media/HTTP.png?6" width="40"></a>
   <a href="https://openintegrations.dev/docs/Instructions/RCON/"><img src="media/RCON.png?6" width="40"></a>
@@ -95,10 +96,8 @@
  
 ## Установка и варианты релизов ##
 
- <a href="https://github.com/Bayselonarrend/OpenIntegrations/releases/latest">
-<img src="https://img.shields.io/github/downloads/bayselonarrend/OpenIntegrations/total?logo=github"  />
-</a>
-
+[![GitHub Downloads](https://img.shields.io/github/downloads/bayselonarrend/openintegrations/total?logo=github&logoColor=white)](https://github.com/Bayselonarrend/OpenIntegrations/releases/latest)
+[![SourceForge Downloads](https://img.shields.io/sourceforge/dw/openintegrations?logo=sourceforge&logoColor=white&color=orange)](https://sourceforge.net/projects/openintegrations/)
 
 <img src="media/icons.png" align="right">
 
@@ -156,10 +155,17 @@
 
 CLI версия ОПИ имеет собственную встроенную справку по всем методам. Показ справки осуществляется при вызове библиотеки без метода, метода без опций или при указании опции `--help`
 
+## Спонсоры [?](https://boosty.to/bayselonarrend/purchase/3429871?ssource=DIRECT&share=subscription_link)
+Представленные ниже компании поддерживают разработку Открытого пакета интеграций и вносят существенный вклад в его развитие
+
+||
+|-|
+| <img width="100" height="120" alt="Logo_GREEN-API_значок G_зеленый" src="https://github.com/user-attachments/assets/df7802ad-d107-47d5-881e-ba900bf5ea6b" /> |
+| **GreenAPI** <br/> Стабильный шлюз <br/> WhatsApp API <br/> <br/>  [green-api.com](https://green-api.com/) 🌍 |
+
+<br/>
 
 ## Поддержать проект
-
-![image](media/boosty.png)
 
 Если вам нравится этот или другие мои проекты, то вы можете поддержать меня [на Boosty](https://boosty.to/bayselonarrend) (регулярно или единоразово). При подписке от 500 рублей открывается доступ в приватный Telegram-чат, где можно задать интересующие вопросы о проекте и получить помощь от меня напрямую. Также присутствует спонсорская подписка для компаний с приоритетной поддержкой и размещением логотипа в списке спонсоров
 

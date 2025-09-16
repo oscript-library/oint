@@ -43,7 +43,7 @@ import TabItem from '@theme/TabItem';
     База    = "testbase1";
     Таблица = "testtable";
 
-    НастройкиTLS      = OPI_MSSQL.ПолучитьНастройкиTls(Истина);
+    НастройкиTLS      = OPI_MSSQL.ПолучитьНастройкиTLS(Истина);
     СтрокаПодключения = OPI_MSSQL.СформироватьСтрокуПодключения(Адрес, База, Логин, Пароль);
 
     СтруктураКолонок = Новый Структура;
@@ -64,25 +64,21 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint mssql ГарантироватьТаблицу \
-              --table "testtable" \
-              --cols "{'smallint_field':'smallint','double_field':'real','bigint_field':'bigint','custom_field':'nvarchar'}" \
+              --table ""test_new"" \
+              --cols ""/tmp/5wcgxv2b.zud.json"" \
               --dbc "Server=127.0.0.1;Database=***;User Id=SA;Password=***;" \
-              --tls "{'use_tls':true,'accept_invalid_certs':true}"
+              --tls ""/tmp/4qjxwdka.xyh.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint mssql ГарантироватьТаблицу ^
-              --table "testtable" ^
-              --cols "{'smallint_field':'smallint','double_field':'real','bigint_field':'bigint','custom_field':'nvarchar'}" ^
+              --table ""test_new"" ^
+              --cols ""/tmp/5wcgxv2b.zud.json"" ^
               --dbc "Server=127.0.0.1;Database=***;User Id=SA;Password=***;" ^
-              --tls "{'use_tls':true,'accept_invalid_certs':true}"
+              --tls ""/tmp/4qjxwdka.xyh.json""
         ```
     </TabItem>
 </Tabs>

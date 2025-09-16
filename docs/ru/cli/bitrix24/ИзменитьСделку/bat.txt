@@ -1,7 +1,5 @@
-:: JSON данные также могут быть переданы как путь к файлу .json
-
 oint bitrix24 ИзменитьСделку ^
-  --url "b24-ar17wx.bitrix24.by" ^
-  --deal 4390 ^
-  --fields "{'TITLE':'Будущая сделка в RUB','CURRENCY_ID':'RUB','OPPORTUNITY':50000,'BEGINDATE':'2025-01-01'}" ^
+  --url ""b24-ar17wx.bitrix24.by"" ^
+  --deal "4918" ^
+  --fields ""/tmp/dllechne.m1u.json"" ^
   --token "***"

@@ -1,4 +1,4 @@
-﻿ {
+﻿{
  "result": {
   "work_time_start": "9",
   "work_time_end": "19",
@@ -31,13 +31,13 @@
   "path_to_type_location": ""
  },
  "time": {
-  "start": 1739051130.47399,
-  "finish": 1739051130.50146,
-  "duration": 0.0274679660797119,
-  "processing": 0.0031890869140625,
-  "date_start": "2025-02-09T00:45:30+03:00",
-  "date_finish": "2025-02-09T00:45:30+03:00",
-  "operating_reset_at": 1739051730,
+  "start": 1757977173.08429,
+  "finish": 1757977173.11183,
+  "duration": 0.0275428295135498,
+  "processing": 0.00307083129882812,
+  "date_start": "2025-09-15T22:59:33+00:00",
+  "date_finish": "2025-09-15T22:59:33+00:00",
+  "operating_reset_at": 1757977773,
   "operating": 0
  }
 }

@@ -36,15 +36,15 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     URL         = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    IDКалендаря = "852";
+    IDКалендаря = "1322";
     IDВладельца = 1;
     Тип         = "user";
 
     Результат = OPI_Bitrix24.УдалитьКалендарь(URL, IDКалендаря, IDВладельца, Тип);
 
     URL         = "b24-ar17wx.bitrix24.by";
-    Токен       = "11ae5d68006e9f06006b12e400000001000...";
-    IDКалендаря = "854";
+    Токен       = "75d8c668006e9f06006b12e400000001000...";
+    IDКалендаря = "1324";
 
     Результат = OPI_Bitrix24.УдалитьКалендарь(URL, IDКалендаря, IDВладельца, Тип, Токен);
 ```
@@ -55,10 +55,10 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 УдалитьКалендарь \
-              --url "b24-ar17wx.bitrix24.by" \
-              --calendar 1102 \
-              --owner 1 \
-              --type "user" \
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --calendar "1372" \
+              --owner "1" \
+              --type ""user"" \
               --token "***"
         ```
     </TabItem>
@@ -66,10 +66,10 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 УдалитьКалендарь ^
-              --url "b24-ar17wx.bitrix24.by" ^
-              --calendar 1102 ^
-              --owner 1 ^
-              --type "user" ^
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --calendar "1372" ^
+              --owner "1" ^
+              --type ""user"" ^
               --token "***"
         ```
     </TabItem>
@@ -80,14 +80,14 @@ import TabItem from '@theme/TabItem';
 {
  "result": true,
  "time": {
-  "start": 1737222008.34856,
-  "finish": 1737222008.39291,
-  "duration": 0.0443460941314697,
-  "processing": 0.0167560577392578,
-  "date_start": "2025-01-18T20:40:08+03:00",
-  "date_finish": "2025-01-18T20:40:08+03:00",
-  "operating_reset_at": 1737222608,
-  "operating": 0
+  "start": 1757999362.64037,
+  "finish": 1757999362.8057,
+  "duration": 0.165329933166504,
+  "processing": 0.14214301109314,
+  "date_start": "2025-09-16T05:09:22+00:00",
+  "date_finish": "2025-09-16T05:09:22+00:00",
+  "operating_reset_at": 1757999962,
+  "operating": 0.14212703704834
  }
 }
 ```

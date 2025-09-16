@@ -34,16 +34,20 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    URL         = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    IDЧата      = "chat" + "2566";
-    IDСообщения = "3850";
+    URL    = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
+    IDЧата = "3060";
 
-    Результат = OPI_Bitrix24.ОтметитьСообщениеКакНепрочитанное(URL, IDЧата, IDСообщения);
+    OPI_ПреобразованиеТипов.ПолучитьСтроку(IDЧата);
+
+    СтрокаЧата  = "chat" + IDЧата;
+    IDСообщения = "60224";
+
+    Результат = OPI_Bitrix24.ОтметитьСообщениеКакНепрочитанное(URL, СтрокаЧата, IDСообщения);
 
     URL            = "b24-ar17wx.bitrix24.by";
-    Токен          = "11ae5d68006e9f06006b12e400000001000...";
+    Токен          = "75d8c668006e9f06006b12e400000001000...";
     IDПользователя = 10;
-    IDСообщения    = "4286";
+    IDСообщения    = "60226";
 
     Результат = OPI_Bitrix24.ОтметитьСообщениеКакНепрочитанное(URL, IDПользователя, IDСообщения, Токен);
 ```
@@ -54,9 +58,9 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 ОтметитьСообщениеКакНепрочитанное \
-              --url "b24-ar17wx.bitrix24.by" \
-              --chat 10 \
-              --message 4286 \
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --chat "10" \
+              --message "4286" \
               --token "***"
         ```
     </TabItem>
@@ -64,9 +68,9 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 ОтметитьСообщениеКакНепрочитанное ^
-              --url "b24-ar17wx.bitrix24.by" ^
-              --chat 10 ^
-              --message 4286 ^
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --chat "10" ^
+              --message "4286" ^
               --token "***"
         ```
     </TabItem>
@@ -77,14 +81,14 @@ import TabItem from '@theme/TabItem';
 {
  "result": true,
  "time": {
-  "start": 1728409841.21042,
-  "finish": 1728409841.28342,
-  "duration": 0.0729920864105225,
-  "processing": 0.046436071395874,
-  "date_start": "2024-10-08T20:50:41+03:00",
-  "date_finish": "2024-10-08T20:50:41+03:00",
-  "operating_reset_at": 1728410441,
-  "operating": 0
+  "start": 1757999044.17028,
+  "finish": 1757999044.30454,
+  "duration": 0.134251117706299,
+  "processing": 0.111156940460205,
+  "date_start": "2025-09-16T05:04:04+00:00",
+  "date_finish": "2025-09-16T05:04:04+00:00",
+  "operating_reset_at": 1757999644,
+  "operating": 0.111142158508301
  }
 }
 ```

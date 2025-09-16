@@ -9,7 +9,7 @@ Var PackagesDirectory;
 
 Procedure OnObjectCreate()
 
-    Version = "1.26.0";
+    Version = "1.27.0";
     InitializeCommonLists();
 
     CurrentDirectory = CurrentScript().Path;
@@ -28,6 +28,7 @@ Procedure InitializeCommonLists() Export
     ModuleCommandMapping.Insert("bitrix24", "OPI_Bitrix24");
     ModuleCommandMapping.Insert("cdek", "OPI_CDEK");
     ModuleCommandMapping.Insert("dropbox", "OPI_Dropbox");
+    ModuleCommandMapping.Insert("ftp", "OPI_FTP");
     ModuleCommandMapping.Insert("gcalendar", "OPI_GoogleCalendar");
     ModuleCommandMapping.Insert("gdrive", "OPI_GoogleDrive");
     ModuleCommandMapping.Insert("gsheets", "OPI_GoogleSheets");
@@ -42,6 +43,7 @@ Procedure InitializeCommonLists() Export
     ModuleCommandMapping.Insert("ozon", "OPI_Ozon");
     ModuleCommandMapping.Insert("postgres", "OPI_PostgreSQL");
     ModuleCommandMapping.Insert("rcon", "OPI_RCON");
+    ModuleCommandMapping.Insert("rportal", "OPI_ReportPortal");
     ModuleCommandMapping.Insert("s3", "OPI_S3");
     ModuleCommandMapping.Insert("slack", "OPI_Slack");
     ModuleCommandMapping.Insert("sqlite", "OPI_SQLite");
@@ -208,7 +210,7 @@ Function RequiresProcessingOfEscapeSequences(Val ParameterName, Val ParameterVal
 
     Return Not StrStartsWith(ParamValueTrim, "{")
                 And Not StrStartsWith(ParamValueTrim, "[") 
-                And Not ParamFile.Exist() 
+                And Not ParamFile.Exists() 
                 And Not ParameterName = "Parameter_out";
 
 EndFunction

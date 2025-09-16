@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Функция ПолучитьТегиОбъекта(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач Версия = "", Знач Заголовки = Неопределено) Экспорт`
+`Функция ПолучитьТегиОбъекта(Знач Наименование, Знач Бакет, Знач ОсновныеДанные, Знач Версия = "", Знач Заголовки = Неопределено, Знач Каталог = Ложь) Экспорт`
 
   | Параметр | CLI опция | Тип | Обяз. | Назначение |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | ОсновныеДанные | --basic | Структура Из КлючИЗначение | &#x2714; | Основные данные запроса. См. ПолучитьСтруктуруДанных |
   | Версия | --ver | Строка | &#x2716; | Токен для получения данных конкретной версии объекта |
   | Заголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Дополнительные заголовки запроса, если необходимо |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
 
   
   Возвращаемое значение:   Структура Из КлючИЗначение - сериализованный JSON ответа от хранилища
@@ -43,9 +44,10 @@ import TabItem from '@theme/TabItem';
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
 
     Наименование = "picture.jpg";
-    Бакет        = "opi-gpbucket3";
 
-    Результат = OPI_S3.ПолучитьТегиОбъекта(Наименование, Бакет, ОсновныеДанные);
+    Каталог = Истина; // Формирование URL в path-style
+    Бакет = "opi-dirbucket3";
+    Результат = OPI_S3.ПолучитьТегиОбъекта(Наименование, Бакет, ОсновныеДанные, , , Каталог);
 ```
     
 
@@ -53,31 +55,21 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьТегиОбъекта \
-              --url "storage-155.s3hoster.by" \
-              --access "BRN5RKJE67YCVDZRRQVI" \
-              --secret "***" \
-              --region "BTC" \
               --name "picture.jpg" \
-              --bucket "opi-gpbucket3" \
-              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+              --bucket "opi-dirbucket3" \
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+              --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint s3 ПолучитьТегиОбъекта ^
-              --url "storage-155.s3hoster.by" ^
-              --access "BRN5RKJE67YCVDZRRQVI" ^
-              --secret "***" ^
-              --region "BTC" ^
               --name "picture.jpg" ^
-              --bucket "opi-gpbucket3" ^
-              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}"
+              --bucket "opi-dirbucket3" ^
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+              --dir true
         ```
     </TabItem>
 </Tabs>
@@ -104,16 +96,16 @@ import TabItem from '@theme/TabItem';
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "180",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 09:35:15 GMT",
+  "Date": "Tue, 16 Sep 2025 05:32:39 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "93c576aa54c960b355da9e2934476635fe3243f5df9dbb4db8b7c0d94bec7cd1",
-  "X-Amz-Request-Id": "180A40AC5F1E33D3",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "057275ee0636b36a8256f409a6ff665de46bfaa1f0d5faf2d1b4f312e55c34fa",
+  "X-Amz-Request-Id": "1865AC6069FD62F7",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "180",
+  "Content-Type": "application/xml"
  }
 }
 ```

@@ -32,15 +32,31 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    Результат = OPI_TCP.ПолучитьНастройкиTls(Истина);
+    Результат = OPI_TCP.ПолучитьНастройкиTLS(Истина);
 ```
     
 
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint tcp ПолучитьНастройкиTLS \
+              --trust true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint tcp ПолучитьНастройкиTLS ^
+              --trust true
+        ```
+    </TabItem>
+</Tabs>
 
 
 ```json title="Результат"
 {
  "use_tls": true,
- "accept_invalid_certs": false
+ "accept_invalid_certs": true
 }
 ```

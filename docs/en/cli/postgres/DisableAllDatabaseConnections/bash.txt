@@ -1,3 +1,4 @@
 oint postgres DisableAllDatabaseConnections \
- --base "testbase1" \
- --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+ --base ""testbase2"" \
+ --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+ --tls ""/tmp/z2uqk4k3.qss.json""

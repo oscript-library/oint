@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function GetObject(Val Name, Val Bucket, Val BasicData, Val Version = "", Val Headers = Undefined, Val SavePath = "") Export`
+`Function GetObject(Val Name, Val Bucket, Val BasicData, Val Version = "", Val Headers = Undefined, Val SavePath = "", Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -22,6 +22,7 @@ import TabItem from '@theme/TabItem';
   | Version | --ver | String | &#x2716; | Token for receiving a specific version of an object |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
   | SavePath | --out | String | &#x2716; | Path to directly write a file to disk |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  BinaryData, String - object content or file path, if a save path is specified
@@ -45,10 +46,11 @@ You can use the `ChunkSize` field in the basic data to specify the minimum file 
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Name   = "picture.jpg";
-    Bucket = "opi-gpbucket3";
+    Name = "picture.jpg";
 
-    Result = OPI_S3.GetObject(Name, Bucket, BasicData);
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
+    Result = OPI_S3.GetObject(Name, Bucket, BasicData, , , , Directory);
 
     TempFile = GetTempFileName();
     BasicData.Insert("ChunkSize", 200000);
@@ -61,23 +63,19 @@ You can use the `ChunkSize` field in the basic data to specify the minimum file 
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 GetObject \
              --name "bigfile.exe" \
              --bucket "newbucket2" \
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':200000}"
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':'200000'}"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 GetObject ^
              --name "bigfile.exe" ^
              --bucket "newbucket2" ^
-             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':200000}"
+             --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3','ChunkSize':'200000'}"
         ```
     </TabItem>
 </Tabs>

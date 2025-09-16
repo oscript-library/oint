@@ -1,6 +1,5 @@
-# JSON данные также могут быть переданы как путь к файлу .json
-
 oint postgres ГарантироватьТаблицу \
-  --table "test_new" \
-  --cols "{'smallint_field':'SMALLINT','uuid_field':'uuid','bigint_field':'BIGINT','custom_field':'TEXT'}" \
-  --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+  --table ""test_new"" \
+  --cols ""/tmp/245ceavd.nau.json"" \
+  --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+  --tls ""/tmp/dv1hemxj.u3e.json""

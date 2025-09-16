@@ -1,7 +1,5 @@
-# JSON данные также могут быть переданы как путь к файлу .json
-
 oint postgres УдалитьКолонкуТаблицы \
-  --table "testtable" \
-  --name "new_field" \
+  --table ""testtable"" \
+  --name ""new_field"" \
   --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
-  --tls "{'use_tls':true,'accept_invalid_certs':true}"
+  --tls ""/tmp/aryi0v0l.ebj.json""

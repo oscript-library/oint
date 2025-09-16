@@ -29,7 +29,7 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
-    База    = "C:\Users\bayse\AppData\Local\Temp\v8_2968_1e2.sqlite";
+    База    = "C:\Users\bayse\AppData\Local\Temp\v8_BA4A_324.sqlite";
     Таблица = "test";
 
     Фильтры = Новый Массив;
@@ -52,23 +52,19 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON данные также могут быть переданы как путь к файлу .json
-            
             oint sqlite УдалитьЗаписи \
               --table "test" \
               --filter "{'field':'name','type':'=','value':'Vitaly A.','union':'AND','raw':false}" \
-              --db "/tmp/usskxkle.34q.sqlite"
+              --db "/tmp/44h0mspf.2k0.sqlite"
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON данные также могут быть переданы как путь к файлу .json
-            
             oint sqlite УдалитьЗаписи ^
               --table "test" ^
               --filter "{'field':'name','type':'=','value':'Vitaly A.','union':'AND','raw':false}" ^
-              --db "/tmp/usskxkle.34q.sqlite"
+              --db "/tmp/44h0mspf.2k0.sqlite"
         ```
     </TabItem>
 </Tabs>

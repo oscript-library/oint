@@ -1,12 +1,8 @@
-﻿    {
+﻿{
  "response": [
   {
-   "activity": {
-    "comments": 1,
-    "likes": 1
-   },
-   "period_from": 1728345600,
-   "period_to": 1728431999,
+   "period_from": 1757980800,
+   "period_to": 1758067199,
    "reach": {
     "age": [
      {
@@ -19,11 +15,11 @@
      },
      {
       "value": "21-24",
-      "count": 1
+      "count": 0
      },
      {
       "value": "24-27",
-      "count": 0
+      "count": 1
      },
      {
       "value": "27-30",
@@ -107,11 +103,11 @@
      },
      {
       "value": "m;21-24",
-      "count": 1
+      "count": 0
      },
      {
       "value": "m;24-27",
-      "count": 0
+      "count": 1
      },
      {
       "value": "m;27-30",
@@ -133,32 +129,19 @@
    },
    "visitors": {
     "cities": [],
-    "countries": [
-     {
-      "code": "RU",
-      "count": 1,
-      "name": "Россия",
-      "value": 1
-     },
-     {
-      "code": "SC",
-      "count": 1,
-      "name": "Сейшелы",
-      "value": 175
-     }
-    ],
+    "countries": [],
     "mobile_views": 0,
-    "views": 2,
-    "visitors": 2
+    "views": 0,
+    "visitors": 0
    }
   },
   {
    "activity": {
-    "comments": 4,
-    "likes": 4
+    "comments": 10,
+    "likes": 10
    },
-   "period_from": 1728259200,
-   "period_to": 1728345599,
+   "period_from": 1757894400,
+   "period_to": 1757980799,
    "reach": {
     "age": [
      {
@@ -171,11 +154,11 @@
      },
      {
       "value": "21-24",
-      "count": 1
+      "count": 0
      },
      {
       "value": "24-27",
-      "count": 0
+      "count": 1
      },
      {
       "value": "27-30",
@@ -259,11 +242,11 @@
      },
      {
       "value": "m;21-24",
-      "count": 1
+      "count": 0
      },
      {
       "value": "m;24-27",
-      "count": 0
+      "count": 1
      },
      {
       "value": "m;27-30",
@@ -287,21 +270,15 @@
     "cities": [],
     "countries": [
      {
-      "code": "SC",
-      "count": 2,
-      "name": "Сейшелы",
-      "value": 175
-     },
-     {
-      "code": "RU",
-      "count": 2,
-      "name": "Россия",
-      "value": 1
+      "code": "IN",
+      "count": 1,
+      "name": "Индия",
+      "value": 80
      }
     ],
     "mobile_views": 0,
-    "views": 4,
-    "visitors": 4
+    "views": 1,
+    "visitors": 1
    }
   }
  ]

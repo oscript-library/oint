@@ -34,13 +34,13 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     URL    = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    IDЧата = ПараметрыФункции["Bitrix24_HookChatID"];
+    IDЧата = "3060";
 
     Результат = OPI_Bitrix24.ПокинутьЧат(URL, IDЧата);
 
-    URL    = ПараметрыФункции["Bitrix24_Domain"];
-    Токен  = ПараметрыФункции["Bitrix24_Token"];
-    IDЧата = ПараметрыФункции["Bitrix24_ChatID"];
+    URL    = "b24-ar17wx.bitrix24.by";
+    Токен  = "75d8c668006e9f06006b12e400000001000...";
+    IDЧата = "3062";
 
     Результат = OPI_Bitrix24.ПокинутьЧат(URL, IDЧата, Токен);
 ```
@@ -51,8 +51,8 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 ПокинутьЧат \
-              --url "b24-ar17wx.bitrix24.by" \
-              --chat 2814 \
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --chat "3110" \
               --token "***"
         ```
     </TabItem>
@@ -60,8 +60,8 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 ПокинутьЧат ^
-              --url "b24-ar17wx.bitrix24.by" ^
-              --chat 2814 ^
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --chat "3110" ^
               --token "***"
         ```
     </TabItem>
@@ -72,13 +72,13 @@ import TabItem from '@theme/TabItem';
 {
  "result": true,
  "time": {
-  "start": 1728409860.62434,
-  "finish": 1728409860.70563,
-  "duration": 0.0812890529632568,
-  "processing": 0.043381929397583,
-  "date_start": "2024-10-08T20:51:00+03:00",
-  "date_finish": "2024-10-08T20:51:00+03:00",
-  "operating_reset_at": 1728410460,
+  "start": 1757999126.28784,
+  "finish": 1757999126.39881,
+  "duration": 0.110970020294189,
+  "processing": 0.0825040340423584,
+  "date_start": "2025-09-16T05:05:26+00:00",
+  "date_finish": "2025-09-16T05:05:26+00:00",
+  "operating_reset_at": 1757999726,
   "operating": 0
  }
 }

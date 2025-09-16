@@ -34,12 +34,12 @@ import TabItem from '@theme/TabItem';
 
 ```bsl title="Пример использования для 1С:Предприятие/OneScript"
     URL        = "https://b24-ar17wx.bitrix24.by/rest/1/h0m...";
-    IDКаталога = "35620";
+    IDКаталога = "42174";
 
     Результат = OPI_Bitrix24.ПолучитьВнешнююСсылкуКаталога(URL, IDКаталога);
 
     URL   = "b24-ar17wx.bitrix24.by";
-    Токен = "11ae5d68006e9f06006b12e400000001000...";
+    Токен = "75d8c668006e9f06006b12e400000001000...";
 
     Результат = OPI_Bitrix24.ПолучитьВнешнююСсылкуКаталога(URL, IDКаталога, Токен);
 ```
@@ -50,8 +50,8 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint bitrix24 ПолучитьВнешнююСсылкуКаталога \
-              --url "b24-ar17wx.bitrix24.by" \
-              --folderid 39176 \
+              --url ""b24-ar17wx.bitrix24.by"" \
+              --folderid "42822" \
               --token "***"
         ```
     </TabItem>
@@ -59,8 +59,8 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint bitrix24 ПолучитьВнешнююСсылкуКаталога ^
-              --url "b24-ar17wx.bitrix24.by" ^
-              --folderid 39176 ^
+              --url ""b24-ar17wx.bitrix24.by"" ^
+              --folderid "42822" ^
               --token "***"
         ```
     </TabItem>
@@ -69,15 +69,15 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Результат"
 {
- "result": "https://b24-ar17wx.bitrix24.by/~zTBjd",
+ "result": "https://b24-ar17wx.bitrix24.by/~CF600",
  "time": {
-  "start": 1728409769.33304,
-  "finish": 1728409769.36881,
-  "duration": 0.0357630252838135,
-  "processing": 0.00747108459472656,
-  "date_start": "2024-10-08T20:49:29+03:00",
-  "date_finish": "2024-10-08T20:49:29+03:00",
-  "operating_reset_at": 1728410369,
+  "start": 1757998798.50266,
+  "finish": 1757998798.53383,
+  "duration": 0.0311710834503174,
+  "processing": 0.00562191009521484,
+  "date_start": "2025-09-16T04:59:58+00:00",
+  "date_finish": "2025-09-16T04:59:58+00:00",
+  "operating_reset_at": 1757999398,
   "operating": 0
  }
 }

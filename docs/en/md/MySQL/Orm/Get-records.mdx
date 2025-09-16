@@ -38,7 +38,15 @@ import TabItem from '@theme/TabItem';
     Password = "12we...";
     Base     = "testbase1";
 
-    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password);
+    TLS = True;
+    Port = 3306;
+    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+
+    If TLS Then
+        TLSSettings = OPI_MySQL.GetTLSSettings(True);
+    Else
+        TLSSettings = Undefined;
+    EndIf;
 
     // All records without filters
 
@@ -48,11 +56,11 @@ import TabItem from '@theme/TabItem';
     // which will be closed after the function is executed.
     // If several operations are performed, it is desirable to use one connection,
     // previously created by the CreateConnection function()
-    Result = OPI_MySQL.GetRecords(Table, , , , , ConnectionString);
+    Result = OPI_MySQL.GetRecords(Table, , , , , ConnectionString, TLSSettings);
 
     // Filter, selected fields, limit and sorting
 
-    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, "test_data", Login, Password);
+    ConnectionString = OPI_MySQL.GenerateConnectionString(Address, "test_data", Login, Password, Port);
 
     Table = "test_data";
 
@@ -84,7 +92,7 @@ import TabItem from '@theme/TabItem';
     Sort  = New Structure("ip_address", "DESC");
     Count = 5;
 
-    Result = OPI_MySQL.GetRecords(Table, Fields, Filters, Sort, Count, ConnectionString);
+    Result = OPI_MySQL.GetRecords(Table, Fields, Filters, Sort, Count, ConnectionString, TLSSettings);
 ```
  
 
@@ -93,16 +101,18 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint mysql GetRecords \
-             --table "testtable" \
-             --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/"
+             --table ""testtable"" \
+             --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" \
+             --tls ""/tmp/0hwqg1pm.21s.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint mysql GetRecords ^
-             --table "testtable" ^
-             --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/"
+             --table ""testtable"" ^
+             --dbc "mysql://bayselonarrend:***@127.0.0.1:3306/" ^
+             --tls ""/tmp/0hwqg1pm.21s.json""
         ```
     </TabItem>
 </Tabs>
@@ -114,8 +124,8 @@ import TabItem from '@theme/TabItem';
   {
    "bigint_field": 9223372036854775807,
    "char_field": "AAAAA",
-   "date_field": "2025-04-06T03:00:00+03:00",
-   "datetime_field": "2025-04-06T16:53:47+03:00",
+   "date_field": "2025-09-15T00:00:00+00:00",
+   "datetime_field": "2025-09-15T22:15:44+00:00",
    "double_field": 100.51212310791,
    "float_field": 100.5,
    "int_field": -2147483647,
@@ -128,8 +138,8 @@ import TabItem from '@theme/TabItem';
    "set_field": "one",
    "smallint_field": -32767,
    "text_field": "Some text",
-   "time_field": "1970-01-01T16:53:47+03:00",
-   "timestamp_field": "2025-04-06T16:53:47+03:00",
+   "time_field": "1970-01-01T22:15:44+00:00",
+   "timestamp_field": "2025-09-15T22:15:44+00:00",
    "tinyint_field": 127,
    "tinytext_field": "Some tiny text",
    "uint_field": 4294967295,

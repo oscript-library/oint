@@ -18,7 +18,7 @@ import TabItem from '@theme/TabItem';
   |-|-|-|-|-|
   | Name | --name | String | &#x2714; | Bucket name |
   | BasicData | --basic | Structure Of KeyAndValue | &#x2714; | Basic request data. See GetBasicDataStructure |
-  | Directory | --dir | Boolean | &#x2716; | True > Directory Bucket, False > General Purpose Bucket |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
 
   
@@ -41,15 +41,9 @@ Method at AWS documentation: [DeleteBucket](https://docs.aws.amazon.com/AmazonS3
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    // Directory bucket
-
-    Name   = "opi-dirbucket3";
-    Result = OPI_S3.DeleteBucket(Name, BasicData, True);
-
-    // General purpose bucket
-
-    Name   = "opi-gpbucket3";
-    Result = OPI_S3.DeleteBucket(Name, BasicData);
+    Directory = True; // Formation URL in path-style
+    Name = "opi-dirbucket3";
+    Result = OPI_S3.DeleteBucket(Name, BasicData, Directory);
 ```
  
 
@@ -57,23 +51,19 @@ Method at AWS documentation: [DeleteBucket](https://docs.aws.amazon.com/AmazonS3
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 DeleteBucket \
-             --name "opi-gpbucket3" \
+             --name "opi-dirbucket3" \
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
-             --dir false
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 DeleteBucket ^
-             --name "opi-gpbucket3" ^
+             --name "opi-dirbucket3" ^
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
-             --dir false
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -85,15 +75,15 @@ Method at AWS documentation: [DeleteBucket](https://docs.aws.amazon.com/AmazonS3
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Type": "text/plain; charset=utf-8",
-  "Date": "Fri, 22 Nov 2024 10:11:57 GMT",
+  "Date": "Mon, 15 Sep 2025 23:18:42 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
-  "X-Amz-Id-2": "93c576aa54c960b355da9e2934476635fe3243f5df9dbb4db8b7c0d94bec7cd1",
-  "X-Amz-Request-Id": "180A42AD1D82459A",
+  "Vary": "Origin, Accept-Encoding",
+  "X-Amz-Id-2": "0757065d17b69556603743b9ea63f04bc7b9f349245bbff6b0ba901258e9c169",
+  "X-Amz-Request-Id": "186597F8718AC81E",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Type": "text/plain; charset=utf-8"
  }
 }
 ```

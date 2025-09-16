@@ -35,7 +35,15 @@ import TabItem from '@theme/TabItem';
     Password = "12we...";
     Base     = "test_data";
 
-    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password);
+    TLS = True;
+    Port = 5432;
+    ConnectionString = OPI_PostgreSQL.GenerateConnectionString(Address, Base, Login, Password, Port);
+
+    If TLS Then
+        TLSSettings = OPI_PostgreSQL.GetTLSSettings(True);
+    Else
+        TLSSettings = Undefined;
+    EndIf;
 
     Table = "test_data";
 
@@ -62,7 +70,7 @@ import TabItem from '@theme/TabItem';
     // which will be closed after the function is executed.
     // If several operations are performed, it is desirable to use one connection,
     // previously created by the CreateConnection function()
-    Result = OPI_PostgreSQL.DeleteRecords(Table, Filters, ConnectionString);
+    Result = OPI_PostgreSQL.DeleteRecords(Table, Filters, ConnectionString, TLSSettings);
 ```
  
 
@@ -71,18 +79,20 @@ import TabItem from '@theme/TabItem';
     <TabItem value="bash" label="Bash" default>
         ```bash
             oint postgres DeleteRecords \
-             --table "test_data" \
-             --filter "[{'field':'gender','type':'=','value':{'VARCHAR':'Male'},'raw':false,'union':'AND'}]" \
-             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+             --table ""test_data"" \
+             --filter ""[{'field':'gender','type':'=','value':{'VARCHAR':'Male'},'raw':false,'union':'AND'}]"" \
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" \
+             --tls ""/tmp/fix0ss4w.wrf.json""
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
             oint postgres DeleteRecords ^
-             --table "test_data" ^
-             --filter "[{'field':'gender','type':'=','value':{'VARCHAR':'Male'},'raw':false,'union':'AND'}]" ^
-             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/"
+             --table ""test_data"" ^
+             --filter ""[{'field':'gender','type':'=','value':{'VARCHAR':'Male'},'raw':false,'union':'AND'}]"" ^
+             --dbc "postgresql://bayselonarrend:***@127.0.0.1:5432/" ^
+             --tls ""/tmp/fix0ss4w.wrf.json""
         ```
     </TabItem>
 </Tabs>

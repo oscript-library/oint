@@ -31,8 +31,8 @@ import TabItem from '@theme/TabItem';
 
 
 ```bsl title="1C:Enterprise/OneScript code example"
-    Token       = "ya29.a0AS3H6Nw6rTG3pFXv17ZLXkvuvtNl_DHHXbxe2yDRIB09Sq-BA7xPQj9V7OKAaAiHRZAsVqI0UD6026Q_3gklXjU-kam0kzFCe2adXI3lS...";
-    Spreadsheet = "1SDgvwigAytLRE0fDCwfhD8DAZzOpcNvNlOHXrQ-8XiY";
+    Token       = "ya29.a0AQQ_BDTgQbn9c5rXhPK3FCakms_7oKkdIWE1CCQFnSPftb2RxvloVqnYOcnsAKhXrD0Gq8Tz2Kgn5IBXG5E25uksZfvvTtXob-jFcuj_9LZYs9La4HrcFk766...";
+    Spreadsheet = "16uPAewX6jwjTdyVlE0O8adQngnoCMbUHQ5Ek36-IPaQ";
     Sheet       = "Sheet2";
 
     ValueMapping = New Map;
@@ -53,11 +53,9 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint gsheets SetCellValues \
              --token "***" \
-             --spreadsheet "1sn3t1HU4qCb03-Ht85AJW4r9Xt3yGlMAq-vRc3pdDlc" \
+             --spreadsheet "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM" \
              --data "{'A1':'ThisIsA1','A2':'ThisIsA2','B2':'ThisIsB2','B3':'ThisIsB3','A3':'ThisIsA3','A4':'ThisIsA4','B1':'ThisIsB1','B4':'ThisIsB4'}" \
              --sheetname "Sheet2"
         ```
@@ -65,11 +63,9 @@ import TabItem from '@theme/TabItem';
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint gsheets SetCellValues ^
              --token "***" ^
-             --spreadsheet "1sn3t1HU4qCb03-Ht85AJW4r9Xt3yGlMAq-vRc3pdDlc" ^
+             --spreadsheet "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM" ^
              --data "{'A1':'ThisIsA1','A2':'ThisIsA2','B2':'ThisIsB2','B3':'ThisIsB3','A3':'ThisIsA3','A4':'ThisIsA4','B1':'ThisIsB1','B4':'ThisIsB4'}" ^
              --sheetname "Sheet2"
         ```
@@ -79,63 +75,63 @@ import TabItem from '@theme/TabItem';
 
 ```json title="Result"
 {
- "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+ "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
  "totalUpdatedRows": 4,
  "totalUpdatedColumns": 2,
  "totalUpdatedCells": 8,
  "totalUpdatedSheets": 1,
  "responses": [
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!A1",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!A2",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!B2",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!B3",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!A3",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!A4",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!B1",
    "updatedRows": 1,
    "updatedColumns": 1,
    "updatedCells": 1
   },
   {
-   "spreadsheetId": "1p_i-5lmOKdBEbi88O0SkXq2Q_gG0c4EY7N_wtWGKSCs",
+   "spreadsheetId": "1NYD5B4YQnXCfmGMzXGh7GzA9Uk1tifgDK4A8682lufM",
    "updatedRange": "Sheet2!B4",
    "updatedRows": 1,
    "updatedColumns": 1,

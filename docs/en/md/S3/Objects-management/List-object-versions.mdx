@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Function ListObjectVersions(Val Bucket, Val BasicData, Val Prefix = "", Val Version = "", Val Headers = Undefined) Export`
+`Function ListObjectVersions(Val Bucket, Val BasicData, Val Prefix = "", Val Version = "", Val Headers = Undefined, Val Directory = False) Export`
 
   | Parameter | CLI option | Type | Required | Description |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | Prefix | --prefix | String | &#x2716; | Filtering by prefix, if necessary |
   | Version | --ver | String | &#x2716; | Version ID for the beginning of the list |
   | Headers | --headers | Map Of KeyAndValue | &#x2716; | Additional request headers, if necessary |
+  | Directory | --dir | Boolean | &#x2716; | True > Path style URL, False > Virtual hosted style URL |
 
   
   Returns:  Structure Of KeyAndValue - serialized JSON response from storage
@@ -42,9 +43,10 @@ Method at AWS documentation: [ListObjectVersions](https://docs.aws.amazon.com/Am
 
     BasicData = OPI_S3.GetBasicDataStructure(URL, AccessKey, SecretKey, Region);
 
-    Bucket = "opi-gpbucket3";
+    Directory = True; // Formation URL in path-style
+    Bucket = "opi-dirbucket3";
     Prefix = "pic";
-    Result = OPI_S3.ListObjectVersions(Bucket, BasicData, Prefix);
+    Result = OPI_S3.ListObjectVersions(Bucket, BasicData, Prefix, , , Directory);
 ```
  
 
@@ -52,31 +54,21 @@ Method at AWS documentation: [ListObjectVersions](https://docs.aws.amazon.com/Am
   
     <TabItem value="bash" label="Bash" default>
         ```bash
-            # JSON data can also be passed as a path to a .json file
-            
             oint s3 ListObjectVersions \
-             --url "storage-155.s3hoster.by" \
-             --access "BRN5RKJE67YCVDZRRQVI" \
-             --secret "***" \
-             --region "BTC" \
-             --bucket "opi-gpbucket3" \
+             --bucket "opi-dirbucket3" \
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
-             --prefix "pic"
+             --prefix "pic" \
+             --dir true
         ```
     </TabItem>
   
     <TabItem value="bat" label="CMD/Bat" default>
         ```batch
-            :: JSON data can also be passed as a path to a .json file
-            
             oint s3 ListObjectVersions ^
-             --url "storage-155.s3hoster.by" ^
-             --access "BRN5RKJE67YCVDZRRQVI" ^
-             --secret "***" ^
-             --region "BTC" ^
-             --bucket "opi-gpbucket3" ^
+             --bucket "opi-dirbucket3" ^
              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
-             --prefix "pic"
+             --prefix "pic" ^
+             --dir true
         ```
     </TabItem>
 </Tabs>
@@ -87,7 +79,7 @@ Method at AWS documentation: [ListObjectVersions](https://docs.aws.amazon.com/Am
  "status": 200,
  "response": {
   "ListVersionsResult": {
-   "Name": "opi-gpbucket3",
+   "Name": "opi-dirbucket3",
    "Prefix": "pic",
    "KeyMarker": {},
    "NextVersionIdMarker": {},
@@ -96,7 +88,7 @@ Method at AWS documentation: [ListObjectVersions](https://docs.aws.amazon.com/Am
    "IsTruncated": "false",
    "Version": {
     "Key": "picture.jpg",
-    "LastModified": "2024-11-22T10:12:02.670Z",
+    "LastModified": "2025-09-15T23:15:38.841Z",
     "ETag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
     "Size": "2114023",
     "Owner": {
@@ -111,16 +103,16 @@ Method at AWS documentation: [ListObjectVersions](https://docs.aws.amazon.com/Am
  },
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "707",
-  "Content-Type": "application/xml",
-  "Date": "Fri, 22 Nov 2024 10:12:24 GMT",
+  "Date": "Mon, 15 Sep 2025 23:17:26 GMT",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "0757065d17b69556603743b9ea63f04bc7b9f349245bbff6b0ba901258e9c169",
-  "X-Amz-Request-Id": "180A42B344DE4242",
+  "X-Amz-Request-Id": "186597E6B427598D",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "708",
+  "Content-Type": "application/xml"
  }
 }
 ```

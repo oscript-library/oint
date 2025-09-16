@@ -44,6 +44,7 @@ List of currently available APIs:
   <a href="https://en.openintegrations.dev/docs/Instructions/Airtable/"><img src="media/Airtable.png?6" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Dropbox/"><img src="media/Dropbox.png?6" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/Neocities/"><img src="media/Neocities.png?6" width="40"></a>
+    <a href="https://en.openintegrations.dev/docs/Instructions/FTP/"><img src="media/FTP.png?6" width="40"></a>
   <a href="https://en.openintegrations.dev/docs/Instructions/TCP/"><img src="media/TCP.png?6" width="40"></a>
     <a href="https://openintegrations.dev/docs/Instructions/HTTP/"><img src="media/HTTP.png?6" width="40"></a>
     <a href="https://en.openintegrations.dev/docs/Instructions/RCON/"><img src="media/RCON.png?6" width="40"></a>
@@ -81,7 +82,8 @@ You can use the standard `>` redirect or the oint's `--out` option to save the r
  
 ## Releases ##
 
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bayselonarrend/OpenIntegrations/total?logo=github)](https://github.com/Bayselonarrend/OpenIntegrations/releases/latest)
+[![GitHub Downloads](https://img.shields.io/github/downloads/bayselonarrend/openintegrations/total?logo=github&logoColor=white)](https://github.com/Bayselonarrend/OpenIntegrations/releases/latest)
+[![SourceForge Downloads](https://img.shields.io/sourceforge/dw/openintegrations?logo=sourceforge&logoColor=white&color=orange)](https://sourceforge.net/projects/openintegrations/)
 
 <img src="media/icons.png" align="right">
 

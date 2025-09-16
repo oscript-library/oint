@@ -196,7 +196,7 @@ Function JsonToStructure(Val Text, Val ToMap = True) Export
 
     If TextType = Type("BinaryData") Then
 
-        Text = ПолучитьСтрокуИзДвоичныхДанных(Text);
+        Text = GetStringFromBinaryData(Text);
         JSONReader.SetString(Text);
 
     ElsIf TextType = Type("Stream") Or TextType = Type("MemoryStream") Or TextType = Type("FileStream") Then
@@ -207,7 +207,7 @@ Function JsonToStructure(Val Text, Val ToMap = True) Export
             ReadingResult = DataReader.Read();
             JSONBinary    = ReadingResult.GetBinaryData();
 
-            JSONReader.SetString(ПолучитьСтрокуИзДвоичныхДанных(JSONBinary));
+            JSONReader.SetString(GetStringFromBinaryData(JSONBinary));
             DataReader.Close();
 
         Else
@@ -258,13 +258,13 @@ Function JSONString(Val Data
 
 EndFunction
 
-Function ReadJSONFile(Val Path) Export
+Function ReadJSONFile(Val Path, Val ToMap = False) Export
 
     // BSLLS:ExternalAppStarting-off
 
     JSONReader = New JSONReader;
     JSONReader.OpenFile(Path);
-    Values     = ReadJSON(JSONReader);
+    Values     = ReadJSON(JSONReader, ToMap);
 
     // BSLLS:ExternalAppStarting-on
 
@@ -273,6 +273,19 @@ Function ReadJSONFile(Val Path) Export
     Return Values;
 
 EndFunction
+
+Procedure WriteJSONFile(Val Path, Val Data) Export
+
+    JSONWriter = New JSONWriter();
+
+    // BSLLS:ExternalAppStarting-off
+    JSONWriter.OpenFile(Path, , False);
+    // BSLLS:ExternalAppStarting-on
+
+    WriteJSON(JSONWriter, Data);
+    JSONWriter.Close();
+
+EndProcedure
 
 #EndRegion
 
@@ -428,18 +441,18 @@ EndProcedure
 
 Procedure AddKeyValue(Table, Val Key, Val Value) Export
 
-    KeyExist   = False;
-    ValueExist = False;
+    KeyExists   = False;
+    ValueExists = False;
 
     For Each Coloumn In Table.Columns Do
 
         If Coloumn.Name = "Key" Then
 
-            KeyExist = True;
+            KeyExists = True;
 
         ElsIf Coloumn.Name = "Value" Then
 
-            ValueExist = True;
+            ValueExists = True;
 
         Else
             Continue;
@@ -447,11 +460,11 @@ Procedure AddKeyValue(Table, Val Key, Val Value) Export
 
     EndDo;
 
-    If Not KeyExist Then
+    If Not KeyExists Then
         Table.Columns.Add("Key");
     EndIf;
 
-    If Not ValueExist Then
+    If Not ValueExists Then
         Table.Columns.Add("Value");
     EndIf;
 
@@ -497,7 +510,7 @@ Procedure ValueToArray(Value) Export
 
 EndProcedure
 
-Function CollectionFieldExist(Val Collection, Val Field, FieldValue = Undefined) Export
+Function CollectionFieldExists(Val Collection, Val Field, FieldValue = Undefined) Export
 
     CollectionType = TypeOf(Collection);
 
@@ -510,7 +523,7 @@ Function CollectionFieldExist(Val Collection, Val Field, FieldValue = Undefined)
         FieldParts   = StrSplit(Field, ".");
         CurrentField = FieldParts[0];
 
-        If Not CollectionFieldExist(Collection, CurrentField, FieldValue) Then
+        If Not CollectionFieldExists(Collection, CurrentField, FieldValue) Then
 
             Return False;
 
@@ -520,7 +533,7 @@ Function CollectionFieldExist(Val Collection, Val Field, FieldValue = Undefined)
             NextCollection = Collection[CurrentField];
             NextField      = StrConcat(FieldParts, ".");
 
-            Return CollectionFieldExist(NextCollection, NextField, FieldValue);
+            Return CollectionFieldExists(NextCollection, NextField, FieldValue);
 
         EndIf;
 
@@ -547,9 +560,9 @@ Function FindMissingCollectionFields(Val Collection, Val Fields) Export
 
     For Each Field In Fields Do
 
-        Exist = CollectionFieldExist(Collection, Field);
+        Exists = CollectionFieldExists(Collection, Field);
 
-        If Not Exist Then
+        If Not Exists Then
             MissingFieldsArray.Add(Field);
         EndIf;
 
@@ -624,7 +637,12 @@ Function CopyCollection(Val Collection) Export
         Collection_ = ?(IsStructure, New Structure, New Map);
 
         For Each CollectionField In Collection Do
-            Collection_.Insert(CollectionField.Key, CollectionField.Value);
+
+            CurrentValue = CollectionField.Value;
+            CurrentValue = ?(ThisIsCollection(CurrentValue), CopyCollection(CurrentValue), CurrentValue);
+
+            Collection_.Insert(CollectionField.Key, CurrentValue);
+
         EndDo;
 
     ElsIf IsArray Then
@@ -632,7 +650,10 @@ Function CopyCollection(Val Collection) Export
         Collection_ = New Array;
 
         For Each CollectionItem In Collection Do
-            Collection_.Add(CollectionItem);
+
+            CurrentValue = ?(ThisIsCollection(CollectionItem), CopyCollection(CollectionItem), CollectionItem);
+            Collection_.Add(CurrentValue);
+
         EndDo;
 
     Else
@@ -648,9 +669,9 @@ EndFunction
 Function GetOr(Val Collection, Val Field, Val DefaultValue) Export
 
     FieldValue = Undefined;
-    Exist      = CollectionFieldExist(Collection, Field, FieldValue);
+    Exists     = CollectionFieldExists(Collection, Field, FieldValue);
 
-    If Not Exist Then
+    If Not Exists Then
         FieldValue = DefaultValue;
     EndIf;
 
@@ -837,6 +858,17 @@ Procedure StreamToStart(CurrentStream) Export
 
 EndProcedure
 
+Procedure RemoveFileWithTry(Val Path, Val MessageText) Export
+
+    Try
+        DeleteFiles(Path);
+    Except
+        //@skip-check use-non-recommended-method
+        Message(MessageText);
+    EndTry;
+
+EndProcedure
+
 Function NumberToString(Val Value) Export
 
     If TypeOf(Value) = Type("Number") Then
@@ -891,7 +923,7 @@ Function ConvertDataWithSizeRetrieval(Data, Val MinimumStreamSize = 0) Export
 
         FileOnDisk = New File(Data);
 
-        If FileOnDisk.Exist() Then
+        If FileOnDisk.Exists() Then
             Size = FileOnDisk.Size();
         Else
             OPI_TypeConversion.GetBinaryData(Data);
@@ -986,6 +1018,15 @@ Function ThisIsCollection(Val Value, Val KeyValue = False) Export
 
 EndFunction
 
+Function OPIVersion() Export
+    Return "1.27.0";
+EndFunction
+
+Function OPILanguage() Export
+    CurrentOPILanguage = "en";
+    Return CurrentOPILanguage;
+EndFunction
+
 #EndRegion
 
 #EndRegion
@@ -1033,8 +1074,8 @@ Procedure WriteOnCurrentLine(Val Text, Val Color = "", Val ToStart = False) Expo
         ConsoleColor = New Map;
     EndIf;
 
-    Encoding      = Консоль.КодировкаВыходногоПотока;
-    OutputStream  = Консоль.OpenStandardOutput();
+    Encoding      = Console.OutputEncoding;
+    OutputStream  = Console.OpenStandardOutput();
     OutputWriting = New DataWriter(OutputStream, Encoding);
 
     If Not ValueIsFilled(Color) Then
@@ -1042,9 +1083,9 @@ Procedure WriteOnCurrentLine(Val Text, Val Color = "", Val ToStart = False) Expo
     EndIf;
 
     If TypeOf(Color)      = Type("String") Then
-        Консоль.TextColor = ConsoleColor[Color];
+        Console.TextColor = ConsoleColor[Color];
     Else
-        Консоль.TextColor = Color;
+        Console.TextColor = Color;
     EndIf;
 
     If ToStart Then
@@ -1181,9 +1222,13 @@ Function JSONСтрокой(Val Данные, Val Экранирование = "
 	Return JSONString(Данные, Экранирование, ПереносСтрок, ДвойныеКавычки);
 EndFunction
 
-Function ПрочитатьJSONФайл(Val Путь) Export
-	Return ReadJSONFile(Путь);
+Function ПрочитатьJSONФайл(Val Путь, Val ВСоответствие = False) Export
+	Return ReadJSONFile(Путь, ВСоответствие);
 EndFunction
+
+Procedure ЗаписатьJSONФайл(Val Путь, Val Данные) Export
+	WriteJSONFile(Путь, Данные);
+EndProcedure
 
 Function ОбработатьXML(XML) Export
 	Return ProcessXML(XML);
@@ -1210,7 +1255,7 @@ Procedure ЗначениеВМассив(Значение) Export
 EndProcedure
 
 Function ПолеКоллекцииСуществует(Val Коллекция, Val Поле, ЗначениеПоля = Undefined) Export
-	Return CollectionFieldExist(Коллекция, Поле, ЗначениеПоля);
+	Return CollectionFieldExists(Коллекция, Поле, ЗначениеПоля);
 EndFunction
 
 Function НайтиОтсутствующиеПоляКоллекции(Val Коллекция, Val Поля) Export
@@ -1261,6 +1306,10 @@ Procedure ПотокВНачало(ТекущийПоток) Export
 	StreamToStart(ТекущийПоток);
 EndProcedure
 
+Procedure УдалитьФайлВПопытке(Val Путь, Val ТекстСообщения) Export
+	RemoveFileWithTry(Путь, ТекстСообщения);
+EndProcedure
+
 Function ЧислоВСтроку(Val Значение) Export
 	Return NumberToString(Значение);
 EndFunction
@@ -1299,6 +1348,14 @@ EndFunction
 
 Function ЭтоКоллекция(Val Значение, Val КлючЗначение = False) Export
 	Return ThisIsCollection(Значение, КлючЗначение);
+EndFunction
+
+Function ВерсияОПИ() Export
+	Return OPIVersion();
+EndFunction
+
+Function ЯзыкОПИ() Export
+	Return OPILanguage();
 EndFunction
 
 Procedure ВывестиТекстВТекущуюСтроку(Val Текст, Val Цвет = "", Val ВНачало = False) Export

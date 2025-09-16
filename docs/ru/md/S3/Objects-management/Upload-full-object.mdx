@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 
 
-`Функция ЗагрузитьОбъектЦеликом(Знач Наименование, Знач Бакет, Знач Содержимое, Знач ОсновныеДанные, Знач Заголовки = Неопределено) Экспорт`
+`Функция ЗагрузитьОбъектЦеликом(Знач Наименование, Знач Бакет, Знач Содержимое, Знач ОсновныеДанные, Знач Заголовки = Неопределено, Знач Каталог = Ложь) Экспорт`
 
   | Параметр | CLI опция | Тип | Обяз. | Назначение |
   |-|-|-|-|-|
@@ -21,6 +21,7 @@ import TabItem from '@theme/TabItem';
   | Содержимое | --data | Строка, ДвоичныеДанные | &#x2714; | Данные или путь к файлу для загрузки |
   | ОсновныеДанные | --basic | Структура Из КлючИЗначение | &#x2714; | Основные данные запроса. См. ПолучитьСтруктуруДанных |
   | Заголовки | --headers | Соответствие Из КлючИЗначение | &#x2716; | Дополнительные заголовки запроса, если необходимо |
+  | Каталог | --dir | Булево | &#x2716; | Истина > Path style URL, Ложь > Virtual hosted style URL |
 
   
   Возвращаемое значение:   Структура Из КлючИЗначение - сериализованный JSON ответа от хранилища
@@ -47,13 +48,38 @@ import TabItem from '@theme/TabItem';
     ОсновныеДанные = OPI_S3.ПолучитьСтруктуруДанных(URL, AccessKey, SecretKey, Region);
 
     Наименование = "pictureSmall.jpg";
-    Бакет        = "opi-gpbucket3";
     Содержимое   = "https://hut.openintegrations.dev/test_data/picture.jpg"; // URL, Путь или Двоичные данные
 
-    Результат = OPI_S3.ЗагрузитьОбъектЦеликом(Наименование, Бакет, Содержимое, ОсновныеДанные);
+    Каталог = Истина; // Формирование URL в path-style
+    Бакет = "opi-dirbucket3";
+    Результат = OPI_S3.ЗагрузитьОбъектЦеликом(Наименование, Бакет, Содержимое, ОсновныеДанные, , Каталог);
 ```
     
 
+ <Tabs>
+  
+    <TabItem value="bash" label="Bash" default>
+        ```bash
+            oint s3 ЗагрузитьОбъектЦеликом \
+              --name "pictureSmall.jpg" \
+              --bucket "opi-dirbucket3" \
+              --data "https://hut.openintegrations.dev/test_data/picture.jpg" \
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" \
+              --dir true
+        ```
+    </TabItem>
+  
+    <TabItem value="bat" label="CMD/Bat" default>
+        ```batch
+            oint s3 ЗагрузитьОбъектЦеликом ^
+              --name "pictureSmall.jpg" ^
+              --bucket "opi-dirbucket3" ^
+              --data "https://hut.openintegrations.dev/test_data/picture.jpg" ^
+              --basic "{'URL':'storage-155.s3hoster.by','AccessKey':'***','SecretKey':'***','Region':'BTC','Service':'s3'}" ^
+              --dir true
+        ```
+    </TabItem>
+</Tabs>
 
 
 ```json title="Результат"
@@ -62,17 +88,17 @@ import TabItem from '@theme/TabItem';
  "response": {},
  "headers": {
   "Accept-Ranges": "bytes",
-  "Content-Length": "0",
-  "Content-Type": "text/plain; charset=utf-8",
-  "Date": "Fri, 22 Nov 2024 09:35:06 GMT",
-  "Etag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
+  "Date": "Tue, 16 Sep 2025 05:29:37 GMT",
+  "ETag": "\"9e0176f87f6565a22f78e0f9b39a4d78\"",
   "Server": "MinIO",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Vary": "Origin,Accept-Encoding",
+  "Vary": "Origin, Accept-Encoding",
   "X-Amz-Id-2": "057275ee0636b36a8256f409a6ff665de46bfaa1f0d5faf2d1b4f312e55c34fa",
-  "X-Amz-Request-Id": "180A40AA0D325AA9",
+  "X-Amz-Request-Id": "1865AC33FF3E0976",
   "X-Content-Type-Options": "nosniff",
-  "X-Xss-Protection": "1; mode=block"
+  "X-XSS-Protection": "1; mode=block",
+  "Content-Length": "0",
+  "Content-Type": "text/plain; charset=utf-8"
  }
 }
 ```

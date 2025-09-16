@@ -84,9 +84,9 @@ Function SetTls(Val AddIn, Val Tls) Export
         ErrorText = "Incorrect Tls settings!";
         OPI_TypeConversion.GetKeyValueCollection(Tls, ErrorText);
 
-        UseTls            = OPI_Tools.GetOr(Tls, "use_tls", False);
+        UseTls            = OPI_Tools.GetOr(Tls, "use_tls" , False);
         DisableValidation = OPI_Tools.GetOr(Tls, "accept_invalid_certs", False);
-        CertFilepath      = OPI_Tools.GetOr(Tls, "ca_cert_path", "");
+        CertFilepath      = OPI_Tools.GetOr(Tls, "ca_cert_path" , "");
 
         OPI_TypeConversion.GetBoolean(UseTls);
         OPI_TypeConversion.GetBoolean(DisableValidation);
@@ -109,6 +109,18 @@ Function GetTlsSettings(Val DisableCertVerification, Val CertFilepath = "") Expo
     OPI_Tools.AddField("ca_cert_path"        , CertFilepath           , "String" , CertStructure);
 
     Return CertStructure;
+
+EndFunction
+
+Function FileTransferRequired() Export
+
+    // Components in 1C on Linux cannot reliably send and receive data larger than 30 KB
+    // https://github.com/Bayselonarrend/OpenIntegrations/issues/72
+
+    // UPD: NoIsolated works
+
+    // Return Not OPI_Tools.IsWindows() And Not OPI_Tools.IsOneScript();
+    Return False;
 
 EndFunction
 
@@ -136,7 +148,7 @@ Function AttachAddInOnServer(Val AddInName, Val Class, Error)
     EndIf;
 
     Try
-        AttachAddIn(TemplateName, AddInName, AddInType.Native);
+        ConnectAddInNoIsolated(TemplateName, AddInName);
         AddIn = New("AddIn." + AddInName + "." + Class);
         Error = Undefined;
         Return AddIn;
@@ -144,6 +156,48 @@ Function AttachAddInOnServer(Val AddInName, Val Class, Error)
         Error = DetailErrorDescription(ErrorInfo());
         Return Undefined;
     EndTry;
+
+EndFunction
+
+Function ConnectAddInNoIsolated(TemplateName, AddInName)
+
+    If OPI_Tools.IsOneScript() Or OPI_Tools.IsWindows() Then
+        TypeRequiered = False;
+    Else
+
+        SystemInfo = New SystemInfo();
+
+        Version1C = SystemInfo.AppVersion;
+        Version1C = StrSplit(Version1C, ".");
+
+        Part1 = Number(Version1C[0]);
+        Part2 = Number(Version1C[1]);
+        Part3 = Number(Version1C[2]);
+
+        TypeRequiered = Part1 > 8 Or Part2 > 3 Or Part3 > 20;
+
+    EndIf;
+
+    If Not TypeRequiered Then
+
+        AddInConnectionType = Undefined;
+        Result              = AttachAddIn(TemplateName, AddInName, AddInType.Native);
+
+    Else
+
+        // BSLLS:UnusedLocalVariable-off
+
+        //@skip-check module-unused-local-variable
+        ConnectionType = AddInConnectionType.NoIsolated;
+        //@skip-check server-execution-safe-mode
+
+        // BSLLS:UnusedLocalVariable-on
+
+        Result = Eval("AttachAddIn(TemplateName, AddInName, AddInType.Native, ConnectionType)");
+
+    EndIf;
+
+    Return Result;
 
 EndFunction
 

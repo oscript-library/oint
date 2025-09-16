@@ -1,7 +1,6 @@
-# JSON данные также могут быть переданы как путь к файлу .json
-
 oint ollama ПолучитьОтветВКонтексте \
-  --url "https://hut.openintegrations.dev/ollama" \
-  --model "tinyllama" \
-  --msgs "[{'role':'user','content':'What is 1C:Enterprise?'},{'role':'assistant','content':'1C:Enterprise is an open-source accounting software designed for small and medium-sized businesses (SMBs) in Russia, Belarus, Ukraine, Kazakhstan, and Kyrgyzstan. It provides a variety of financial, inventory, accounting, purchasing, and payroll management features and can be installed on-premise or in the cloud for remote access.\n\n1C:Enterprise is known for its robust reporting capabilities, easy integration with third-party applications, and customizable templates for invoicing and journal entries. It is also compatible with leading accounting and financial software solutions like QuickBooks, Xero, and Sage Intacct, making it a popular choice among SMBs looking to streamline their finance processes.'},{'role':'user','content':'When the first version was released?'}]" \
+  --url ""https://hut.openintegrations.dev/ollama"" \
+  --model ""tinyllama"" \
+  --msgs ""[{'role':'user','content':'Hello!'}]"" \
+  --options ""/tmp/f5jrnmds.wl4.json"" \
   --headers "{'Authorization':'***'}"
